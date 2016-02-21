@@ -8,11 +8,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class HistoryViewController: UIViewController {
+    
+    private var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        tableView = UITableView(frame: CGRect.zero, style: .Grouped)
+        view.addSubview(tableView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,6 +24,12 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+
+    // MARK: - Configure Layout Constraints
+    
+    private func configureLayoutConstraints() {
+        
+    }
 
 }
 

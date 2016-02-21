@@ -8,13 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		589065D41C7A3F2F00F7F6DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */; };
-		589065D61C7A3F2F00F7F6DC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589065D51C7A3F2F00F7F6DC /* ViewController.swift */; };
+		589065D61C7A3F2F00F7F6DC /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589065D51C7A3F2F00F7F6DC /* HistoryViewController.swift */; };
 		589065D91C7A3F2F00F7F6DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 589065D71C7A3F2F00F7F6DC /* Main.storyboard */; };
 		589065DC1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 589065DA1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld */; };
 		589065DE1C7A3F2F00F7F6DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 589065DD1C7A3F2F00F7F6DC /* Assets.xcassets */; };
 		589065E11C7A3F2F00F7F6DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 589065DF1C7A3F2F00F7F6DC /* LaunchScreen.storyboard */; };
 		589065EC1C7A3F2F00F7F6DC /* SmokeReporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589065EB1C7A3F2F00F7F6DC /* SmokeReporterTests.swift */; };
 		589065F71C7A3F2F00F7F6DC /* SmokeReporterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589065F61C7A3F2F00F7F6DC /* SmokeReporterUITests.swift */; };
+		589066061C7A489700F7F6DC /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589066041C7A489700F7F6DC /* CocoaLumberjackSwift.framework */; };
+		589066071C7A489800F7F6DC /* CocoaLumberjackSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 589066041C7A489700F7F6DC /* CocoaLumberjackSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		589066081C7A489800F7F6DC /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589066051C7A489700F7F6DC /* SnapKit.framework */; };
+		589066091C7A489800F7F6DC /* SnapKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 589066051C7A489700F7F6DC /* SnapKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5890660C1C7A48A000F7F6DC /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5890660B1C7A48A000F7F6DC /* CocoaLumberjack.framework */; };
+		5890660D1C7A48A000F7F6DC /* CocoaLumberjack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5890660B1C7A48A000F7F6DC /* CocoaLumberjack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		589066161C7A499700F7F6DC /* BrightFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589066151C7A499700F7F6DC /* BrightFutures.framework */; };
+		589066171C7A499700F7F6DC /* BrightFutures.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 589066151C7A499700F7F6DC /* BrightFutures.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5890661C1C7A4AD300F7F6DC /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5890661B1C7A4AD300F7F6DC /* Result.framework */; };
+		5890661D1C7A4AD300F7F6DC /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5890661B1C7A4AD300F7F6DC /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		589066231C7A4AE900F7F6DC /* BrightFutures.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5890661E1C7A4AE900F7F6DC /* BrightFutures.framework.dSYM */; };
+		589066241C7A4AE900F7F6DC /* CocoaLumberjack.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5890661F1C7A4AE900F7F6DC /* CocoaLumberjack.framework.dSYM */; };
+		589066251C7A4AE900F7F6DC /* CocoaLumberjackSwift.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 589066201C7A4AE900F7F6DC /* CocoaLumberjackSwift.framework.dSYM */; };
+		589066261C7A4AE900F7F6DC /* Result.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 589066211C7A4AE900F7F6DC /* Result.framework.dSYM */; };
+		589066271C7A4AE900F7F6DC /* SnapKit.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 589066221C7A4AE900F7F6DC /* SnapKit.framework.dSYM */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,10 +49,42 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5890660A1C7A489800F7F6DC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				589066071C7A489800F7F6DC /* CocoaLumberjackSwift.framework in Embed Frameworks */,
+				589066171C7A499700F7F6DC /* BrightFutures.framework in Embed Frameworks */,
+				5890661D1C7A4AD300F7F6DC /* Result.framework in Embed Frameworks */,
+				5890660D1C7A48A000F7F6DC /* CocoaLumberjack.framework in Embed Frameworks */,
+				589066091C7A489800F7F6DC /* SnapKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5890660E1C7A48B700F7F6DC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				589066231C7A4AE900F7F6DC /* BrightFutures.framework.dSYM in CopyFiles */,
+				589066241C7A4AE900F7F6DC /* CocoaLumberjack.framework.dSYM in CopyFiles */,
+				589066251C7A4AE900F7F6DC /* CocoaLumberjackSwift.framework.dSYM in CopyFiles */,
+				589066261C7A4AE900F7F6DC /* Result.framework.dSYM in CopyFiles */,
+				589066271C7A4AE900F7F6DC /* SnapKit.framework.dSYM in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		589065D01C7A3F2F00F7F6DC /* SmokeReporter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokeReporter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		589065D51C7A3F2F00F7F6DC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		589065D51C7A3F2F00F7F6DC /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		589065D81C7A3F2F00F7F6DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		589065DB1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SmokeReporter.xcdatamodel; sourceTree = "<group>"; };
 		589065DD1C7A3F2F00F7F6DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +96,16 @@
 		589065F21C7A3F2F00F7F6DC /* SmokeReporterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmokeReporterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		589065F61C7A3F2F00F7F6DC /* SmokeReporterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeReporterUITests.swift; sourceTree = "<group>"; };
 		589065F81C7A3F2F00F7F6DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		589066041C7A489700F7F6DC /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = Carthage/Build/iOS/CocoaLumberjackSwift.framework; sourceTree = "<group>"; };
+		589066051C7A489700F7F6DC /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
+		5890660B1C7A48A000F7F6DC /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
+		589066151C7A499700F7F6DC /* BrightFutures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BrightFutures.framework; path = Carthage/Build/iOS/BrightFutures.framework; sourceTree = "<group>"; };
+		5890661B1C7A4AD300F7F6DC /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		5890661E1C7A4AE900F7F6DC /* BrightFutures.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = BrightFutures.framework.dSYM; path = Carthage/Build/iOS/BrightFutures.framework.dSYM; sourceTree = "<group>"; };
+		5890661F1C7A4AE900F7F6DC /* CocoaLumberjack.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = CocoaLumberjack.framework.dSYM; path = Carthage/Build/iOS/CocoaLumberjack.framework.dSYM; sourceTree = "<group>"; };
+		589066201C7A4AE900F7F6DC /* CocoaLumberjackSwift.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = CocoaLumberjackSwift.framework.dSYM; path = Carthage/Build/iOS/CocoaLumberjackSwift.framework.dSYM; sourceTree = "<group>"; };
+		589066211C7A4AE900F7F6DC /* Result.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Result.framework.dSYM; path = Carthage/Build/iOS/Result.framework.dSYM; sourceTree = "<group>"; };
+		589066221C7A4AE900F7F6DC /* SnapKit.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SnapKit.framework.dSYM; path = Carthage/Build/iOS/SnapKit.framework.dSYM; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +113,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				589066061C7A489700F7F6DC /* CocoaLumberjackSwift.framework in Frameworks */,
+				589066161C7A499700F7F6DC /* BrightFutures.framework in Frameworks */,
+				5890661C1C7A4AD300F7F6DC /* Result.framework in Frameworks */,
+				5890660C1C7A48A000F7F6DC /* CocoaLumberjack.framework in Frameworks */,
+				589066081C7A489800F7F6DC /* SnapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +144,7 @@
 				589065D21C7A3F2F00F7F6DC /* SmokeReporter */,
 				589065EA1C7A3F2F00F7F6DC /* SmokeReporterTests */,
 				589065F51C7A3F2F00F7F6DC /* SmokeReporterUITests */,
+				5890661A1C7A4A7D00F7F6DC /* Frameworks */,
 				589065D11C7A3F2F00F7F6DC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,7 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */,
-				589065D51C7A3F2F00F7F6DC /* ViewController.swift */,
+				589065D51C7A3F2F00F7F6DC /* HistoryViewController.swift */,
 				589065D71C7A3F2F00F7F6DC /* Main.storyboard */,
 				589065DD1C7A3F2F00F7F6DC /* Assets.xcassets */,
 				589065DF1C7A3F2F00F7F6DC /* LaunchScreen.storyboard */,
@@ -128,6 +191,31 @@
 			path = SmokeReporterUITests;
 			sourceTree = "<group>";
 		};
+		5890661A1C7A4A7D00F7F6DC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				589066051C7A489700F7F6DC /* SnapKit.framework */,
+				589066041C7A489700F7F6DC /* CocoaLumberjackSwift.framework */,
+				5890660B1C7A48A000F7F6DC /* CocoaLumberjack.framework */,
+				589066151C7A499700F7F6DC /* BrightFutures.framework */,
+				5890661B1C7A4AD300F7F6DC /* Result.framework */,
+				58BB86DC1C7A4B0200804E90 /* dSYM */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		58BB86DC1C7A4B0200804E90 /* dSYM */ = {
+			isa = PBXGroup;
+			children = (
+				5890661E1C7A4AE900F7F6DC /* BrightFutures.framework.dSYM */,
+				5890661F1C7A4AE900F7F6DC /* CocoaLumberjack.framework.dSYM */,
+				589066201C7A4AE900F7F6DC /* CocoaLumberjackSwift.framework.dSYM */,
+				589066211C7A4AE900F7F6DC /* Result.framework.dSYM */,
+				589066221C7A4AE900F7F6DC /* SnapKit.framework.dSYM */,
+			);
+			name = dSYM;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -138,6 +226,8 @@
 				589065CC1C7A3F2F00F7F6DC /* Sources */,
 				589065CD1C7A3F2F00F7F6DC /* Frameworks */,
 				589065CE1C7A3F2F00F7F6DC /* Resources */,
+				5890660A1C7A489800F7F6DC /* Embed Frameworks */,
+				5890660E1C7A48B700F7F6DC /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -196,6 +286,7 @@
 				TargetAttributes = {
 					589065CF1C7A3F2F00F7F6DC = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 659B2N7HE9;
 					};
 					589065E61C7A3F2F00F7F6DC = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -260,7 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				589065DC1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld in Sources */,
-				589065D61C7A3F2F00F7F6DC /* ViewController.swift in Sources */,
+				589065D61C7A3F2F00F7F6DC /* HistoryViewController.swift in Sources */,
 				589065D41C7A3F2F00F7F6DC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,9 +494,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SmokeReporter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wopata.SmokeReporter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.smokereporter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -414,9 +510,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SmokeReporter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wopata.SmokeReporter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.smokereporter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -488,6 +589,7 @@
 				589065FD1C7A3F2F00F7F6DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		589065FE1C7A3F2F00F7F6DC /* Build configuration list for PBXNativeTarget "SmokeReporterTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +598,7 @@
 				589066001C7A3F2F00F7F6DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		589066011C7A3F2F00F7F6DC /* Build configuration list for PBXNativeTarget "SmokeReporterUITests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +607,7 @@
 				589066031C7A3F2F00F7F6DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
