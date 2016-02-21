@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		589065D41C7A3F2F00F7F6DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */; };
-		589065D61C7A3F2F00F7F6DC /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589065D51C7A3F2F00F7F6DC /* HistoryViewController.swift */; };
 		589065D91C7A3F2F00F7F6DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 589065D71C7A3F2F00F7F6DC /* Main.storyboard */; };
 		589065DC1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 589065DA1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld */; };
 		589065DE1C7A3F2F00F7F6DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 589065DD1C7A3F2F00F7F6DC /* Assets.xcassets */; };
@@ -30,6 +29,11 @@
 		589066251C7A4AE900F7F6DC /* CocoaLumberjackSwift.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 589066201C7A4AE900F7F6DC /* CocoaLumberjackSwift.framework.dSYM */; };
 		589066261C7A4AE900F7F6DC /* Result.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 589066211C7A4AE900F7F6DC /* Result.framework.dSYM */; };
 		589066271C7A4AE900F7F6DC /* SnapKit.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 589066221C7A4AE900F7F6DC /* SnapKit.framework.dSYM */; };
+		58BB86E41C7A4C3400804E90 /* Smoke.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB86E21C7A4C3400804E90 /* Smoke.swift */; };
+		58BB86E81C7A4E8400804E90 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB86E71C7A4E8400804E90 /* CoreDataStack.swift */; };
+		58BB86EE1C7A516000804E90 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB86ED1C7A516000804E90 /* HistoryViewController.swift */; };
+		58BB86F01C7A517300804E90 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB86EF1C7A517300804E90 /* HistoryTableViewCell.swift */; };
+		58BB86F21C7A589A00804E90 /* Smoke+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB86F11C7A589A00804E90 /* Smoke+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,7 +88,6 @@
 /* Begin PBXFileReference section */
 		589065D01C7A3F2F00F7F6DC /* SmokeReporter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokeReporter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		589065D51C7A3F2F00F7F6DC /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		589065D81C7A3F2F00F7F6DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		589065DB1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SmokeReporter.xcdatamodel; sourceTree = "<group>"; };
 		589065DD1C7A3F2F00F7F6DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -106,6 +109,11 @@
 		589066201C7A4AE900F7F6DC /* CocoaLumberjackSwift.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = CocoaLumberjackSwift.framework.dSYM; path = Carthage/Build/iOS/CocoaLumberjackSwift.framework.dSYM; sourceTree = "<group>"; };
 		589066211C7A4AE900F7F6DC /* Result.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Result.framework.dSYM; path = Carthage/Build/iOS/Result.framework.dSYM; sourceTree = "<group>"; };
 		589066221C7A4AE900F7F6DC /* SnapKit.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SnapKit.framework.dSYM; path = Carthage/Build/iOS/SnapKit.framework.dSYM; sourceTree = "<group>"; };
+		58BB86E21C7A4C3400804E90 /* Smoke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Smoke.swift; sourceTree = "<group>"; };
+		58BB86E71C7A4E8400804E90 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		58BB86ED1C7A516000804E90 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		58BB86EF1C7A517300804E90 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
+		58BB86F11C7A589A00804E90 /* Smoke+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Smoke+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,7 +171,8 @@
 			isa = PBXGroup;
 			children = (
 				589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */,
-				589065D51C7A3F2F00F7F6DC /* HistoryViewController.swift */,
+				58BB86DD1C7A4B3600804E90 /* Controllers */,
+				58BB86DF1C7A4B3600804E90 /* Models */,
 				589065D71C7A3F2F00F7F6DC /* Main.storyboard */,
 				589065DD1C7A3F2F00F7F6DC /* Assets.xcassets */,
 				589065DF1C7A3F2F00F7F6DC /* LaunchScreen.storyboard */,
@@ -214,6 +223,33 @@
 				589066221C7A4AE900F7F6DC /* SnapKit.framework.dSYM */,
 			);
 			name = dSYM;
+			sourceTree = "<group>";
+		};
+		58BB86DD1C7A4B3600804E90 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				58BB86EC1C7A516000804E90 /* History */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		58BB86DF1C7A4B3600804E90 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				58BB86E71C7A4E8400804E90 /* CoreDataStack.swift */,
+				58BB86E21C7A4C3400804E90 /* Smoke.swift */,
+				58BB86F11C7A589A00804E90 /* Smoke+CoreDataProperties.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		58BB86EC1C7A516000804E90 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				58BB86ED1C7A516000804E90 /* HistoryViewController.swift */,
+				58BB86EF1C7A517300804E90 /* HistoryTableViewCell.swift */,
+			);
+			path = History;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -350,8 +386,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58BB86E81C7A4E8400804E90 /* CoreDataStack.swift in Sources */,
+				58BB86F21C7A589A00804E90 /* Smoke+CoreDataProperties.swift in Sources */,
+				58BB86E41C7A4C3400804E90 /* Smoke.swift in Sources */,
+				58BB86F01C7A517300804E90 /* HistoryTableViewCell.swift in Sources */,
 				589065DC1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld in Sources */,
-				589065D61C7A3F2F00F7F6DC /* HistoryViewController.swift in Sources */,
+				58BB86EE1C7A516000804E90 /* HistoryViewController.swift in Sources */,
 				589065D41C7A3F2F00F7F6DC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,6 +525,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
