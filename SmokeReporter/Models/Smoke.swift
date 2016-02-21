@@ -9,8 +9,14 @@
 import Foundation
 import CoreData
 
+enum SmokeKind {
+    case Cigarette, Joint
+}
+
+private let kSmokeKindCigarette = "Cigarette"
+private let kSmokeKindJoint = "Joint"
+
 final class Smoke: NSManagedObject {
-    static let entityName = "Smoke"
     
     static func historyFetchedResultsController() -> NSFetchedResultsController {
         let req = NSFetchRequest(entityName: Smoke.entityName)
@@ -21,4 +27,24 @@ final class Smoke: NSManagedObject {
             cacheName: nil)
         return controller
     }
+    
+    static func insertNewSmoke(kind: SmokeKind, intensity: Float, feelingBefore: String?, feelingAfter: String?, comment: String?, date: NSDate = NSDate()) -> Smoke {
+        let smoke = NSEntityDescription.insertNewObjectForEntityForName(Smoke.entityName, inManagedObjectContext: CoreDataStack.shared.managedObjectContext) as! Smoke
+        smoke.intensity = intensity
+        smoke.kind = kind == .Cigarette ? kSmokeKindCigarette : kSmokeKindJoint
+        smoke.feelingBefore = feelingBefore
+        smoke.feelingAfter = feelingAfter
+        smoke.date = date
+        smoke.comment = comment
+        return smoke
+    }
+    
+    static func deleteSmoke(smoke: Smoke) {
+        CoreDataStack.shared.managedObjectContext.deleteObject(smoke)
+    }
+    
+    var normalizedKind: SmokeKind {
+        return kind == kSmokeKindCigarette ? .Cigarette : .Joint
+    }
+    
 }

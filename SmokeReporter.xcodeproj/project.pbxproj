@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		586152AF1C7A62430032DA0A /* NamedEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586152AE1C7A62430032DA0A /* NamedEntities.swift */; };
 		589065D41C7A3F2F00F7F6DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */; };
 		589065D91C7A3F2F00F7F6DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 589065D71C7A3F2F00F7F6DC /* Main.storyboard */; };
 		589065DC1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 589065DA1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld */; };
@@ -34,6 +35,11 @@
 		58BB86EE1C7A516000804E90 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB86ED1C7A516000804E90 /* HistoryViewController.swift */; };
 		58BB86F01C7A517300804E90 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB86EF1C7A517300804E90 /* HistoryTableViewCell.swift */; };
 		58BB86F21C7A589A00804E90 /* Smoke+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB86F11C7A589A00804E90 /* Smoke+CoreDataProperties.swift */; };
+		58BB86F41C7A5AE000804E90 /* SwiftHelpers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58BB86F31C7A5AE000804E90 /* SwiftHelpers.framework */; };
+		58BB86F51C7A5AE000804E90 /* SwiftHelpers.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58BB86F31C7A5AE000804E90 /* SwiftHelpers.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		58BB86F71C7A5AEA00804E90 /* SwiftHelpers.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 58BB86F61C7A5AEA00804E90 /* SwiftHelpers.framework.dSYM */; };
+		58FCFC0C1C7A7916005786C9 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FCFC0B1C7A7916005786C9 /* StyleSheet.swift */; };
+		58FCFC0F1C7A866D005786C9 /* SmokeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FCFC0E1C7A866D005786C9 /* SmokeDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +68,7 @@
 			files = (
 				589066071C7A489800F7F6DC /* CocoaLumberjackSwift.framework in Embed Frameworks */,
 				589066171C7A499700F7F6DC /* BrightFutures.framework in Embed Frameworks */,
+				58BB86F51C7A5AE000804E90 /* SwiftHelpers.framework in Embed Frameworks */,
 				5890661D1C7A4AD300F7F6DC /* Result.framework in Embed Frameworks */,
 				5890660D1C7A48A000F7F6DC /* CocoaLumberjack.framework in Embed Frameworks */,
 				589066091C7A489800F7F6DC /* SnapKit.framework in Embed Frameworks */,
@@ -80,12 +87,14 @@
 				589066251C7A4AE900F7F6DC /* CocoaLumberjackSwift.framework.dSYM in CopyFiles */,
 				589066261C7A4AE900F7F6DC /* Result.framework.dSYM in CopyFiles */,
 				589066271C7A4AE900F7F6DC /* SnapKit.framework.dSYM in CopyFiles */,
+				58BB86F71C7A5AEA00804E90 /* SwiftHelpers.framework.dSYM in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		586152AE1C7A62430032DA0A /* NamedEntities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamedEntities.swift; sourceTree = "<group>"; };
 		589065D01C7A3F2F00F7F6DC /* SmokeReporter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokeReporter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		589065D81C7A3F2F00F7F6DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -114,6 +123,10 @@
 		58BB86ED1C7A516000804E90 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		58BB86EF1C7A517300804E90 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		58BB86F11C7A589A00804E90 /* Smoke+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Smoke+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		58BB86F31C7A5AE000804E90 /* SwiftHelpers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftHelpers.framework; path = Carthage/Build/iOS/SwiftHelpers.framework; sourceTree = "<group>"; };
+		58BB86F61C7A5AEA00804E90 /* SwiftHelpers.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftHelpers.framework.dSYM; path = Carthage/Build/iOS/SwiftHelpers.framework.dSYM; sourceTree = "<group>"; };
+		58FCFC0B1C7A7916005786C9 /* StyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleSheet.swift; sourceTree = "<group>"; };
+		58FCFC0E1C7A866D005786C9 /* SmokeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmokeDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +136,7 @@
 			files = (
 				589066061C7A489700F7F6DC /* CocoaLumberjackSwift.framework in Frameworks */,
 				589066161C7A499700F7F6DC /* BrightFutures.framework in Frameworks */,
+				58BB86F41C7A5AE000804E90 /* SwiftHelpers.framework in Frameworks */,
 				5890661C1C7A4AD300F7F6DC /* Result.framework in Frameworks */,
 				5890660C1C7A48A000F7F6DC /* CocoaLumberjack.framework in Frameworks */,
 				589066081C7A489800F7F6DC /* SnapKit.framework in Frameworks */,
@@ -146,6 +160,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		586152B01C7A62E70032DA0A /* CoreDataProperties */ = {
+			isa = PBXGroup;
+			children = (
+				58BB86F11C7A589A00804E90 /* Smoke+CoreDataProperties.swift */,
+			);
+			name = CoreDataProperties;
+			sourceTree = "<group>";
+		};
 		589065C71C7A3F2F00F7F6DC = {
 			isa = PBXGroup;
 			children = (
@@ -171,8 +193,9 @@
 			isa = PBXGroup;
 			children = (
 				589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */,
-				58BB86DD1C7A4B3600804E90 /* Controllers */,
+				58FCFC0B1C7A7916005786C9 /* StyleSheet.swift */,
 				58BB86DF1C7A4B3600804E90 /* Models */,
+				58BB86DD1C7A4B3600804E90 /* Controllers */,
 				589065D71C7A3F2F00F7F6DC /* Main.storyboard */,
 				589065DD1C7A3F2F00F7F6DC /* Assets.xcassets */,
 				589065DF1C7A3F2F00F7F6DC /* LaunchScreen.storyboard */,
@@ -203,6 +226,7 @@
 		5890661A1C7A4A7D00F7F6DC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58BB86F31C7A5AE000804E90 /* SwiftHelpers.framework */,
 				589066051C7A489700F7F6DC /* SnapKit.framework */,
 				589066041C7A489700F7F6DC /* CocoaLumberjackSwift.framework */,
 				5890660B1C7A48A000F7F6DC /* CocoaLumberjack.framework */,
@@ -221,6 +245,7 @@
 				589066201C7A4AE900F7F6DC /* CocoaLumberjackSwift.framework.dSYM */,
 				589066211C7A4AE900F7F6DC /* Result.framework.dSYM */,
 				589066221C7A4AE900F7F6DC /* SnapKit.framework.dSYM */,
+				58BB86F61C7A5AEA00804E90 /* SwiftHelpers.framework.dSYM */,
 			);
 			name = dSYM;
 			sourceTree = "<group>";
@@ -229,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				58BB86EC1C7A516000804E90 /* History */,
+				58FCFC0D1C7A866D005786C9 /* Smoke */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -237,8 +263,9 @@
 			isa = PBXGroup;
 			children = (
 				58BB86E71C7A4E8400804E90 /* CoreDataStack.swift */,
+				586152AE1C7A62430032DA0A /* NamedEntities.swift */,
 				58BB86E21C7A4C3400804E90 /* Smoke.swift */,
-				58BB86F11C7A589A00804E90 /* Smoke+CoreDataProperties.swift */,
+				586152B01C7A62E70032DA0A /* CoreDataProperties */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -250,6 +277,14 @@
 				58BB86EF1C7A517300804E90 /* HistoryTableViewCell.swift */,
 			);
 			path = History;
+			sourceTree = "<group>";
+		};
+		58FCFC0D1C7A866D005786C9 /* Smoke */ = {
+			isa = PBXGroup;
+			children = (
+				58FCFC0E1C7A866D005786C9 /* SmokeDetailViewController.swift */,
+			);
+			path = Smoke;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,11 +421,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				586152AF1C7A62430032DA0A /* NamedEntities.swift in Sources */,
+				58FCFC0C1C7A7916005786C9 /* StyleSheet.swift in Sources */,
 				58BB86E81C7A4E8400804E90 /* CoreDataStack.swift in Sources */,
 				58BB86F21C7A589A00804E90 /* Smoke+CoreDataProperties.swift in Sources */,
 				58BB86E41C7A4C3400804E90 /* Smoke.swift in Sources */,
 				58BB86F01C7A517300804E90 /* HistoryTableViewCell.swift in Sources */,
 				589065DC1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld in Sources */,
+				58FCFC0F1C7A866D005786C9 /* SmokeDetailViewController.swift in Sources */,
 				58BB86EE1C7A516000804E90 /* HistoryViewController.swift in Sources */,
 				589065D41C7A3F2F00F7F6DC /* AppDelegate.swift in Sources */,
 			);
@@ -542,6 +580,7 @@
 				);
 				INFOPLIST_FILE = SmokeReporter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.smokereporter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -558,6 +597,7 @@
 				);
 				INFOPLIST_FILE = SmokeReporter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.smokereporter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

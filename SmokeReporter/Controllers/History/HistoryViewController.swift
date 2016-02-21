@@ -9,19 +9,27 @@
 import UIKit
 import SnapKit
 import CoreData
+import SwiftHelpers
 
 final class HistoryViewController: UIViewController {
     
     private var addBtn: UIBarButtonItem!
     private var tableView: UITableView!
+    
+    private var dateFormatter: NSDateFormatter!
+    
     private lazy var fetchedResultsController: NSFetchedResultsController = {
-        return Smoke.historyFetchedResultsController()
+        let controller = Smoke.historyFetchedResultsController()
+        controller.delegate = self
+        return controller
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        title = L
+        title = L("History")
+        
+        dateFormatter = NSDateFormatter(dateFormat: "HH'h'mm dd/MM/yy")
         
         addBtn = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addSmokeBtnClicked:")
         navigationItem.rightBarButtonItem = addBtn
@@ -36,6 +44,25 @@ final class HistoryViewController: UIViewController {
         
         configureLayoutConstraints()
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        launchFetchIfNeeded()
+    }
+    
+    // MARK: - Data Fetch
+    
+    private var fetchExecuted = false
+    private func launchFetchIfNeeded() {
+        if fetchExecuted { return }
+        do {
+            try fetchedResultsController.performFetch()
+            fetchExecuted = true
+        } catch let err as NSError {
+            print("Error while perfoming fetch: \(err)")
+            fetchExecuted = false
+        }
+    }
 
     // MARK: - Configure Layout Constraints
     
@@ -48,8 +75,10 @@ final class HistoryViewController: UIViewController {
     // MARK: - Add button handler
     
     func addSmokeBtnClicked(sender: UIBarButtonItem) {
-        
+        let nav = UINavigationController(rootViewController: SmokeDetailViewController())
+        presentViewController(nav, animated: true, completion: nil)
     }
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -65,8 +94,26 @@ extension HistoryViewController: UITableViewDataSource {
         configureCell(cell, forIndexPath: indexPath)
         return cell
     }
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            let smoke = fetchedResultsController.objectAtIndexPath(indexPath) as! Smoke
+            Smoke.deleteSmoke(smoke)
+        }
+    }
     private func configureCell(cell: UITableViewCell, forIndexPath indexPath: NSIndexPath) {
-        
+        let smoke = fetchedResultsController.objectAtIndexPath(indexPath) as! Smoke
+        if let cell = cell as? HistoryTableViewCell {
+            cell.dateLbl.text = dateFormatter.stringFromDate(smoke.date)
+            if smoke.normalizedKind == .Cigarette {
+                cell.imgView.image = UIImage(named: "cigarette")
+            } else {
+                cell.imgView.image = UIImage(named: "joint")
+            }
+            cell.intensityLbl.text = "\(smoke.intensity.integerValue)"
+        }
     }
 }
 
@@ -74,5 +121,38 @@ extension HistoryViewController: UITableViewDataSource {
 extension HistoryViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let nav = UINavigationController(rootViewController: SmokeDetailViewController())
+        presentViewController(nav, animated: true, completion: nil)
+    }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+extension HistoryViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        tableView.beginUpdates()
+    }
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        switch type {
+        case .Insert:
+            if let newIndexPath = newIndexPath {
+                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+            }
+        case .Delete:
+            if let indexPath = indexPath {
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
+        case .Move:
+            if let indexPath = indexPath, newIndexPath = newIndexPath {
+                tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
+            }
+        case .Update:
+            if let indexPath = indexPath {
+                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
+        }
+    }
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        tableView.endUpdates()
     }
 }

@@ -19,5 +19,6 @@ extension Smoke {
     @NSManaged var feelingBefore: String?
     @NSManaged var intensity: NSNumber
     @NSManaged var kind: String
+    @NSManaged var comment: String?
 
 }

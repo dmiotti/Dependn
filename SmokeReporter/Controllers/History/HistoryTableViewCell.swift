@@ -7,20 +7,53 @@
 //
 
 import UIKit
+import SwiftHelpers
 
-final class HistoryTableViewCell: UITableViewCell {
+final class HistoryTableViewCell: SHCommonInitTableViewCell {
     
     static let reuseIdentifier = "HistoryTableViewCell"
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    
+    var imgView: UIImageView!
+    var dateLbl: UILabel!
+    var intensityLbl: UILabel!
+    
+    override func commonInit() {
+        super.commonInit()
+        
+        imgView = UIImageView()
+        imgView.contentMode = .ScaleAspectFit
+        contentView.addSubview(imgView)
+        
+        dateLbl = UILabel()
+        dateLbl.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
+        contentView.addSubview(dateLbl)
+        
+        intensityLbl = UILabel()
+        intensityLbl.textAlignment = .Right
+        contentView.addSubview(intensityLbl)
+        
+        configureLayoutConstraints()
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    private func configureLayoutConstraints() {
+        imgView.snp_makeConstraints {
+            $0.centerY.equalTo(contentView)
+            $0.left.equalTo(contentView).offset(20)
+            $0.width.height.equalTo(30)
+        }
+        
+        intensityLbl.snp_makeConstraints {
+            $0.right.equalTo(contentView).offset(-20)
+            $0.top.equalTo(contentView)
+            $0.bottom.equalTo(contentView)
+        }
+        
+        dateLbl.snp_makeConstraints {
+            $0.left.equalTo(imgView.snp_right).offset(10)
+            $0.top.equalTo(contentView)
+            $0.bottom.equalTo(contentView)
+            $0.right.equalTo(intensityLbl.snp_left).offset(-10)
+        }
     }
 
 }
