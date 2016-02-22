@@ -30,6 +30,9 @@ final class SmokeDetailViewController: UIViewController {
     private var feelingAfterTextView: UITextView!
     private var commentLbl: UILabel!
     private var commentTextView: UITextView!
+    private var dateLbl: UILabel!
+    private var dateTextField: UITextField!
+    private var dateFormatter: NSDateFormatter!
     
     /// Bar buttons
     private var cancelBtn: UIBarButtonItem!
@@ -39,6 +42,10 @@ final class SmokeDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = L("AddSmoke")
+        
+        dateFormatter = NSDateFormatter(dateFormat: "EEEE dd MMMM HH:mm")
 
         view.backgroundColor = UIColor.whiteColor()
         
@@ -93,6 +100,27 @@ final class SmokeDetailViewController: UIViewController {
         configureTextView(commentTextView)
         scrollContentView.addSubview(commentTextView)
         
+        dateLbl = UILabel()
+        configureLbl(dateLbl, withText: L("Date"))
+        scrollContentView.addSubview(dateLbl)
+        
+        dateTextField = UITextField()
+        dateTextField.textAlignment = .Center
+        dateTextField.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle1)
+        
+        let picker = UIDatePicker()
+        picker.datePickerMode = .DateAndTime
+        dateTextField.inputView = picker
+        
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
+        toolbar.tintColor = UIColor.grayColor()
+        let dateDoneItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "datePickerDidSelectDate:")
+        let dateSpaceItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        toolbar.items = [ dateSpaceItem, dateDoneItem ]
+        dateTextField.inputAccessoryView = toolbar
+        
+        scrollContentView.addSubview(dateTextField)
+        
         configureLayoutConstraints()
         
         registerNotificationObservers()
@@ -116,7 +144,14 @@ final class SmokeDetailViewController: UIViewController {
             feelingBeforeTextView.text = smoke.feelingBefore
             feelingAfterTextView.text = smoke.feelingAfter
             commentTextView.text = smoke.comment
+            configureDateBtnWithDate(smoke.date)
+        } else {
+            configureDateBtnWithDate(NSDate())
         }
+    }
+    
+    private func configureDateBtnWithDate(date: NSDate) {
+        dateTextField.text = dateFormatter.stringFromDate(date).capitalizedString
     }
     
     // MARK: - Bar Buttons
@@ -140,6 +175,10 @@ final class SmokeDetailViewController: UIViewController {
     
     func cancelBtnClicked(sender: UIBarButtonItem) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func datePickerDidSelectDate(sender: UIBarButtonItem) {
+        dateTextField.resignFirstResponder()
     }
     
     // MARK: - Intensity Slider
@@ -240,6 +279,19 @@ final class SmokeDetailViewController: UIViewController {
         
         commentTextView.snp_makeConstraints {
             $0.top.equalTo(commentLbl.snp_bottom).offset(kAddSmokeValuePadding)
+            $0.left.equalTo(scrollContentView).offset(kAddSmokeHorizontalPadding)
+            $0.right.equalTo(scrollContentView).offset(-kAddSmokeHorizontalPadding)
+            $0.height.equalTo(kAddSmokeTextViewHeight)
+        }
+        
+        dateLbl.snp_makeConstraints {
+            $0.top.equalTo(commentTextView.snp_bottom).offset(kAddSmokeLblPadding)
+            $0.left.equalTo(scrollContentView).offset(kAddSmokeHorizontalPadding)
+            $0.right.equalTo(scrollContentView).offset(-kAddSmokeHorizontalPadding)
+        }
+        
+        dateTextField.snp_makeConstraints {
+            $0.top.equalTo(dateLbl.snp_bottom).offset(kAddSmokeValuePadding)
             $0.left.equalTo(scrollContentView).offset(kAddSmokeHorizontalPadding)
             $0.right.equalTo(scrollContentView).offset(-kAddSmokeHorizontalPadding)
             $0.height.equalTo(kAddSmokeTextViewHeight)
