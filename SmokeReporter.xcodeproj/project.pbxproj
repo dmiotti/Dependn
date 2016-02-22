@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		586152AF1C7A62430032DA0A /* NamedEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586152AE1C7A62430032DA0A /* NamedEntities.swift */; };
 		589065D41C7A3F2F00F7F6DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */; };
 		589065D91C7A3F2F00F7F6DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 589065D71C7A3F2F00F7F6DC /* Main.storyboard */; };
 		589065DC1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 589065DA1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld */; };
@@ -94,7 +93,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		586152AE1C7A62430032DA0A /* NamedEntities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamedEntities.swift; sourceTree = "<group>"; };
 		589065D01C7A3F2F00F7F6DC /* SmokeReporter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokeReporter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		589065D81C7A3F2F00F7F6DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -160,14 +158,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		586152B01C7A62E70032DA0A /* CoreDataProperties */ = {
-			isa = PBXGroup;
-			children = (
-				58BB86F11C7A589A00804E90 /* Smoke+CoreDataProperties.swift */,
-			);
-			name = CoreDataProperties;
-			sourceTree = "<group>";
-		};
 		589065C71C7A3F2F00F7F6DC = {
 			isa = PBXGroup;
 			children = (
@@ -263,9 +253,8 @@
 			isa = PBXGroup;
 			children = (
 				58BB86E71C7A4E8400804E90 /* CoreDataStack.swift */,
-				586152AE1C7A62430032DA0A /* NamedEntities.swift */,
 				58BB86E21C7A4C3400804E90 /* Smoke.swift */,
-				586152B01C7A62E70032DA0A /* CoreDataProperties */,
+				58BB86F11C7A589A00804E90 /* Smoke+CoreDataProperties.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -421,7 +410,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				586152AF1C7A62430032DA0A /* NamedEntities.swift in Sources */,
 				58FCFC0C1C7A7916005786C9 /* StyleSheet.swift in Sources */,
 				58BB86E81C7A4E8400804E90 /* CoreDataStack.swift in Sources */,
 				58BB86F21C7A589A00804E90 /* Smoke+CoreDataProperties.swift in Sources */,

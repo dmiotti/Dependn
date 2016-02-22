@@ -13,6 +13,10 @@ private let kCoreDataStackErrorDomain = "CoreDataStack"
 private let kCoreDataStackMomdFilename = "SmokeReporter"
 private let kCoreDataStackSQLLiteFilename = "SmokeReporter.sqlite"
 
+protocol NamedEntity {
+    static var entityName: String { get }
+}
+
 final class CoreDataStack {
     
     static let shared = CoreDataStack()

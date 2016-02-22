@@ -16,7 +16,9 @@ enum SmokeKind {
 private let kSmokeKindCigarette = "Cigarette"
 private let kSmokeKindJoint = "Joint"
 
-final class Smoke: NSManagedObject {
+final class Smoke: NSManagedObject, NamedEntity {
+    
+    static var entityName: String { get { return "Smoke" } }
     
     static func historyFetchedResultsController() -> NSFetchedResultsController {
         let req = NSFetchRequest(entityName: Smoke.entityName)
