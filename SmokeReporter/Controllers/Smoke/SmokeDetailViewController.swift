@@ -49,6 +49,7 @@ final class SmokeDetailViewController: UIViewController {
         navigationItem.rightBarButtonItem = doneBtn
         
         scrollView = UIScrollView()
+        scrollView.alwaysBounceVertical = true
         view.addSubview(scrollView)
         
         scrollContentView = UIView()
@@ -259,7 +260,7 @@ final class SmokeDetailViewController: UIViewController {
     
     private func configureLbl(label: UILabel, withText text: String) {
         label.text = text
-        intensityLbl.font = UIFont.preferredFontForTextStyle(UIFontTextStyleCaption1)
+        label.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle1)
     }
 
 }
