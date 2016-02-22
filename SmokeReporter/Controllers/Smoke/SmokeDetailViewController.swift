@@ -260,7 +260,7 @@ final class SmokeDetailViewController: UIViewController {
     
     private func configureLbl(label: UILabel, withText text: String) {
         label.text = text
-        label.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle1)
+        label.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle2)
     }
 
 }

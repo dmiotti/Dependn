@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  SmokeReporter
+
+  Created by David Miotti on 22/02/16.
+  Copyright © 2016 David Miotti. All rights reserved.
+*/
+
+"History" = "History";
+"Intensity" = "Intensity";
+"FeelingBefore" = "How you feel before ?";
+"FeelingAfter" = "How you fell after ?";
+"Comment" = "Any comment ?";

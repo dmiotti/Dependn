@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  SmokeReporter
+
+  Created by David Miotti on 22/02/16.
+  Copyright © 2016 David Miotti. All rights reserved.
+*/
+
+"History" = "Historique";
+"Intensity" = "Intensité de l'envie";
+"FeelingBefore" = "Ressenti avant";
+"FeelingAfter" = "Ressenti après";
+"Comment" = "Commentaire";

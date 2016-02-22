@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5888DC731C7A90EC00E01A32 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5888DC751C7A90EC00E01A32 /* Localizable.strings */; };
 		589065D41C7A3F2F00F7F6DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */; };
 		589065D91C7A3F2F00F7F6DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 589065D71C7A3F2F00F7F6DC /* Main.storyboard */; };
 		589065DC1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 589065DA1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld */; };
@@ -93,6 +94,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5888DC741C7A90EC00E01A32 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5888DC761C7A90F000E01A32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5888DC771C7A910400E01A32 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		5888DC781C7A910400E01A32 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		5888DC791C7A910400E01A32 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		589065D01C7A3F2F00F7F6DC /* SmokeReporter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokeReporter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		589065D81C7A3F2F00F7F6DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -191,6 +197,7 @@
 				589065DF1C7A3F2F00F7F6DC /* LaunchScreen.storyboard */,
 				589065E21C7A3F2F00F7F6DC /* Info.plist */,
 				589065DA1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld */,
+				5888DC751C7A90EC00E01A32 /* Localizable.strings */,
 			);
 			path = SmokeReporter;
 			sourceTree = "<group>";
@@ -365,6 +372,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 589065C71C7A3F2F00F7F6DC;
 			productRefGroup = 589065D11C7A3F2F00F7F6DC /* Products */;
@@ -384,6 +392,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				589065E11C7A3F2F00F7F6DC /* LaunchScreen.storyboard in Resources */,
+				5888DC731C7A90EC00E01A32 /* Localizable.strings in Resources */,
 				589065DE1C7A3F2F00F7F6DC /* Assets.xcassets in Resources */,
 				589065D91C7A3F2F00F7F6DC /* Main.storyboard in Resources */,
 			);
@@ -454,10 +463,21 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		5888DC751C7A90EC00E01A32 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5888DC741C7A90EC00E01A32 /* Base */,
+				5888DC761C7A90F000E01A32 /* en */,
+				5888DC791C7A910400E01A32 /* fr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		589065D71C7A3F2F00F7F6DC /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				589065D81C7A3F2F00F7F6DC /* Base */,
+				5888DC771C7A910400E01A32 /* fr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -466,6 +486,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				589065E01C7A3F2F00F7F6DC /* Base */,
+				5888DC781C7A910400E01A32 /* fr */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
