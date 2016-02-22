@@ -159,6 +159,7 @@ final class SmokeDetailViewController: UIViewController {
     func doneBtnClicked(sender: UIBarButtonItem) {
         let k: SmokeKind = kindSelector.selectedSegmentIndex == 0 ? .Cigarette : .Joint
         if let smoke = smoke {
+            smoke.normalizedKind = k
             smoke.intensity = intensitySlider.value
             smoke.feelingBefore = feelingBeforeTextView.text
             smoke.feelingAfter = feelingAfterTextView.text

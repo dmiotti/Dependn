@@ -46,7 +46,16 @@ final class Smoke: NSManagedObject, NamedEntity {
     }
     
     var normalizedKind: SmokeKind {
-        return kind == kSmokeKindCigarette ? .Cigarette : .Joint
+        get {
+            return kind == kSmokeKindCigarette ? .Cigarette : .Joint
+        }
+        set {
+            if newValue == .Cigarette {
+                kind = kSmokeKindCigarette
+            } else {
+                kind = kSmokeKindJoint
+            }
+        }
     }
     
 }
