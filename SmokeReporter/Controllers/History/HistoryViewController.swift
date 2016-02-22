@@ -122,7 +122,9 @@ extension HistoryViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let nav = UINavigationController(rootViewController: SmokeDetailViewController())
+        let smoke = SmokeDetailViewController()
+        smoke.smoke = fetchedResultsController.objectAtIndexPath(indexPath) as? Smoke
+        let nav = UINavigationController(rootViewController: smoke)
         presentViewController(nav, animated: true, completion: nil)
     }
 }

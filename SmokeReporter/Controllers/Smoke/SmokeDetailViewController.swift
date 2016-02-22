@@ -111,6 +111,7 @@ final class SmokeDetailViewController: UIViewController {
                 kindSelector.selectedSegmentIndex = 1
             }
             intensitySlider.value = smoke.intensity.floatValue
+            intensitySlider.tintColor = StyleSheet.colorForIntensity(intensitySlider.value)
             feelingBeforeTextView.text = smoke.feelingBefore
             feelingAfterTextView.text = smoke.feelingAfter
             commentTextView.text = smoke.comment
@@ -120,8 +121,13 @@ final class SmokeDetailViewController: UIViewController {
     // MARK: - Bar Buttons
     
     func doneBtnClicked(sender: UIBarButtonItem) {
-        if smoke == nil {
-            let k: SmokeKind = kindSelector.selectedSegmentIndex == 0 ? .Cigarette : .Joint
+        let k: SmokeKind = kindSelector.selectedSegmentIndex == 0 ? .Cigarette : .Joint
+        if let smoke = smoke {
+            smoke.intensity = intensitySlider.value
+            smoke.feelingBefore = feelingBeforeTextView.text
+            smoke.feelingAfter = feelingAfterTextView.text
+            smoke.comment = commentTextView.text
+        } else {
             Smoke.insertNewSmoke(k,
                 intensity: intensitySlider.value,
                 feelingBefore: feelingBeforeTextView.text,
@@ -240,6 +246,8 @@ final class SmokeDetailViewController: UIViewController {
             $0.bottom.equalTo(scrollContentView).offset(-kAddSmokeLblPadding)
         }
     }
+    
+    // MARK: - Private Helpers
     
     private func configureTextView(textView: UITextView) {
         textView.layer.borderColor = UIColor.lightGrayColor().CGColor
