@@ -22,7 +22,7 @@ final class Smoke: NSManagedObject, NamedEntity {
     
     static func historyFetchedResultsController() -> NSFetchedResultsController {
         let req = NSFetchRequest(entityName: Smoke.entityName)
-        req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: true) ]
+        req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
         let controller = NSFetchedResultsController(fetchRequest: req,
             managedObjectContext: CoreDataStack.shared.managedObjectContext,
             sectionNameKeyPath: nil,
