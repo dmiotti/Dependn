@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5888DC731C7A90EC00E01A32 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5888DC751C7A90EC00E01A32 /* Localizable.strings */; };
+		5888DC7E1C7B218F00E01A32 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5888DC7C1C7B218F00E01A32 /* Fabric.framework */; };
+		5888DC7F1C7B219000E01A32 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5888DC7D1C7B218F00E01A32 /* Crashlytics.framework */; };
 		589065D41C7A3F2F00F7F6DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */; };
 		589065D91C7A3F2F00F7F6DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 589065D71C7A3F2F00F7F6DC /* Main.storyboard */; };
 		589065DC1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 589065DA1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld */; };
@@ -99,6 +101,8 @@
 		5888DC771C7A910400E01A32 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		5888DC781C7A910400E01A32 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5888DC791C7A910400E01A32 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5888DC7C1C7B218F00E01A32 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		5888DC7D1C7B218F00E01A32 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		589065D01C7A3F2F00F7F6DC /* SmokeReporter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokeReporter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		589065D31C7A3F2F00F7F6DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		589065D81C7A3F2F00F7F6DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -138,7 +142,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5888DC7E1C7B218F00E01A32 /* Fabric.framework in Frameworks */,
 				589066061C7A489700F7F6DC /* CocoaLumberjackSwift.framework in Frameworks */,
+				5888DC7F1C7B219000E01A32 /* Crashlytics.framework in Frameworks */,
 				589066161C7A499700F7F6DC /* BrightFutures.framework in Frameworks */,
 				58BB86F41C7A5AE000804E90 /* SwiftHelpers.framework in Frameworks */,
 				5890661C1C7A4AD300F7F6DC /* Result.framework in Frameworks */,
@@ -223,6 +229,8 @@
 		5890661A1C7A4A7D00F7F6DC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5888DC7C1C7B218F00E01A32 /* Fabric.framework */,
+				5888DC7D1C7B218F00E01A32 /* Crashlytics.framework */,
 				58BB86F31C7A5AE000804E90 /* SwiftHelpers.framework */,
 				589066051C7A489700F7F6DC /* SnapKit.framework */,
 				589066041C7A489700F7F6DC /* CocoaLumberjackSwift.framework */,
@@ -295,6 +303,7 @@
 				589065CE1C7A3F2F00F7F6DC /* Resources */,
 				5890660A1C7A489800F7F6DC /* Embed Frameworks */,
 				5890660E1C7A48B700F7F6DC /* CopyFiles */,
+				5888DC7B1C7B217600E01A32 /* Fabric */,
 			);
 			buildRules = (
 			);
@@ -413,6 +422,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5888DC7B1C7B217600E01A32 /* Fabric */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Fabric;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 1eae28d1e74276b776784b2e624fcafbe8be63d5 ba6ddef5d9aedbe90726d134beae9003786035d9528c15c59a784d82adc87e47";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		589065CC1C7A3F2F00F7F6DC /* Sources */ = {
@@ -586,6 +612,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = SmokeReporter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -604,6 +631,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = SmokeReporter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
