@@ -103,6 +103,9 @@ extension HistoryViewController: UITableViewDataSource {
             Smoke.deleteSmoke(smoke)
         }
     }
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return fetchedResultsController.sections?[section].name ?? nil
+    }
     private func configureCell(cell: UITableViewCell, forIndexPath indexPath: NSIndexPath) {
         let smoke = fetchedResultsController.objectAtIndexPath(indexPath) as! Smoke
         if let cell = cell as? HistoryTableViewCell {
@@ -152,6 +155,18 @@ extension HistoryViewController: NSFetchedResultsControllerDelegate {
             if let indexPath = indexPath {
                 tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
+        }
+    }
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        switch type {
+        case .Insert:
+            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
+        case .Delete:
+            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
+        case .Update:
+            tableView.reloadSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
+        case .Move:
+            break
         }
     }
     func controllerDidChangeContent(controller: NSFetchedResultsController) {

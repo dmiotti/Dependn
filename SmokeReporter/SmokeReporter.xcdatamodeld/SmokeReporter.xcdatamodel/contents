@@ -7,8 +7,9 @@
         <attribute name="feelingBefore" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="intensity" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="kind" attributeType="String" syncable="YES"/>
+        <attribute name="sectionIdentifier" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Smoke" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="Smoke" positionX="-63" positionY="-18" width="128" height="150"/>
     </elements>
 </model>

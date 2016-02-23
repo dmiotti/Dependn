@@ -33,6 +33,7 @@ final class SmokeDetailViewController: UIViewController {
     private var dateLbl: UILabel!
     private var dateTextField: UITextField!
     private var dateFormatter: NSDateFormatter!
+    private var datePicker: UIDatePicker!
     
     /// Bar buttons
     private var cancelBtn: UIBarButtonItem!
@@ -108,9 +109,9 @@ final class SmokeDetailViewController: UIViewController {
         dateTextField.textAlignment = .Center
         dateTextField.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle1)
         
-        let picker = UIDatePicker()
-        picker.datePickerMode = .DateAndTime
-        dateTextField.inputView = picker
+        datePicker = UIDatePicker()
+        datePicker.datePickerMode = .DateAndTime
+        dateTextField.inputView = datePicker
         
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
         toolbar.tintColor = UIColor.grayColor()
@@ -144,8 +145,10 @@ final class SmokeDetailViewController: UIViewController {
             feelingBeforeTextView.text = smoke.feelingBefore
             feelingAfterTextView.text = smoke.feelingAfter
             commentTextView.text = smoke.comment
+            datePicker.date = smoke.date
             configureDateBtnWithDate(smoke.date)
         } else {
+            datePicker.date = NSDate()
             configureDateBtnWithDate(NSDate())
         }
     }
@@ -164,12 +167,14 @@ final class SmokeDetailViewController: UIViewController {
             smoke.feelingBefore = feelingBeforeTextView.text
             smoke.feelingAfter = feelingAfterTextView.text
             smoke.comment = commentTextView.text
+            smoke.date = datePicker.date
         } else {
             Smoke.insertNewSmoke(k,
                 intensity: intensitySlider.value,
                 feelingBefore: feelingBeforeTextView.text,
                 feelingAfter: feelingAfterTextView.text,
-                comment: commentTextView.text)
+                comment: commentTextView.text,
+                date: datePicker.date)
         }
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -180,6 +185,7 @@ final class SmokeDetailViewController: UIViewController {
     
     func datePickerDidSelectDate(sender: UIBarButtonItem) {
         dateTextField.resignFirstResponder()
+        configureDateBtnWithDate(datePicker.date)
     }
     
     // MARK: - Intensity Slider

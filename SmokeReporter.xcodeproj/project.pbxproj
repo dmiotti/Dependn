@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		587DB8781C7D02E300CD5354 /* Smoke+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587DB8771C7D02E300CD5354 /* Smoke+CoreDataProperties.swift */; };
 		5888DC731C7A90EC00E01A32 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5888DC751C7A90EC00E01A32 /* Localizable.strings */; };
 		5888DC7E1C7B218F00E01A32 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5888DC7C1C7B218F00E01A32 /* Fabric.framework */; };
 		5888DC7F1C7B219000E01A32 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5888DC7D1C7B218F00E01A32 /* Crashlytics.framework */; };
@@ -36,7 +37,6 @@
 		58BB86E81C7A4E8400804E90 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB86E71C7A4E8400804E90 /* CoreDataStack.swift */; };
 		58BB86EE1C7A516000804E90 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB86ED1C7A516000804E90 /* HistoryViewController.swift */; };
 		58BB86F01C7A517300804E90 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB86EF1C7A517300804E90 /* HistoryTableViewCell.swift */; };
-		58BB86F21C7A589A00804E90 /* Smoke+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB86F11C7A589A00804E90 /* Smoke+CoreDataProperties.swift */; };
 		58BB86F41C7A5AE000804E90 /* SwiftHelpers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58BB86F31C7A5AE000804E90 /* SwiftHelpers.framework */; };
 		58BB86F51C7A5AE000804E90 /* SwiftHelpers.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58BB86F31C7A5AE000804E90 /* SwiftHelpers.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		58BB86F71C7A5AEA00804E90 /* SwiftHelpers.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 58BB86F61C7A5AEA00804E90 /* SwiftHelpers.framework.dSYM */; };
@@ -96,6 +96,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		587DB8771C7D02E300CD5354 /* Smoke+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Smoke+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5888DC741C7A90EC00E01A32 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5888DC761C7A90F000E01A32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5888DC771C7A910400E01A32 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
@@ -130,7 +131,6 @@
 		58BB86E71C7A4E8400804E90 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		58BB86ED1C7A516000804E90 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		58BB86EF1C7A517300804E90 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
-		58BB86F11C7A589A00804E90 /* Smoke+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Smoke+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		58BB86F31C7A5AE000804E90 /* SwiftHelpers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftHelpers.framework; path = Carthage/Build/iOS/SwiftHelpers.framework; sourceTree = "<group>"; };
 		58BB86F61C7A5AEA00804E90 /* SwiftHelpers.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftHelpers.framework.dSYM; path = Carthage/Build/iOS/SwiftHelpers.framework.dSYM; sourceTree = "<group>"; };
 		58FCFC0B1C7A7916005786C9 /* StyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleSheet.swift; sourceTree = "<group>"; };
@@ -269,7 +269,7 @@
 			children = (
 				58BB86E71C7A4E8400804E90 /* CoreDataStack.swift */,
 				58BB86E21C7A4C3400804E90 /* Smoke.swift */,
-				58BB86F11C7A589A00804E90 /* Smoke+CoreDataProperties.swift */,
+				587DB8771C7D02E300CD5354 /* Smoke+CoreDataProperties.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -447,7 +447,7 @@
 			files = (
 				58FCFC0C1C7A7916005786C9 /* StyleSheet.swift in Sources */,
 				58BB86E81C7A4E8400804E90 /* CoreDataStack.swift in Sources */,
-				58BB86F21C7A589A00804E90 /* Smoke+CoreDataProperties.swift in Sources */,
+				587DB8781C7D02E300CD5354 /* Smoke+CoreDataProperties.swift in Sources */,
 				58BB86E41C7A4C3400804E90 /* Smoke.swift in Sources */,
 				58BB86F01C7A517300804E90 /* HistoryTableViewCell.swift in Sources */,
 				589065DC1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld in Sources */,

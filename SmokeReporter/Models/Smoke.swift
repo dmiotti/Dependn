@@ -18,6 +18,8 @@ private let kSmokeKindJoint = "Joint"
 
 final class Smoke: NSManagedObject, NamedEntity {
     
+    static let sectionDateFormatter = NSDateFormatter(dateFormat: "dd MMMM yyyy")
+    
     static var entityName: String { get { return "Smoke" } }
     
     static func historyFetchedResultsController() -> NSFetchedResultsController {
@@ -25,7 +27,7 @@ final class Smoke: NSManagedObject, NamedEntity {
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
         let controller = NSFetchedResultsController(fetchRequest: req,
             managedObjectContext: CoreDataStack.shared.managedObjectContext,
-            sectionNameKeyPath: nil,
+            sectionNameKeyPath: "sectionIdentifier",
             cacheName: nil)
         return controller
     }
@@ -56,6 +58,10 @@ final class Smoke: NSManagedObject, NamedEntity {
                 kind = kSmokeKindJoint
             }
         }
+    }
+    
+    var sectionIdentifier: String? {
+        return Smoke.sectionDateFormatter.stringFromDate(date)
     }
     
 }
