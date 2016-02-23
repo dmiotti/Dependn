@@ -12,4 +12,6 @@
 "FeelingAfter" = "Ressenti après";
 "Comment" = "Commentaire";
 "Date" = "Date";
-"AddSmoke" = "Ajouter";
+"AddConsomation" = "Ajouter une consomation";
+"Hour" = "Heure";
+"Kind" = "Type";

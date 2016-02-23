@@ -44,7 +44,7 @@ final class SmokeDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = L("AddSmoke")
+        title = L("AddConsomation")
         
         dateFormatter = NSDateFormatter(dateFormat: "EEEE dd MMMM HH:mm")
 
@@ -248,8 +248,8 @@ final class SmokeDetailViewController: UIViewController {
         
         intensitySlider.snp_makeConstraints {
             $0.top.equalTo(intensityLbl.snp_bottom).offset(kAddSmokeValuePadding)
-            $0.left.equalTo(scrollContentView).offset(kAddSmokeHorizontalPadding)
-            $0.right.equalTo(scrollContentView).offset(-kAddSmokeHorizontalPadding)
+            $0.left.equalTo(scrollContentView).offset(kAddSmokeHorizontalPadding * 2.0)
+            $0.right.equalTo(scrollContentView).offset(-kAddSmokeHorizontalPadding * 2.0)
         }
         
         feelingBeforeLbl.snp_makeConstraints {

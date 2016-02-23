@@ -10,10 +10,12 @@ import UIKit
 import SnapKit
 import CoreData
 import SwiftHelpers
+import PKHUD
 
 final class HistoryViewController: UIViewController {
     
     private var addBtn: UIBarButtonItem!
+    private var shareBtn: UIBarButtonItem!
     private var tableView: UITableView!
     
     private var dateFormatter: NSDateFormatter!
@@ -33,6 +35,9 @@ final class HistoryViewController: UIViewController {
         
         addBtn = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addSmokeBtnClicked:")
         navigationItem.rightBarButtonItem = addBtn
+        
+        shareBtn = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareBtnClicked:")
+        navigationItem.leftBarButtonItem = shareBtn
         
         tableView = UITableView(frame: CGRect.zero, style: .Grouped)
         tableView.dataSource = self
@@ -77,6 +82,30 @@ final class HistoryViewController: UIViewController {
     func addSmokeBtnClicked(sender: UIBarButtonItem) {
         let nav = UINavigationController(rootViewController: SmokeDetailViewController())
         presentViewController(nav, animated: true, completion: nil)
+    }
+    
+    func shareBtnClicked(sender: UIBarButtonItem) {
+        HUD.show(.Progress)
+        let queue = NSOperationQueue()
+        let exportJob = ExportOperation()
+        exportJob.completionBlock = {
+            dispatch_async(dispatch_get_main_queue()) {
+                HUD.hide(animated: true) { finished in
+                    if let err = exportJob.error {
+                        HUD.flash(HUDContentType.Label(err.localizedDescription))
+                    } else if let path = exportJob.exportedPath {
+                        self.launchSharingWithFile(path)
+                    }
+                }
+            }
+        }
+        queue.addOperation(exportJob)
+    }
+    
+    private func launchSharingWithFile(filepath: String) {
+        let items = [ "export.csv", NSURL(fileURLWithPath: filepath) ]
+        let share = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        presentViewController(share, animated: true, completion: nil)
     }
     
 }
