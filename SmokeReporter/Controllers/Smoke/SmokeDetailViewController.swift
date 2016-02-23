@@ -315,6 +315,7 @@ final class SmokeDetailViewController: UIViewController {
         textView.textContainerInset = UIEdgeInsetsZero
         textView.textContainer.lineFragmentPadding = 0
         textView.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+        textView.delegate = self
     }
     
     private func configureLbl(label: UILabel, withText text: String) {
@@ -322,4 +323,12 @@ final class SmokeDetailViewController: UIViewController {
         label.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle2)
     }
 
+}
+
+extension SmokeDetailViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(textView: UITextView) {
+        var rect = scrollView.convertRect(textView.frame, fromView: scrollContentView)
+        rect.origin.y += kAddSmokeLblPadding
+        scrollView.scrollRectToVisible(rect, animated: true)
+    }
 }
