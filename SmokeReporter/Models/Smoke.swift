@@ -18,7 +18,7 @@ private let kSmokeKindJoint = "Joint"
 
 final class Smoke: NSManagedObject, NamedEntity {
     
-    static let sectionDateFormatter = NSDateFormatter(dateFormat: "dd MMMM yyyy")
+    static let sectionDateFormatter = NSDateFormatter(dateFormat: "EEEE dd MMMM yyyy")
     
     static var entityName: String { get { return "Smoke" } }
     
