@@ -25,7 +25,7 @@ final class HistoryTableViewCell: SHCommonInitTableViewCell {
         contentView.addSubview(imgView)
         
         dateLbl = UILabel()
-        dateLbl.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3)
+        dateLbl.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         contentView.addSubview(dateLbl)
         
         intensityLbl = UILabel()

@@ -39,7 +39,7 @@ final class HistoryViewController: UIViewController {
         shareBtn = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareBtnClicked:")
         navigationItem.leftBarButtonItem = shareBtn
         
-        tableView = UITableView(frame: CGRect.zero, style: .Grouped)
+        tableView = UITableView(frame: .zero, style: .Grouped)
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
