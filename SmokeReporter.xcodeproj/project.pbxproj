@@ -658,7 +658,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.smokereporter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "45a00264-94b0-41bb-9fb1-6258844efe47";
+				PROVISIONING_PROFILE = "c621d5d5-75d3-4441-9820-3eee3cd8d991";
 			};
 			name = Release;
 		};
