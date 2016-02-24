@@ -31,7 +31,7 @@ final class HistoryViewController: UIViewController {
         
         title = L("History")
         
-        dateFormatter = NSDateFormatter(dateFormat: "HH'h'mm dd/MM/yy")
+        dateFormatter = NSDateFormatter(dateFormat: "HH'h'mm")
         
         addBtn = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addSmokeBtnClicked:")
         navigationItem.rightBarButtonItem = addBtn
