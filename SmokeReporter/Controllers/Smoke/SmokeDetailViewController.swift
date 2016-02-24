@@ -44,7 +44,7 @@ final class SmokeDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = L("AddConsomation")
+        title = L("AddConsumption")
         
         dateFormatter = NSDateFormatter(dateFormat: "EEEE dd MMMM HH:mm")
 
@@ -63,7 +63,7 @@ final class SmokeDetailViewController: UIViewController {
         scrollContentView = UIView()
         scrollView.addSubview(scrollContentView)
 
-        kindSelector = UISegmentedControl(items: [ L("Cigarette"), L("Joint") ])
+        kindSelector = UISegmentedControl(items: [ L("Cigarette"), L("Weed") ])
         kindSelector.selectedSegmentIndex = 0
         scrollContentView.addSubview(kindSelector)
         
@@ -79,73 +79,52 @@ final class SmokeDetailViewController: UIViewController {
         
         feelingBeforeLbl = UILabel()
         configureLbl(feelingBeforeLbl, withText: L("FeelingBefore"))
-        scrollContentView.addSubview(feelingBeforeLbl)
         
         feelingBeforeTextView = UITextView()
         configureTextView(feelingBeforeTextView)
-        scrollContentView.addSubview(feelingBeforeTextView)
         
         feelingAfterLbl = UILabel()
         configureLbl(feelingAfterLbl, withText: L("FeelingAfter"))
-        scrollContentView.addSubview(feelingAfterLbl)
         
         feelingAfterTextView = UITextView()
         configureTextView(feelingAfterTextView)
-        scrollContentView.addSubview(feelingAfterTextView)
         
         commentLbl = UILabel()
         configureLbl(commentLbl, withText: L("Comment"))
-        scrollContentView.addSubview(commentLbl)
         
         commentTextView = UITextView()
         configureTextView(commentTextView)
-        scrollContentView.addSubview(commentTextView)
         
         dateLbl = UILabel()
         configureLbl(dateLbl, withText: L("Date"))
-        scrollContentView.addSubview(dateLbl)
         
         dateTextField = UITextField()
-        dateTextField.textAlignment = .Center
-        dateTextField.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle1)
-        
-        datePicker = UIDatePicker()
-        datePicker.datePickerMode = .DateAndTime
-        dateTextField.inputView = datePicker
-        
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
-        toolbar.tintColor = UIColor.grayColor()
-        let dateDoneItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "datePickerDidSelectDate:")
-        let dateSpaceItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-        toolbar.items = [ dateSpaceItem, dateDoneItem ]
-        dateTextField.inputAccessoryView = toolbar
-        
-        scrollContentView.addSubview(dateTextField)
+        configureDateTextField()
         
         configureLayoutConstraints()
         
         registerNotificationObservers()
         
-        prefillWithSmokeIfNeeded()
+        fillWithSmokeIfNeeded()
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    // MARK: - Prefill
+    // MARK: - Auto fill with the given smoke
     
-    private func prefillWithSmokeIfNeeded() {
+    private func fillWithSmokeIfNeeded() {
         if let smoke = smoke {
-            if smoke.normalizedKind == .Joint {
+            if smoke.normalizedKind == SmokeKind.Weed {
                 kindSelector.selectedSegmentIndex = 1
             }
-            intensitySlider.value = smoke.intensity.floatValue
-            intensitySlider.tintColor = StyleSheet.colorForIntensity(intensitySlider.value)
-            feelingBeforeTextView.text = smoke.feelingBefore
-            feelingAfterTextView.text = smoke.feelingAfter
-            commentTextView.text = smoke.comment
-            datePicker.date = smoke.date
+            intensitySlider.value       = smoke.intensity.floatValue
+            intensitySlider.tintColor   = StyleSheet.colorForIntensity(intensitySlider.value)
+            feelingBeforeTextView.text  = smoke.feelingBefore
+            feelingAfterTextView.text   = smoke.feelingAfter
+            commentTextView.text        = smoke.comment
+            datePicker.date             = smoke.date
             configureDateBtnWithDate(smoke.date)
         } else {
             datePicker.date = NSDate()
@@ -160,7 +139,8 @@ final class SmokeDetailViewController: UIViewController {
     // MARK: - Bar Buttons
     
     func doneBtnClicked(sender: UIBarButtonItem) {
-        let k: SmokeKind = kindSelector.selectedSegmentIndex == 0 ? .Cigarette : .Joint
+        let k: SmokeKind = kindSelector.selectedSegmentIndex == 0
+            ? SmokeKind.Cigarette : SmokeKind.Weed
         if let smoke = smoke {
             smoke.normalizedKind = k
             smoke.intensity = intensitySlider.value
@@ -197,8 +177,9 @@ final class SmokeDetailViewController: UIViewController {
     // MARK: - Keyboard Notifications
     
     private func registerNotificationObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        let ns = NSNotificationCenter.defaultCenter()
+        ns.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        ns.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {
@@ -316,11 +297,31 @@ final class SmokeDetailViewController: UIViewController {
         textView.textContainer.lineFragmentPadding = 0
         textView.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         textView.delegate = self
+        scrollContentView.addSubview(textView)
     }
     
     private func configureLbl(label: UILabel, withText text: String) {
         label.text = text
         label.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle2)
+        scrollContentView.addSubview(label)
+    }
+    
+    private func configureDateTextField() {
+        dateTextField.textAlignment = .Center
+        dateTextField.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle1)
+        
+        datePicker = UIDatePicker()
+        datePicker.datePickerMode = .DateAndTime
+        dateTextField.inputView = datePicker
+        
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
+        toolbar.tintColor = UIColor.grayColor()
+        let dateDoneItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "datePickerDidSelectDate:")
+        let dateSpaceItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        toolbar.items = [ dateSpaceItem, dateDoneItem ]
+        dateTextField.inputAccessoryView = toolbar
+        
+        scrollContentView.addSubview(dateTextField)
     }
 
 }

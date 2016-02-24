@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5870F48C1C7E52DF0010FBDC /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48B1C7E52DF0010FBDC /* StatsViewController.swift */; };
 		5870F48E1C7E54BB0010FBDC /* StatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48D1C7E54BB0010FBDC /* StatsCell.swift */; };
+		5870F4901C7E59610010FBDC /* CountOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48F1C7E59610010FBDC /* CountOperation.swift */; };
 		587DB8781C7D02E300CD5354 /* Smoke+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587DB8771C7D02E300CD5354 /* Smoke+CoreDataProperties.swift */; };
 		587DB87C1C7D084400CD5354 /* ExportOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587DB87B1C7D084400CD5354 /* ExportOperation.swift */; };
 		587DB87E1C7D0FF800CD5354 /* PKHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 587DB87D1C7D0FF800CD5354 /* PKHUD.framework */; };
@@ -106,6 +107,7 @@
 /* Begin PBXFileReference section */
 		5870F48B1C7E52DF0010FBDC /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		5870F48D1C7E54BB0010FBDC /* StatsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsCell.swift; sourceTree = "<group>"; };
+		5870F48F1C7E59610010FBDC /* CountOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountOperation.swift; sourceTree = "<group>"; };
 		587DB8771C7D02E300CD5354 /* Smoke+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Smoke+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		587DB87B1C7D084400CD5354 /* ExportOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportOperation.swift; sourceTree = "<group>"; };
 		587DB87D1C7D0FF800CD5354 /* PKHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PKHUD.framework; path = Carthage/Build/iOS/PKHUD.framework; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				587DB87B1C7D084400CD5354 /* ExportOperation.swift */,
+				5870F48F1C7E59610010FBDC /* CountOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 				5870F48C1C7E52DF0010FBDC /* StatsViewController.swift in Sources */,
 				58BB86E81C7A4E8400804E90 /* CoreDataStack.swift in Sources */,
 				587DB8781C7D02E300CD5354 /* Smoke+CoreDataProperties.swift in Sources */,
+				5870F4901C7E59610010FBDC /* CountOperation.swift in Sources */,
 				58BB86E41C7A4C3400804E90 /* Smoke.swift in Sources */,
 				58BB86F01C7A517300804E90 /* HistoryTableViewCell.swift in Sources */,
 				587DB87C1C7D084400CD5354 /* ExportOperation.swift in Sources */,

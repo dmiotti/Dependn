@@ -10,11 +10,11 @@ import Foundation
 import CoreData
 
 enum SmokeKind {
-    case Cigarette, Joint
+    case Cigarette, Weed
 }
 
-private let kSmokeKindCigarette = "Cigarette"
-private let kSmokeKindJoint = "Joint"
+let kSmokeKindCigarette = "Cigarette"
+let kSmokeKindWeed = "Joint"
 
 final class Smoke: NSManagedObject, NamedEntity {
     
@@ -35,7 +35,7 @@ final class Smoke: NSManagedObject, NamedEntity {
     static func insertNewSmoke(kind: SmokeKind, intensity: Float, feelingBefore: String?, feelingAfter: String?, comment: String?, date: NSDate = NSDate()) -> Smoke {
         let smoke = NSEntityDescription.insertNewObjectForEntityForName(Smoke.entityName, inManagedObjectContext: CoreDataStack.shared.managedObjectContext) as! Smoke
         smoke.intensity = intensity
-        smoke.kind = kind == .Cigarette ? kSmokeKindCigarette : kSmokeKindJoint
+        smoke.kind = kind == .Cigarette ? kSmokeKindCigarette : kSmokeKindWeed
         smoke.feelingBefore = feelingBefore
         smoke.feelingAfter = feelingAfter
         smoke.date = date
@@ -49,13 +49,13 @@ final class Smoke: NSManagedObject, NamedEntity {
     
     var normalizedKind: SmokeKind {
         get {
-            return kind == kSmokeKindCigarette ? .Cigarette : .Joint
+            return kind == kSmokeKindCigarette ? .Cigarette : .Weed
         }
         set {
             if newValue == .Cigarette {
                 kind = kSmokeKindCigarette
             } else {
-                kind = kSmokeKindJoint
+                kind = kSmokeKindWeed
             }
         }
     }
