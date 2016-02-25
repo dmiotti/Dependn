@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 final class Place: NSManagedObject, NamedEntity {
     
     static var entityName: String { get { return "Place" } }

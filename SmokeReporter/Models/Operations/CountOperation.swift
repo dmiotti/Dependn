@@ -26,8 +26,8 @@ final class CountOperation: SHOperation {
     
     override func execute() {
         context.performBlockAndWait {
-            let cigReq = self.fetchRequestForKind(kSmokeKindCigarette)
-            let weedReq = self.fetchRequestForKind(kSmokeKindWeed)
+            let cigReq = self.fetchRequestForKind(SmokeTypeCig)
+            let weedReq = self.fetchRequestForKind(SmokeTypeWeed)
             do {
                 let cigCount = try self.countForRequest(cigReq)
                 let weedCount = try self.countForRequest(weedReq)
@@ -43,7 +43,7 @@ final class CountOperation: SHOperation {
     
     private func fetchRequestForKind(kind: String) -> NSFetchRequest {
         let req = NSFetchRequest(entityName: Smoke.entityName)
-        req.predicate = NSPredicate(format: "kind == %@", kind)
+        req.predicate = NSPredicate(format: "type == %@", kind)
         return req
     }
     

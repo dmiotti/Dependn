@@ -37,7 +37,7 @@ final class StatsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = L("Stats")
+        title = L("app_name")
         
         refreshBtn = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refreshBtnClicked:")
         navigationItem.rightBarButtonItem = refreshBtn

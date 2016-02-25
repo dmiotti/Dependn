@@ -29,7 +29,7 @@ final class HistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = L("history_title")
+        title = L("app_name")
         
         dateFormatter = NSDateFormatter(dateFormat: "HH'h'mm")
         
@@ -87,25 +87,39 @@ final class HistoryViewController: UIViewController {
     func shareBtnClicked(sender: UIBarButtonItem) {
         HUD.show(.Progress)
         let queue = NSOperationQueue()
-        let exportJob = ExportOperation()
-        exportJob.completionBlock = {
+        
+        let exportOp = ExportOperation()
+        exportOp.completionBlock = {
             dispatch_async(dispatch_get_main_queue()) {
                 HUD.hide(animated: true) { finished in
-                    if let err = exportJob.error {
+                    if let err = exportOp.error {
                         HUD.flash(HUDContentType.Label(err.localizedDescription))
-                    } else if let path = exportJob.exportedPath {
-                        self.launchSharingWithFile(path)
+                    } else if let path = exportOp.exportedPath {
+                        let items = [ "export.csv", NSURL(fileURLWithPath: path) ]
+                        let share = UIActivityViewController(activityItems: items, applicationActivities: nil)
+                        self.presentViewController(share, animated: true, completion: nil)
                     }
                 }
             }
         }
-        queue.addOperation(exportJob)
-    }
-    
-    private func launchSharingWithFile(filepath: String) {
-        let items = [ "export.csv", NSURL(fileURLWithPath: filepath) ]
-        let share = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        presentViewController(share, animated: true, completion: nil)
+        queue.addOperation(exportOp)
+        
+//        /// Import
+//        if let csv = NSBundle.mainBundle().pathForResource("a", ofType: "csv") {
+//            let importOp = ImportOperation(path: csv)
+//            importOp.completionBlock = {
+//                dispatch_async(dispatch_get_main_queue()) {
+//                    HUD.hide(animated: true) { finished in
+//                        if let err = importOp.error {
+//                            HUD.flash(HUDContentType.Label(err.localizedDescription))
+//                        } else {
+//                            HUD.flash(.Success)
+//                        }
+//                    }
+//                }
+//            }
+//            queue.addOperation(importOp)
+//        }
     }
     
 }

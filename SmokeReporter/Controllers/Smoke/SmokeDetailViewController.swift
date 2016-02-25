@@ -74,7 +74,7 @@ final class SmokeDetailViewController: UIViewController {
         scrollContentView.addSubview(typeSelector)
         
         intensityLbl = UILabel()
-        configureLbl(intensityLbl, withText: L("new_intensity"))
+        configureLbl(intensityLbl, withText: L("new.intensity"))
         scrollContentView.addSubview(intensityLbl)
         
         intensitySlider = UISlider()
@@ -84,31 +84,31 @@ final class SmokeDetailViewController: UIViewController {
         scrollContentView.addSubview(intensitySlider)
         
         feelingBeforeLbl = UILabel()
-        configureLbl(feelingBeforeLbl, withText: L("new_feeling_before"))
+        configureLbl(feelingBeforeLbl, withText: L("new.feeling_before"))
         
         feelingBeforeTextView = UITextView()
         configureTextView(feelingBeforeTextView)
         
         feelingAfterLbl = UILabel()
-        configureLbl(feelingAfterLbl, withText: L("new_feeling_after"))
+        configureLbl(feelingAfterLbl, withText: L("new.feeling_after"))
         
         feelingAfterTextView = UITextView()
         configureTextView(feelingAfterTextView)
         
         commentLbl = UILabel()
-        configureLbl(commentLbl, withText: L("new_comment"))
+        configureLbl(commentLbl, withText: L("new.comment"))
         
         commentTextView = UITextView()
         configureTextView(commentTextView)
         
         dateLbl = UILabel()
-        configureLbl(dateLbl, withText: L("new_date"))
+        configureLbl(dateLbl, withText: L("new.date"))
         
         dateTextField = UITextField()
         configureDateTextField()
         
         mapLbl = UILabel()
-        configureLbl(mapLbl, withText: L("new_place"))
+        configureLbl(mapLbl, withText: L("new.place"))
         
         mapView = MKMapView()
         mapView.userInteractionEnabled = false
@@ -116,7 +116,7 @@ final class SmokeDetailViewController: UIViewController {
         mapView.setUserTrackingMode(.Follow, animated: true)
         
         placeNameLbl = UITextField()
-        placeNameLbl.placeholder = L("new_place_placeholder")
+        placeNameLbl.placeholder = L("new.place_placeholder")
         scrollContentView.addSubview(placeNameLbl)
         
         configureLayoutConstraints()
@@ -136,13 +136,13 @@ final class SmokeDetailViewController: UIViewController {
     
     private func fillWithSmokeIfNeeded() {
         if let smoke = smoke {
-            if smoke.normalizedKind == SmokeKind.Weed {
+            if smoke.normalizedKind == SmokeType.Weed {
                 typeSelector.selectedSegmentIndex = 1
             }
             intensitySlider.value       = smoke.intensity.floatValue
             intensitySlider.tintColor   = UIColor.colorForIntensity(intensitySlider.value)
-            feelingBeforeTextView.text  = smoke.feelingBefore
-            feelingAfterTextView.text   = smoke.feelingAfter
+            feelingBeforeTextView.text  = smoke.before
+            feelingAfterTextView.text   = smoke.after
             commentTextView.text        = smoke.comment
             datePicker.date             = smoke.date
             configureDateBtnWithDate(smoke.date)
@@ -159,21 +159,22 @@ final class SmokeDetailViewController: UIViewController {
     // MARK: - Bar Buttons
     
     func doneBtnClicked(sender: UIBarButtonItem) {
-        let k: SmokeKind = typeSelector.selectedSegmentIndex == 0
-            ? SmokeKind.Cigarette : SmokeKind.Weed
+        let k: SmokeType = typeSelector.selectedSegmentIndex == 0
+            ? SmokeType.Cigarette : SmokeType.Weed
         if let smoke = smoke {
             smoke.normalizedKind = k
             smoke.intensity = intensitySlider.value
-            smoke.feelingBefore = feelingBeforeTextView.text
-            smoke.feelingAfter = feelingAfterTextView.text
+            smoke.before = feelingBeforeTextView.text
+            smoke.after = feelingAfterTextView.text
             smoke.comment = commentTextView.text
             smoke.date = datePicker.date
         } else {
             Smoke.insertNewSmoke(k,
                 intensity: intensitySlider.value,
-                feelingBefore: feelingBeforeTextView.text,
-                feelingAfter: feelingAfterTextView.text,
+                before: feelingBeforeTextView.text,
+                after: feelingAfterTextView.text,
                 comment: commentTextView.text,
+                place: nil,
                 date: datePicker.date)
         }
         dismissViewControllerAnimated(true, completion: nil)

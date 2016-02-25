@@ -6,19 +6,32 @@
   Copyright © 2016 David Miotti. All rights reserved.
 */
 
-"history_title" = "Historique";
+"app_name" = "DEPENDN’";
 
-"new_cigarette" = "Cig";
-"new_weed" = "Weed";
-"new_intensity" = "Intensité de l'envie";
-"new_feeling_before" = "Ressenti avant";
-"new_feeling_after" = "Ressenti après";
-"new_date" = "Date";
-"new_hour" = "Heure";
-"new_type" = "Type";
-"new_comment" = "Commentaire";
-"new_place" = "Où";
-"new_place_placeholder" = "Donner un nom à ce lieu (rayon 4km)";
+"new.cigarette" = "Cig";
+"new.weed" = "Weed";
+"new.intensity" = "Intensité de l'envie";
+"new.feeling_before" = "Ressenti avant";
+"new.feeling_after" = "Ressenti après";
+"new.date" = "Date";
+"new.hour" = "Heure";
+"new.type" = "Type";
+"new.comment" = "Commentaire";
+"new.place" = "Où";
+"new.place_placeholder" = "Donner un nom à ce lieu (rayon 4km)";
 
-"stats_title" = "Stats";
 "stats_total" = "Total";
+
+"export.date" = "date";
+"export.time" = "heure";
+"export.intensity" = "intensité";
+"export.type" = "type";
+"export.before" = "feeling before";
+"export.after" = "feeling after";
+"export.comment" = "comment";
+"export.place" = "Lieu";
+"export.lat" = "Latitude";
+"export.lon" = "Longiture";
+
+"color.navigation_bar" = "28AFFA";
+"color.navigation_title" = "FFFFFF";

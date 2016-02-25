@@ -3,21 +3,21 @@
     <entity name="Place" representedClassName=".Place" syncable="YES">
         <attribute name="lat" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="lon" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="smokes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Smoke" inverseName="place" inverseEntity="Smoke" syncable="YES"/>
     </entity>
     <entity name="Smoke" representedClassName=".Smoke" syncable="YES">
+        <attribute name="after" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="before" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" attributeType="Date" syncable="YES"/>
-        <attribute name="feelingAfter" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="feelingBefore" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="intensity" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="kind" attributeType="String" syncable="YES"/>
         <attribute name="sectionIdentifier" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" attributeType="String" syncable="YES"/>
         <relationship name="place" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Place" inverseName="smokes" inverseEntity="Place" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Smoke" positionX="-117" positionY="189" width="128" height="163"/>
-        <element name="Place" positionX="-353" positionY="329" width="128" height="103"/>
+        <element name="Place" positionX="-353" positionY="329" width="128" height="105"/>
+        <element name="Smoke" positionX="-117" positionY="189" width="128" height="165"/>
     </elements>
 </model>

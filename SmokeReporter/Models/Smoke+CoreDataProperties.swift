@@ -16,10 +16,10 @@ extension Smoke {
 
     @NSManaged var comment: String?
     @NSManaged var date: NSDate
-    @NSManaged var feelingAfter: String?
-    @NSManaged var feelingBefore: String?
+    @NSManaged var after: String?
+    @NSManaged var before: String?
     @NSManaged var intensity: NSNumber
-    @NSManaged var kind: String
+    @NSManaged var type: String
     @NSManaged var place: Place?
 
 }

@@ -9,6 +9,7 @@
 import UIKit
 import Fabric
 import Crashlytics
+import SwiftHelpers
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         Fabric.with([Crashlytics.self])
+        
+        let attr = [
+            NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightSemibold),
+            NSForegroundColorAttributeName: L("color.navigation_title").UIColor
+        ]
+        UINavigationBar.appearance().titleTextAttributes = attr
+        UINavigationBar.appearance().barTintColor = L("color.navigation_bar").UIColor
+        
         return true
     }
 
