@@ -6,14 +6,19 @@
   Copyright © 2016 David Miotti. All rights reserved.
 */
 
-"History" = "Historique";
-"Intensity" = "Intensité de l'envie";
-"FeelingBefore" = "Ressenti avant";
-"FeelingAfter" = "Ressenti après";
-"Comment" = "Commentaire";
-"Date" = "Date";
-"AddConsumption" = "Ajouter une consommation";
-"Hour" = "Heure";
-"Kind" = "Type";
-"Stats" = "Stats";
-"Total" = "Total";
+"history_title" = "Historique";
+
+"new_cigarette" = "Cig";
+"new_weed" = "Weed";
+"new_intensity" = "Intensité de l'envie";
+"new_feeling_before" = "Ressenti avant";
+"new_feeling_after" = "Ressenti après";
+"new_date" = "Date";
+"new_hour" = "Heure";
+"new_type" = "Type";
+"new_comment" = "Commentaire";
+"new_place" = "Où";
+"new_place_placeholder" = "Donner un nom à ce lieu (rayon 4km)";
+
+"stats_title" = "Stats";
+"stats_total" = "Total";

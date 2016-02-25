@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  SmokeReporter
+
+  Created by David Miotti on 24/02/16.
+  Copyright © 2016 David Miotti. All rights reserved.
+*/
+
+NSLocationWhenInUseUsageDescription = "Track from where you take the most";

@@ -6,12 +6,19 @@
   Copyright © 2016 David Miotti. All rights reserved.
 */
 
-"History" = "History";
-"Intensity" = "Intensity";
-"FeelingBefore" = "How you feel before ?";
-"FeelingAfter" = "How you fell after ?";
-"Comment" = "Any comment ?";
-"Date" = "Date";
-"AddConsumption" = "Add smoke";
-"Stats" = "Stats";
-"Total" = "Total";
+"history_title" = "History";
+
+"new_type" = "Type";
+"new_cigarette" = "Cig";
+"new_weed" = "Weed";
+"new_intensity" = "Intensity";
+"new_feeling_before" = "Feeling before";
+"new_feeling_after" = "Feeling after";
+"new_date" = "Date";
+"new_hour" = "Hour";
+"new_comment" = "Comment";
+"new_place" = "Place";
+"new_place_placeholder" = "Give a name to this place (rayon 4km)";
+
+"stats_title" = "Stats";
+"stats_total" = "Total";

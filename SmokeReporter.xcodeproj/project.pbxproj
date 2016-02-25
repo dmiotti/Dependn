@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5833E56C1C7E687700735BC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5833E56E1C7E687700735BC3 /* InfoPlist.strings */; };
+		5833E5781C7E839900735BC3 /* Smoke+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833E5751C7E839900735BC3 /* Smoke+CoreDataProperties.swift */; };
+		5833E5791C7E839900735BC3 /* Place+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833E5761C7E839900735BC3 /* Place+CoreDataProperties.swift */; };
+		5833E57A1C7E839900735BC3 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833E5771C7E839900735BC3 /* Place.swift */; };
 		5870F48C1C7E52DF0010FBDC /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48B1C7E52DF0010FBDC /* StatsViewController.swift */; };
 		5870F48E1C7E54BB0010FBDC /* StatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48D1C7E54BB0010FBDC /* StatsCell.swift */; };
 		5870F4901C7E59610010FBDC /* CountOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48F1C7E59610010FBDC /* CountOperation.swift */; };
-		587DB8781C7D02E300CD5354 /* Smoke+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587DB8771C7D02E300CD5354 /* Smoke+CoreDataProperties.swift */; };
 		587DB87C1C7D084400CD5354 /* ExportOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587DB87B1C7D084400CD5354 /* ExportOperation.swift */; };
 		587DB87E1C7D0FF800CD5354 /* PKHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 587DB87D1C7D0FF800CD5354 /* PKHUD.framework */; };
 		587DB87F1C7D0FF800CD5354 /* PKHUD.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 587DB87D1C7D0FF800CD5354 /* PKHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -105,14 +108,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5833E56D1C7E687700735BC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5833E56F1C7E687900735BC3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5833E5711C7E68DF00735BC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		5833E5731C7E68E700735BC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		5833E5751C7E839900735BC3 /* Smoke+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Smoke+CoreDataProperties.swift"; path = "../Smoke+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5833E5761C7E839900735BC3 /* Place+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Place+CoreDataProperties.swift"; path = "../Place+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5833E5771C7E839900735BC3 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		5870F48B1C7E52DF0010FBDC /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		5870F48D1C7E54BB0010FBDC /* StatsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsCell.swift; sourceTree = "<group>"; };
 		5870F48F1C7E59610010FBDC /* CountOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountOperation.swift; sourceTree = "<group>"; };
-		587DB8771C7D02E300CD5354 /* Smoke+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Smoke+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		587DB87B1C7D084400CD5354 /* ExportOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportOperation.swift; sourceTree = "<group>"; };
 		587DB87D1C7D0FF800CD5354 /* PKHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PKHUD.framework; path = Carthage/Build/iOS/PKHUD.framework; sourceTree = "<group>"; };
 		587DB8801C7D100C00CD5354 /* PKHUD.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = PKHUD.framework.dSYM; path = Carthage/Build/iOS/PKHUD.framework.dSYM; sourceTree = "<group>"; };
-		5888DC741C7A90EC00E01A32 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5888DC761C7A90F000E01A32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5888DC771C7A910400E01A32 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		5888DC781C7A910400E01A32 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -143,7 +151,7 @@
 		589066211C7A4AE900F7F6DC /* Result.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Result.framework.dSYM; path = Carthage/Build/iOS/Result.framework.dSYM; sourceTree = "<group>"; };
 		589066221C7A4AE900F7F6DC /* SnapKit.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SnapKit.framework.dSYM; path = Carthage/Build/iOS/SnapKit.framework.dSYM; sourceTree = "<group>"; };
 		58BB86E21C7A4C3400804E90 /* Smoke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Smoke.swift; sourceTree = "<group>"; };
-		58BB86E71C7A4E8400804E90 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		58BB86E71C7A4E8400804E90 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = SmokeReporter/Models/CoreDataStack.swift; sourceTree = SOURCE_ROOT; };
 		58BB86ED1C7A516000804E90 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		58BB86EF1C7A517300804E90 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		58BB86F31C7A5AE000804E90 /* SwiftHelpers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftHelpers.framework; path = Carthage/Build/iOS/SwiftHelpers.framework; sourceTree = "<group>"; };
@@ -186,6 +194,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5833E57E1C7E84DF00735BC3 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				5833E5751C7E839900735BC3 /* Smoke+CoreDataProperties.swift */,
+				5833E5761C7E839900735BC3 /* Place+CoreDataProperties.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		5870F48A1C7E52C90010FBDC /* Stats */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,6 +255,7 @@
 				589065E21C7A3F2F00F7F6DC /* Info.plist */,
 				589065DA1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld */,
 				5888DC751C7A90EC00E01A32 /* Localizable.strings */,
+				5833E56E1C7E687700735BC3 /* InfoPlist.strings */,
 			);
 			path = SmokeReporter;
 			sourceTree = "<group>";
@@ -306,7 +324,8 @@
 			children = (
 				58BB86E71C7A4E8400804E90 /* CoreDataStack.swift */,
 				58BB86E21C7A4C3400804E90 /* Smoke.swift */,
-				587DB8771C7D02E300CD5354 /* Smoke+CoreDataProperties.swift */,
+				5833E5771C7E839900735BC3 /* Place.swift */,
+				5833E57E1C7E84DF00735BC3 /* CoreData */,
 				587DB87A1C7D082E00CD5354 /* Operations */,
 			);
 			path = Models;
@@ -442,6 +461,7 @@
 				5888DC731C7A90EC00E01A32 /* Localizable.strings in Resources */,
 				589065DE1C7A3F2F00F7F6DC /* Assets.xcassets in Resources */,
 				589065D91C7A3F2F00F7F6DC /* Main.storyboard in Resources */,
+				5833E56C1C7E687700735BC3 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,12 +505,14 @@
 			files = (
 				58FCFC0C1C7A7916005786C9 /* StyleSheet.swift in Sources */,
 				5870F48C1C7E52DF0010FBDC /* StatsViewController.swift in Sources */,
+				5833E5781C7E839900735BC3 /* Smoke+CoreDataProperties.swift in Sources */,
 				58BB86E81C7A4E8400804E90 /* CoreDataStack.swift in Sources */,
-				587DB8781C7D02E300CD5354 /* Smoke+CoreDataProperties.swift in Sources */,
 				5870F4901C7E59610010FBDC /* CountOperation.swift in Sources */,
 				58BB86E41C7A4C3400804E90 /* Smoke.swift in Sources */,
 				58BB86F01C7A517300804E90 /* HistoryTableViewCell.swift in Sources */,
+				5833E5791C7E839900735BC3 /* Place+CoreDataProperties.swift in Sources */,
 				587DB87C1C7D084400CD5354 /* ExportOperation.swift in Sources */,
+				5833E57A1C7E839900735BC3 /* Place.swift in Sources */,
 				589065DC1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld in Sources */,
 				58FCFC0F1C7A866D005786C9 /* SmokeDetailViewController.swift in Sources */,
 				5870F48E1C7E54BB0010FBDC /* StatsCell.swift in Sources */,
@@ -531,10 +553,18 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		5833E56E1C7E687700735BC3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5833E56D1C7E687700735BC3 /* en */,
+				5833E56F1C7E687900735BC3 /* fr */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		5888DC751C7A90EC00E01A32 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5888DC741C7A90EC00E01A32 /* Base */,
 				5888DC761C7A90F000E01A32 /* en */,
 				5888DC791C7A910400E01A32 /* fr */,
 			);
@@ -546,6 +576,7 @@
 			children = (
 				589065D81C7A3F2F00F7F6DC /* Base */,
 				5888DC771C7A910400E01A32 /* fr */,
+				5833E5711C7E68DF00735BC3 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -555,6 +586,7 @@
 			children = (
 				589065E01C7A3F2F00F7F6DC /* Base */,
 				5888DC781C7A910400E01A32 /* fr */,
+				5833E5731C7E68E700735BC3 /* en */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

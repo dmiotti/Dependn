@@ -1,5 +1,5 @@
 //
-//  Smoke+CoreDataProperties.swift
+//  Place+CoreDataProperties.swift
 //  SmokeReporter
 //
 //  Created by David Miotti on 25/02/16.
@@ -12,14 +12,11 @@
 import Foundation
 import CoreData
 
-extension Smoke {
+extension Place {
 
-    @NSManaged var comment: String?
-    @NSManaged var date: NSDate
-    @NSManaged var feelingAfter: String?
-    @NSManaged var feelingBefore: String?
-    @NSManaged var intensity: NSNumber
-    @NSManaged var kind: String
-    @NSManaged var place: Place?
+    @NSManaged var lat: NSNumber
+    @NSManaged var lon: NSNumber
+    @NSManaged var name: String
+    @NSManaged var smokes: NSSet?
 
 }

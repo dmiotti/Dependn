@@ -64,4 +64,5 @@ final class Smoke: NSManagedObject, NamedEntity {
         return Smoke.sectionDateFormatter.stringFromDate(date)
     }
     
+    
 }

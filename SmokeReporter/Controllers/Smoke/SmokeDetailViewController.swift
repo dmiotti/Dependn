@@ -8,6 +8,8 @@
 
 import UIKit
 import SwiftHelpers
+import CoreLocation
+import MapKit
 
 private let kAddSmokeLblPadding: CGFloat = 20
 private let kAddSmokeValuePadding: CGFloat = 5
@@ -21,7 +23,7 @@ final class SmokeDetailViewController: UIViewController {
     private var scrollContentView: UIView!
     
     /// All forms
-    private var kindSelector: UISegmentedControl!
+    private var typeSelector: UISegmentedControl!
     private var intensityLbl: UILabel!
     private var intensitySlider: UISlider!
     private var feelingBeforeLbl: UILabel!
@@ -34,17 +36,20 @@ final class SmokeDetailViewController: UIViewController {
     private var dateTextField: UITextField!
     private var dateFormatter: NSDateFormatter!
     private var datePicker: UIDatePicker!
+    private var mapLbl: UILabel!
+    private var mapView: MKMapView!
+    private var placeNameLbl: UITextField!
     
     /// Bar buttons
     private var cancelBtn: UIBarButtonItem!
     private var doneBtn: UIBarButtonItem!
     
     var smoke: Smoke?
+    
+    private let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        title = L("AddConsumption")
         
         dateFormatter = NSDateFormatter(dateFormat: "EEEE dd MMMM HH:mm")
 
@@ -63,12 +68,13 @@ final class SmokeDetailViewController: UIViewController {
         scrollContentView = UIView()
         scrollView.addSubview(scrollContentView)
 
-        kindSelector = UISegmentedControl(items: [ L("Cigarette"), L("Weed") ])
-        kindSelector.selectedSegmentIndex = 0
-        scrollContentView.addSubview(kindSelector)
+        typeSelector = UISegmentedControl(items: [ L("new_cigarette"), L("new_weed") ])
+        typeSelector.addTarget(self, action: "selectorValueChanged:", forControlEvents: .ValueChanged)
+        typeSelector.selectedSegmentIndex = 0
+        scrollContentView.addSubview(typeSelector)
         
         intensityLbl = UILabel()
-        configureLbl(intensityLbl, withText: L("Intensity"))
+        configureLbl(intensityLbl, withText: L("new_intensity"))
         scrollContentView.addSubview(intensityLbl)
         
         intensitySlider = UISlider()
@@ -78,34 +84,48 @@ final class SmokeDetailViewController: UIViewController {
         scrollContentView.addSubview(intensitySlider)
         
         feelingBeforeLbl = UILabel()
-        configureLbl(feelingBeforeLbl, withText: L("FeelingBefore"))
+        configureLbl(feelingBeforeLbl, withText: L("new_feeling_before"))
         
         feelingBeforeTextView = UITextView()
         configureTextView(feelingBeforeTextView)
         
         feelingAfterLbl = UILabel()
-        configureLbl(feelingAfterLbl, withText: L("FeelingAfter"))
+        configureLbl(feelingAfterLbl, withText: L("new_feeling_after"))
         
         feelingAfterTextView = UITextView()
         configureTextView(feelingAfterTextView)
         
         commentLbl = UILabel()
-        configureLbl(commentLbl, withText: L("Comment"))
+        configureLbl(commentLbl, withText: L("new_comment"))
         
         commentTextView = UITextView()
         configureTextView(commentTextView)
         
         dateLbl = UILabel()
-        configureLbl(dateLbl, withText: L("Date"))
+        configureLbl(dateLbl, withText: L("new_date"))
         
         dateTextField = UITextField()
         configureDateTextField()
+        
+        mapLbl = UILabel()
+        configureLbl(mapLbl, withText: L("new_place"))
+        
+        mapView = MKMapView()
+        mapView.userInteractionEnabled = false
+        scrollContentView.addSubview(mapView)
+        mapView.setUserTrackingMode(.Follow, animated: true)
+        
+        placeNameLbl = UITextField()
+        placeNameLbl.placeholder = L("new_place_placeholder")
+        scrollContentView.addSubview(placeNameLbl)
         
         configureLayoutConstraints()
         
         registerNotificationObservers()
         
         fillWithSmokeIfNeeded()
+        
+        locationManager.requestWhenInUseAuthorization()
     }
     
     deinit {
@@ -117,10 +137,10 @@ final class SmokeDetailViewController: UIViewController {
     private func fillWithSmokeIfNeeded() {
         if let smoke = smoke {
             if smoke.normalizedKind == SmokeKind.Weed {
-                kindSelector.selectedSegmentIndex = 1
+                typeSelector.selectedSegmentIndex = 1
             }
             intensitySlider.value       = smoke.intensity.floatValue
-            intensitySlider.tintColor   = StyleSheet.colorForIntensity(intensitySlider.value)
+            intensitySlider.tintColor   = UIColor.colorForIntensity(intensitySlider.value)
             feelingBeforeTextView.text  = smoke.feelingBefore
             feelingAfterTextView.text   = smoke.feelingAfter
             commentTextView.text        = smoke.comment
@@ -139,7 +159,7 @@ final class SmokeDetailViewController: UIViewController {
     // MARK: - Bar Buttons
     
     func doneBtnClicked(sender: UIBarButtonItem) {
-        let k: SmokeKind = kindSelector.selectedSegmentIndex == 0
+        let k: SmokeKind = typeSelector.selectedSegmentIndex == 0
             ? SmokeKind.Cigarette : SmokeKind.Weed
         if let smoke = smoke {
             smoke.normalizedKind = k
@@ -168,10 +188,18 @@ final class SmokeDetailViewController: UIViewController {
         configureDateBtnWithDate(datePicker.date)
     }
     
-    // MARK: - Intensity Slider
+    // MARK: - Type segmented control & Intensity Slider
+    
+    func selectorValueChanged(sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 1 {
+            typeSelector.tintColor = UIColor.greenSeaColor()
+        } else {
+            typeSelector.tintColor = UIColor.pumkinColor()
+        }
+    }
     
     func intensitySlideValueChanged(slider: UISlider) {
-        slider.tintColor = StyleSheet.colorForIntensity(slider.value)
+        slider.tintColor = UIColor.colorForIntensity(slider.value)
     }
     
     // MARK: - Keyboard Notifications
@@ -216,14 +244,14 @@ final class SmokeDetailViewController: UIViewController {
             $0.width.equalTo(view)
         }
         
-        kindSelector.snp_makeConstraints {
+        typeSelector.snp_makeConstraints {
             $0.top.equalTo(scrollContentView).offset(kAddSmokeLblPadding)
             $0.left.equalTo(scrollContentView).offset(kAddSmokeHorizontalPadding)
             $0.right.equalTo(scrollContentView).offset(-kAddSmokeHorizontalPadding)
         }
         
         intensityLbl.snp_makeConstraints {
-            $0.top.equalTo(kindSelector.snp_bottom).offset(kAddSmokeLblPadding)
+            $0.top.equalTo(typeSelector.snp_bottom).offset(kAddSmokeLblPadding)
             $0.left.equalTo(scrollContentView).offset(kAddSmokeHorizontalPadding)
         }
         
@@ -283,6 +311,25 @@ final class SmokeDetailViewController: UIViewController {
             $0.left.equalTo(scrollContentView).offset(kAddSmokeHorizontalPadding)
             $0.right.equalTo(scrollContentView).offset(-kAddSmokeHorizontalPadding)
             $0.height.equalTo(kAddSmokeTextViewHeight)
+        }
+        
+        mapLbl.snp_makeConstraints {
+            $0.top.equalTo(dateTextField.snp_bottom).offset(kAddSmokeLblPadding)
+            $0.left.equalTo(scrollContentView).offset(kAddSmokeHorizontalPadding)
+            $0.right.equalTo(scrollContentView).offset(-kAddSmokeHorizontalPadding)
+        }
+        
+        mapView.snp_makeConstraints {
+            $0.top.equalTo(mapLbl.snp_bottom).offset(kAddSmokeValuePadding)
+            $0.left.equalTo(scrollContentView).offset(kAddSmokeHorizontalPadding)
+            $0.right.equalTo(scrollContentView).offset(-kAddSmokeHorizontalPadding)
+            $0.height.equalTo(scrollContentView.snp_width).multipliedBy(0.4)
+        }
+        
+        placeNameLbl.snp_makeConstraints {
+            $0.top.equalTo(mapView.snp_bottom).offset(kAddSmokeLblPadding)
+            $0.left.equalTo(scrollContentView).offset(kAddSmokeHorizontalPadding)
+            $0.right.equalTo(scrollContentView).offset(-kAddSmokeHorizontalPadding)
             
             $0.bottom.equalTo(scrollContentView).offset(-kAddSmokeLblPadding)
         }
@@ -323,7 +370,19 @@ final class SmokeDetailViewController: UIViewController {
         
         scrollContentView.addSubview(dateTextField)
     }
+}
 
+extension SmokeDetailViewController: CLLocationManagerDelegate {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == .AuthorizedWhenInUse || status == .AuthorizedAlways {
+            mapView.showsUserLocation = true
+            mapLbl.hidden = false
+            mapView.hidden = false
+        } else {
+            mapLbl.hidden = true
+            mapView.hidden = true
+        }
+    }
 }
 
 extension SmokeDetailViewController: UITextViewDelegate {

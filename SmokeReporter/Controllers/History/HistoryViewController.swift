@@ -29,7 +29,7 @@ final class HistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = L("History")
+        title = L("history_title")
         
         dateFormatter = NSDateFormatter(dateFormat: "HH'h'mm")
         
