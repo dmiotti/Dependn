@@ -8,6 +8,8 @@
 
 "app_name" = "DEPENDN’";
 
+"cancel" = "Annuler";
+
 "new.cigarette" = "Cig";
 "new.weed" = "Weed";
 "new.intensity" = "Intensité de l'envie";
@@ -17,21 +19,32 @@
 "new.hour" = "Heure";
 "new.type" = "Type";
 "new.comment" = "Commentaire";
-"new.place" = "Où";
+"new.place" = "Lieu";
 "new.place_placeholder" = "Donner un nom à ce lieu (rayon 4km)";
 
+"stats_title" = "Statistiques";
 "stats_total" = "Total";
 
 "export.date" = "date";
 "export.time" = "heure";
 "export.intensity" = "intensité";
 "export.type" = "type";
-"export.before" = "feeling before";
-"export.after" = "feeling after";
+"export.before" = "ressenti avant";
+"export.after" = "ressenti après";
 "export.comment" = "comment";
-"export.place" = "Lieu";
-"export.lat" = "Latitude";
-"export.lon" = "Longiture";
+"export.place" = "lieu";
+"export.lat" = "latitude";
+"export.lon" = "longiture";
 
-"color.navigation_bar" = "28AFFA";
-"color.navigation_title" = "FFFFFF";
+"history.cigarette" = "Cigarette";
+"history.weed" = "Weed";
+"history.action.title" = "Quel action voulez-vous lancer ?";
+"history.action.message" = "";
+"history.action.export" = "Export";
+"history.action.import" = "Import";
+
+"color.window" = "28AFFA";
+"color.navigationbar" = "FFFFFF";
+"color.navigationbar_title" = "FFFFFF";
+"color.navigationbar_button" = "FFFFFF";
+"color.navigationbar_bar" = "28AFFA";

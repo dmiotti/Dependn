@@ -37,7 +37,7 @@ final class StatsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = L("app_name")
+        title = L("stats_title")
         
         refreshBtn = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refreshBtnClicked:")
         navigationItem.rightBarButtonItem = refreshBtn
@@ -46,6 +46,7 @@ final class StatsViewController: UIViewController {
         loadingBtn = UIBarButtonItem(customView: loadingView)
         
         tableView = UITableView(frame: .zero, style: .Grouped)
+        tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(StatsCell.self, forCellReuseIdentifier: StatsCell.reuseIdentifier)

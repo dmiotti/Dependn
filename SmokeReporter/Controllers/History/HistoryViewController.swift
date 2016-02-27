@@ -14,9 +14,10 @@ import PKHUD
 
 final class HistoryViewController: UIViewController {
     
-    private var addBtn: UIBarButtonItem!
-    private var shareBtn: UIBarButtonItem!
+    private var actionBtn: UIBarButtonItem!
+    private var statsBtn: UIBarButtonItem!
     private var tableView: UITableView!
+    private var addBtn: UIButton!
     
     private var dateFormatter: NSDateFormatter!
     
@@ -33,19 +34,25 @@ final class HistoryViewController: UIViewController {
         
         dateFormatter = NSDateFormatter(dateFormat: "HH'h'mm")
         
-        addBtn = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addSmokeBtnClicked:")
-        navigationItem.rightBarButtonItem = addBtn
+        actionBtn = UIBarButtonItem(image: UIImage(named: "settings_icon"), style: .Plain, target: self, action: "actionBtnClicked:")
+        navigationItem.leftBarButtonItem = actionBtn
         
-        shareBtn = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareBtnClicked:")
-        navigationItem.leftBarButtonItem = shareBtn
+        statsBtn = UIBarButtonItem(image: UIImage(named: "stats_icon"), style: .Plain, target: self, action: "statsBtnClicked:")
+        navigationItem.rightBarButtonItem = statsBtn
         
-        tableView = UITableView(frame: .zero, style: .Grouped)
+        tableView = UITableView(frame: .zero, style: .Plain)
+        tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.dataSource = self
         tableView.delegate = self
-        view.addSubview(tableView)
-        
         tableView.registerClass(HistoryTableViewCell.self,
             forCellReuseIdentifier: HistoryTableViewCell.reuseIdentifier)
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 100))
+        view.addSubview(tableView)
+        
+        addBtn = UIButton(type: .System)
+        addBtn.setImage(UIImage(named: "add")?.imageWithRenderingMode(.AlwaysOriginal), forState: .Normal)
+        addBtn.addTarget(self, action: "addBtnClicked:", forControlEvents: .TouchUpInside)
+        view.addSubview(addBtn)
         
         configureLayoutConstraints()
     }
@@ -53,6 +60,7 @@ final class HistoryViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         launchFetchIfNeeded()
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
     }
     
     // MARK: - Data Fetch
@@ -75,19 +83,48 @@ final class HistoryViewController: UIViewController {
         tableView.snp_makeConstraints {
             $0.edges.equalTo(view)
         }
+        
+        addBtn.snp_makeConstraints {
+            $0.bottom.equalTo(view).offset(-20)
+            $0.centerX.equalTo(view)
+        }
     }
     
     // MARK: - Add button handler
     
-    func addSmokeBtnClicked(sender: UIBarButtonItem) {
+    func actionBtnClicked(sender: UIBarButtonItem) {
+        let alert = UIAlertController(
+            title: L("history.action.title"),
+            message: L("history.action.message"),
+            preferredStyle: .ActionSheet)
+        let cancelAction = UIAlertAction(
+            title: L("cancel"), style: .Cancel,
+            handler: nil)
+        let exportAction = UIAlertAction(title: L("history.action.export"), style: .Default) { action in
+            self.launchExport()
+        }
+        let importAction = UIAlertAction(title: L("history.action.import"), style: .Default) { action in
+            self.launchImport()
+        }
+        alert.addAction(exportAction)
+        alert.addAction(importAction)
+        alert.addAction(cancelAction)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func addBtnClicked(sender: UIButton) {
         let nav = UINavigationController(rootViewController: SmokeDetailViewController())
         presentViewController(nav, animated: true, completion: nil)
     }
     
-    func shareBtnClicked(sender: UIBarButtonItem) {
+    func statsBtnClicked(sender: UIBarButtonItem) {
+        let stats = StatsViewController()
+        navigationController?.pushViewController(stats, animated: true)
+    }
+    
+    private let queue = NSOperationQueue()
+    private func launchExport() {
         HUD.show(.Progress)
-        let queue = NSOperationQueue()
-        
         let exportOp = ExportOperation()
         exportOp.completionBlock = {
             dispatch_async(dispatch_get_main_queue()) {
@@ -103,23 +140,24 @@ final class HistoryViewController: UIViewController {
             }
         }
         queue.addOperation(exportOp)
-        
-//        /// Import
-//        if let csv = NSBundle.mainBundle().pathForResource("a", ofType: "csv") {
-//            let importOp = ImportOperation(path: csv)
-//            importOp.completionBlock = {
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    HUD.hide(animated: true) { finished in
-//                        if let err = importOp.error {
-//                            HUD.flash(HUDContentType.Label(err.localizedDescription))
-//                        } else {
-//                            HUD.flash(.Success)
-//                        }
-//                    }
-//                }
-//            }
-//            queue.addOperation(importOp)
-//        }
+    }
+    
+    private func launchImport() {
+        if let csv = NSBundle.mainBundle().pathForResource("a", ofType: "csv") {
+            let importOp = ImportOperation(path: csv)
+            importOp.completionBlock = {
+                dispatch_async(dispatch_get_main_queue()) {
+                    HUD.hide(animated: true) { finished in
+                        if let err = importOp.error {
+                            HUD.flash(HUDContentType.Label(err.localizedDescription))
+                        } else {
+                            HUD.flash(.Success)
+                        }
+                    }
+                }
+            }
+            queue.addOperation(importOp)
+        }
     }
     
 }
@@ -146,8 +184,23 @@ extension HistoryViewController: UITableViewDataSource {
             Smoke.deleteSmoke(smoke)
         }
     }
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return fetchedResultsController.sections?[section].name ?? nil
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView()
+        header.backgroundColor = "F5FAFF".UIColor
+        let date = UILabel()
+        date.text = fetchedResultsController.sections?[section].name.uppercaseString
+        date.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
+        date.textColor = "7D9BB8".UIColor
+        header.addSubview(date)
+        date.snp_makeConstraints {
+            $0.left.equalTo(header).offset(15)
+            $0.right.equalTo(header).offset(-15)
+            $0.bottom.equalTo(header).offset(-6)
+        }
+        return header
     }
     private func configureCell(cell: UITableViewCell, forIndexPath indexPath: NSIndexPath) {
         let smoke = fetchedResultsController.objectAtIndexPath(indexPath) as! Smoke
@@ -156,7 +209,7 @@ extension HistoryViewController: UITableViewDataSource {
             if smoke.normalizedKind == .Cigarette {
                 cell.imgView.image = UIImage(named: "cigarette")
             } else {
-                cell.imgView.image = UIImage(named: "joint")
+                cell.imgView.image = UIImage(named: "weed")
             }
             cell.intensityLbl.text = "\(smoke.intensity.integerValue)"
         }

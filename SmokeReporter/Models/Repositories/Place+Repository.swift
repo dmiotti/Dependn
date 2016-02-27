@@ -12,15 +12,15 @@ import CoreData
 extension Place {
     static func insertNewPlace(
         name: String?,
-        lat: String,
-        lon: String,
+        latitude: Double,
+        longitude: Double,
         inContext context: NSManagedObjectContext = CoreDataStack.shared.managedObjectContext) -> Place {
             
             let place = NSEntityDescription.insertNewObjectForEntityForName(Place.entityName, inManagedObjectContext: context) as! Place
             
             place.name = name
-            place.lat = lat.floatValue
-            place.lon = lat.floatValue
+            place.lat = latitude
+            place.lon = longitude
         
             return place
     }

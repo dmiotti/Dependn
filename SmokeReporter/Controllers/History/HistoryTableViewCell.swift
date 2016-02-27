@@ -20,6 +20,8 @@ final class HistoryTableViewCell: SHCommonInitTableViewCell {
     override func commonInit() {
         super.commonInit()
         
+        accessoryType = .DisclosureIndicator
+        
         imgView = UIImageView()
         imgView.contentMode = .ScaleAspectFit
         contentView.addSubview(imgView)

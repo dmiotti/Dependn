@@ -14,8 +14,8 @@ import CoreData
 
 extension Place {
 
-    @NSManaged var lat: NSNumber
-    @NSManaged var lon: NSNumber
+    @NSManaged var lat: NSNumber?
+    @NSManaged var lon: NSNumber?
     @NSManaged var name: String?
     @NSManaged var smokes: NSSet?
 

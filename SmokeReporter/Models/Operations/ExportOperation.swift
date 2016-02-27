@@ -9,6 +9,7 @@
 import UIKit
 import SwiftHelpers
 import CoreData
+import CoreLocation
 
 private let kExportOperationSeparator = ";"
 private let kExportOperationNewLine = "\n"
@@ -84,8 +85,8 @@ final class ExportOperation: SHOperation {
             smoke.after ?? "",
             smoke.comment ?? "",
             smoke.place?.name ?? "",
-            smoke.place?.lat.stringValue ?? "",
-            smoke.place?.lon.stringValue ?? ""
+            smoke.place?.lat?.stringValue ?? "",
+            smoke.place?.lon?.stringValue ?? ""
         ]
         return values.joinWithSeparator(kExportOperationSeparator)
     }
@@ -173,7 +174,7 @@ final class ImportOperation: SHOperation {
             if lat.characters.count > 0 && lon.characters.count > 0 {
                 let name = values[7]
                 let placeName: String? = name.characters.count > 0 ? name : nil
-                place = Place.insertNewPlace(placeName, lat: lat, lon: lon)
+                place = Place.insertNewPlace(placeName, latitude: Double(lat.floatValue), longitude: Double(lon.floatValue))
             }
         }
         

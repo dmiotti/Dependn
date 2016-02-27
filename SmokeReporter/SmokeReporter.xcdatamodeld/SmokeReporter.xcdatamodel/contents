@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
     <entity name="Place" representedClassName=".Place" syncable="YES">
-        <attribute name="lat" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="lon" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="lon" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="smokes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Smoke" inverseName="place" inverseEntity="Smoke" syncable="YES"/>
     </entity>

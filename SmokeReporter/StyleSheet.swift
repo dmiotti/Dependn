@@ -7,8 +7,29 @@
 //
 
 import UIKit
+import SwiftHelpers
+
+class StyleSheet {
+    class func constomizeAppearance(window: UIWindow?) {
+        UINavigationBar.appearance().tintColor = L("color.navigationbar").UIColor
+        let attr = [
+            NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightSemibold),
+            NSForegroundColorAttributeName: L("color.navigationbar_title").UIColor
+        ]
+        UINavigationBar.appearance().titleTextAttributes = attr
+        
+        UINavigationBar.appearance().barTintColor = L("color.navigationbar_bar").UIColor
+        
+        UIBarButtonItem.appearance().tintColor = L("color.navigationbar_button").UIColor
+        UIBarButtonItem.appearance().setTitleTextAttributes(attr, forState: .Normal)
+        
+        window?.tintColor = L("color.window").UIColor
+    }
+}
 
 extension UIColor {
+    
+    class func lightBackgroundColor()   ->  UIColor { return "F5FAFF".UIColor }
 
     class func lowIntensityColor()      -> UIColor { return  UIColor.emeraldColor()     }
     class func mediumIntensityColor()   -> UIColor { return  UIColor.nephritisColor()   }
