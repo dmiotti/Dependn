@@ -1,4 +1,4 @@
-# Smoke Reporter
+# Dependn
 
 Report every Cigarettes you smoke and make stats.
 
