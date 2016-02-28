@@ -11,6 +11,7 @@ import SnapKit
 import CoreData
 import SwiftHelpers
 import PKHUD
+import CocoaLumberjackSwift
 
 final class HistoryViewController: UIViewController {
     
@@ -46,7 +47,7 @@ final class HistoryViewController: UIViewController {
         tableView.delegate = self
         tableView.registerClass(HistoryTableViewCell.self,
             forCellReuseIdentifier: HistoryTableViewCell.reuseIdentifier)
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 100))
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 120))
         view.addSubview(tableView)
         
         addBtn = UIButton(type: .System)
@@ -72,7 +73,7 @@ final class HistoryViewController: UIViewController {
             try fetchedResultsController.performFetch()
             fetchExecuted = true
         } catch let err as NSError {
-            print("Error while perfoming fetch: \(err)")
+            DDLogError("Error while perfoming fetch: \(err)")
             fetchExecuted = false
         }
     }
@@ -143,21 +144,21 @@ final class HistoryViewController: UIViewController {
     }
     
     private func launchImport() {
-        if let csv = NSBundle.mainBundle().pathForResource("a", ofType: "csv") {
-            let importOp = ImportOperation(path: csv)
-            importOp.completionBlock = {
-                dispatch_async(dispatch_get_main_queue()) {
-                    HUD.hide(animated: true) { finished in
-                        if let err = importOp.error {
-                            HUD.flash(HUDContentType.Label(err.localizedDescription))
-                        } else {
-                            HUD.flash(.Success)
-                        }
+        let importOp = ImportOperation(controller: self)
+        importOp.completionBlock = {
+            dispatch_async(dispatch_get_main_queue()) {
+                if let err = importOp.error {
+                    if err.code != kImportOperationUserCancelledCode {
+                        HUD.flash(HUDContentType.LabeledError(
+                            title: err.localizedDescription,
+                            subtitle: err.localizedRecoverySuggestion))
                     }
+                } else {
+                    HUD.flash(.Success)
                 }
             }
-            queue.addOperation(importOp)
         }
+        queue.addOperation(importOp)
     }
     
 }
@@ -205,14 +206,28 @@ extension HistoryViewController: UITableViewDataSource {
     private func configureCell(cell: UITableViewCell, forIndexPath indexPath: NSIndexPath) {
         let smoke = fetchedResultsController.objectAtIndexPath(indexPath) as! Smoke
         if let cell = cell as? HistoryTableViewCell {
-            cell.dateLbl.text = dateFormatter.stringFromDate(smoke.date)
-            if smoke.normalizedKind == .Cigarette {
+            let type = smoke.smokeType
+            cell.dateLbl.attributedText = attributedStringForDate(smoke.date, type: type)
+            if type == .Cig {
                 cell.imgView.image = UIImage(named: "cigarette")
             } else {
                 cell.imgView.image = UIImage(named: "weed")
             }
             cell.intensityLbl.text = "\(smoke.intensity.integerValue)"
         }
+    }
+    private func attributedStringForDate(date: NSDate, type: SmokeType) -> NSAttributedString {
+        let dateString = dateFormatter.stringFromDate(date)
+        let typeString = type == .Cig ? L("history.cig") : L("history.weed")
+        let full = "\(dateString)\n\(typeString)"
+        let attr = NSMutableAttributedString(string: full)
+        let fullRange = NSRange(location: 0, length: attr.length)
+        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(16, weight: UIFontWeightRegular), range: fullRange)
+        attr.addAttribute(NSForegroundColorAttributeName, value: UIColor.appBlackColor(), range: fullRange)
+        let typeRange = full.rangeString(typeString)
+        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(12, weight: UIFontWeightRegular), range: typeRange)
+        attr.addAttribute(NSForegroundColorAttributeName, value: UIColor.appLightTextColor(), range: typeRange)
+        return NSAttributedString(attributedString: attr)
     }
 }
 

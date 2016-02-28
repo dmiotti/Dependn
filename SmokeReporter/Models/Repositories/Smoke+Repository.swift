@@ -24,7 +24,7 @@ extension Smoke {
                 .insertNewObjectForEntityForName(Smoke.entityName,
                     inManagedObjectContext: context) as! Smoke
             smoke.intensity = intensity
-            smoke.type = type == .Cigarette ? SmokeTypeCig : SmokeTypeWeed
+            smoke.type = type == .Cig ? SmokeTypeCig : SmokeTypeWeed
             smoke.before = before
             smoke.after = after
             smoke.comment = comment

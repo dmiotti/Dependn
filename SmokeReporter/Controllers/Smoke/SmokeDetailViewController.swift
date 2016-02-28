@@ -39,6 +39,7 @@ final class SmokeDetailViewController: UIViewController {
     private var mapLbl: UILabel!
     private var mapView: MKMapView!
     private var placeNameField: UITextField!
+    private var allowMapBtn: UIButton!
     
     /// Bar buttons
     private var cancelBtn: UIBarButtonItem!
@@ -47,6 +48,7 @@ final class SmokeDetailViewController: UIViewController {
     var smoke: Smoke?
     
     private var placeFound: Place?
+    private var currentUserLocation: MKUserLocation?
     private let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
@@ -69,7 +71,7 @@ final class SmokeDetailViewController: UIViewController {
         scrollContentView = UIView()
         scrollView.addSubview(scrollContentView)
 
-        typeSelector = UISegmentedControl(items: [ L("new.cigarette"), L("new.weed") ])
+        typeSelector = UISegmentedControl(items: [ L("new.cig"), L("new.weed") ])
         typeSelector.selectedSegmentIndex = 0
         scrollContentView.addSubview(typeSelector)
         
@@ -111,12 +113,25 @@ final class SmokeDetailViewController: UIViewController {
         configureLbl(mapLbl, withText: L("new.place"))
         
         mapView = MKMapView()
+        mapView.delegate = self
+        mapView.layer.cornerRadius = 3
+        mapView.clipsToBounds = true
         mapView.userInteractionEnabled = false
         scrollContentView.addSubview(mapView)
-        mapView.setUserTrackingMode(.Follow, animated: true)
+        
+        allowMapBtn = UIButton(type: .System)
+        allowMapBtn.setTitle(L("new.allow_map"), forState: .Normal)
+        allowMapBtn.setTitleColor(UIColor.appBlackColor(), forState: .Normal)
+        allowMapBtn.contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        allowMapBtn.titleLabel?.lineBreakMode = .ByWordWrapping
+        allowMapBtn.titleLabel?.font = UIFont.systemFontOfSize(20, weight: UIFontWeightThin)
+        allowMapBtn.addTarget(self, action: "allowUsingMapBtnClicked:", forControlEvents: .TouchUpInside)
+        allowMapBtn.backgroundColor = UIColor.lightBackgroundColor()
+        scrollContentView.addSubview(allowMapBtn)
         
         placeNameField = UITextField()
         placeNameField.placeholder = L("new.place_placeholder")
+        placeNameField.enabled = false
         scrollContentView.addSubview(placeNameField)
         
         configureLayoutConstraints()
@@ -125,7 +140,12 @@ final class SmokeDetailViewController: UIViewController {
         
         fillWithSmokeIfNeeded()
         
-        locationManager.requestWhenInUseAuthorization()
+        if smoke == nil && CLLocationManager.authorizationStatus() != .NotDetermined {
+            allowMapBtn.hidden = true
+            allowMapBtn.userInteractionEnabled = false
+            placeNameField.enabled = true
+            locationManager.requestWhenInUseAuthorization()
+        }
     }
     
     deinit {
@@ -136,7 +156,7 @@ final class SmokeDetailViewController: UIViewController {
     
     private func fillWithSmokeIfNeeded() {
         if let smoke = smoke {
-            if smoke.normalizedKind == SmokeType.Weed {
+            if smoke.smokeType == .Weed {
                 typeSelector.selectedSegmentIndex = 1
             }
             intensitySlider.value = smoke.intensity.floatValue
@@ -154,6 +174,8 @@ final class SmokeDetailViewController: UIViewController {
         } else {
             datePicker.date = NSDate()
             configureDateBtnWithDate(NSDate())
+            mapView.showsUserLocation = true
+            mapView.setUserTrackingMode(.Follow, animated: true)
         }
     }
     
@@ -164,27 +186,21 @@ final class SmokeDetailViewController: UIViewController {
     // MARK: - Bar Buttons
     
     func doneBtnClicked(sender: UIBarButtonItem) {
-        let k: SmokeType = typeSelector.selectedSegmentIndex == 0
-            ? SmokeType.Cigarette : SmokeType.Weed
+        let type: SmokeType = typeSelector.selectedSegmentIndex == 0 ? SmokeType.Cig : SmokeType.Weed
         if let smoke = smoke {
-            smoke.normalizedKind = k
+            smoke.smokeType = type
             smoke.intensity = intensitySlider.value
             smoke.before = feelingBeforeTextView.text
             smoke.after = feelingAfterTextView.text
             smoke.comment = commentTextView.text
             smoke.date = datePicker.date
-            if smoke.place == nil && mapView.userLocationVisible {
-                let coord = mapView.userLocation.coordinate
-                smoke.place = Place.insertNewPlace(placeNameField.text, latitude: coord.latitude, longitude: coord.longitude)
-            } else {
-                smoke.place?.name = placeNameField.text
-            }
+            smoke.place?.name = placeNameField.text
         } else {
             var place: Place?
             if placeNameField.text?.characters.count > 0 {
                 
             }
-            Smoke.insertNewSmoke(k,
+            Smoke.insertNewSmoke(type,
                 intensity: intensitySlider.value,
                 before: feelingBeforeTextView.text,
                 after: feelingAfterTextView.text,
@@ -341,6 +357,14 @@ final class SmokeDetailViewController: UIViewController {
             
             $0.bottom.equalTo(scrollContentView).offset(-kAddSmokeLblPadding)
         }
+        
+        allowMapBtn.snp_makeConstraints {
+            $0.edges.equalTo(mapView)
+        }
+    }
+    
+    func allowUsingMapBtnClicked(sender: UIButton) {
+        locationManager.requestWhenInUseAuthorization()
     }
     
     // MARK: - Private Helpers
@@ -380,18 +404,23 @@ final class SmokeDetailViewController: UIViewController {
     }
 }
 
-extension SmokeDetailViewController: CLLocationManagerDelegate {
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
+extension SmokeDetailViewController: MKMapViewDelegate {
+    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+        currentUserLocation = userLocation
     }
+}
+
+extension SmokeDetailViewController: CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if smoke != nil {
-            return
-        }
+        if smoke != nil { return }
         if status == .AuthorizedWhenInUse || status == .AuthorizedAlways {
-            locationManager.startUpdatingLocation()
-            
-            mapView.showsUserLocation = true
+            if allowMapBtn.alpha > 0 {
+                UIView.animateWithDuration(0.35, animations: {
+                    self.allowMapBtn.alpha = 0
+                    }, completion: { finished in
+                        self.allowMapBtn.hidden = true
+                })
+            }
             mapLbl.hidden = false
             mapView.hidden = false
         } else {

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		58276F9F1C7FAD8800DEB4C6 /* Smoke+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58276F9E1C7FAD8800DEB4C6 /* Smoke+Repository.swift */; };
-		58276FA11C7FAE2A00DEB4C6 /* a.csv in Resources */ = {isa = PBXBuildFile; fileRef = 58276FA01C7FAE2A00DEB4C6 /* a.csv */; };
 		58276FA31C7FBA8D00DEB4C6 /* Place+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58276FA21C7FBA8D00DEB4C6 /* Place+Repository.swift */; };
 		5833E56C1C7E687700735BC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5833E56E1C7E687700735BC3 /* InfoPlist.strings */; };
 		5833E5781C7E839900735BC3 /* Smoke+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833E5751C7E839900735BC3 /* Smoke+CoreDataProperties.swift */; };
@@ -114,7 +113,6 @@
 		58276F9B1C7FA73900DEB4C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		58276F9C1C7FA73900DEB4C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		58276F9E1C7FAD8800DEB4C6 /* Smoke+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Smoke+Repository.swift"; sourceTree = "<group>"; };
-		58276FA01C7FAE2A00DEB4C6 /* a.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = a.csv; sourceTree = "<group>"; };
 		58276FA21C7FBA8D00DEB4C6 /* Place+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Place+Repository.swift"; sourceTree = "<group>"; };
 		5833E56F1C7E687900735BC3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5833E5751C7E839900735BC3 /* Smoke+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Smoke+CoreDataProperties.swift"; path = "../Smoke+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -263,7 +261,6 @@
 				589065DF1C7A3F2F00F7F6DC /* LaunchScreen.storyboard */,
 				589065E21C7A3F2F00F7F6DC /* Info.plist */,
 				589065DA1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld */,
-				58276FA01C7FAE2A00DEB4C6 /* a.csv */,
 				5888DC751C7A90EC00E01A32 /* Localizable.strings */,
 				5833E56E1C7E687700735BC3 /* InfoPlist.strings */,
 			);
@@ -467,7 +464,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58276FA11C7FAE2A00DEB4C6 /* a.csv in Resources */,
 				589065E11C7A3F2F00F7F6DC /* LaunchScreen.storyboard in Resources */,
 				5888DC731C7A90EC00E01A32 /* Localizable.strings in Resources */,
 				589065DE1C7A3F2F00F7F6DC /* Assets.xcassets in Resources */,

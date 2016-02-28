@@ -10,7 +10,7 @@
 
 "cancel" = "Annuler";
 
-"new.cigarette" = "Cig";
+"new.cig" = "Cig";
 "new.weed" = "Weed";
 "new.intensity" = "Intensité de l'envie";
 "new.feeling_before" = "Ressenti avant";
@@ -20,7 +20,8 @@
 "new.type" = "Type";
 "new.comment" = "Commentaire";
 "new.place" = "Lieu";
-"new.place_placeholder" = "Donner un nom à ce lieu (rayon 4km)";
+"new.place_placeholder" = "Donner un nom à ce lieu (rayon 50m)";
+"new.allow_map" = "Utiliser ma position afin de mieux comprendre mes consommations";
 
 "stats_title" = "Statistiques";
 "stats_total" = "Total";
@@ -35,16 +36,19 @@
 "export.place" = "lieu";
 "export.lat" = "latitude";
 "export.lon" = "longiture";
+"export.cig" = "Cigarette";
+"export.weed" = "Weed";
 
-"history.cigarette" = "Cigarette";
+"history.cig" = "Cigarette";
 "history.weed" = "Weed";
 "history.action.title" = "Quel action voulez-vous lancer ?";
 "history.action.message" = "";
 "history.action.export" = "Export";
 "history.action.import" = "Import";
 
-"color.window" = "28AFFA";
-"color.navigationbar" = "FFFFFF";
-"color.navigationbar_title" = "FFFFFF";
-"color.navigationbar_button" = "FFFFFF";
-"color.navigationbar_bar" = "28AFFA";
+"import.choose_file" = "Choisissez un ficher à importer";
+"import.choose_file_message" = "Vos données actuelles seront supprimées";
+"import.no_data" = "Il n'y a aucune donnée à importer";
+"import.no_data_suggestion" = "Ajouter un fichier d'import dans l'application grâce à iTunes";
+"import.cancelled_by_user" = "L'utilisateur a annuler l'import";
+"import.cancelled_by_user_recovery" = "Veuillez recommencer";

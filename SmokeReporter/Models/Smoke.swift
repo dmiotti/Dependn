@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 enum SmokeType {
-    case Cigarette, Weed
+    case Cig, Weed
 }
 
 let SmokeTypeCig = "Cig"
@@ -22,12 +22,12 @@ final class Smoke: NSManagedObject, NamedEntity {
     
     static var entityName: String { get { return "Smoke" } }
     
-    var normalizedKind: SmokeType {
+    var smokeType: SmokeType {
         get {
-            return type == SmokeTypeCig ? .Cigarette : .Weed
+            return type == SmokeTypeCig ? .Cig : .Weed
         }
         set {
-            if newValue == .Cigarette {
+            if newValue == .Cig {
                 type = SmokeTypeCig
             } else {
                 type = SmokeTypeWeed

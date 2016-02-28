@@ -11,25 +11,29 @@ import SwiftHelpers
 
 class StyleSheet {
     class func constomizeAppearance(window: UIWindow?) {
-        UINavigationBar.appearance().tintColor = L("color.navigationbar").UIColor
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         let attr = [
             NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightSemibold),
-            NSForegroundColorAttributeName: L("color.navigationbar_title").UIColor
+            NSForegroundColorAttributeName: UIColor.whiteColor()
         ]
         UINavigationBar.appearance().titleTextAttributes = attr
         
-        UINavigationBar.appearance().barTintColor = L("color.navigationbar_bar").UIColor
+        UINavigationBar.appearance().barTintColor = UIColor.appBlueColor()
         
-        UIBarButtonItem.appearance().tintColor = L("color.navigationbar_button").UIColor
+        UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
         UIBarButtonItem.appearance().setTitleTextAttributes(attr, forState: .Normal)
+        UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UIToolbar.self]).tintColor = UIColor.appBlueColor()
         
-        window?.tintColor = L("color.window").UIColor
+        window?.tintColor = UIColor.appBlueColor()
     }
 }
 
 extension UIColor {
     
-    class func lightBackgroundColor()   ->  UIColor { return "F5FAFF".UIColor }
+    class func appBlueColor()           -> UIColor { return "28AFFA".UIColor }
+    class func appBlackColor()          -> UIColor { return "030303".UIColor }
+    class func appLightTextColor()         -> UIColor { return "A2B8CC".UIColor }
+    class func lightBackgroundColor()   -> UIColor { return "F5FAFF".UIColor }
 
     class func lowIntensityColor()      -> UIColor { return  UIColor.emeraldColor()     }
     class func mediumIntensityColor()   -> UIColor { return  UIColor.nephritisColor()   }

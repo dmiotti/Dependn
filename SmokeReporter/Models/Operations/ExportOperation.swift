@@ -10,6 +10,8 @@ import UIKit
 import SwiftHelpers
 import CoreData
 import CoreLocation
+import BrightFutures
+import PKHUD
 
 private let kExportOperationSeparator = ";"
 private let kExportOperationNewLine = "\n"
@@ -37,7 +39,7 @@ final class ExportOperation: SHOperation {
                 let req = NSFetchRequest(entityName: Smoke.entityName)
                 req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: true) ]
                 let smokes = try self.context.executeFetchRequest(req) as! [Smoke]
-
+                
                 let path = self.exportPath()
                 let csv = self.createCSV(smokes)
                 
@@ -50,7 +52,7 @@ final class ExportOperation: SHOperation {
                 self.error = err
             }
         }
-
+        
         finish()
     }
     
@@ -79,7 +81,7 @@ final class ExportOperation: SHOperation {
         let values = [
             kExportOperationDayFormatter.stringFromDate(date),
             kExportOperationHourFormatter.stringFromDate(date),
-            smoke.type,
+            smoke.smokeType == .Cig ? L("export.cig") : L("export.weed"),
             String(format: "%.1f", arguments: [ smoke.intensity.floatValue ]),
             smoke.before ?? "",
             smoke.after ?? "",
@@ -92,9 +94,10 @@ final class ExportOperation: SHOperation {
     }
     
     private func exportPath() -> String {
-        let fileUUID = NSUUID().UUIDString
+        let dateFormatter = NSDateFormatter(dateFormat: "dd'_'MM'_'yyyy")
+        let filename = "export_\(dateFormatter.stringFromDate(NSDate()))"
         return applicationCachesDirectory
-            .URLByAppendingPathComponent(fileUUID)
+            .URLByAppendingPathComponent(filename)
             .URLByAppendingPathExtension("csv").path!
     }
     
@@ -103,45 +106,134 @@ final class ExportOperation: SHOperation {
             .URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
         return urls[urls.count-1]
     }()
-
+    
 }
+
+public let kImportOperationErrorDomain = "ImportOperation"
+public let kImportOperationNothingToImportCode = 1
+public let kImportOperationUserCancelledCode = 2
 
 final class ImportOperation: SHOperation {
     
     var error: NSError?
     
-    private let path: String
+    private let controller: UIViewController
     private let context: NSManagedObjectContext
     
-    init(path: String) {
-        self.path = path
+    init(controller: UIViewController) {
+        self.controller = controller
         context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         context.parentContext = CoreDataStack.shared.managedObjectContext
         super.init()
     }
     
     override func execute() {
-        do {
-            let csv = try String(contentsOfFile: path, encoding: NSUTF8StringEncoding)
-            
-            context.performBlockAndWait {
-                let lines = csv.componentsSeparatedByCharactersInSet(
-                    NSCharacterSet.newlineCharacterSet())
-                for (index, line) in lines.enumerate() {
-                    if index == 0 {
-                        continue
+        let candidates = getCandidateFiles()
+        if candidates.count > 0 {
+            askForFile(candidates).onComplete { r in
+                if let file = r.value {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        HUD.show(.Progress)
                     }
-                    let values = line.componentsSeparatedByString(";")
-                    self.newRecordFromValues(values)
+                    self.context.performBlockAndWait {
+                        do {
+                            try self.deleteAllSmokes()
+                            try self.importFileAtURL(file)
+                            try self.saveContext()
+                        } catch let err as NSError {
+                            self.error = err
+                        }
+                    }
+                    dispatch_async(dispatch_get_main_queue()) {
+                        HUD.hide(animated: true, completion: { finished in
+                            self.finish()
+                        })
+                    }
+                } else {
+                    self.error = r.error
+                    self.finish()
                 }
             }
+        } else {
+            self.error = NSError(
+                domain: kImportOperationErrorDomain,
+                code: kImportOperationNothingToImportCode,
+                userInfo: [
+                    NSLocalizedDescriptionKey: L("import.no_data"),
+                    NSLocalizedRecoverySuggestionErrorKey: L("import.no_data_suggestion")])
+            finish()
+        }
+    }
+    
+    private func getCandidateFiles() -> [NSURL] {
+        var candidates = [NSURL]()
+        
+        let fileManager = NSFileManager.defaultManager()
+        let urls = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        if let directoryURL = urls.last {
             
-            try saveContext()
-        } catch let err as NSError {
-            self.error = err
+            /// List all possible import to the user
+            let enumerator = fileManager.enumeratorAtURL(directoryURL,
+                includingPropertiesForKeys: nil, options: .SkipsHiddenFiles, errorHandler: nil)
+            
+            while let element = enumerator?.nextObject() as? NSURL
+                where element.pathExtension == "csv" {
+                    candidates.append(element)
+            }
         }
         
-        finish()
+        return candidates
+    }
+    
+    private func askForFile(files: [NSURL]) -> Future<NSURL, NSError> {
+        let promise = Promise<NSURL, NSError>()
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            let alert = UIAlertController(title: L("import.choose_file"), message: L("import.choose_file_message"), preferredStyle: .ActionSheet)
+            
+            for file in files {
+                let filename = file.URLByDeletingPathExtension?.lastPathComponent
+                let action = UIAlertAction(title: filename, style: .Default) { action in
+                    promise.success(file)
+                }
+                alert.addAction(action)
+            }
+            
+            let cancelAction = UIAlertAction(title: L("cancel"), style: .Cancel) { action in
+                let err = NSError(domain: kImportOperationErrorDomain,
+                    code: kImportOperationUserCancelledCode,
+                    userInfo: [NSLocalizedDescriptionKey: L("import.cancelled_by_user"),
+                        NSLocalizedRecoverySuggestionErrorKey: L("import.cancelled_by_user_recovery")])
+                promise.failure(err)
+            }
+            alert.addAction(cancelAction)
+            
+            self.controller.presentViewController(alert, animated: true, completion: nil)
+        }
+        
+        return promise.future
+    }
+    
+    private func importFileAtURL(URL: NSURL) throws {
+        let csv = try String(contentsOfURL: URL, encoding: NSUTF8StringEncoding)
+        let lines = csv.componentsSeparatedByCharactersInSet(
+            NSCharacterSet.newlineCharacterSet())
+        for (index, line) in lines.enumerate() {
+            if index == 0 {
+                continue
+            }
+            let values = line.componentsSeparatedByString(";")
+            self.newRecordFromValues(values)
+        }
+    }
+    
+    private func deleteAllSmokes() throws {
+        let req = NSFetchRequest(entityName: Smoke.entityName)
+        req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: true) ]
+        let smokes = try self.context.executeFetchRequest(req) as! [Smoke]
+        for smoke in smokes {
+            self.context.deleteObject(smoke)
+        }
     }
     
     private func saveContext() throws {
@@ -161,7 +253,7 @@ final class ImportOperation: SHOperation {
         let hourstr = values[1]
         let datestr = "\(daystr) \(hourstr)"
         let date = kImportOperationDateFormatter.dateFromString(datestr) ?? NSDate()
-        let type = values[2] == "Joint" ? SmokeType.Weed : SmokeType.Cigarette
+        let type: SmokeType = values[2] == "Weed" ? .Weed : .Cig
         let intensity = NSString(string: values[3]).floatValue
         let before = values[4]
         let after = values[5]
@@ -174,7 +266,10 @@ final class ImportOperation: SHOperation {
             if lat.characters.count > 0 && lon.characters.count > 0 {
                 let name = values[7]
                 let placeName: String? = name.characters.count > 0 ? name : nil
-                place = Place.insertNewPlace(placeName, latitude: Double(lat.floatValue), longitude: Double(lon.floatValue))
+                place = Place.insertNewPlace(placeName,
+                    latitude: Double(lat.floatValue),
+                    longitude: Double(lon.floatValue),
+                    inContext: CoreDataStack.shared.managedObjectContext)
             }
         }
         
