@@ -8,6 +8,10 @@
 
 import Foundation
 import CoreData
+import CocoaLumberjackSwift
+import CoreLocation
+
+private let R: Double = 6371009000
 
 extension Smoke {
     
@@ -16,10 +20,11 @@ extension Smoke {
         before: String?,
         after: String?,
         comment: String?,
-        place: Place?,
+        place: String?,
+        latitude: Double?,
+        longitude: Double?,
         date: NSDate = NSDate(),
-        inContext context: NSManagedObjectContext = CoreDataStack.shared.managedObjectContext) -> Smoke {
-            
+        inContext context: NSManagedObjectContext) -> Smoke {
             let smoke = NSEntityDescription
                 .insertNewObjectForEntityForName(Smoke.entityName,
                     inManagedObjectContext: context) as! Smoke
@@ -29,6 +34,8 @@ extension Smoke {
             smoke.after = after
             smoke.comment = comment
             smoke.place = place
+            smoke.lat = latitude
+            smoke.lon = longitude
             smoke.date = date
             return smoke
     }
@@ -45,6 +52,31 @@ extension Smoke {
     
     static func deleteSmoke(smoke: Smoke) {
         CoreDataStack.shared.managedObjectContext.deleteObject(smoke)
+    }
+    
+    static func findNearBySmoke(latitude: Double, longitude: Double, inContext context: NSManagedObjectContext) -> Smoke? {
+        // We want to search within ±150 meters
+        let D: Double = 150.0 * 1.1
+        let meanLat = latitude * M_PI / 180.0
+        let deltaLat = D / R * 180.0 / M_PI
+        let deltaLon = D / (R * cos(meanLat)) * 180.0 / M_PI
+        let minLat = latitude - deltaLat
+        let maxLat = latitude + deltaLat
+        let minLon = longitude - deltaLon
+        let maxLon = longitude + deltaLon
+        let req = NSFetchRequest(entityName: Smoke.entityName)
+        req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
+        req.predicate = NSPredicate(format:
+            "(%@ <= lon) AND (lon <= %@) AND (%@ <= lat) AND (lat <= %@) AND (place != nil)",
+            NSNumber(double: minLon), NSNumber(double: maxLon), NSNumber(double: minLat), NSNumber(double: maxLat))
+        req.fetchLimit = 50
+        print("\(req.predicate!)")
+        do {
+            return try context.executeFetchRequest(req).first as? Smoke
+        } catch let err as NSError {
+            DDLogError("Error while fetching places: \(err)")
+        }
+        return nil
     }
     
 }

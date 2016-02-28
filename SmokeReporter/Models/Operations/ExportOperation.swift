@@ -86,15 +86,15 @@ final class ExportOperation: SHOperation {
             smoke.before ?? "",
             smoke.after ?? "",
             smoke.comment ?? "",
-            smoke.place?.name ?? "",
-            smoke.place?.lat?.stringValue ?? "",
-            smoke.place?.lon?.stringValue ?? ""
+            smoke.place ?? "",
+            smoke.lat?.stringValue ?? "",
+            smoke.lon?.stringValue ?? ""
         ]
         return values.joinWithSeparator(kExportOperationSeparator)
     }
     
     private func exportPath() -> String {
-        let dateFormatter = NSDateFormatter(dateFormat: "dd'_'MM'_'yyyy")
+        let dateFormatter = NSDateFormatter(dateFormat: "dd'_'MM'_'yyyy'_'HH'_'mm")
         let filename = "export_\(dateFormatter.stringFromDate(NSDate()))"
         return applicationCachesDirectory
             .URLByAppendingPathComponent(filename)
@@ -258,20 +258,9 @@ final class ImportOperation: SHOperation {
         let before = values[4]
         let after = values[5]
         let comment = values[6]
-        
-        var place: Place? = nil
-        if values.count == 10 {
-            let lat = values[8]
-            let lon = values[9]
-            if lat.characters.count > 0 && lon.characters.count > 0 {
-                let name = values[7]
-                let placeName: String? = name.characters.count > 0 ? name : nil
-                place = Place.insertNewPlace(placeName,
-                    latitude: Double(lat.floatValue),
-                    longitude: Double(lon.floatValue),
-                    inContext: CoreDataStack.shared.managedObjectContext)
-            }
-        }
+        let place = values[7]
+        let lat = values[8]
+        let lon = values[9]
         
         Smoke.insertNewSmoke(type,
             intensity: intensity,
@@ -279,8 +268,17 @@ final class ImportOperation: SHOperation {
             after: after,
             comment: comment,
             place: place,
+            latitude: doubleOrNil(lat),
+            longitude: doubleOrNil(lon),
             date: date,
             inContext: context)
+    }
+    
+    private func doubleOrNil(value: String) -> Double? {
+        if value.characters.count > 0 {
+            return Double(value.floatValue)
+        }
+        return nil
     }
     
 }

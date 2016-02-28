@@ -20,6 +20,8 @@ extension Smoke {
     @NSManaged var before: String?
     @NSManaged var intensity: NSNumber
     @NSManaged var type: String
-    @NSManaged var place: Place?
+    @NSManaged var place: String?
+    @NSManaged var lat: NSNumber?
+    @NSManaged var lon: NSNumber?
 
 }

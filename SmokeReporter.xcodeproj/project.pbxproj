@@ -8,11 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		58276F9F1C7FAD8800DEB4C6 /* Smoke+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58276F9E1C7FAD8800DEB4C6 /* Smoke+Repository.swift */; };
-		58276FA31C7FBA8D00DEB4C6 /* Place+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58276FA21C7FBA8D00DEB4C6 /* Place+Repository.swift */; };
 		5833E56C1C7E687700735BC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5833E56E1C7E687700735BC3 /* InfoPlist.strings */; };
 		5833E5781C7E839900735BC3 /* Smoke+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833E5751C7E839900735BC3 /* Smoke+CoreDataProperties.swift */; };
-		5833E5791C7E839900735BC3 /* Place+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833E5761C7E839900735BC3 /* Place+CoreDataProperties.swift */; };
-		5833E57A1C7E839900735BC3 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833E5771C7E839900735BC3 /* Place.swift */; };
 		5870F48C1C7E52DF0010FBDC /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48B1C7E52DF0010FBDC /* StatsViewController.swift */; };
 		5870F48E1C7E54BB0010FBDC /* StatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48D1C7E54BB0010FBDC /* StatsCell.swift */; };
 		5870F4901C7E59610010FBDC /* CountOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48F1C7E59610010FBDC /* CountOperation.swift */; };
@@ -113,11 +110,8 @@
 		58276F9B1C7FA73900DEB4C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		58276F9C1C7FA73900DEB4C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		58276F9E1C7FAD8800DEB4C6 /* Smoke+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Smoke+Repository.swift"; sourceTree = "<group>"; };
-		58276FA21C7FBA8D00DEB4C6 /* Place+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Place+Repository.swift"; sourceTree = "<group>"; };
 		5833E56F1C7E687900735BC3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5833E5751C7E839900735BC3 /* Smoke+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Smoke+CoreDataProperties.swift"; path = "../Smoke+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5833E5761C7E839900735BC3 /* Place+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Place+CoreDataProperties.swift"; path = "../Place+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5833E5771C7E839900735BC3 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		5870F48B1C7E52DF0010FBDC /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		5870F48D1C7E54BB0010FBDC /* StatsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsCell.swift; sourceTree = "<group>"; };
 		5870F48F1C7E59610010FBDC /* CountOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountOperation.swift; sourceTree = "<group>"; };
@@ -196,7 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				58276F9E1C7FAD8800DEB4C6 /* Smoke+Repository.swift */,
-				58276FA21C7FBA8D00DEB4C6 /* Place+Repository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -205,7 +198,6 @@
 			isa = PBXGroup;
 			children = (
 				5833E5751C7E839900735BC3 /* Smoke+CoreDataProperties.swift */,
-				5833E5761C7E839900735BC3 /* Place+CoreDataProperties.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -331,7 +323,6 @@
 			children = (
 				58BB86E71C7A4E8400804E90 /* CoreDataStack.swift */,
 				58BB86E21C7A4C3400804E90 /* Smoke.swift */,
-				5833E5771C7E839900735BC3 /* Place.swift */,
 				58276F9D1C7FAD7600DEB4C6 /* Repositories */,
 				5833E57E1C7E84DF00735BC3 /* CoreData */,
 				587DB87A1C7D082E00CD5354 /* Operations */,
@@ -517,14 +508,11 @@
 				5870F4901C7E59610010FBDC /* CountOperation.swift in Sources */,
 				58BB86E41C7A4C3400804E90 /* Smoke.swift in Sources */,
 				58BB86F01C7A517300804E90 /* HistoryTableViewCell.swift in Sources */,
-				5833E5791C7E839900735BC3 /* Place+CoreDataProperties.swift in Sources */,
 				587DB87C1C7D084400CD5354 /* ExportOperation.swift in Sources */,
-				5833E57A1C7E839900735BC3 /* Place.swift in Sources */,
 				589065DC1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld in Sources */,
 				58276F9F1C7FAD8800DEB4C6 /* Smoke+Repository.swift in Sources */,
 				58FCFC0F1C7A866D005786C9 /* SmokeDetailViewController.swift in Sources */,
 				5870F48E1C7E54BB0010FBDC /* StatsCell.swift in Sources */,
-				58276FA31C7FBA8D00DEB4C6 /* Place+Repository.swift in Sources */,
 				58BB86EE1C7A516000804E90 /* HistoryViewController.swift in Sources */,
 				589065D41C7A3F2F00F7F6DC /* AppDelegate.swift in Sources */,
 			);

@@ -20,7 +20,7 @@
 "new.type" = "Type";
 "new.comment" = "Commentaire";
 "new.place" = "Lieu";
-"new.place_placeholder" = "Donner un nom à ce lieu (rayon 50m)";
+"new.place_placeholder" = "Donner un nom à ce lieu (rayon 80m)";
 "new.allow_map" = "Utiliser ma position afin de mieux comprendre mes consommations";
 
 "stats_title" = "Statistiques";
@@ -35,7 +35,7 @@
 "export.comment" = "comment";
 "export.place" = "lieu";
 "export.lat" = "latitude";
-"export.lon" = "longiture";
+"export.lon" = "longitude";
 "export.cig" = "Cigarette";
 "export.weed" = "Weed";
 

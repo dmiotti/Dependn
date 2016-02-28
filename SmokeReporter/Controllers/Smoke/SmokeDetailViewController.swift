@@ -47,14 +47,15 @@ final class SmokeDetailViewController: UIViewController {
     
     var smoke: Smoke?
     
-    private var placeFound: Place?
-    private var currentUserLocation: MKUserLocation?
+    private var userLocation: MKUserLocation?
     private let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         dateFormatter = NSDateFormatter(dateFormat: "EEEE dd MMMM HH:mm")
+        
+        locationManager.delegate = self
 
         view.backgroundColor = UIColor.lightBackgroundColor()
         
@@ -131,7 +132,8 @@ final class SmokeDetailViewController: UIViewController {
         
         placeNameField = UITextField()
         placeNameField.placeholder = L("new.place_placeholder")
-        placeNameField.enabled = false
+        placeNameField.returnKeyType = .Done
+        placeNameField.delegate = self
         scrollContentView.addSubview(placeNameField)
         
         configureLayoutConstraints()
@@ -139,13 +141,6 @@ final class SmokeDetailViewController: UIViewController {
         registerNotificationObservers()
         
         fillWithSmokeIfNeeded()
-        
-        if smoke == nil && CLLocationManager.authorizationStatus() != .NotDetermined {
-            allowMapBtn.hidden = true
-            allowMapBtn.userInteractionEnabled = false
-            placeNameField.enabled = true
-            locationManager.requestWhenInUseAuthorization()
-        }
     }
     
     deinit {
@@ -164,18 +159,24 @@ final class SmokeDetailViewController: UIViewController {
             feelingAfterTextView.text = smoke.after
             commentTextView.text = smoke.comment
             datePicker.date = smoke.date
-            placeNameField.text = smoke.place?.name
-            if let place = smoke.place, coord = place.coordinate {
-                let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
-                let region = MKCoordinateRegion(center: coord, span: span)
-                mapView.setRegion(region, animated: true)
+            placeNameField.text = smoke.place
+            allowMapBtn.hidden = true
+            if let lat = smoke.lat?.doubleValue, lon = smoke.lon?.doubleValue {
+                enableMapView(CLLocationCoordinate2D(latitude: lat, longitude: lon))
+            } else {
+                disableMapView(false)
             }
             configureDateBtnWithDate(smoke.date)
         } else {
             datePicker.date = NSDate()
             configureDateBtnWithDate(NSDate())
-            mapView.showsUserLocation = true
-            mapView.setUserTrackingMode(.Follow, animated: true)
+            
+            if CLLocationManager.authorizationStatus() != .NotDetermined {
+                enableMapView(nil)
+                locationManager.requestWhenInUseAuthorization()
+            } else {
+                disableMapView(true)
+            }
         }
     }
     
@@ -194,19 +195,18 @@ final class SmokeDetailViewController: UIViewController {
             smoke.after = feelingAfterTextView.text
             smoke.comment = commentTextView.text
             smoke.date = datePicker.date
-            smoke.place?.name = placeNameField.text
+            smoke.place = placeNameField.text
         } else {
-            var place: Place?
-            if placeNameField.text?.characters.count > 0 {
-                
-            }
             Smoke.insertNewSmoke(type,
                 intensity: intensitySlider.value,
                 before: feelingBeforeTextView.text,
                 after: feelingAfterTextView.text,
                 comment: commentTextView.text,
-                place: place,
-                date: datePicker.date)
+                place: placeNameField.text,
+                latitude: userLocation?.coordinate.latitude,
+                longitude: userLocation?.coordinate.longitude,
+                date: datePicker.date,
+                inContext: CoreDataStack.shared.managedObjectContext)
         }
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -256,8 +256,129 @@ final class SmokeDetailViewController: UIViewController {
         scrollView.scrollIndicatorInsets = contentInsets
     }
     
-    // MARK: - Configure Layout Constraints
+    func allowUsingMapBtnClicked(sender: UIButton) {
+        locationManager.requestWhenInUseAuthorization()
+    }
     
+    // MARK: - Private Helpers
+    
+    private func configureTextView(textView: UITextView) {
+        textView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        textView.layer.borderWidth = 1
+        textView.textContainerInset = UIEdgeInsetsZero
+        textView.textContainer.lineFragmentPadding = 0
+        textView.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+        textView.delegate = self
+        scrollContentView.addSubview(textView)
+    }
+    
+    private func configureLbl(label: UILabel, withText text: String) {
+        label.text = text
+        label.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle2)
+        scrollContentView.addSubview(label)
+    }
+    
+    private func configureDateTextField() {
+        dateTextField.textAlignment = .Center
+        dateTextField.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle1)
+        
+        datePicker = UIDatePicker()
+        datePicker.datePickerMode = .DateAndTime
+        dateTextField.inputView = datePicker
+        
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
+        toolbar.tintColor = UIColor.grayColor()
+        let dateDoneItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "datePickerDidSelectDate:")
+        let dateSpaceItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        toolbar.items = [ dateSpaceItem, dateDoneItem ]
+        dateTextField.inputAccessoryView = toolbar
+        
+        scrollContentView.addSubview(dateTextField)
+    }
+    
+    private func enableMapView(location: CLLocationCoordinate2D?) {
+        if allowMapBtn.alpha > 0 {
+            UIView.animateWithDuration(0.35, animations: {
+                self.allowMapBtn.alpha = 0
+                }, completion: { finished in
+                    self.allowMapBtn.hidden = true
+            })
+        }
+        if let location = location {
+            let coord = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+            let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+            let region = MKCoordinateRegion(center: coord, span: span)
+            mapView.setRegion(region, animated: true)
+            
+            let ann = MKPointAnnotation()
+            ann.coordinate = coord
+            mapView.addAnnotation(ann)
+        } else {
+            mapView.showsUserLocation = true
+            mapView.setUserTrackingMode(.Follow, animated: true)
+        }
+        mapLbl.hidden = false
+        mapView.hidden = false
+    }
+    
+    private func disableMapView(canAccept: Bool) {
+        if canAccept {
+            allowMapBtn.alpha = 1
+        } else {
+            mapLbl.hidden = true
+            mapView.hidden = true
+        }
+    }
+}
+
+// MARK: - MKMapViewDelegate
+extension SmokeDetailViewController: MKMapViewDelegate {
+    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+        self.userLocation = userLocation
+        
+        if placeNameField.text == nil || placeNameField.text?.characters.count == 0 {
+            if let smoke = Smoke.findNearBySmoke(
+                userLocation.coordinate.latitude,
+                longitude: userLocation.coordinate.longitude,
+                inContext: CoreDataStack.shared.managedObjectContext) {
+                    placeNameField.text = smoke.place
+            }
+        }
+    }
+}
+
+// MARK: - CLLocationManagerDelegate
+extension SmokeDetailViewController: CLLocationManagerDelegate {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if smoke != nil { return }
+        if status == .AuthorizedWhenInUse || status == .AuthorizedAlways {
+            enableMapView(nil)
+        } else {
+            disableMapView(true)
+        }
+    }
+}
+
+// MARK: - UITextViewDelegate
+extension SmokeDetailViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(textView: UITextView) {
+        var rect = scrollView.convertRect(textView.frame, fromView: scrollContentView)
+        rect.origin.y += kAddSmokeLblPadding
+        scrollView.scrollRectToVisible(rect, animated: true)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension SmokeDetailViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+// MARK: - Configure Layout Constraints
+extension SmokeDetailViewController {
+
     private func configureLayoutConstraints() {
         scrollView.snp_makeConstraints {
             $0.edges.equalTo(view)
@@ -363,77 +484,4 @@ final class SmokeDetailViewController: UIViewController {
         }
     }
     
-    func allowUsingMapBtnClicked(sender: UIButton) {
-        locationManager.requestWhenInUseAuthorization()
-    }
-    
-    // MARK: - Private Helpers
-    
-    private func configureTextView(textView: UITextView) {
-        textView.layer.borderColor = UIColor.lightGrayColor().CGColor
-        textView.layer.borderWidth = 1
-        textView.textContainerInset = UIEdgeInsetsZero
-        textView.textContainer.lineFragmentPadding = 0
-        textView.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
-        textView.delegate = self
-        scrollContentView.addSubview(textView)
-    }
-    
-    private func configureLbl(label: UILabel, withText text: String) {
-        label.text = text
-        label.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle2)
-        scrollContentView.addSubview(label)
-    }
-    
-    private func configureDateTextField() {
-        dateTextField.textAlignment = .Center
-        dateTextField.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle1)
-        
-        datePicker = UIDatePicker()
-        datePicker.datePickerMode = .DateAndTime
-        dateTextField.inputView = datePicker
-        
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
-        toolbar.tintColor = UIColor.grayColor()
-        let dateDoneItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "datePickerDidSelectDate:")
-        let dateSpaceItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-        toolbar.items = [ dateSpaceItem, dateDoneItem ]
-        dateTextField.inputAccessoryView = toolbar
-        
-        scrollContentView.addSubview(dateTextField)
-    }
-}
-
-extension SmokeDetailViewController: MKMapViewDelegate {
-    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-        currentUserLocation = userLocation
-    }
-}
-
-extension SmokeDetailViewController: CLLocationManagerDelegate {
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if smoke != nil { return }
-        if status == .AuthorizedWhenInUse || status == .AuthorizedAlways {
-            if allowMapBtn.alpha > 0 {
-                UIView.animateWithDuration(0.35, animations: {
-                    self.allowMapBtn.alpha = 0
-                    }, completion: { finished in
-                        self.allowMapBtn.hidden = true
-                })
-            }
-            mapLbl.hidden = false
-            mapView.hidden = false
-        } else {
-            mapLbl.hidden = true
-            mapView.hidden = true
-        }
-    }
-}
-
-extension SmokeDetailViewController: UITextViewDelegate {
-    func textViewDidBeginEditing(textView: UITextView) {
-        var rect = scrollView.convertRect(textView.frame, fromView: scrollContentView)
-        rect.origin.y += kAddSmokeLblPadding
-        scrollView.scrollRectToVisible(rect, animated: true)
-    }
 }
