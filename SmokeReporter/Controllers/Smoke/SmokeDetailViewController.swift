@@ -49,14 +49,15 @@ final class SmokeDetailViewController: UIViewController {
     
     private var userLocation: MKUserLocation?
     private let locationManager = CLLocationManager()
-
+    private let nearbyQueue = NSOperationQueue()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         dateFormatter = NSDateFormatter(dateFormat: "EEEE dd MMMM HH:mm")
         
         locationManager.delegate = self
-
+        
         view.backgroundColor = UIColor.lightBackgroundColor()
         
         cancelBtn = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelBtnClicked:")
@@ -71,7 +72,7 @@ final class SmokeDetailViewController: UIViewController {
         
         scrollContentView = UIView()
         scrollView.addSubview(scrollContentView)
-
+        
         typeSelector = UISegmentedControl(items: [ L("new.cig"), L("new.weed") ])
         typeSelector.selectedSegmentIndex = 0
         scrollContentView.addSubview(typeSelector)
@@ -340,13 +341,15 @@ extension SmokeDetailViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         self.userLocation = userLocation
         
-        if placeNameField.text == nil || placeNameField.text?.characters.count == 0 {
-            if let smoke = Smoke.findNearBySmoke(
-                userLocation.coordinate.latitude,
-                longitude: userLocation.coordinate.longitude,
-                inContext: CoreDataStack.shared.managedObjectContext) {
-                    placeNameField.text = smoke.place
-            }
+        if let location = userLocation.location
+            where (placeNameField.text == nil || placeNameField.text?.characters.count == 0) {
+                let op = NearestPlaceOperation(location: location, distance: 80)
+                op.completionBlock = {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.placeNameField.text = op.place
+                    }
+                }
+                nearbyQueue.addOperation(op)
         }
     }
 }
@@ -382,7 +385,7 @@ extension SmokeDetailViewController: UITextFieldDelegate {
 
 // MARK: - Configure Layout Constraints
 extension SmokeDetailViewController {
-
+    
     private func configureLayoutConstraints() {
         scrollView.snp_makeConstraints {
             $0.edges.equalTo(view)

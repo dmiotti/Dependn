@@ -13,6 +13,7 @@
 		586B73491C83932900934192 /* AveragePerDayOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586B73481C83932900934192 /* AveragePerDayOperation.swift */; };
 		586B734B1C8397CE00934192 /* AverageTimeInBetweenTwoTakesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586B734A1C8397CE00934192 /* AverageTimeInBetweenTwoTakesOperation.swift */; };
 		586B734D1C83A27B00934192 /* AverageIntensityOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586B734C1C83A27B00934192 /* AverageIntensityOperation.swift */; };
+		586B73511C83B75800934192 /* NearestSmokeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586B73501C83B75800934192 /* NearestSmokeOperation.swift */; };
 		5870F48C1C7E52DF0010FBDC /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48B1C7E52DF0010FBDC /* StatsViewController.swift */; };
 		5870F48E1C7E54BB0010FBDC /* StatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48D1C7E54BB0010FBDC /* StatsCell.swift */; };
 		5870F4901C7E59610010FBDC /* CountOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48F1C7E59610010FBDC /* CountOperation.swift */; };
@@ -118,6 +119,7 @@
 		586B73481C83932900934192 /* AveragePerDayOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AveragePerDayOperation.swift; sourceTree = "<group>"; };
 		586B734A1C8397CE00934192 /* AverageTimeInBetweenTwoTakesOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AverageTimeInBetweenTwoTakesOperation.swift; sourceTree = "<group>"; };
 		586B734C1C83A27B00934192 /* AverageIntensityOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AverageIntensityOperation.swift; sourceTree = "<group>"; };
+		586B73501C83B75800934192 /* NearestSmokeOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearestSmokeOperation.swift; sourceTree = "<group>"; };
 		5870F48B1C7E52DF0010FBDC /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		5870F48D1C7E54BB0010FBDC /* StatsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsCell.swift; sourceTree = "<group>"; };
 		5870F48F1C7E59610010FBDC /* CountOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountOperation.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				586B73481C83932900934192 /* AveragePerDayOperation.swift */,
 				586B734A1C8397CE00934192 /* AverageTimeInBetweenTwoTakesOperation.swift */,
 				586B734C1C83A27B00934192 /* AverageIntensityOperation.swift */,
+				586B73501C83B75800934192 /* NearestSmokeOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -537,6 +540,7 @@
 				58BB86F01C7A517300804E90 /* HistoryTableViewCell.swift in Sources */,
 				587DB87C1C7D084400CD5354 /* ExportOperation.swift in Sources */,
 				589065DC1C7A3F2F00F7F6DC /* SmokeReporter.xcdatamodeld in Sources */,
+				586B73511C83B75800934192 /* NearestSmokeOperation.swift in Sources */,
 				58276F9F1C7FAD8800DEB4C6 /* Smoke+Repository.swift in Sources */,
 				58FCFC0F1C7A866D005786C9 /* SmokeDetailViewController.swift in Sources */,
 				5870F48E1C7E54BB0010FBDC /* StatsCell.swift in Sources */,

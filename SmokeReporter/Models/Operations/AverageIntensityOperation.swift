@@ -12,10 +12,10 @@ import CoreData
 
 final class AverageIntensityOperation: SHOperation {
     
-    let context: NSManagedObjectContext
+    private(set) var error: NSError?
+    private(set) var average: Float = 0
     
-    var error: NSError?
-    var average: Float = 0
+    private let context: NSManagedObjectContext
     
     override init() {
         context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)

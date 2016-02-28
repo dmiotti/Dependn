@@ -12,12 +12,12 @@ import CoreData
 
 final class CountOperation: SHOperation {
     
-    var cigaretteCount: Int?
-    var weedCount: Int?
-    var total: Int?
-    var error: NSError?
+    private(set) var cigaretteCount: Int?
+    private(set) var weedCount: Int?
+    private(set) var total: Int?
+    private(set) var error: NSError?
     
-    let context: NSManagedObjectContext
+    private let context: NSManagedObjectContext
     
     override init() {
         context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)

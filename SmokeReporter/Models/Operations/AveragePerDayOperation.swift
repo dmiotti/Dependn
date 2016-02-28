@@ -12,12 +12,11 @@ import CoreData
 
 final class AveragePerDayOperation: SHOperation {
     
-    let context: NSManagedObjectContext
+    private(set) var average: Float?
+    private(set) var error: NSError?
     
-    var average: Float?
-    var error: NSError?
-    
-    private var fetchedResultsController: NSFetchedResultsController
+    private let context: NSManagedObjectContext
+    private(set) var fetchedResultsController: NSFetchedResultsController
     
     override init() {
         context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)

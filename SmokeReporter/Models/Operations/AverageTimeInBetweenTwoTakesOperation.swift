@@ -12,10 +12,10 @@ import CoreData
 
 final class AverageTimeInBetweenTwoTakesOperation: SHOperation {
     
-    let context: NSManagedObjectContext
+    private(set) var average: NSTimeInterval?
+    private(set) var error: NSError?
     
-    var average: NSTimeInterval?
-    var error: NSError?
+    private let context: NSManagedObjectContext
     
     override init() {
         context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)

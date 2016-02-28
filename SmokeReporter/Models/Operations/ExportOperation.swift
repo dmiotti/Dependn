@@ -115,10 +115,10 @@ public let kImportOperationUserCancelledCode = 2
 
 final class ImportOperation: SHOperation {
     
-    var error: NSError?
+    private(set) var error: NSError?
     
-    private let controller: UIViewController
     private let context: NSManagedObjectContext
+    private let controller: UIViewController
     
     init(controller: UIViewController) {
         self.controller = controller
