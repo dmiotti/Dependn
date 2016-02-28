@@ -246,6 +246,9 @@ final class ImportOperation: SHOperation {
     }
     
     private func newRecordFromValues(values: [String]) {
+        if values.count < 10 {
+            return
+        }
         let daystr = values[0]
         let hourstr = values[1]
         let datestr = "\(daystr) \(hourstr)"
