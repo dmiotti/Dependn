@@ -196,8 +196,22 @@ extension HistoryViewController: UITableViewDataSource {
         date.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
         date.textColor = "7D9BB8".UIColor
         header.addSubview(date)
+        let countLbl = UILabel()
+        countLbl.text = fetchedResultsController.sections?[section].name.uppercaseString
+        countLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
+        countLbl.textColor = "7D9BB8".UIColor
+        header.addSubview(countLbl)
+        if let numberOfObjects = fetchedResultsController.sections?[section].numberOfObjects {
+            countLbl.text = "\(numberOfObjects)"
+        } else {
+            countLbl.text = nil
+        }
         date.snp_makeConstraints {
             $0.left.equalTo(header).offset(15)
+            $0.right.equalTo(countLbl.snp_left).offset(-15)
+            $0.bottom.equalTo(header).offset(-6)
+        }
+        countLbl.snp_makeConstraints {
             $0.right.equalTo(header).offset(-15)
             $0.bottom.equalTo(header).offset(-6)
         }
