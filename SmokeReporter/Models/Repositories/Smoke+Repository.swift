@@ -70,7 +70,6 @@ extension Smoke {
             "(%@ <= lon) AND (lon <= %@) AND (%@ <= lat) AND (lat <= %@) AND (place != nil)",
             NSNumber(double: minLon), NSNumber(double: maxLon), NSNumber(double: minLat), NSNumber(double: maxLat))
         req.fetchLimit = 50
-        print("\(req.predicate!)")
         do {
             return try context.executeFetchRequest(req).first as? Smoke
         } catch let err as NSError {
