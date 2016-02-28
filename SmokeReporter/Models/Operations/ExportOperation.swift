@@ -176,9 +176,10 @@ final class ImportOperation: SHOperation {
             let enumerator = fileManager.enumeratorAtURL(directoryURL,
                 includingPropertiesForKeys: nil, options: .SkipsHiddenFiles, errorHandler: nil)
             
-            while let element = enumerator?.nextObject() as? NSURL
-                where element.pathExtension == "csv" {
+            while let element = enumerator?.nextObject() as? NSURL {
+                if element.pathExtension == "csv" {
                     candidates.append(element)
+                }
             }
         }
         
@@ -245,10 +246,6 @@ final class ImportOperation: SHOperation {
     }
     
     private func newRecordFromValues(values: [String]) {
-        if values.count < 7 {
-            return
-        }
-        
         let daystr = values[0]
         let hourstr = values[1]
         let datestr = "\(daystr) \(hourstr)"
