@@ -209,9 +209,11 @@ extension HistoryViewController: UITableViewDataSource {
             let type = smoke.smokeType
             cell.dateLbl.attributedText = attributedStringForDate(smoke.date, type: type)
             if type == .Cig {
-                cell.imgView.image = UIImage(named: "cigarette")
+                cell.circleTypeView.color = UIColor.appCigaretteColor()
+                cell.circleTypeView.textLbl.text = "C"
             } else {
-                cell.imgView.image = UIImage(named: "weed")
+                cell.circleTypeView.color = UIColor.appWeedColor()
+                cell.circleTypeView.textLbl.text = "W"
             }
             cell.intensityLbl.text = "\(smoke.intensity.integerValue)"
         }
@@ -260,7 +262,8 @@ extension HistoryViewController: NSFetchedResultsControllerDelegate {
             }
         case .Move:
             if let indexPath = indexPath, newIndexPath = newIndexPath {
-                tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
             }
         case .Update:
             if let indexPath = indexPath {

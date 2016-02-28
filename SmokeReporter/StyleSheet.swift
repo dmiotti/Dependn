@@ -32,7 +32,9 @@ extension UIColor {
     
     class func appBlueColor()           -> UIColor { return "28AFFA".UIColor }
     class func appBlackColor()          -> UIColor { return "030303".UIColor }
-    class func appLightTextColor()         -> UIColor { return "A2B8CC".UIColor }
+    class func appLightTextColor()      -> UIColor { return "A2B8CC".UIColor }
+    class func appCigaretteColor()      -> UIColor { return "28AFFA".UIColor }
+    class func appWeedColor()           -> UIColor { return "2DD7AA".UIColor }
     class func lightBackgroundColor()   -> UIColor { return "F5FAFF".UIColor }
 
     class func lowIntensityColor()      -> UIColor { return  UIColor.emeraldColor()     }

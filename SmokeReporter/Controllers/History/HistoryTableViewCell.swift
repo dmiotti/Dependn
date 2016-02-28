@@ -9,22 +9,52 @@
 import UIKit
 import SwiftHelpers
 
+final class SmokeCircleTypeView: SHCommonInitView {
+    private(set) var textLbl: UILabel!
+    
+    var color: UIColor = UIColor.appBlackColor() {
+        didSet {
+            textLbl.textColor = color
+            backgroundColor = color.colorWithAlphaComponent(0.1)
+            layer.borderColor = color.colorWithAlphaComponent(0.1).CGColor
+            setNeedsDisplay()
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = bounds.size.height / 2.0
+    }
+    
+    override func commonInit() {
+        super.commonInit()
+        layer.borderWidth = 1
+        textLbl = UILabel()
+        textLbl.textAlignment = .Center
+        textLbl.font = UIFont.systemFontOfSize(14, weight: UIFontWeightMedium)
+        addSubview(textLbl)
+        textLbl.snp_makeConstraints {
+            $0.edges.equalTo(self)
+        }
+        color = UIColor.appBlackColor()
+    }
+}
+
 final class HistoryTableViewCell: SHCommonInitTableViewCell {
     
     static let reuseIdentifier = "HistoryTableViewCell"
     
-    var imgView: UIImageView!
-    var dateLbl: UILabel!
-    var intensityLbl: UILabel!
+    private(set) var circleTypeView: SmokeCircleTypeView!
+    private(set) var dateLbl: UILabel!
+    private(set) var intensityLbl: UILabel!
     
     override func commonInit() {
         super.commonInit()
         
         accessoryType = .DisclosureIndicator
         
-        imgView = UIImageView()
-        imgView.contentMode = .ScaleAspectFit
-        contentView.addSubview(imgView)
+        circleTypeView = SmokeCircleTypeView()
+        contentView.addSubview(circleTypeView)
         
         dateLbl = UILabel()
         dateLbl.numberOfLines = 0
@@ -38,7 +68,7 @@ final class HistoryTableViewCell: SHCommonInitTableViewCell {
     }
     
     private func configureLayoutConstraints() {
-        imgView.snp_makeConstraints {
+        circleTypeView.snp_makeConstraints {
             $0.centerY.equalTo(contentView)
             $0.left.equalTo(contentView).offset(20)
             $0.width.height.equalTo(30)
@@ -51,7 +81,7 @@ final class HistoryTableViewCell: SHCommonInitTableViewCell {
         }
         
         dateLbl.snp_makeConstraints {
-            $0.left.equalTo(imgView.snp_right).offset(10)
+            $0.left.equalTo(circleTypeView.snp_right).offset(10)
             $0.top.equalTo(contentView)
             $0.bottom.equalTo(contentView)
             $0.right.equalTo(intensityLbl.snp_left).offset(-10)
