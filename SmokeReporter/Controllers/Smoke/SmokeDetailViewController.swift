@@ -281,6 +281,7 @@ final class SmokeDetailViewController: UIViewController {
     private func configureDateTextField() {
         dateTextField.textAlignment = .Center
         dateTextField.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle1)
+        dateTextField.adjustsFontSizeToFitWidth = true
         
         datePicker = UIDatePicker()
         datePicker.datePickerMode = .DateAndTime
@@ -456,8 +457,8 @@ extension SmokeDetailViewController {
         
         dateTextField.snp_makeConstraints {
             $0.top.equalTo(dateLbl.snp_bottom).offset(kAddSmokeValuePadding)
-            $0.left.equalTo(scrollContentView).offset(kAddSmokeHorizontalPadding)
-            $0.right.equalTo(scrollContentView).offset(-kAddSmokeHorizontalPadding)
+            $0.left.equalTo(scrollContentView).offset(kAddSmokeHorizontalPadding*2.0)
+            $0.right.equalTo(scrollContentView).offset(-kAddSmokeHorizontalPadding*2.0)
             $0.height.equalTo(kAddSmokeTextViewHeight)
         }
         

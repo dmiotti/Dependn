@@ -39,9 +39,9 @@
 "history.cig" = "Cigarette";
 "history.weed" = "Weed";
 "history.action.title" = "Quelle action voulez-vous lancer ?";
-"history.action.message" = "";
-"history.action.export" = "Export";
-"history.action.import" = "Import";
+"history.action.message" = "Pour importer des données vous devez ajouter des fichiers à l'application via iTunes";
+"history.action.export" = "Exporter mes données";
+"history.action.import" = "Importer mes données";
 
 "import.choose_file" = "Choisissez un ficher à importer";
 "import.choose_file_message" = "Vos données actuelles seront supprimées";
