@@ -23,7 +23,7 @@ final class HistoryViewController: UIViewController {
     private var dateFormatter: NSDateFormatter!
     
     private lazy var fetchedResultsController: NSFetchedResultsController = {
-        let controller = Smoke.historyFetchedResultsController()
+        let controller = Smoke.historyFetchedResultsController(inContext: CoreDataStack.shared.managedObjectContext)
         controller.delegate = self
         return controller
     }()

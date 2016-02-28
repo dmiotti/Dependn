@@ -21,6 +21,7 @@ final class StatsCell: SHCommonInitTableViewCell {
         
         titleLbl = UILabel()
         titleLbl.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+        titleLbl.adjustsFontSizeToFitWidth = true
         contentView.addSubview(titleLbl)
         
         valueLbl = UILabel()
@@ -36,6 +37,7 @@ final class StatsCell: SHCommonInitTableViewCell {
             $0.left.equalTo(contentView).offset(20)
             $0.top.equalTo(contentView)
             $0.bottom.equalTo(contentView)
+            $0.right.lessThanOrEqualTo(valueLbl.snp_left).offset(-10)
         }
         
         valueLbl.snp_makeConstraints {

@@ -23,9 +23,6 @@
 "new.place_placeholder" = "Donner un nom à ce lieu (rayon 80m)";
 "new.allow_map" = "Utiliser ma position afin de mieux comprendre mes consommations";
 
-"stats_title" = "Statistiques";
-"stats_total" = "Total";
-
 "export.date" = "date";
 "export.time" = "heure";
 "export.intensity" = "intensité";
@@ -52,3 +49,13 @@
 "import.no_data_suggestion" = "Ajouter un fichier d'import dans l'application grâce à iTunes";
 "import.cancelled_by_user" = "L'utilisateur a annuler l'import";
 "import.cancelled_by_user_recovery" = "Veuillez recommencer";
+
+"stats.title" = "Statistiques";
+"stats.total" = "Total";
+"stats.average_per_day" = "Moyenne par jour";
+"stats.version" = "Version";
+"stats.average_btw_takes" = "Temps moyen entre 2 prises";
+"stats.not_available" = "nc.";
+"stats.minutes" = "minutes";
+"stats.hours" = "heures";
+"stats.average_intensity" = "Intensité moyenne";

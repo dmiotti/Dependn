@@ -287,8 +287,11 @@ final class SmokeDetailViewController: UIViewController {
         dateTextField.inputView = datePicker
         
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
-        toolbar.tintColor = UIColor.grayColor()
         let dateDoneItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "datePickerDidSelectDate:")
+        dateDoneItem.setTitleTextAttributes([
+            NSForegroundColorAttributeName: UIColor.appBlueColor(),
+            NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
+            ], forState: .Normal)
         let dateSpaceItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         toolbar.items = [ dateSpaceItem, dateDoneItem ]
         dateTextField.inputAccessoryView = toolbar

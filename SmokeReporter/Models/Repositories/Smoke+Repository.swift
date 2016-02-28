@@ -40,11 +40,11 @@ extension Smoke {
             return smoke
     }
     
-    static func historyFetchedResultsController() -> NSFetchedResultsController {
+    static func historyFetchedResultsController(inContext context: NSManagedObjectContext) -> NSFetchedResultsController {
         let req = NSFetchRequest(entityName: Smoke.entityName)
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
         let controller = NSFetchedResultsController(fetchRequest: req,
-            managedObjectContext: CoreDataStack.shared.managedObjectContext,
+            managedObjectContext: context,
             sectionNameKeyPath: "sectionIdentifier",
             cacheName: nil)
         return controller

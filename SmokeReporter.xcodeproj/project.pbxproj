@@ -10,6 +10,9 @@
 		58276F9F1C7FAD8800DEB4C6 /* Smoke+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58276F9E1C7FAD8800DEB4C6 /* Smoke+Repository.swift */; };
 		5833E56C1C7E687700735BC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5833E56E1C7E687700735BC3 /* InfoPlist.strings */; };
 		5833E5781C7E839900735BC3 /* Smoke+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833E5751C7E839900735BC3 /* Smoke+CoreDataProperties.swift */; };
+		586B73491C83932900934192 /* AveragePerDayOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586B73481C83932900934192 /* AveragePerDayOperation.swift */; };
+		586B734B1C8397CE00934192 /* AverageTimeInBetweenTwoTakesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586B734A1C8397CE00934192 /* AverageTimeInBetweenTwoTakesOperation.swift */; };
+		586B734D1C83A27B00934192 /* AverageIntensityOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586B734C1C83A27B00934192 /* AverageIntensityOperation.swift */; };
 		5870F48C1C7E52DF0010FBDC /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48B1C7E52DF0010FBDC /* StatsViewController.swift */; };
 		5870F48E1C7E54BB0010FBDC /* StatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48D1C7E54BB0010FBDC /* StatsCell.swift */; };
 		5870F4901C7E59610010FBDC /* CountOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5870F48F1C7E59610010FBDC /* CountOperation.swift */; };
@@ -112,6 +115,9 @@
 		58276F9E1C7FAD8800DEB4C6 /* Smoke+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Smoke+Repository.swift"; sourceTree = "<group>"; };
 		5833E56F1C7E687900735BC3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5833E5751C7E839900735BC3 /* Smoke+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Smoke+CoreDataProperties.swift"; path = "../Smoke+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		586B73481C83932900934192 /* AveragePerDayOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AveragePerDayOperation.swift; sourceTree = "<group>"; };
+		586B734A1C8397CE00934192 /* AverageTimeInBetweenTwoTakesOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AverageTimeInBetweenTwoTakesOperation.swift; sourceTree = "<group>"; };
+		586B734C1C83A27B00934192 /* AverageIntensityOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AverageIntensityOperation.swift; sourceTree = "<group>"; };
 		5870F48B1C7E52DF0010FBDC /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		5870F48D1C7E54BB0010FBDC /* StatsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsCell.swift; sourceTree = "<group>"; };
 		5870F48F1C7E59610010FBDC /* CountOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountOperation.swift; sourceTree = "<group>"; };
@@ -216,6 +222,9 @@
 			children = (
 				587DB87B1C7D084400CD5354 /* ExportOperation.swift */,
 				5870F48F1C7E59610010FBDC /* CountOperation.swift */,
+				586B73481C83932900934192 /* AveragePerDayOperation.swift */,
+				586B734A1C8397CE00934192 /* AverageTimeInBetweenTwoTakesOperation.swift */,
+				586B734C1C83A27B00934192 /* AverageIntensityOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -516,7 +525,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				586B73491C83932900934192 /* AveragePerDayOperation.swift in Sources */,
+				586B734B1C8397CE00934192 /* AverageTimeInBetweenTwoTakesOperation.swift in Sources */,
 				58FCFC0C1C7A7916005786C9 /* StyleSheet.swift in Sources */,
+				586B734D1C83A27B00934192 /* AverageIntensityOperation.swift in Sources */,
 				5870F48C1C7E52DF0010FBDC /* StatsViewController.swift in Sources */,
 				5833E5781C7E839900735BC3 /* Smoke+CoreDataProperties.swift in Sources */,
 				58BB86E81C7A4E8400804E90 /* CoreDataStack.swift in Sources */,
