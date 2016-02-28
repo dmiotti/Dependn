@@ -41,7 +41,7 @@
 
 "history.cig" = "Cigarette";
 "history.weed" = "Weed";
-"history.action.title" = "Quel action voulez-vous lancer ?";
+"history.action.title" = "Quelle action voulez-vous lancer ?";
 "history.action.message" = "";
 "history.action.export" = "Export";
 "history.action.import" = "Import";
