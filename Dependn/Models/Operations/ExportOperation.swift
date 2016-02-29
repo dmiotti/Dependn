@@ -37,7 +37,7 @@ final class ExportOperation: SHOperation {
         context.performBlockAndWait {
             do {
                 let req = NSFetchRequest(entityName: Smoke.entityName)
-                req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: true) ]
+                req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
                 let smokes = try self.context.executeFetchRequest(req) as! [Smoke]
                 
                 let path = self.exportPath()
