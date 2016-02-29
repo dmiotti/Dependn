@@ -11,7 +11,7 @@ import SnapKit
 import CoreData
 import SwiftHelpers
 import PKHUD
-import CocoaLumberjackSwift
+import CocoaLumberjack
 
 final class HistoryViewController: UIViewController {
     
@@ -73,6 +73,7 @@ final class HistoryViewController: UIViewController {
             try fetchedResultsController.performFetch()
             fetchExecuted = true
         } catch let err as NSError {
+//            DDLog.log
             DDLogError("Error while perfoming fetch: \(err)")
             fetchExecuted = false
         }

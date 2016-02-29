@@ -5,7 +5,7 @@ Report every Cigarettes you smoke and make stats.
 ## Setup
 
 ```
-$ brew install carthage
-$ carthage update
+$ brew install cocoapods
+$ pod install
 $ open SmokeReporter.xcodeproj
 ```

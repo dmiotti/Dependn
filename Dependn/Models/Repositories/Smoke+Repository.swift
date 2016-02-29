@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-import CocoaLumberjackSwift
+import CocoaLumberjack
 import CoreLocation
 
 private let R: Double = 6371009000
