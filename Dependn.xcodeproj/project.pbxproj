@@ -261,10 +261,10 @@
 			isa = PBXGroup;
 			children = (
 				58DF62B31C83BDEE0035F608 /* CoreDataStack.swift */,
-				58DF62B41C83BDEE0035F608 /* Operations */,
-				58DF62BB1C83BDEE0035F608 /* Repositories */,
 				58DF62BE1C83BDEE0035F608 /* Smoke.swift */,
 				58DF62BD1C83BDEE0035F608 /* Smoke+CoreDataProperties.swift */,
+				58DF62BB1C83BDEE0035F608 /* Repositories */,
+				58DF62B41C83BDEE0035F608 /* Operations */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -297,6 +297,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 589065FB1C7A3F2F00F7F6DC /* Build configuration list for PBXNativeTarget "Dependn" */;
 			buildPhases = (
+				58BF267F1C83C06300263313 /* Update Build Number 1 */,
 				589065CC1C7A3F2F00F7F6DC /* Sources */,
 				589065CD1C7A3F2F00F7F6DC /* Frameworks */,
 				589065CE1C7A3F2F00F7F6DC /* Resources */,
@@ -304,6 +305,7 @@
 				5890660E1C7A48B700F7F6DC /* CopyFiles */,
 				5888DC7B1C7B217600E01A32 /* Fabric */,
 				58CFC59F1C831ADD00F8A006 /* Strip Archs */,
+				58BF26801C83C0B400263313 /* Update Build Number 2 */,
 			);
 			buildRules = (
 			);
@@ -377,6 +379,34 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run 1eae28d1e74276b776784b2e624fcafbe8be63d5 ba6ddef5d9aedbe90726d134beae9003786035d9528c15c59a784d82adc87e47";
+		};
+		58BF267F1C83C06300263313 /* Update Build Number 1 */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update Build Number 1";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Set the build number to the count of Git commits\nbuildNumber=$(git rev-list --count HEAD)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		58BF26801C83C0B400263313 /* Update Build Number 2 */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update Build Number 2";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Set the build number to \"DEVELOPMENT\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion DEVELOPMENT\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
 		58CFC59F1C831ADD00F8A006 /* Strip Archs */ = {
 			isa = PBXShellScriptBuildPhase;
