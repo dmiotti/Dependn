@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5801C6781C84414200CA0A82 /* Dependn.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */; };
+		580E96971C8444E400F92068 /* RecordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E96961C8444E400F92068 /* RecordDetailViewController.swift */; };
 		58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF629E1C83BDEE0035F608 /* AppDelegate.swift */; };
 		58DF62C31C83BDEE0035F608 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58DF629F1C83BDEE0035F608 /* Assets.xcassets */; };
 		58DF62C41C83BDEE0035F608 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58DF62A01C83BDEE0035F608 /* LaunchScreen.storyboard */; };
 		58DF62C51C83BDEE0035F608 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58DF62A21C83BDEE0035F608 /* Main.storyboard */; };
 		58DF62C61C83BDEE0035F608 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62A61C83BDEE0035F608 /* HistoryTableViewCell.swift */; };
 		58DF62C71C83BDEE0035F608 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62A71C83BDEE0035F608 /* HistoryViewController.swift */; };
-		58DF62C81C83BDEE0035F608 /* SmokeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62A91C83BDEE0035F608 /* SmokeDetailViewController.swift */; };
 		58DF62C91C83BDEE0035F608 /* StatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62AB1C83BDEE0035F608 /* StatsCell.swift */; };
 		58DF62CA1C83BDEE0035F608 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62AC1C83BDEE0035F608 /* StatsViewController.swift */; };
 		58DF62CB1C83BDEE0035F608 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58DF62AD1C83BDEE0035F608 /* InfoPlist.strings */; };
@@ -25,10 +26,10 @@
 		58DF62D21C83BDEE0035F608 /* CountOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62B81C83BDEE0035F608 /* CountOperation.swift */; };
 		58DF62D31C83BDEE0035F608 /* ExportOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62B91C83BDEE0035F608 /* ExportOperation.swift */; };
 		58DF62D41C83BDEE0035F608 /* NearestSmokeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BA1C83BDEE0035F608 /* NearestSmokeOperation.swift */; };
-		58DF62D51C83BDEE0035F608 /* Smoke+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BC1C83BDEE0035F608 /* Smoke+Repository.swift */; };
-		58DF62D61C83BDEE0035F608 /* Smoke+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BD1C83BDEE0035F608 /* Smoke+CoreDataProperties.swift */; };
-		58DF62D71C83BDEE0035F608 /* Smoke.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BE1C83BDEE0035F608 /* Smoke.swift */; };
-		58DF62D81C83BDEE0035F608 /* SmokeReporter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BF1C83BDEE0035F608 /* SmokeReporter.xcdatamodeld */; };
+		58DF62D51C83BDEE0035F608 /* Record+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BC1C83BDEE0035F608 /* Record+Repository.swift */; };
+		58DF62D61C83BDEE0035F608 /* Record+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BD1C83BDEE0035F608 /* Record+CoreDataProperties.swift */; };
+		58DF62D71C83BDEE0035F608 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BE1C83BDEE0035F608 /* Record.swift */; };
+		58DF62D81C83BDEE0035F608 /* Dependn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */; };
 		58DF62D91C83BDEE0035F608 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62C11C83BDEE0035F608 /* StyleSheet.swift */; };
 		FE13DF52A68AA47D8184F97D /* Pods_Dependn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE1FEA29CFCF5CB9F1B7A41 /* Pods_Dependn.framework */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,7 @@
 
 /* Begin PBXFileReference section */
 		1B3495A2BA0FC80954921D93 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		580E96961C8444E400F92068 /* RecordDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordDetailViewController.swift; sourceTree = "<group>"; };
 		589065D01C7A3F2F00F7F6DC /* Dependn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dependn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DF629E1C83BDEE0035F608 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		58DF629F1C83BDEE0035F608 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -64,7 +66,6 @@
 		58DF62A31C83BDEE0035F608 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		58DF62A61C83BDEE0035F608 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		58DF62A71C83BDEE0035F608 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
-		58DF62A91C83BDEE0035F608 /* SmokeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmokeDetailViewController.swift; sourceTree = "<group>"; };
 		58DF62AB1C83BDEE0035F608 /* StatsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsCell.swift; sourceTree = "<group>"; };
 		58DF62AC1C83BDEE0035F608 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		58DF62AE1C83BDEE0035F608 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -77,10 +78,10 @@
 		58DF62B81C83BDEE0035F608 /* CountOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountOperation.swift; sourceTree = "<group>"; };
 		58DF62B91C83BDEE0035F608 /* ExportOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportOperation.swift; sourceTree = "<group>"; };
 		58DF62BA1C83BDEE0035F608 /* NearestSmokeOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearestSmokeOperation.swift; sourceTree = "<group>"; };
-		58DF62BC1C83BDEE0035F608 /* Smoke+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Smoke+Repository.swift"; sourceTree = "<group>"; };
-		58DF62BD1C83BDEE0035F608 /* Smoke+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Smoke+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		58DF62BE1C83BDEE0035F608 /* Smoke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Smoke.swift; sourceTree = "<group>"; };
-		58DF62C01C83BDEE0035F608 /* SmokeReporter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SmokeReporter.xcdatamodel; sourceTree = "<group>"; };
+		58DF62BC1C83BDEE0035F608 /* Record+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Record+Repository.swift"; sourceTree = "<group>"; };
+		58DF62BD1C83BDEE0035F608 /* Record+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Record+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		58DF62BE1C83BDEE0035F608 /* Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
+		58DF62C01C83BDEE0035F608 /* Dependn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Dependn.xcdatamodel; sourceTree = "<group>"; };
 		58DF62C11C83BDEE0035F608 /* StyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleSheet.swift; sourceTree = "<group>"; };
 		C09CD8CFDAFA6B00C5114286 /* Pods-Dependn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dependn.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dependn/Pods-Dependn.release.xcconfig"; sourceTree = "<group>"; };
 		DAE1FEA29CFCF5CB9F1B7A41 /* Pods_Dependn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dependn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +107,15 @@
 				C09CD8CFDAFA6B00C5114286 /* Pods-Dependn.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		580E96951C8444E400F92068 /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				580E96961C8444E400F92068 /* RecordDetailViewController.swift */,
+			);
+			name = Record;
+			path = History/Record;
 			sourceTree = "<group>";
 		};
 		589065C71C7A3F2F00F7F6DC = {
@@ -139,7 +149,7 @@
 				58DF62AD1C83BDEE0035F608 /* InfoPlist.strings */,
 				58DF62AF1C83BDEE0035F608 /* Localizable.strings */,
 				58DF62B11C83BDEE0035F608 /* Info.plist */,
-				58DF62BF1C83BDEE0035F608 /* SmokeReporter.xcdatamodeld */,
+				58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */,
 			);
 			path = Dependn;
 			sourceTree = "<group>";
@@ -147,8 +157,8 @@
 		58DF62A41C83BDEE0035F608 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				580E96951C8444E400F92068 /* Record */,
 				58DF62A51C83BDEE0035F608 /* History */,
-				58DF62A81C83BDEE0035F608 /* Smoke */,
 				58DF62AA1C83BDEE0035F608 /* Stats */,
 			);
 			path = Controllers;
@@ -157,18 +167,10 @@
 		58DF62A51C83BDEE0035F608 /* History */ = {
 			isa = PBXGroup;
 			children = (
-				58DF62A61C83BDEE0035F608 /* HistoryTableViewCell.swift */,
 				58DF62A71C83BDEE0035F608 /* HistoryViewController.swift */,
+				58DF62A61C83BDEE0035F608 /* HistoryTableViewCell.swift */,
 			);
 			path = History;
-			sourceTree = "<group>";
-		};
-		58DF62A81C83BDEE0035F608 /* Smoke */ = {
-			isa = PBXGroup;
-			children = (
-				58DF62A91C83BDEE0035F608 /* SmokeDetailViewController.swift */,
-			);
-			path = Smoke;
 			sourceTree = "<group>";
 		};
 		58DF62AA1C83BDEE0035F608 /* Stats */ = {
@@ -184,8 +186,8 @@
 			isa = PBXGroup;
 			children = (
 				58DF62B31C83BDEE0035F608 /* CoreDataStack.swift */,
-				58DF62BE1C83BDEE0035F608 /* Smoke.swift */,
-				58DF62BD1C83BDEE0035F608 /* Smoke+CoreDataProperties.swift */,
+				58DF62BE1C83BDEE0035F608 /* Record.swift */,
+				58DF62BD1C83BDEE0035F608 /* Record+CoreDataProperties.swift */,
 				58DF62BB1C83BDEE0035F608 /* Repositories */,
 				58DF62B41C83BDEE0035F608 /* Operations */,
 			);
@@ -208,7 +210,7 @@
 		58DF62BB1C83BDEE0035F608 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				58DF62BC1C83BDEE0035F608 /* Smoke+Repository.swift */,
+				58DF62BC1C83BDEE0035F608 /* Record+Repository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -237,7 +239,6 @@
 				5890660A1C7A489800F7F6DC /* Embed Frameworks */,
 				5890660E1C7A48B700F7F6DC /* CopyFiles */,
 				5888DC7B1C7B217600E01A32 /* Fabric */,
-				58CFC59F1C831ADD00F8A006 /* Strip Archs */,
 				58BF26801C83C0B400263313 /* Update Build Number 2 */,
 				02752BF4BCE3D4F09066974D /* Embed Pods Frameworks */,
 				CBD50F783DA64145D4A06428 /* Copy Pods Resources */,
@@ -295,6 +296,7 @@
 				58DF62CB1C83BDEE0035F608 /* InfoPlist.strings in Resources */,
 				58DF62C31C83BDEE0035F608 /* Assets.xcassets in Resources */,
 				58DF62C41C83BDEE0035F608 /* LaunchScreen.storyboard in Resources */,
+				5801C6781C84414200CA0A82 /* Dependn.xcdatamodeld in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,20 +360,6 @@
 			shellPath = /bin/sh;
 			shellScript = "# Set the build number to \"DEVELOPMENT\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion DEVELOPMENT\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
-		58CFC59F1C831ADD00F8A006 /* Strip Archs */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Strip Archs";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "APP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\n# This script loops through the frameworks embedded in the application and\n# removes unused architectures.\nfind \"$APP_PATH\" -name '*.framework' -type d | while read -r FRAMEWORK\ndo\nFRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\n\nEXTRACTED_ARCHS=()\n\nfor ARCH in $ARCHS\ndo\necho \"Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME\"\nlipo -extract \"$ARCH\" \"$FRAMEWORK_EXECUTABLE_PATH\" -o \"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\"\nEXTRACTED_ARCHS+=(\"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\")\ndone\n\necho \"Merging extracted architectures: ${ARCHS}\"\nlipo -o \"$FRAMEWORK_EXECUTABLE_PATH-merged\" -create \"${EXTRACTED_ARCHS[@]}\"\nrm \"${EXTRACTED_ARCHS[@]}\"\n\necho \"Replacing original executable with thinned version\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_EXECUTABLE_PATH-merged\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n\ndone";
-		};
 		78D910DF7A014E8B954AE046 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -409,16 +397,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58DF62D81C83BDEE0035F608 /* SmokeReporter.xcdatamodeld in Sources */,
+				58DF62D81C83BDEE0035F608 /* Dependn.xcdatamodeld in Sources */,
+				580E96971C8444E400F92068 /* RecordDetailViewController.swift in Sources */,
 				58DF62CE1C83BDEE0035F608 /* CoreDataStack.swift in Sources */,
 				58DF62C71C83BDEE0035F608 /* HistoryViewController.swift in Sources */,
 				58DF62D21C83BDEE0035F608 /* CountOperation.swift in Sources */,
 				58DF62D11C83BDEE0035F608 /* AverageTimeInBetweenTwoTakesOperation.swift in Sources */,
 				58DF62C61C83BDEE0035F608 /* HistoryTableViewCell.swift in Sources */,
-				58DF62D71C83BDEE0035F608 /* Smoke.swift in Sources */,
+				58DF62D71C83BDEE0035F608 /* Record.swift in Sources */,
 				58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */,
-				58DF62C81C83BDEE0035F608 /* SmokeDetailViewController.swift in Sources */,
-				58DF62D51C83BDEE0035F608 /* Smoke+Repository.swift in Sources */,
+				58DF62D51C83BDEE0035F608 /* Record+Repository.swift in Sources */,
 				58DF62D31C83BDEE0035F608 /* ExportOperation.swift in Sources */,
 				58DF62D91C83BDEE0035F608 /* StyleSheet.swift in Sources */,
 				58DF62CF1C83BDEE0035F608 /* AverageIntensityOperation.swift in Sources */,
@@ -426,7 +414,7 @@
 				58DF62D41C83BDEE0035F608 /* NearestSmokeOperation.swift in Sources */,
 				58DF62CA1C83BDEE0035F608 /* StatsViewController.swift in Sources */,
 				58DF62C91C83BDEE0035F608 /* StatsCell.swift in Sources */,
-				58DF62D61C83BDEE0035F608 /* Smoke+CoreDataProperties.swift in Sources */,
+				58DF62D61C83BDEE0035F608 /* Record+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,13 +602,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		58DF62BF1C83BDEE0035F608 /* SmokeReporter.xcdatamodeld */ = {
+		58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				58DF62C01C83BDEE0035F608 /* SmokeReporter.xcdatamodel */,
+				58DF62C01C83BDEE0035F608 /* Dependn.xcdatamodel */,
 			);
-			currentVersion = 58DF62C01C83BDEE0035F608 /* SmokeReporter.xcdatamodel */;
-			path = SmokeReporter.xcdatamodeld;
+			currentVersion = 58DF62C01C83BDEE0035F608 /* Dependn.xcdatamodel */;
+			path = Dependn.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
-    <entity name="Smoke" representedClassName=".Smoke" syncable="YES">
+    <entity name="Record" representedClassName=".Smoke" syncable="YES">
         <attribute name="after" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="before" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
@@ -13,6 +13,6 @@
         <attribute name="type" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Smoke" positionX="-117" positionY="189" width="128" height="195"/>
+        <element name="Record" positionX="-117" positionY="189" width="128" height="195"/>
     </elements>
 </model>

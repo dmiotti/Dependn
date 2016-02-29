@@ -21,7 +21,7 @@ final class AveragePerDayOperation: SHOperation {
     override init() {
         context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         context.parentContext = CoreDataStack.shared.managedObjectContext
-        fetchedResultsController = Smoke.historyFetchedResultsController(inContext: context)
+        fetchedResultsController = Record.historyFetchedResultsController(inContext: context)
     }
 
     override func execute() {

@@ -23,7 +23,7 @@ final class HistoryViewController: UIViewController {
     private var dateFormatter: NSDateFormatter!
     
     private lazy var fetchedResultsController: NSFetchedResultsController = {
-        let controller = Smoke.historyFetchedResultsController(inContext: CoreDataStack.shared.managedObjectContext)
+        let controller = Record.historyFetchedResultsController(inContext: CoreDataStack.shared.managedObjectContext)
         controller.delegate = self
         return controller
     }()
@@ -115,7 +115,7 @@ final class HistoryViewController: UIViewController {
     }
     
     func addBtnClicked(sender: UIButton) {
-        let nav = UINavigationController(rootViewController: SmokeDetailViewController())
+        let nav = UINavigationController(rootViewController: RecordDetailViewController())
         presentViewController(nav, animated: true, completion: nil)
     }
     
@@ -182,8 +182,8 @@ extension HistoryViewController: UITableViewDataSource {
     }
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            let smoke = fetchedResultsController.objectAtIndexPath(indexPath) as! Smoke
-            Smoke.deleteSmoke(smoke)
+            let record = fetchedResultsController.objectAtIndexPath(indexPath) as! Record
+            Record.deleteRecord(record)
         }
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -219,10 +219,10 @@ extension HistoryViewController: UITableViewDataSource {
         return header
     }
     private func configureCell(cell: UITableViewCell, forIndexPath indexPath: NSIndexPath) {
-        let smoke = fetchedResultsController.objectAtIndexPath(indexPath) as! Smoke
+        let record = fetchedResultsController.objectAtIndexPath(indexPath) as! Record
         if let cell = cell as? HistoryTableViewCell {
-            let type = smoke.smokeType
-            cell.dateLbl.attributedText = attributedStringForDate(smoke.date, type: type)
+            let type = record.recordType
+            cell.dateLbl.attributedText = attributedStringForDate(record.date, type: type)
             if type == .Cig {
                 cell.circleTypeView.color = UIColor.appCigaretteColor()
                 cell.circleTypeView.textLbl.text = "C"
@@ -230,10 +230,10 @@ extension HistoryViewController: UITableViewDataSource {
                 cell.circleTypeView.color = UIColor.appWeedColor()
                 cell.circleTypeView.textLbl.text = "W"
             }
-            cell.intensityLbl.text = "\(smoke.intensity.integerValue)"
+            cell.intensityLbl.text = "\(record.intensity.integerValue)"
         }
     }
-    private func attributedStringForDate(date: NSDate, type: SmokeType) -> NSAttributedString {
+    private func attributedStringForDate(date: NSDate, type: RecordType) -> NSAttributedString {
         let dateString = dateFormatter.stringFromDate(date)
         let typeString = type == .Cig ? L("history.cig") : L("history.weed")
         let full = "\(dateString)\n\(typeString)"
@@ -253,9 +253,9 @@ extension HistoryViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let smoke = SmokeDetailViewController()
-        smoke.smoke = fetchedResultsController.objectAtIndexPath(indexPath) as? Smoke
-        let nav = UINavigationController(rootViewController: smoke)
+        let recordController = RecordDetailViewController()
+        recordController.record = fetchedResultsController.objectAtIndexPath(indexPath) as? Record
+        let nav = UINavigationController(rootViewController: recordController)
         presentViewController(nav, animated: true, completion: nil)
     }
 }

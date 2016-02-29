@@ -23,12 +23,12 @@ final class AverageTimeInBetweenTwoTakesOperation: SHOperation {
     }
     
     override func execute() {
-        let req = NSFetchRequest(entityName: Smoke.entityName)
+        let req = NSFetchRequest(entityName: Record.entityName)
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
         
         context.performBlockAndWait {
             do {
-                let results = try self.context.executeFetchRequest(req) as! [Smoke]
+                let results = try self.context.executeFetchRequest(req) as! [Record]
                 var values = [NSTimeInterval]()
                 var lastDate: NSDate?
                 for result in results {

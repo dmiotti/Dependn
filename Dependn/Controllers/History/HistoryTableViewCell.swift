@@ -9,7 +9,7 @@
 import UIKit
 import SwiftHelpers
 
-final class SmokeCircleTypeView: SHCommonInitView {
+final class RecordCircleTypeView: SHCommonInitView {
     private(set) var textLbl: UILabel!
     
     var color: UIColor = UIColor.appBlackColor() {
@@ -44,7 +44,7 @@ final class HistoryTableViewCell: SHCommonInitTableViewCell {
     
     static let reuseIdentifier = "HistoryTableViewCell"
     
-    private(set) var circleTypeView: SmokeCircleTypeView!
+    private(set) var circleTypeView: RecordCircleTypeView!
     private(set) var dateLbl: UILabel!
     private(set) var intensityLbl: UILabel!
     
@@ -53,7 +53,7 @@ final class HistoryTableViewCell: SHCommonInitTableViewCell {
         
         accessoryType = .DisclosureIndicator
         
-        circleTypeView = SmokeCircleTypeView()
+        circleTypeView = RecordCircleTypeView()
         contentView.addSubview(circleTypeView)
         
         dateLbl = UILabel()

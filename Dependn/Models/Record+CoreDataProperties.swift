@@ -1,5 +1,5 @@
 //
-//  Smoke+CoreDataProperties.swift
+//  Record+CoreDataProperties.swift
 //  Dependn
 //
 //  Created by David Miotti on 25/02/16.
@@ -12,7 +12,7 @@
 import Foundation
 import CoreData
 
-extension Smoke {
+extension Record {
 
     @NSManaged var comment: String?
     @NSManaged var date: NSDate

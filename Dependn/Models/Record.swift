@@ -1,5 +1,5 @@
 //
-//  Smoke.swift
+//  Record.swift
 //  Dependn
 //
 //  Created by David Miotti on 21/02/16.
@@ -9,34 +9,34 @@
 import Foundation
 import CoreData
 
-enum SmokeType {
+enum RecordType {
     case Cig, Weed
 }
 
-let SmokeTypeCig = "Cig"
-let SmokeTypeWeed = "Weed"
+let kRecordTypeCig = "Cig"
+let kRecordTypeWeed = "Weed"
 
-final class Smoke: NSManagedObject, NamedEntity {
+final class Record: NSManagedObject, NamedEntity {
     
     static let sectionDateFormatter = NSDateFormatter(dateFormat: "EEEE dd MMMM yyyy")
     
-    static var entityName: String { get { return "Smoke" } }
+    static var entityName: String { get { return "Record" } }
     
-    var smokeType: SmokeType {
+    var recordType: RecordType {
         get {
-            return type == SmokeTypeCig ? .Cig : .Weed
+            return type == kRecordTypeCig ? .Cig : .Weed
         }
         set {
             if newValue == .Cig {
-                type = SmokeTypeCig
+                type = kRecordTypeCig
             } else {
-                type = SmokeTypeWeed
+                type = kRecordTypeWeed
             }
         }
     }
     
     var sectionIdentifier: String? {
-        return Smoke.sectionDateFormatter.stringFromDate(date)
+        return Record.sectionDateFormatter.stringFromDate(date)
     }
     
 }

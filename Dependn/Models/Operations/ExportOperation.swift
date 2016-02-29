@@ -36,12 +36,12 @@ final class ExportOperation: SHOperation {
         
         context.performBlockAndWait {
             do {
-                let req = NSFetchRequest(entityName: Smoke.entityName)
+                let req = NSFetchRequest(entityName: Record.entityName)
                 req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
-                let smokes = try self.context.executeFetchRequest(req) as! [Smoke]
+                let records = try self.context.executeFetchRequest(req) as! [Record]
                 
                 let path = self.exportPath()
-                let csv = self.createCSV(smokes)
+                let csv = self.createCSV(records)
                 
                 try csv.writeToFile(path,
                     atomically: true,
@@ -56,7 +56,7 @@ final class ExportOperation: SHOperation {
         finish()
     }
     
-    private func createCSV(smokes: [Smoke]) -> String {
+    private func createCSV(records: [Record]) -> String {
         let header = [
             L("export.date"),
             L("export.time"),
@@ -70,25 +70,25 @@ final class ExportOperation: SHOperation {
             L("export.lon") ]
             .joinWithSeparator(kExportOperationSeparator)
         
-        let content = smokes.map({ recordToCSV($0) })
+        let content = records.map({ recordToCSV($0) })
             .joinWithSeparator(kExportOperationNewLine)
         return header + kExportOperationNewLine
             + content + kExportOperationNewLine
     }
     
-    private func recordToCSV(smoke: Smoke) -> String {
-        let date = smoke.date
+    private func recordToCSV(record: Record) -> String {
+        let date = record.date
         let values = [
             kExportOperationDayFormatter.stringFromDate(date),
             kExportOperationHourFormatter.stringFromDate(date),
-            smoke.smokeType == .Cig ? L("export.cig") : L("export.weed"),
-            String(format: "%.1f", arguments: [ smoke.intensity.floatValue ]),
-            smoke.before ?? "",
-            smoke.after ?? "",
-            smoke.comment ?? "",
-            smoke.place ?? "",
-            smoke.lat?.stringValue ?? "",
-            smoke.lon?.stringValue ?? ""
+            record.recordType == .Cig ? L("export.cig") : L("export.weed"),
+            String(format: "%.1f", arguments: [ record.intensity.floatValue ]),
+            record.before ?? "",
+            record.after ?? "",
+            record.comment ?? "",
+            record.place ?? "",
+            record.lat?.stringValue ?? "",
+            record.lon?.stringValue ?? ""
         ]
         return values.joinWithSeparator(kExportOperationSeparator)
     }
@@ -137,7 +137,7 @@ final class ImportOperation: SHOperation {
                     }
                     self.context.performBlockAndWait {
                         do {
-                            try self.deleteAllSmokes()
+                            try self.deleteAllRecords()
                             try self.importFileAtURL(file)
                             try self.saveContext()
                         } catch let err as NSError {
@@ -228,12 +228,12 @@ final class ImportOperation: SHOperation {
         }
     }
     
-    private func deleteAllSmokes() throws {
-        let req = NSFetchRequest(entityName: Smoke.entityName)
+    private func deleteAllRecords() throws {
+        let req = NSFetchRequest(entityName: Record.entityName)
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: true) ]
-        let smokes = try self.context.executeFetchRequest(req) as! [Smoke]
-        for smoke in smokes {
-            self.context.deleteObject(smoke)
+        let records = try self.context.executeFetchRequest(req) as! [Record]
+        for r in records {
+            self.context.deleteObject(r)
         }
     }
     
@@ -253,7 +253,7 @@ final class ImportOperation: SHOperation {
         let hourstr = values[1]
         let datestr = "\(daystr) \(hourstr)"
         let date = kImportOperationDateFormatter.dateFromString(datestr) ?? NSDate()
-        let type: SmokeType = values[2] == "Weed" ? .Weed : .Cig
+        let type: RecordType = values[2] == "Weed" ? .Weed : .Cig
         let intensity = NSString(string: values[3]).floatValue
         let before = values[4]
         let after = values[5]
@@ -262,7 +262,7 @@ final class ImportOperation: SHOperation {
         let lat = values[8]
         let lon = values[9]
         
-        Smoke.insertNewSmoke(type,
+        Record.insertNewRecord(type,
             intensity: intensity,
             before: before,
             after: after,

@@ -24,7 +24,7 @@ final class AverageIntensityOperation: SHOperation {
     
     override func execute() {
         
-        let req = NSFetchRequest(entityName: Smoke.entityName)
+        let req = NSFetchRequest(entityName: Record.entityName)
         req.resultType = .DictionaryResultType
         let exp = NSExpression(forKeyPath: "intensity")
         

@@ -45,7 +45,7 @@ final class SmokeDetailViewController: UIViewController {
     private var cancelBtn: UIBarButtonItem!
     private var doneBtn: UIBarButtonItem!
     
-    var smoke: Smoke?
+    var smoke: Record?
     
     private var userLocation: MKUserLocation?
     private let locationManager = CLLocationManager()
@@ -152,7 +152,7 @@ final class SmokeDetailViewController: UIViewController {
     
     private func fillWithSmokeIfNeeded() {
         if let smoke = smoke {
-            if smoke.smokeType == .Weed {
+            if smoke.recordType == .Weed {
                 typeSelector.selectedSegmentIndex = 1
             }
             intensitySlider.value = smoke.intensity.floatValue
@@ -188,9 +188,9 @@ final class SmokeDetailViewController: UIViewController {
     // MARK: - Bar Buttons
     
     func doneBtnClicked(sender: UIBarButtonItem) {
-        let type: SmokeType = typeSelector.selectedSegmentIndex == 0 ? SmokeType.Cig : SmokeType.Weed
+        let type: RecordType = typeSelector.selectedSegmentIndex == 0 ? .Cig : .Weed
         if let smoke = smoke {
-            smoke.smokeType = type
+            smoke.recordType = type
             smoke.intensity = intensitySlider.value
             smoke.before = feelingBeforeTextView.text
             smoke.after = feelingAfterTextView.text
@@ -198,7 +198,7 @@ final class SmokeDetailViewController: UIViewController {
             smoke.date = datePicker.date
             smoke.place = placeNameField.text
         } else {
-            Smoke.insertNewSmoke(type,
+            Record.insertNewRecord(type,
                 intensity: intensitySlider.value,
                 before: feelingBeforeTextView.text,
                 after: feelingAfterTextView.text,

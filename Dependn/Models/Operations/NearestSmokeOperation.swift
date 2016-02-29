@@ -1,5 +1,5 @@
 //
-//  NearestSmokeOperation.swift
+//  NearestPlaceOperation.swift
 //  Dependn
 //
 //  Created by David Miotti on 29/02/16.
@@ -30,19 +30,19 @@ final class NearestPlaceOperation: SHOperation {
     
     override func execute() {
         
-        let req = NSFetchRequest(entityName: Smoke.entityName)
+        let req = NSFetchRequest(entityName: Record.entityName)
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
         req.predicate = NSPredicate(format: "place != nil AND lat != nil AND lon != nil")
         
         context.performBlockAndWait {
             do {
-                let smokes = try self.context.executeFetchRequest(req) as! [Smoke]
-                for smoke in smokes {
-                    if let lat = smoke.lat?.doubleValue, lon = smoke.lon?.doubleValue {
-                        let smokeLocation = CLLocation(latitude: lat, longitude: lon)
-                        let dist = smokeLocation.distanceFromLocation(smokeLocation)
+                let records = try self.context.executeFetchRequest(req) as! [Record]
+                for record in records {
+                    if let lat = record.lat?.doubleValue, lon = record.lon?.doubleValue {
+                        let recordLocation = CLLocation(latitude: lat, longitude: lon)
+                        let dist = self.location.distanceFromLocation(recordLocation)
                         if dist <= self.distance {
-                            self.place = smoke.place
+                            self.place = record.place
                             break
                         }
                     }
