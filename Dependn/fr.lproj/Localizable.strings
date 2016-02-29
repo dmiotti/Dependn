@@ -22,6 +22,7 @@
 "new.place" = "Lieu";
 "new.place_placeholder" = "Donner un nom à ce lieu (rayon 80m)";
 "new.allow_map" = "Utiliser ma position afin de mieux comprendre mes consommations";
+"new.use_my_position" = "Utiliser ma position";
 
 "export.date" = "date";
 "export.time" = "heure";

@@ -40,6 +40,8 @@ final class RecordDetailViewController: UIViewController {
     private var mapView: MKMapView!
     private var placeNameField: UITextField!
     private var allowMapBtn: UIButton!
+    private var useMyPositionLbl: UILabel!
+    private var useMyPositionSwitch: UISwitch!
     
     /// Bar buttons
     private var cancelBtn: UIBarButtonItem!
@@ -137,6 +139,15 @@ final class RecordDetailViewController: UIViewController {
         placeNameField.delegate = self
         scrollContentView.addSubview(placeNameField)
         
+        useMyPositionLbl = UILabel()
+        useMyPositionLbl.text = L("new.use_my_position")
+        useMyPositionLbl.font = UIFont.preferredFontForTextStyle(UIFontTextStyleCaption1)
+        scrollContentView.addSubview(useMyPositionLbl)
+        
+        useMyPositionSwitch = UISwitch()
+        useMyPositionSwitch.addTarget(self, action: "switchValueChanged:", forControlEvents: .ValueChanged)
+        scrollContentView.addSubview(useMyPositionSwitch)
+        
         configureLayoutConstraints()
         
         registerNotificationObservers()
@@ -219,6 +230,14 @@ final class RecordDetailViewController: UIViewController {
     func datePickerDidSelectDate(sender: UIBarButtonItem) {
         dateTextField.resignFirstResponder()
         configureDateBtnWithDate(datePicker.date)
+    }
+    
+    func switchValueChanged(sender: UISwitch) {
+        if !sender.on {
+            userLocation = nil
+        } else {
+            
+        }
     }
     
     // MARK: - Intensity Slider
@@ -318,9 +337,15 @@ final class RecordDetailViewController: UIViewController {
             let ann = MKPointAnnotation()
             ann.coordinate = coord
             mapView.addAnnotation(ann)
+            
+            useMyPositionSwitch.enabled = false
+            useMyPositionSwitch.on = false
         } else {
             mapView.showsUserLocation = true
             mapView.setUserTrackingMode(.Follow, animated: true)
+            
+            useMyPositionSwitch.enabled = true
+            useMyPositionSwitch.on = true
         }
         mapLbl.hidden = false
         mapView.hidden = false
@@ -328,8 +353,12 @@ final class RecordDetailViewController: UIViewController {
     
     private func disableMapView(canAccept: Bool) {
         if canAccept {
+            useMyPositionSwitch.enabled = true
+            useMyPositionSwitch.on = false
             allowMapBtn.alpha = 1
         } else {
+            useMyPositionSwitch.enabled = false
+            useMyPositionSwitch.on = false
             mapLbl.hidden = true
             mapView.hidden = true
         }
@@ -482,12 +511,21 @@ extension RecordDetailViewController {
             $0.left.equalTo(scrollContentView).offset(kAddRecordHorizontalPadding)
             $0.right.equalTo(scrollContentView).offset(-kAddRecordHorizontalPadding)
             $0.height.equalTo(scrollContentView.snp_width).multipliedBy(0.4)
-            
-            $0.bottom.equalTo(scrollContentView).offset(-kAddRecordLblPadding)
         }
         
         allowMapBtn.snp_makeConstraints {
             $0.edges.equalTo(mapView)
+        }
+        
+        useMyPositionLbl.snp_makeConstraints {
+            $0.right.equalTo(useMyPositionSwitch.snp_left).offset(-kAddRecordHorizontalPadding)
+            $0.centerY.equalTo(useMyPositionSwitch)
+        }
+        
+        useMyPositionSwitch.snp_makeConstraints {
+            $0.right.equalTo(scrollContentView).offset(-kAddRecordHorizontalPadding)
+            $0.top.equalTo(mapView.snp_bottom).offset(kAddRecordValuePadding)
+            $0.bottom.equalTo(scrollContentView).offset(-kAddRecordLblPadding)
         }
     }
     
