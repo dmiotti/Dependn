@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5801C6781C84414200CA0A82 /* Dependn.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */; };
 		580E96971C8444E400F92068 /* RecordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E96961C8444E400F92068 /* RecordDetailViewController.swift */; };
+		58858ADD1C84520100E8A794 /* Dependn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */; };
 		58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF629E1C83BDEE0035F608 /* AppDelegate.swift */; };
 		58DF62C31C83BDEE0035F608 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58DF629F1C83BDEE0035F608 /* Assets.xcassets */; };
 		58DF62C41C83BDEE0035F608 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58DF62A01C83BDEE0035F608 /* LaunchScreen.storyboard */; };
@@ -29,7 +29,6 @@
 		58DF62D51C83BDEE0035F608 /* Record+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BC1C83BDEE0035F608 /* Record+Repository.swift */; };
 		58DF62D61C83BDEE0035F608 /* Record+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BD1C83BDEE0035F608 /* Record+CoreDataProperties.swift */; };
 		58DF62D71C83BDEE0035F608 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BE1C83BDEE0035F608 /* Record.swift */; };
-		58DF62D81C83BDEE0035F608 /* Dependn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */; };
 		58DF62D91C83BDEE0035F608 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62C11C83BDEE0035F608 /* StyleSheet.swift */; };
 		FE13DF52A68AA47D8184F97D /* Pods_Dependn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE1FEA29CFCF5CB9F1B7A41 /* Pods_Dependn.framework */; };
 /* End PBXBuildFile section */
@@ -296,7 +295,6 @@
 				58DF62CB1C83BDEE0035F608 /* InfoPlist.strings in Resources */,
 				58DF62C31C83BDEE0035F608 /* Assets.xcassets in Resources */,
 				58DF62C41C83BDEE0035F608 /* LaunchScreen.storyboard in Resources */,
-				5801C6781C84414200CA0A82 /* Dependn.xcdatamodeld in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,7 +395,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58DF62D81C83BDEE0035F608 /* Dependn.xcdatamodeld in Sources */,
+				58858ADD1C84520100E8A794 /* Dependn.xcdatamodeld in Sources */,
 				580E96971C8444E400F92068 /* RecordDetailViewController.swift in Sources */,
 				58DF62CE1C83BDEE0035F608 /* CoreDataStack.swift in Sources */,
 				58DF62C71C83BDEE0035F608 /* HistoryViewController.swift in Sources */,
