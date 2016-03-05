@@ -7,5 +7,11 @@ Report every Cigarettes you smoke and make stats.
 ```
 $ brew install cocoapods
 $ pod install
-$ open SmokeReporter.xcodeproj
+$ open Dependn.xcworkspace
+```
+
+## Deployment
+
+```
+fastlane beta
 ```
