@@ -15,6 +15,13 @@ private let kCoreDataStackSQLLiteFilename = "Dependn.sqlite"
 
 protocol NamedEntity {
     static var entityName: String { get }
+    static func entityFetchRequest() -> NSFetchRequest
+}
+
+extension NamedEntity {
+    static func entityFetchRequest() -> NSFetchRequest {
+        return NSFetchRequest(entityName: entityName)
+    }
 }
 
 final class CoreDataStack {

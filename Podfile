@@ -14,5 +14,6 @@ target 'Dependn' do
   pod 'SnapKit'
   pod 'CocoaLumberjack/Swift'
   pod 'BrightFutures'
+  pod 'ChameleonFramework/Swift'
 
 end

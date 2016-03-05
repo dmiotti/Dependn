@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		580E96971C8444E400F92068 /* RecordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E96961C8444E400F92068 /* RecordDetailViewController.swift */; };
+		581DC5D21C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5CF1C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift */; };
+		581DC5D31C8B2ED0006DE551 /* Addiction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5D01C8B2ED0006DE551 /* Addiction.swift */; };
+		581DC5D41C8B2ED0006DE551 /* Record+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5D11C8B2ED0006DE551 /* Record+CoreDataProperties.swift */; };
+		581DC5D71C8B3172006DE551 /* Addiction+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5D61C8B3172006DE551 /* Addiction+Repository.swift */; };
+		581DC5DA1C8B37F4006DE551 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5D91C8B37F4006DE551 /* SettingsViewController.swift */; };
+		581DC5DC1C8B38AD006DE551 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5DB1C8B38AD006DE551 /* SettingsTableViewCell.swift */; };
+		581DC5DF1C8B3C5D006DE551 /* AddictionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5DE1C8B3C5D006DE551 /* AddictionListViewController.swift */; };
+		581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */; };
 		58858ADD1C84520100E8A794 /* Dependn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */; };
 		58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF629E1C83BDEE0035F608 /* AppDelegate.swift */; };
 		58DF62C31C83BDEE0035F608 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58DF629F1C83BDEE0035F608 /* Assets.xcassets */; };
@@ -27,7 +35,6 @@
 		58DF62D31C83BDEE0035F608 /* ExportOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62B91C83BDEE0035F608 /* ExportOperation.swift */; };
 		58DF62D41C83BDEE0035F608 /* NearestSmokeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BA1C83BDEE0035F608 /* NearestSmokeOperation.swift */; };
 		58DF62D51C83BDEE0035F608 /* Record+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BC1C83BDEE0035F608 /* Record+Repository.swift */; };
-		58DF62D61C83BDEE0035F608 /* Record+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BD1C83BDEE0035F608 /* Record+CoreDataProperties.swift */; };
 		58DF62D71C83BDEE0035F608 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BE1C83BDEE0035F608 /* Record.swift */; };
 		58DF62D91C83BDEE0035F608 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62C11C83BDEE0035F608 /* StyleSheet.swift */; };
 		FE13DF52A68AA47D8184F97D /* Pods_Dependn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE1FEA29CFCF5CB9F1B7A41 /* Pods_Dependn.framework */; };
@@ -58,6 +65,14 @@
 /* Begin PBXFileReference section */
 		1B3495A2BA0FC80954921D93 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		580E96961C8444E400F92068 /* RecordDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordDetailViewController.swift; sourceTree = "<group>"; };
+		581DC5CF1C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Addiction+CoreDataProperties.swift"; path = "../Addiction+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		581DC5D01C8B2ED0006DE551 /* Addiction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Addiction.swift; sourceTree = "<group>"; };
+		581DC5D11C8B2ED0006DE551 /* Record+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Record+CoreDataProperties.swift"; path = "../Record+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		581DC5D61C8B3172006DE551 /* Addiction+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Addiction+Repository.swift"; sourceTree = "<group>"; };
+		581DC5D91C8B37F4006DE551 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		581DC5DB1C8B38AD006DE551 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		581DC5DE1C8B3C5D006DE551 /* AddictionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionListViewController.swift; sourceTree = "<group>"; };
+		581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionTableViewCell.swift; sourceTree = "<group>"; };
 		589065D01C7A3F2F00F7F6DC /* Dependn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dependn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DF629E1C83BDEE0035F608 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		58DF629F1C83BDEE0035F608 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -78,7 +93,6 @@
 		58DF62B91C83BDEE0035F608 /* ExportOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportOperation.swift; sourceTree = "<group>"; };
 		58DF62BA1C83BDEE0035F608 /* NearestSmokeOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearestSmokeOperation.swift; sourceTree = "<group>"; };
 		58DF62BC1C83BDEE0035F608 /* Record+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Record+Repository.swift"; sourceTree = "<group>"; };
-		58DF62BD1C83BDEE0035F608 /* Record+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Record+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		58DF62BE1C83BDEE0035F608 /* Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		58DF62C01C83BDEE0035F608 /* Dependn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Dependn.xcdatamodel; sourceTree = "<group>"; };
 		58DF62C11C83BDEE0035F608 /* StyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleSheet.swift; sourceTree = "<group>"; };
@@ -115,6 +129,33 @@
 			);
 			name = Record;
 			path = History/Record;
+			sourceTree = "<group>";
+		};
+		581DC5D51C8B2EE2006DE551 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				581DC5CF1C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift */,
+				581DC5D11C8B2ED0006DE551 /* Record+CoreDataProperties.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		581DC5D81C8B37E5006DE551 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				581DC5D91C8B37F4006DE551 /* SettingsViewController.swift */,
+				581DC5DB1C8B38AD006DE551 /* SettingsTableViewCell.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		581DC5DD1C8B3C41006DE551 /* Addiction */ = {
+			isa = PBXGroup;
+			children = (
+				581DC5DE1C8B3C5D006DE551 /* AddictionListViewController.swift */,
+				581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */,
+			);
+			path = Addiction;
 			sourceTree = "<group>";
 		};
 		589065C71C7A3F2F00F7F6DC = {
@@ -156,9 +197,11 @@
 		58DF62A41C83BDEE0035F608 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				580E96951C8444E400F92068 /* Record */,
 				58DF62A51C83BDEE0035F608 /* History */,
+				580E96951C8444E400F92068 /* Record */,
 				58DF62AA1C83BDEE0035F608 /* Stats */,
+				581DC5D81C8B37E5006DE551 /* Settings */,
+				581DC5DD1C8B3C41006DE551 /* Addiction */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -186,7 +229,8 @@
 			children = (
 				58DF62B31C83BDEE0035F608 /* CoreDataStack.swift */,
 				58DF62BE1C83BDEE0035F608 /* Record.swift */,
-				58DF62BD1C83BDEE0035F608 /* Record+CoreDataProperties.swift */,
+				581DC5D01C8B2ED0006DE551 /* Addiction.swift */,
+				581DC5D51C8B2EE2006DE551 /* CoreData */,
 				58DF62BB1C83BDEE0035F608 /* Repositories */,
 				58DF62B41C83BDEE0035F608 /* Operations */,
 			);
@@ -210,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				58DF62BC1C83BDEE0035F608 /* Record+Repository.swift */,
+				581DC5D61C8B3172006DE551 /* Addiction+Repository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -395,24 +440,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				581DC5D41C8B2ED0006DE551 /* Record+CoreDataProperties.swift in Sources */,
+				581DC5D31C8B2ED0006DE551 /* Addiction.swift in Sources */,
 				58858ADD1C84520100E8A794 /* Dependn.xcdatamodeld in Sources */,
 				580E96971C8444E400F92068 /* RecordDetailViewController.swift in Sources */,
 				58DF62CE1C83BDEE0035F608 /* CoreDataStack.swift in Sources */,
+				581DC5D71C8B3172006DE551 /* Addiction+Repository.swift in Sources */,
 				58DF62C71C83BDEE0035F608 /* HistoryViewController.swift in Sources */,
 				58DF62D21C83BDEE0035F608 /* CountOperation.swift in Sources */,
 				58DF62D11C83BDEE0035F608 /* AverageTimeInBetweenTwoTakesOperation.swift in Sources */,
 				58DF62C61C83BDEE0035F608 /* HistoryTableViewCell.swift in Sources */,
+				581DC5DF1C8B3C5D006DE551 /* AddictionListViewController.swift in Sources */,
 				58DF62D71C83BDEE0035F608 /* Record.swift in Sources */,
 				58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */,
 				58DF62D51C83BDEE0035F608 /* Record+Repository.swift in Sources */,
+				581DC5DA1C8B37F4006DE551 /* SettingsViewController.swift in Sources */,
 				58DF62D31C83BDEE0035F608 /* ExportOperation.swift in Sources */,
+				581DC5D21C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift in Sources */,
 				58DF62D91C83BDEE0035F608 /* StyleSheet.swift in Sources */,
 				58DF62CF1C83BDEE0035F608 /* AverageIntensityOperation.swift in Sources */,
 				58DF62D01C83BDEE0035F608 /* AveragePerDayOperation.swift in Sources */,
+				581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */,
 				58DF62D41C83BDEE0035F608 /* NearestSmokeOperation.swift in Sources */,
+				581DC5DC1C8B38AD006DE551 /* SettingsTableViewCell.swift in Sources */,
 				58DF62CA1C83BDEE0035F608 /* StatsViewController.swift in Sources */,
 				58DF62C91C83BDEE0035F608 /* StatsCell.swift in Sources */,
-				58DF62D61C83BDEE0035F608 /* Record+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

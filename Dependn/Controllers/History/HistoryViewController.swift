@@ -22,8 +22,10 @@ final class HistoryViewController: UIViewController {
     
     private var dateFormatter: NSDateFormatter!
     
+    private let managedObjectContext = CoreDataStack.shared.managedObjectContext
+    
     private lazy var fetchedResultsController: NSFetchedResultsController = {
-        let controller = Record.historyFetchedResultsController(inContext: CoreDataStack.shared.managedObjectContext)
+        let controller = Record.historyFetchedResultsController(inContext: self.managedObjectContext)
         controller.delegate = self
         return controller
     }()
@@ -98,24 +100,49 @@ final class HistoryViewController: UIViewController {
             title: L("history.action.title"),
             message: L("history.action.message"),
             preferredStyle: .ActionSheet)
-        let cancelAction = UIAlertAction(
-            title: L("cancel"), style: .Cancel,
-            handler: nil)
+        let cancelAction = UIAlertAction(title: L("cancel"), style: .Cancel, handler: nil)
         let exportAction = UIAlertAction(title: L("history.action.export"), style: .Default) { action in
             self.launchExport()
         }
         let importAction = UIAlertAction(title: L("history.action.import"), style: .Default) { action in
             self.launchImport()
         }
+        let settingsAction = UIAlertAction(title: L("history.action.settings"), style: .Default) { action in
+            let settings = SettingsViewController()
+            self.navigationController?.pushViewController(settings, animated: true)
+        }
         alert.addAction(exportAction)
         alert.addAction(importAction)
+        alert.addAction(settingsAction)
         alert.addAction(cancelAction)
         presentViewController(alert, animated: true, completion: nil)
     }
     
     func addBtnClicked(sender: UIButton) {
-        let nav = UINavigationController(rootViewController: RecordDetailViewController())
-        presentViewController(nav, animated: true, completion: nil)
+        if ensureThereIsAddictions() {
+            let nav = UINavigationController(rootViewController: RecordDetailViewController())
+            presentViewController(nav, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: L("history.no_addictions.title"), message: L("history.no_addictions.message"), preferredStyle: .Alert)
+            let addAction = UIAlertAction(title: L("history.no_addictions.add"), style: .Default) { action in
+                let controller = AddictionListViewController()
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+            let okAction = UIAlertAction(title: L("history.no_addictions.ok"), style: .Cancel, handler: nil)
+            alert.addAction(addAction)
+            alert.addAction(okAction)
+            presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func ensureThereIsAddictions() -> Bool {
+        var hasAddictions = false
+        do {
+            hasAddictions = try Addiction.getAllAddictions(inContext: managedObjectContext).count > 0
+        } catch let err as NSError {
+            DDLogError("Error while checking there is at least one addiction: \(err)")
+        }
+        return hasAddictions
     }
     
     func statsBtnClicked(sender: UIBarButtonItem) {
@@ -182,7 +209,7 @@ extension HistoryViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             let record = fetchedResultsController.objectAtIndexPath(indexPath) as! Record
-            Record.deleteRecord(record)
+            Record.deleteRecord(record, inContext: managedObjectContext)
         }
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -220,21 +247,18 @@ extension HistoryViewController: UITableViewDataSource {
     private func configureCell(cell: UITableViewCell, forIndexPath indexPath: NSIndexPath) {
         let record = fetchedResultsController.objectAtIndexPath(indexPath) as! Record
         if let cell = cell as? HistoryTableViewCell {
-            let type = record.recordType
-            cell.dateLbl.attributedText = attributedStringForDate(record.date, type: type)
-            if type == .Cig {
-                cell.circleTypeView.color = UIColor.appCigaretteColor()
-                cell.circleTypeView.textLbl.text = "C"
-            } else {
-                cell.circleTypeView.color = UIColor.appWeedColor()
-                cell.circleTypeView.textLbl.text = "W"
+            let addiction = record.addiction
+            cell.dateLbl.attributedText = attributedStringForDate(record.date, addiction: addiction)
+            cell.circleTypeView.color = addiction.color.UIColor
+            if let first = addiction.name.capitalizedString.characters.first {
+                cell.circleTypeView.textLbl.text = "\(first)"
             }
             cell.intensityLbl.text = "\(record.intensity.integerValue)"
         }
     }
-    private func attributedStringForDate(date: NSDate, type: RecordType) -> NSAttributedString {
+    private func attributedStringForDate(date: NSDate, addiction: Addiction) -> NSAttributedString {
         let dateString = dateFormatter.stringFromDate(date)
-        let typeString = type == .Cig ? L("history.cig") : L("history.weed")
+        let typeString = addiction.name.capitalizedString
         let full = "\(dateString)\n\(typeString)"
         let attr = NSMutableAttributedString(string: full)
         let fullRange = NSRange(location: 0, length: attr.length)

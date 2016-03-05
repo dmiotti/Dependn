@@ -12,6 +12,7 @@ import CoreData
 import CoreLocation
 import BrightFutures
 import PKHUD
+import CocoaLumberjack
 
 private let kExportOperationSeparator = ";"
 private let kExportOperationNewLine = "\n"
@@ -81,7 +82,7 @@ final class ExportOperation: SHOperation {
         let values = [
             kExportOperationDayFormatter.stringFromDate(date),
             kExportOperationHourFormatter.stringFromDate(date),
-            record.recordType == .Cig ? L("export.cig") : L("export.weed"),
+            record.addiction.name.capitalizedString,
             String(format: "%.1f", arguments: [ record.intensity.floatValue ]),
             record.before ?? "",
             record.after ?? "",
@@ -138,6 +139,7 @@ final class ImportOperation: SHOperation {
                     self.context.performBlockAndWait {
                         do {
                             try self.deleteAllRecords()
+                            try self.deleteAllAddictions()
                             try self.importFileAtURL(file)
                             try self.saveContext()
                         } catch let err as NSError {
@@ -233,7 +235,16 @@ final class ImportOperation: SHOperation {
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: true) ]
         let records = try self.context.executeFetchRequest(req) as! [Record]
         for r in records {
-            self.context.deleteObject(r)
+            context.deleteObject(r)
+        }
+    }
+    
+    private func deleteAllAddictions() throws {
+        let req = NSFetchRequest(entityName: Addiction.entityName)
+        req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
+        let addictions = try self.context.executeFetchRequest(req) as! [Addiction]
+        for addiction in addictions {
+            context.deleteObject(addiction)
         }
     }
     
@@ -249,29 +260,36 @@ final class ImportOperation: SHOperation {
         if values.count < 10 {
             return
         }
-        let daystr = values[0]
-        let hourstr = values[1]
-        let datestr = "\(daystr) \(hourstr)"
-        let date = kImportOperationDateFormatter.dateFromString(datestr) ?? NSDate()
-        let type: RecordType = values[2] == "Weed" ? .Weed : .Cig
-        let intensity = NSString(string: values[3]).floatValue
-        let before = values[4]
-        let after = values[5]
-        let comment = values[6]
-        let place = values[7]
-        let lat = values[8]
-        let lon = values[9]
         
-        Record.insertNewRecord(type,
-            intensity: intensity,
-            before: before,
-            after: after,
-            comment: comment,
-            place: place,
-            latitude: doubleOrNil(lat),
-            longitude: doubleOrNil(lon),
-            date: date,
-            inContext: context)
+        do {
+            let addiction = try Addiction.findOrInsertNewAddiction(values[2],
+                inContext: context)
+            
+            let daystr = values[0]
+            let hourstr = values[1]
+            let datestr = "\(daystr) \(hourstr)"
+            let date = kImportOperationDateFormatter.dateFromString(datestr) ?? NSDate()
+            let intensity = NSString(string: values[3]).floatValue
+            let before = values[4]
+            let after = values[5]
+            let comment = values[6]
+            let place = values[7]
+            let lat = values[8]
+            let lon = values[9]
+            
+            Record.insertNewRecord(addiction,
+                intensity: intensity,
+                before: before,
+                after: after,
+                comment: comment,
+                place: place,
+                latitude: doubleOrNil(lat),
+                longitude: doubleOrNil(lon),
+                date: date,
+                inContext: context)
+        } catch let err as NSError {
+            DDLogError("Error while adding new record: \(err)")
+        }
     }
     
     private func doubleOrNil(value: String) -> Double? {

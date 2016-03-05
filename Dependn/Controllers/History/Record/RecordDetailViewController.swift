@@ -53,10 +53,14 @@ final class RecordDetailViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private let nearbyQueue = NSOperationQueue()
     
+    private var addictions: [Addiction]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         dateFormatter = NSDateFormatter(dateFormat: "EEEE dd MMMM HH:mm")
+        
+        addictions = try? Addiction.getAllAddictions(inContext: CoreDataStack.shared.managedObjectContext)
         
         locationManager.delegate = self
         
@@ -75,7 +79,7 @@ final class RecordDetailViewController: UIViewController {
         scrollContentView = UIView()
         scrollView.addSubview(scrollContentView)
         
-        typeSelector = UISegmentedControl(items: [ L("new.cig"), L("new.weed") ])
+        typeSelector = UISegmentedControl(items: addictions.map { $0.name.capitalizedString })
         typeSelector.selectedSegmentIndex = 0
         scrollContentView.addSubview(typeSelector)
         
@@ -153,8 +157,8 @@ final class RecordDetailViewController: UIViewController {
     
     private func fillWithRecordIfNeeded() {
         if let record = record {
-            if record.recordType == .Weed {
-                typeSelector.selectedSegmentIndex = 1
+            if let idx = addictions.indexOf(record.addiction) {
+                typeSelector.selectedSegmentIndex = idx
             }
             intensitySlider.value = record.intensity.floatValue
             feelingBeforeTextView.text = record.before
@@ -188,9 +192,9 @@ final class RecordDetailViewController: UIViewController {
     // MARK: - Bar Buttons
     
     func doneBtnClicked(sender: UIBarButtonItem) {
-        let type: RecordType = typeSelector.selectedSegmentIndex == 0 ? .Cig : .Weed
+        let addiction = addictions[typeSelector.selectedSegmentIndex]
         if let record = record {
-            record.recordType = type
+            record.addiction = addiction
             record.intensity = intensitySlider.value
             record.before = feelingBeforeTextView.text
             record.after = feelingAfterTextView.text
@@ -198,7 +202,7 @@ final class RecordDetailViewController: UIViewController {
             record.date = datePicker.date
             record.place = placeNameField.text
         } else {
-            Record.insertNewRecord(type,
+            Record.insertNewRecord(addiction,
                 intensity: intensitySlider.value,
                 before: feelingBeforeTextView.text,
                 after: feelingAfterTextView.text,

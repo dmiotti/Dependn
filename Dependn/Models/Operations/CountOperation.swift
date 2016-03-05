@@ -12,8 +12,6 @@ import CoreData
 
 final class CountOperation: SHOperation {
     
-    private(set) var cigaretteCount: Int?
-    private(set) var weedCount: Int?
     private(set) var total: Int?
     private(set) var error: NSError?
     
@@ -26,25 +24,14 @@ final class CountOperation: SHOperation {
     
     override func execute() {
         context.performBlockAndWait {
-            let cigReq = self.fetchRequestForKind(kRecordTypeCig)
-            let weedReq = self.fetchRequestForKind(kRecordTypeWeed)
+            let req = Record.entityFetchRequest()
             do {
-                let cigCount = try self.countForRequest(cigReq)
-                let weedCount = try self.countForRequest(weedReq)
-                self.cigaretteCount = cigCount
-                self.weedCount = weedCount
-                self.total = cigCount + weedCount
+                self.total = try self.countForRequest(req)
             } catch let err as NSError {
                 self.error = err
             }
         }
         finish()
-    }
-    
-    private func fetchRequestForKind(kind: String) -> NSFetchRequest {
-        let req = NSFetchRequest(entityName: Record.entityName)
-        req.predicate = NSPredicate(format: "type == %@", kind)
-        return req
     }
     
     private func countForRequest(req: NSFetchRequest) throws -> Int {

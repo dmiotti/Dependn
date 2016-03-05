@@ -37,7 +37,9 @@ final class AveragePerDayOperation: SHOperation {
                     }
                 }
                 
-                self.average = values.reduce(Float(0), combine: +) / Float(values.count)
+                if values.count > 0 {
+                    self.average = values.reduce(Float(0), combine: +) / Float(values.count)
+                }
             } catch let err as NSError {
                 self.error = err
             }

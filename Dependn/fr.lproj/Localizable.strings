@@ -43,6 +43,11 @@
 "history.action.message" = "Pour importer des données vous devez ajouter des fichiers à l'application via iTunes";
 "history.action.export" = "Exporter mes données";
 "history.action.import" = "Importer mes données";
+"history.action.settings" = "Paramètres";
+"history.no_addictions.ok" = "OK";
+"history.no_addictions.add" = "Ajouter";
+"history.no_addictions.title" = "Ajouter une entrée";
+"history.no_addictions.message" = "Vous n'avez pas encore ajouté d'addiction, vous devez dabors ajouter vos addictions";
 
 "import.choose_file" = "Choisissez un ficher à importer";
 "import.choose_file_message" = "Vos données actuelles seront supprimées";
@@ -60,3 +65,20 @@
 "stats.minutes" = "minutes";
 "stats.hours" = "heures";
 "stats.average_intensity" = "Intensité moyenne";
+
+"settings.title" = "Paramètres";
+"settings.manage_addictions" = "Gèrer mes addictions";
+
+"addiction_list.title" = "Mes addictions";
+"addiction_list.new.title" = "Ajouter une addiction";
+"addiction_list.new.message" = "Nommez votre addiction";
+"addiction_list.new.cancel" = "Annuler";
+"addiction_list.new.add" = "Ajouter";
+"addiction_list.new.placeholder" = "Cigarette, Cocaine, Cannabis, ...";
+"addiction_list.new.error" = "Erreur";
+"addiction_list.new.name_missing" = "Vous devez renseigner un nom";
+"addiction_list.new.error.ok" = "OK";
+"addiction_list.delete.cancel" = "Annuler";
+"addiction_list.delete.confirm" = "Continuer";
+"addiction_list.delete.title" = "Êtes-vous sûr de vouloir supprimer %@";
+"addiction_list.delete.message" = "Toutes les informations liées à cette addictions seront effacées";

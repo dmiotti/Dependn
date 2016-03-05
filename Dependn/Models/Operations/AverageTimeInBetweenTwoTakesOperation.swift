@@ -38,7 +38,9 @@ final class AverageTimeInBetweenTwoTakesOperation: SHOperation {
                     }
                     lastDate = result.date
                 }
-                self.average = values.reduce(NSTimeInterval(0), combine: +) / NSTimeInterval(values.count)
+                if values.count > 0 {
+                    self.average = values.reduce(NSTimeInterval(0), combine: +) / NSTimeInterval(values.count)
+                }
             } catch let err as NSError {
                 self.error = err
             }

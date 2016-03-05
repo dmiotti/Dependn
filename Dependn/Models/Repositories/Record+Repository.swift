@@ -15,7 +15,7 @@ private let R: Double = 6371009000
 
 extension Record {
     
-    static func insertNewRecord(type: RecordType,
+    class func insertNewRecord(addiction: Addiction,
         intensity: Float,
         before: String?,
         after: String?,
@@ -29,7 +29,7 @@ extension Record {
                 .insertNewObjectForEntityForName(Record.entityName,
                     inManagedObjectContext: context) as! Record
             record.intensity = intensity
-            record.type = type == .Cig ? kRecordTypeCig : kRecordTypeWeed
+            record.addiction = addiction
             record.before = before
             record.after = after
             record.comment = comment
@@ -40,8 +40,8 @@ extension Record {
             return record
     }
     
-    static func historyFetchedResultsController(inContext context: NSManagedObjectContext) -> NSFetchedResultsController {
-        let req = NSFetchRequest(entityName: Record.entityName)
+    class func historyFetchedResultsController(inContext context: NSManagedObjectContext) -> NSFetchedResultsController {
+        let req = entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
         let controller = NSFetchedResultsController(fetchRequest: req,
             managedObjectContext: context,
@@ -50,8 +50,14 @@ extension Record {
         return controller
     }
     
-    static func deleteRecord(record: Record) {
-        CoreDataStack.shared.managedObjectContext.deleteObject(record)
+    class func deleteRecord(record: Record, inContext context: NSManagedObjectContext) {
+        context.deleteObject(record)
+    }
+    
+    class func recordForAddiction(addiction: Addiction, inContext context: NSManagedObjectContext) throws -> [Record] {
+        let req = Record.entityFetchRequest()
+        req.predicate = NSPredicate(format: "addiction == %@", addiction)
+        return try context.executeFetchRequest(req) as? [Record] ?? []
     }
     
 }

@@ -12,8 +12,8 @@ import CoreData
 
 final class AverageIntensityOperation: SHOperation {
     
+    private(set) var average: Float?
     private(set) var error: NSError?
-    private(set) var average: Float = 0
     
     private let context: NSManagedObjectContext
     
