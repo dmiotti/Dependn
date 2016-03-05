@@ -176,9 +176,7 @@ final class HistoryViewController: UIViewController {
             dispatch_async(dispatch_get_main_queue()) {
                 if let err = importOp.error {
                     if err.code != kImportOperationUserCancelledCode {
-                        HUD.flash(HUDContentType.LabeledError(
-                            title: err.localizedDescription,
-                            subtitle: err.localizedRecoverySuggestion))
+                        UIAlertController.presentError(err, inController: self)
                     }
                 } else {
                     HUD.flash(.Success)
