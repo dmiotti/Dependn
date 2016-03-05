@@ -73,7 +73,6 @@ final class HistoryViewController: UIViewController {
             try fetchedResultsController.performFetch()
             fetchExecuted = true
         } catch let err as NSError {
-//            DDLog.log
             DDLogError("Error while perfoming fetch: \(err)")
             fetchExecuted = false
         }

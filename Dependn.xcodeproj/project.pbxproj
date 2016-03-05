@@ -541,7 +541,7 @@
 			baseConfigurationReference = E66218247728D8F7859EFFDF /* Pods-Dependn.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: David Miotti (A999UM69TM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -552,7 +552,6 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.smokereporter;
 				PRODUCT_NAME = Dependn;
-				PROVISIONING_PROFILE = "c64fd3e8-748f-4b09-8408-f05871b7d46a";
 			};
 			name = Debug;
 		};
@@ -561,7 +560,7 @@
 			baseConfigurationReference = C09CD8CFDAFA6B00C5114286 /* Pods-Dependn.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: David Miotti (659B2N7HE9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -572,7 +571,6 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.smokereporter;
 				PRODUCT_NAME = Dependn;
-				PROVISIONING_PROFILE = "c621d5d5-75d3-4441-9820-3eee3cd8d991";
 			};
 			name = Release;
 		};

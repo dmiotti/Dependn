@@ -10,6 +10,7 @@ import UIKit
 import SwiftHelpers
 import CoreLocation
 import MapKit
+import SnapKit
 
 private let kAddRecordLblPadding: CGFloat = 20
 private let kAddRecordValuePadding: CGFloat = 5
@@ -39,7 +40,6 @@ final class RecordDetailViewController: UIViewController {
     private var mapLbl: UILabel!
     private var mapView: MKMapView!
     private var placeNameField: UITextField!
-    private var allowMapBtn: UIButton!
     private var useMyPositionLbl: UILabel!
     private var useMyPositionSwitch: UISwitch!
     
@@ -123,16 +123,6 @@ final class RecordDetailViewController: UIViewController {
         mapView.userInteractionEnabled = false
         scrollContentView.addSubview(mapView)
         
-        allowMapBtn = UIButton(type: .System)
-        allowMapBtn.setTitle(L("new.allow_map"), forState: .Normal)
-        allowMapBtn.setTitleColor(UIColor.appBlackColor(), forState: .Normal)
-        allowMapBtn.contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
-        allowMapBtn.titleLabel?.lineBreakMode = .ByWordWrapping
-        allowMapBtn.titleLabel?.font = UIFont.systemFontOfSize(20, weight: UIFontWeightThin)
-        allowMapBtn.addTarget(self, action: "allowUsingMapBtnClicked:", forControlEvents: .TouchUpInside)
-        allowMapBtn.backgroundColor = UIColor.lightBackgroundColor()
-        scrollContentView.addSubview(allowMapBtn)
-        
         placeNameField = UITextField()
         placeNameField.placeholder = L("new.place_placeholder")
         placeNameField.returnKeyType = .Done
@@ -172,7 +162,6 @@ final class RecordDetailViewController: UIViewController {
             commentTextView.text = record.comment
             datePicker.date = record.date
             placeNameField.text = record.place
-            allowMapBtn.hidden = true
             if let lat = record.lat?.doubleValue, lon = record.lon?.doubleValue {
                 enableMapView(CLLocationCoordinate2D(latitude: lat, longitude: lon))
             } else {
@@ -235,8 +224,10 @@ final class RecordDetailViewController: UIViewController {
     func switchValueChanged(sender: UISwitch) {
         if !sender.on {
             userLocation = nil
+            disableMapView(true)
         } else {
-            
+            enableMapView(nil)
+            locationManager.requestWhenInUseAuthorization()
         }
     }
     
@@ -274,10 +265,6 @@ final class RecordDetailViewController: UIViewController {
         contentInsets.bottom = 0
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
-    }
-    
-    func allowUsingMapBtnClicked(sender: UIButton) {
-        locationManager.requestWhenInUseAuthorization()
     }
     
     // MARK: - Private Helpers
@@ -321,13 +308,6 @@ final class RecordDetailViewController: UIViewController {
     }
     
     private func enableMapView(location: CLLocationCoordinate2D?) {
-        if allowMapBtn.alpha > 0 {
-            UIView.animateWithDuration(0.35, animations: {
-                self.allowMapBtn.alpha = 0
-                }, completion: { finished in
-                    self.allowMapBtn.hidden = true
-            })
-        }
         if let location = location {
             let coord = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
@@ -352,15 +332,18 @@ final class RecordDetailViewController: UIViewController {
     }
     
     private func disableMapView(canAccept: Bool) {
+        useMyPositionSwitch.on = false
+        
+        configureMapViewConstraints()
+        
+        UIView.animateWithDuration(0.35) {
+            self.mapView.layoutIfNeeded()
+        }
+        
         if canAccept {
             useMyPositionSwitch.enabled = true
-            useMyPositionSwitch.on = false
-            allowMapBtn.alpha = 1
         } else {
             useMyPositionSwitch.enabled = false
-            useMyPositionSwitch.on = false
-            mapLbl.hidden = true
-            mapView.hidden = true
         }
     }
 }
@@ -506,17 +489,6 @@ extension RecordDetailViewController {
             $0.right.equalTo(scrollContentView).offset(-kAddRecordHorizontalPadding)
         }
         
-        mapView.snp_makeConstraints {
-            $0.top.equalTo(placeNameField.snp_bottom).offset(kAddRecordValuePadding)
-            $0.left.equalTo(scrollContentView).offset(kAddRecordHorizontalPadding)
-            $0.right.equalTo(scrollContentView).offset(-kAddRecordHorizontalPadding)
-            $0.height.equalTo(scrollContentView.snp_width).multipliedBy(0.4)
-        }
-        
-        allowMapBtn.snp_makeConstraints {
-            $0.edges.equalTo(mapView)
-        }
-        
         useMyPositionLbl.snp_makeConstraints {
             $0.right.equalTo(useMyPositionSwitch.snp_left).offset(-kAddRecordHorizontalPadding)
             $0.centerY.equalTo(useMyPositionSwitch)
@@ -526,6 +498,21 @@ extension RecordDetailViewController {
             $0.right.equalTo(scrollContentView).offset(-kAddRecordHorizontalPadding)
             $0.top.equalTo(mapView.snp_bottom).offset(kAddRecordValuePadding)
             $0.bottom.equalTo(scrollContentView).offset(-kAddRecordLblPadding)
+        }
+        
+        configureMapViewConstraints()
+    }
+    
+    private func configureMapViewConstraints() {
+        mapView.snp_remakeConstraints {
+            $0.top.equalTo(placeNameField.snp_bottom).offset(kAddRecordValuePadding)
+            $0.left.equalTo(scrollContentView).offset(kAddRecordHorizontalPadding)
+            $0.right.equalTo(scrollContentView).offset(-kAddRecordHorizontalPadding)
+            $0.height.equalTo(scrollContentView.snp_width).multipliedBy(0.4)
+        }
+        
+        UIView.animateWithDuration(0.35) {
+            self.mapView.layoutIfNeeded()
         }
     }
     
