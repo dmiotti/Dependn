@@ -68,6 +68,7 @@
 
 "settings.title" = "Paramètres";
 "settings.manage_addictions" = "Gèrer mes addictions";
+"settings.use_passcode" = "Utiliser un passcode";
 
 "addiction_list.title" = "Mes addictions";
 "addiction_list.new.title" = "Ajouter une addiction";
@@ -82,3 +83,5 @@
 "addiction_list.delete.confirm" = "Continuer";
 "addiction_list.delete.title" = "Êtes-vous sûr de vouloir supprimer %@";
 "addiction_list.delete.message" = "Toutes les informations liées à cette addictions seront effacées";
+
+"passcode.reason" = "Get access to your data";

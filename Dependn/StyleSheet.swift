@@ -26,6 +26,17 @@ class StyleSheet {
         
         window?.tintColor = UIColor.appBlueColor()
     }
+    
+    class func setupWhiteAppearanceForNavigationController(navigationController: UINavigationController) {
+        navigationController.navigationBar.barTintColor = UIColor.whiteColor()
+        let attr = [
+            NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightSemibold),
+            NSForegroundColorAttributeName: UIColor.appBlackColor(),
+            NSKernAttributeName: 13.0 * 1.53 / 1000.0
+        ]
+        navigationController.navigationBar.titleTextAttributes = attr
+        navigationController.navigationBar.tintColor = UIColor.appBlueColor()
+    }
 }
 
 extension UIColor {

@@ -15,5 +15,6 @@ target 'Dependn' do
   pod 'CocoaLumberjack/Swift'
   pod 'BrightFutures'
   pod 'ChameleonFramework/Swift'
+  pod 'SwiftyUserDefaults'
 
 end
