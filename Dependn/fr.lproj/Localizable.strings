@@ -84,4 +84,5 @@
 "addiction_list.delete.title" = "Êtes-vous sûr de vouloir supprimer %@";
 "addiction_list.delete.message" = "Toutes les informations liées à cette addictions seront effacées";
 
-"passcode.reason" = "Get access to your data";
+"passcode.reason" = "Accèdez à vos données";
+"passcode.unset" = "Désactiver l'utilisation du passcode";

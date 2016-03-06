@@ -56,9 +56,10 @@ final class SettingsViewController: UIViewController {
     }
     
     func passcodeSwitchValueChanged(sender: UISwitch) {
+        let reason = sender.on ? L("passcode.reason") : L("passcode.unset")
         if let policy = supportedOwnerAuthentications().first {
             authContext.evaluatePolicy(policy,
-                localizedReason: L("passcode.reason")) { (success, error) in
+                localizedReason: reason) { (success, error) in
                     if success {
                         Defaults[.usePasscode] = sender.on
                     } else {
@@ -135,11 +136,5 @@ extension SettingsViewController: UITableViewDelegate {
     private func showManageAddictions() {
         let controller = AddictionListViewController()
         navigationController?.pushViewController(controller, animated: true)
-    }
-}
-
-extension SettingsViewController: PasscodeNavigationDelegate {
-    func passcodeDidCancel(passcode: PasscodeNavigationViewController) {
-        passcode.dismissViewControllerAnimated(true, completion: nil)
     }
 }
