@@ -269,11 +269,11 @@ extension AddRecordViewController: UITableViewDataSource {
             let row = OptionalsRowType(rawValue: indexPath.row)!
             switch row {
             case .Feeling:
-                cell.feelingField.text = chosenFeeling
-                cell.feelingField.placeholder = L("new_record.feeling")
+                cell.descLbl.text = L("new_record.feeling")
+                cell.contentLbl.text = chosenFeeling
             case .Comment:
-                cell.feelingField.text = chosenComment
-                cell.feelingField.placeholder = L("new_record.comment")
+                cell.descLbl.text = L("new_record.comment")
+                cell.contentLbl.text = chosenComment
             }
             return cell
         }

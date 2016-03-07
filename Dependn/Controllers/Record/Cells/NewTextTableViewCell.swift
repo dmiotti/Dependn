@@ -13,7 +13,8 @@ final class NewTextTableViewCell: SHCommonInitTableViewCell {
     
     static let reuseIdentifier = "NewTextTableViewCell"
     
-    var feelingField: UITextField!
+    private(set) var descLbl: UILabel!
+    private(set) var contentLbl: UILabel!
     
     override func commonInit() {
         super.commonInit()
@@ -22,21 +23,31 @@ final class NewTextTableViewCell: SHCommonInitTableViewCell {
         
         contentView.backgroundColor = UIColor.whiteColor()
         
-        feelingField = UITextField()
-        feelingField.userInteractionEnabled = false
-        feelingField.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
-        feelingField.textColor = UIColor.appBlackColor()
-        contentView.addSubview(feelingField)
+        descLbl = UILabel()
+        descLbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+        descLbl.textColor = UIColor.appLightTextColor()
+        contentView.addSubview(descLbl)
+        
+        contentLbl = UILabel()
+        contentLbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+        contentLbl.textColor = UIColor.appBlackColor()
+        contentView.addSubview(contentLbl)
         
         configureLayoutConstraints()
     }
     
     private func configureLayoutConstraints() {
-        feelingField.snp_makeConstraints {
+        descLbl.snp_makeConstraints {
             $0.left.equalTo(contentView).offset(58)
             $0.top.equalTo(contentView)
             $0.bottom.equalTo(contentView)
-            $0.right.equalTo(contentView).offset(-20)
+            $0.right.lessThanOrEqualTo(contentLbl.snp_left).offset(-15)
+        }
+        
+        contentLbl.snp_makeConstraints {
+            $0.right.equalTo(contentView)
+            $0.top.equalTo(contentView)
+            $0.bottom.equalTo(contentView)
         }
     }
 

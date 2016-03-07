@@ -111,21 +111,16 @@ final class HistoryViewController: UIViewController {
             let settings = SettingsViewController()
             self.navigationController?.pushViewController(settings, animated: true)
         }
-        let viewNewRecordAction = UIAlertAction(title: "Nouvelle page", style: .Default) { action in
-            let nav = UINavigationController(rootViewController: AddRecordViewController())
-            self.presentViewController(nav, animated: true, completion: nil)
-        }
         alert.addAction(exportAction)
         alert.addAction(importAction)
         alert.addAction(settingsAction)
-        alert.addAction(viewNewRecordAction)
         alert.addAction(cancelAction)
         presentViewController(alert, animated: true, completion: nil)
     }
     
     func addBtnClicked(sender: UIButton) {
         if ensureThereIsAddictions() {
-            let nav = UINavigationController(rootViewController: RecordDetailViewController())
+            let nav = UINavigationController(rootViewController: AddRecordViewController())
             presentViewController(nav, animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: L("history.no_addictions.title"), message: L("history.no_addictions.message"), preferredStyle: .Alert)
