@@ -43,6 +43,12 @@ final class AddictionListViewController: UIViewController {
         navigationItem.rightBarButtonItem = addBtn
         
         configureLayoutConstraints()
+        
+        registerNotificationObservers()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -99,6 +105,36 @@ final class AddictionListViewController: UIViewController {
         }
     }
     
+    // MARK: - Keyboard Notifications
+    
+    private func registerNotificationObservers() {
+        let ns = NSNotificationCenter.defaultCenter()
+        ns.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        ns.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        let scrollViewRect = view.convertRect(tableView.frame, fromView: tableView.superview)
+        if let rectValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let kbRect = view.convertRect(rectValue.CGRectValue(), fromView: nil)
+            
+            let hiddenScrollViewRect = CGRectIntersection(scrollViewRect, kbRect)
+            if !CGRectIsNull(hiddenScrollViewRect) {
+                var contentInsets = tableView.contentInset
+                contentInsets.bottom = hiddenScrollViewRect.size.height
+                tableView.contentInset = contentInsets
+                tableView.scrollIndicatorInsets = contentInsets
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        var contentInsets = tableView.contentInset
+        contentInsets.bottom = 0
+        tableView.contentInset = contentInsets
+        tableView.scrollIndicatorInsets = contentInsets
+    }
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -110,9 +146,8 @@ extension AddictionListViewController: UITableViewDataSource {
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(AddictionTableViewCell.reuseIdentifier, forIndexPath: indexPath)
-        let addiction = fetchedResultsController.objectAtIndexPath(indexPath) as! Addiction
-        cell.textLabel?.text = addiction.name.capitalizedString
+        let cell = tableView.dequeueReusableCellWithIdentifier(AddictionTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! AddictionTableViewCell
+        cell.addiction = fetchedResultsController.objectAtIndexPath(indexPath) as? Addiction
         return cell
     }
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -145,6 +180,29 @@ extension AddictionListViewController: UITableViewDataSource {
 extension AddictionListViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        updateNameOfAddictionAtIndexPath(indexPath)
+    }
+    private func updateNameOfAddictionAtIndexPath(indexPath: NSIndexPath) {
+        if let addiction = fetchedResultsController.objectAtIndexPath(indexPath) as? Addiction {
+            let alert = UIAlertController(title: L("addiction_list.modify.title"), message: L("addiction_list.modify.message"), preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: L("cancel"), style: .Cancel, handler: nil)
+            let addAction = UIAlertAction(title: L("addiction_list.modify"), style: .Default) { action in
+                if let name = alert.textFields?.first?.text {
+                    addiction.name = name
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                } else {
+                    UIAlertController.presentAlertWithTitle(L("addiction_list.new.error"),
+                        message: L("addiction_list.new.name_missing"), inController: self)
+                }
+            }
+            alert.addTextFieldWithConfigurationHandler { textField in
+                textField.placeholder = L("addiction_list.modify.placeholder")
+                textField.text = addiction.name.capitalizedString
+            }
+            alert.addAction(cancelAction)
+            alert.addAction(addAction)
+            presentViewController(alert, animated: true, completion: nil)
+        }
     }
 }
 

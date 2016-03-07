@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         Fabric.with([Crashlytics.self])
-        StyleSheet.constomizeAppearance(window)
+        StyleSheet.customizeAppearance(window)
         showPasscodeIfNeeded()
         return true
     }
@@ -53,6 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         CoreDataStack.shared.saveContext()
     }
+    
+    // MARK: - Passcode management
     
     private var hidingNav: UINavigationController?
     private var authContext = LAContext()

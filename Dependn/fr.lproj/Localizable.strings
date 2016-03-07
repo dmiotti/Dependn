@@ -24,6 +24,16 @@
 "new.allow_map" = "Utiliser ma position afin de mieux comprendre mes consommations";
 "new.use_my_position" = "Utiliser ma position";
 
+"new_record.date" = "Date";
+"new_record.place" = "Lieu";
+"new_record.add_btn" = "Ajouter";
+"new_record.title" = "Nouvelle entrée";
+"new_record.intensity" = "Intensité";
+"new_record.optional" = "Optionnel";
+"new_record.feeling" = "Ressenti";
+"new_record.comment" = "Commentaire";
+"new_record.use_position" = "Mémoriser cet endroit";
+
 "export.date" = "date";
 "export.time" = "heure";
 "export.intensity" = "intensité";
@@ -83,6 +93,13 @@
 "addiction_list.delete.confirm" = "Continuer";
 "addiction_list.delete.title" = "Êtes-vous sûr de vouloir supprimer %@";
 "addiction_list.delete.message" = "Toutes les informations liées à cette addictions seront effacées";
+"addiction_list.modify.title" = "Modifier une addiction";
+"addiction_list.modify.message" = "Vous pouvez changer le nom de l'addiction";
+"addiction_list.modify.placeholder" = "Entrer le nouveau nom";
+"addiction_list.modify" = "Modifier";
 
 "passcode.reason" = "Accèdez à vos données";
 "passcode.unset" = "Désactiver l'utilisation du passcode";
+
+"search.placeholder" = "Rechercher une addiction";
+"search.add_addiction" = "Ajouter une nouvelle addiction";

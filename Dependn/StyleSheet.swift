@@ -10,7 +10,7 @@ import UIKit
 import SwiftHelpers
 
 class StyleSheet {
-    class func constomizeAppearance(window: UIWindow?) {
+    class func customizeAppearance(window: UIWindow?) {
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         let attr = [
             NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightSemibold),
@@ -22,20 +22,16 @@ class StyleSheet {
         
         UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
         UIBarButtonItem.appearance().setTitleTextAttributes(attr, forState: .Normal)
+        
         UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UIToolbar.self]).tintColor = UIColor.appBlueColor()
         
+        UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).setTitleTextAttributes([
+            NSForegroundColorAttributeName: UIColor.appBlueColor(),
+            NSFontAttributeName: UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
+            ], forState: .Normal)
+        UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).tintColor = UIColor.appBlueColor()
+        
         window?.tintColor = UIColor.appBlueColor()
-    }
-    
-    class func setupWhiteAppearanceForNavigationController(navigationController: UINavigationController) {
-        navigationController.navigationBar.barTintColor = UIColor.whiteColor()
-        let attr = [
-            NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightSemibold),
-            NSForegroundColorAttributeName: UIColor.appBlackColor(),
-            NSKernAttributeName: 13.0 * 1.53 / 1000.0
-        ]
-        navigationController.navigationBar.titleTextAttributes = attr
-        navigationController.navigationBar.tintColor = UIColor.appBlueColor()
     }
 }
 

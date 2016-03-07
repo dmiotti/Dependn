@@ -111,9 +111,14 @@ final class HistoryViewController: UIViewController {
             let settings = SettingsViewController()
             self.navigationController?.pushViewController(settings, animated: true)
         }
+        let viewNewRecordAction = UIAlertAction(title: "Nouvelle page", style: .Default) { action in
+            let nav = UINavigationController(rootViewController: AddRecordViewController())
+            self.presentViewController(nav, animated: true, completion: nil)
+        }
         alert.addAction(exportAction)
         alert.addAction(importAction)
         alert.addAction(settingsAction)
+        alert.addAction(viewNewRecordAction)
         alert.addAction(cancelAction)
         presentViewController(alert, animated: true, completion: nil)
     }
@@ -273,8 +278,7 @@ extension HistoryViewController: UITableViewDataSource {
 extension HistoryViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-        let recordController = RecordDetailViewController()
+        let recordController = AddRecordViewController()
         recordController.record = fetchedResultsController.objectAtIndexPath(indexPath) as? Record
         let nav = UINavigationController(rootViewController: recordController)
         presentViewController(nav, animated: true, completion: nil)

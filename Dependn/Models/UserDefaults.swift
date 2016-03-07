@@ -11,5 +11,5 @@ import SwiftyUserDefaults
 
 extension DefaultsKeys {
     static let usePasscode = DefaultsKey<Bool>("usePasscode")
-    static let passcode = DefaultsKey<String?>("passcode")
+    static let useLocation = DefaultsKey<Bool>("useLocation")
 }
