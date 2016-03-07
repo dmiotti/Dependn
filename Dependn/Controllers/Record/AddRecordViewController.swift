@@ -396,12 +396,15 @@ extension AddRecordViewController: UITableViewDelegate {
         case .Place:
             controller.title = L("new_record.place")
             controller.originalText = chosenPlace
+            controller.placeholder = L("new_record.place_placeholder")
         case .Feeling:
             controller.title = L("new_record.feeling")
             controller.originalText = chosenFeeling
+            controller.placeholder = L("new_record.feeling_placeholder")
         case .Comment:
             controller.title = L("new_record.comment")
             controller.originalText = chosenComment
+            controller.placeholder = L("new_record.comment_placeholder")
         case .None: break
         }
         navigationController?.pushViewController(controller, animated: true)

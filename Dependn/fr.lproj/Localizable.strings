@@ -33,6 +33,9 @@
 "new_record.feeling" = "Ressenti";
 "new_record.comment" = "Commentaire";
 "new_record.use_position" = "Mémoriser cet endroit";
+"new_record.place_placeholder" = "Décrivez le contexte où vous êtes";
+"new_record.feeling_placeholder" = "Décrivez vos émotions en quelques mots...";
+"new_record.comment_placeholder" = "Ajouter un commentaire";
 
 "export.date" = "date";
 "export.time" = "heure";
