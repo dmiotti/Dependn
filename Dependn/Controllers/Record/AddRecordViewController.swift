@@ -56,8 +56,9 @@ final class AddRecordViewController: UIViewController {
     var record: Record?
     
     private var chosenDate = NSDate()
-    private var chosenAddiction: Addiction?
+    private var chosenAddiction: Addiction!
     private var chosenPlace: String?
+    private var chosenIntensity: Float = 3
     private var chosenFeeling: String?
     private var chosenComment: String?
     
@@ -119,6 +120,7 @@ final class AddRecordViewController: UIViewController {
     
     private func fillWithRecord(record: Record) {
         chosenAddiction = record.addiction
+        chosenIntensity = record.intensity.floatValue
         chosenDate = record.date
         chosenPlace = record.place
         chosenFeeling = record.before
@@ -126,6 +128,25 @@ final class AddRecordViewController: UIViewController {
     }
     
     func addBtnClicked(sender: UIBarButtonItem) {
+        if let record = record {
+            record.addiction = chosenAddiction
+            record.intensity = chosenIntensity
+            record.before = chosenFeeling
+            record.comment = chosenComment
+            record.date = chosenDate
+            record.place = chosenPlace
+        } else {
+            Record.insertNewRecord(chosenAddiction,
+                intensity: chosenIntensity,
+                before: chosenFeeling,
+                after: nil,
+                comment: chosenComment,
+                place: chosenPlace,
+                latitude: userLocation?.coordinate.latitude,
+                longitude: userLocation?.coordinate.longitude,
+                date: chosenDate,
+                inContext: CoreDataStack.shared.managedObjectContext)
+        }
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -240,6 +261,8 @@ extension AddRecordViewController: UITableViewDataSource {
             }
         case .Intensity:
             let cell = tableView.dequeueReusableCellWithIdentifier(NewIntensityTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewIntensityTableViewCell
+            cell.delegate = self
+            cell.updateIntensityWithProgress(chosenIntensity / 10.0)
             return cell
         case .Optionals:
             let cell = tableView.dequeueReusableCellWithIdentifier(NewTextTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewTextTableViewCell
@@ -451,5 +474,12 @@ extension AddRecordViewController: CLLocationManagerDelegate {
                 let queue = NSOperationQueue()
                 queue.addOperation(op)
         }
+    }
+}
+
+// MARK: - NewIntensityTableViewCellDelegate
+extension AddRecordViewController: NewIntensityTableViewCellDelegate {
+    func intensityCell(cell: NewIntensityTableViewCell, didChangeIntensity intensity: Float) {
+        chosenIntensity = intensity * 10.0
     }
 }

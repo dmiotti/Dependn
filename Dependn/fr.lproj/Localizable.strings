@@ -103,3 +103,7 @@
 
 "search.placeholder" = "Rechercher une addiction";
 "search.add_addiction" = "Ajouter une nouvelle addiction";
+
+"intensity.low" = "Faible";
+"intensity.medium" = "Moyenne";
+"intensity.high" = "Forte";

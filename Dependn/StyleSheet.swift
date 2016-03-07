@@ -43,6 +43,9 @@ extension UIColor {
     class func appCigaretteColor()      -> UIColor { return "28AFFA".UIColor }
     class func appWeedColor()           -> UIColor { return "2DD7AA".UIColor }
     class func lightBackgroundColor()   -> UIColor { return "F5FAFF".UIColor }
+    
+    class func appIntensityLowColor()   -> UIColor { return "FDDC6A".UIColor }
+    class func appIntensityHighColor()  -> UIColor { return "F76D5F".UIColor }
 
     class func lowIntensityColor()      -> UIColor { return  UIColor.emeraldColor()     }
     class func mediumIntensityColor()   -> UIColor { return  UIColor.nephritisColor()   }
