@@ -17,7 +17,7 @@
 		581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */; };
 		581DC5E71C8B73D3006DE551 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E61C8B73D3006DE551 /* UserDefaults.swift */; };
 		58548BBD1C8BA33800C7C940 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */; };
-		58548BBF1C8BA8D900C7C940 /* HidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BBE1C8BA8D900C7C940 /* HidingViewController.swift */; };
+		58548BBF1C8BA8D900C7C940 /* PasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */; };
 		58548BC91C8BBBCF00C7C940 /* RecordCircleTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BC81C8BBBCF00C7C940 /* RecordCircleTypeView.swift */; };
 		58548BDE1C8BE18100C7C940 /* AddRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BD51C8BE18100C7C940 /* AddRecordViewController.swift */; };
 		58548BE01C8BE18100C7C940 /* NewDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BD81C8BE18100C7C940 /* NewDateTableViewCell.swift */; };
@@ -85,7 +85,7 @@
 		581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionTableViewCell.swift; sourceTree = "<group>"; };
 		581DC5E61C8B73D3006DE551 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
-		58548BBE1C8BA8D900C7C940 /* HidingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HidingViewController.swift; sourceTree = "<group>"; };
+		58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeViewController.swift; sourceTree = "<group>"; };
 		58548BC81C8BBBCF00C7C940 /* RecordCircleTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordCircleTypeView.swift; sourceTree = "<group>"; };
 		58548BD51C8BE18100C7C940 /* AddRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecordViewController.swift; sourceTree = "<group>"; };
 		58548BD81C8BE18100C7C940 /* NewDateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDateTableViewCell.swift; sourceTree = "<group>"; };
@@ -176,7 +176,7 @@
 		58548BB91C8B9A6000C7C940 /* Passcode */ = {
 			isa = PBXGroup;
 			children = (
-				58548BBE1C8BA8D900C7C940 /* HidingViewController.swift */,
+				58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */,
 			);
 			path = Passcode;
 			sourceTree = "<group>";
@@ -518,7 +518,7 @@
 				58DF62D21C83BDEE0035F608 /* CountOperation.swift in Sources */,
 				58DF62D11C83BDEE0035F608 /* AverageTimeInBetweenTwoTakesOperation.swift in Sources */,
 				58DF62C61C83BDEE0035F608 /* HistoryTableViewCell.swift in Sources */,
-				58548BBF1C8BA8D900C7C940 /* HidingViewController.swift in Sources */,
+				58548BBF1C8BA8D900C7C940 /* PasscodeViewController.swift in Sources */,
 				581DC5DF1C8B3C5D006DE551 /* AddictionListViewController.swift in Sources */,
 				58DF62D71C83BDEE0035F608 /* Record.swift in Sources */,
 				58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */,

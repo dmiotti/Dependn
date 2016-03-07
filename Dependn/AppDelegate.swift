@@ -9,9 +9,7 @@
 import UIKit
 import Fabric
 import Crashlytics
-import SwiftHelpers
 import SwiftyUserDefaults
-import LocalAuthentication
 import CocoaLumberjack
 
 @UIApplicationMain
@@ -27,11 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    }
-    
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
@@ -44,10 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         showPasscodeIfNeeded()
     }
     
-    func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-    
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
@@ -57,12 +46,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Passcode management
     
     private var hidingNav: UINavigationController?
-    private var authContext = LAContext()
     
     private func showPasscodeIfNeeded() {
         guard
             hidingNav == nil &&
-            supportedOwnerAuthentications().count > 0 &&
+            PasscodeViewController.supportedOwnerAuthentications().count > 0 &&
             Defaults[.usePasscode] == true else {
                 DDLogInfo("Passcode is already shown or is unsupported")
                 return
@@ -75,61 +63,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     topController = top
                 }
                 
-                let hidingViewController = HidingViewController()
-                self.hidingNav = UINavigationController(rootViewController: hidingViewController)
+                let passcodeViewController = PasscodeViewController()
+                self.hidingNav = UINavigationController(rootViewController: passcodeViewController)
                 self.hidingNav!.modalTransitionStyle = .CrossDissolve
-                topController.presentViewController(self.hidingNav!, animated: false) { finished in
-                    self.launchPasscode()
-                }
+                topController.presentViewController(self.hidingNav!, animated: false, completion: nil)
             }
         }
-    }
-    
-    private func launchPasscode() {
-        if let policy = supportedOwnerAuthentications().first {
-            authContext.evaluatePolicy(policy, localizedReason: L("passcode.reason")) { success, error in
-                if success {
-                    self.hidingNav?.dismissViewControllerAnimated(true) {
-                        self.hidingNav = nil
-                    }
-                } else {
-                    DDLogError("\(error)")
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.launchPasscode()
-                    }
-                }
-            }
-        }
-    }
-    
-    func passcodeSwitchValueChanged(sender: UISwitch) {
-        if let policy = supportedOwnerAuthentications().first {
-            authContext.evaluatePolicy(policy,
-                localizedReason: L("passcode.reason")) { (success, error) in
-                    if success {
-                        Defaults[.usePasscode] = sender.on
-                    } else {
-                        DDLogError("\(error)")
-                        sender.setOn(!sender.on, animated: true)
-                    }
-            }
-        } else {
-            sender.setOn(!sender.on, animated: true)
-        }
-    }
-    
-    private func supportedOwnerAuthentications() -> [LAPolicy] {
-        var supportedAuthentications = [LAPolicy]()
-        var error: NSError?
-        if authContext.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
-            supportedAuthentications.append(.DeviceOwnerAuthenticationWithBiometrics)
-        }
-        DDLogError("\(error)")
-        if authContext.canEvaluatePolicy(.DeviceOwnerAuthentication, error: &error) {
-            supportedAuthentications.append(.DeviceOwnerAuthentication)
-        }
-        DDLogError("\(error)")
-        return supportedAuthentications
     }
     
 }
