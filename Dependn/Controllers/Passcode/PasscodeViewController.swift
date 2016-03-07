@@ -43,22 +43,6 @@ final class PasscodeViewController: UIViewController {
         }
     }
     
-    func passcodeSwitchValueChanged(sender: UISwitch) {
-        if let policy = PasscodeViewController.supportedOwnerAuthentications().first {
-            authContext.evaluatePolicy(policy,
-                localizedReason: L("passcode.reason")) { (success, error) in
-                    if success {
-                        Defaults[.usePasscode] = sender.on
-                    } else {
-                        DDLogError("\(error)")
-                        sender.setOn(!sender.on, animated: true)
-                    }
-            }
-        } else {
-            sender.setOn(!sender.on, animated: true)
-        }
-    }
-    
     static func supportedOwnerAuthentications() -> [LAPolicy] {
         var supportedAuthentications = [LAPolicy]()
         var error: NSError?
