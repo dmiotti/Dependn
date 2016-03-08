@@ -24,7 +24,7 @@
         <!--History View Controller-->
         <scene sceneID="bfQ-Wb-4SF">
             <objects>
-                <viewController id="XEm-uK-lsk" customClass="HistoryViewController" customModule="SmokeReporter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XEm-uK-lsk" customClass="HistoryViewController" customModule="Dependn" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NCf-JC-3B3"/>
                         <viewControllerLayoutGuide type="bottom" id="5Sd-8q-YI3"/>
