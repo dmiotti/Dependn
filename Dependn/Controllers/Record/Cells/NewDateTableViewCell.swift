@@ -9,13 +9,24 @@
 import UIKit
 import SwiftHelpers
 
+protocol NewDateTableViewCellDelegate {
+    func dateTableViewCell(cell: NewDateTableViewCell, didSelectDate date: NSDate)
+}
+
 final class NewDateTableViewCell: SHCommonInitTableViewCell {
     
     static let reuseIdentifier = "NewDateTableViewCell"
     
+    var delegate: NewDateTableViewCellDelegate?
+    
+    private(set) var chosenDateLbl: UILabel!
+    
     private var dateLbl: UILabel!
     private var calImgView: UIImageView!
-    var chosenDateLbl: UILabel!
+    
+    private var hiddenDateTextField: UITextField!
+    private var datePicker: UIDatePicker!
+    private var toolbar: UIToolbar!
 
     override func commonInit() {
         super.commonInit()
@@ -41,7 +52,28 @@ final class NewDateTableViewCell: SHCommonInitTableViewCell {
         chosenDateLbl.adjustsFontSizeToFitWidth = true
         contentView.addSubview(chosenDateLbl)
         
+        /// Build focused TextField
+        hiddenDateTextField = UITextField()
+        hiddenDateTextField.hidden = true
+        
+        datePicker = UIDatePicker()
+        datePicker.datePickerMode = .DateAndTime
+        hiddenDateTextField.inputView = datePicker
+        contentView.addSubview(hiddenDateTextField)
+        
+        toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: bounds.size.width, height: 44))
+        let dateDoneItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "datePickerDidSelectDate:")
+        dateDoneItem.setTitleTextAttributes([
+            NSForegroundColorAttributeName: UIColor.appBlueColor(),
+            NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
+            ], forState: .Normal)
+        let dateSpaceItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        toolbar.items = [ dateSpaceItem, dateDoneItem ]
+        hiddenDateTextField.inputAccessoryView = toolbar
+        
         configureLayoutConstraints()
+        
+        layoutIfNeeded()
     }
     
     private func configureLayoutConstraints() {
@@ -56,10 +88,27 @@ final class NewDateTableViewCell: SHCommonInitTableViewCell {
             $0.bottom.equalTo(contentView)
         }
         chosenDateLbl.snp_makeConstraints {
-            $0.top.equalTo(contentView)
-            $0.bottom.equalTo(contentView)
+            $0.centerY.equalTo(dateLbl)
             $0.right.equalTo(contentView)
-            $0.left.greaterThanOrEqualTo(dateLbl.snp_right).offset(10)
+            $0.left.equalTo(dateLbl.snp_right)
+        }
+        hiddenDateTextField.snp_makeConstraints {
+            $0.top.equalTo(contentView)
+            $0.left.equalTo(contentView)
+            $0.width.height.equalTo(1)
+        }
+    }
+    
+    func datePickerDidSelectDate(sender: UIBarButtonItem) {
+        hiddenDateTextField.resignFirstResponder()
+        delegate?.dateTableViewCell(self, didSelectDate: datePicker.date)
+    }
+    
+    override func setHighlighted(highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        
+        if highlighted {
+            hiddenDateTextField.becomeFirstResponder()
         }
     }
 

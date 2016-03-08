@@ -92,7 +92,7 @@ final class AddRecordViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 55
-        
+        tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.registerClass(AddictionTableViewCell.self,    forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
         tableView.registerClass(NewDateTableViewCell.self,      forCellReuseIdentifier: NewDateTableViewCell.reuseIdentifier)
         tableView.registerClass(NewPlaceTableViewCell.self,     forCellReuseIdentifier: NewPlaceTableViewCell.reuseIdentifier)
@@ -149,16 +149,6 @@ final class AddRecordViewController: UIViewController {
                 inContext: CoreDataStack.shared.managedObjectContext)
         }
         dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func datePickerDidSelectDate(sender: UIBarButtonItem) {
-        hiddenDateTextField.resignFirstResponder()
-        chosenDate = datePicker.date
-        tableView.reloadRowsAtIndexPaths([
-            NSIndexPath(
-                forRow: DateAndPlaceRowType.Date.rawValue,
-                inSection: AddRecordSectionType.DateAndPlace.rawValue)],
-            withRowAnimation: .Automatic)
     }
     
     func cancelBtnClicked(sender: UIBarButtonItem) {
@@ -246,14 +236,7 @@ extension AddRecordViewController: UITableViewDataSource {
             case .Date:
                 let cell = tableView.dequeueReusableCellWithIdentifier(NewDateTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewDateTableViewCell
                 cell.chosenDateLbl.text = dateFormatter.stringFromDate(chosenDate).capitalizedString
-                if hiddenDateTextField.superview != nil {
-                    hiddenDateTextField.removeFromSuperview()
-                }
-                cell.contentView.addSubview(hiddenDateTextField)
-                cell.contentView.sendSubviewToBack(hiddenDateTextField)
-                hiddenDateTextField.snp_makeConstraints {
-                    $0.edges.equalTo(cell.contentView)
-                }
+                cell.delegate = self
                 return cell
             case .Place:
                 let cell = tableView.dequeueReusableCellWithIdentifier(NewPlaceTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewPlaceTableViewCell
@@ -489,5 +472,16 @@ extension AddRecordViewController: CLLocationManagerDelegate {
 extension AddRecordViewController: NewIntensityTableViewCellDelegate {
     func intensityCell(cell: NewIntensityTableViewCell, didChangeIntensity intensity: Float) {
         chosenIntensity = intensity * 10.0
+    }
+}
+
+extension AddRecordViewController: NewDateTableViewCellDelegate {
+    func dateTableViewCell(cell: NewDateTableViewCell, didSelectDate date: NSDate) {
+        chosenDate = date
+        tableView.reloadRowsAtIndexPaths([
+            NSIndexPath(
+                forRow: DateAndPlaceRowType.Date.rawValue,
+                inSection: AddRecordSectionType.DateAndPlace.rawValue)],
+            withRowAnimation: .Automatic)
     }
 }

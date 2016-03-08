@@ -20,8 +20,6 @@ final class NewPlaceTableViewCell: SHCommonInitTableViewCell {
     override func commonInit() {
         super.commonInit()
         
-        separatorInset = UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 0)
-        
         accessoryType = .DisclosureIndicator
         
         placeImgView = UIImageView(image: UIImage(named: "place_icon"))
@@ -55,9 +53,9 @@ final class NewPlaceTableViewCell: SHCommonInitTableViewCell {
             $0.bottom.equalTo(contentView)
         }
         chosenPlaceLbl.snp_makeConstraints {
-            $0.top.equalTo(contentView)
-            $0.bottom.equalTo(contentView)
+            $0.centerY.equalTo(placeLbl)
             $0.right.equalTo(contentView)
+            $0.left.equalTo(placeLbl.snp_right)
         }
     }
 

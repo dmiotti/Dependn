@@ -11,7 +11,7 @@ import CoreData
 
 final class Record: NSManagedObject, NamedEntity {
     
-    static let sectionDateFormatter = NSDateFormatter(dateFormat: "EEEE dd MMMM yyyy")
+    static let sectionDateFormatter = NSDateFormatter(dateFormat: "EEEE d MMMM yyyy")
     
     static var entityName: String { get { return "Record" } }
     
