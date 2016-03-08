@@ -36,6 +36,8 @@
 "new_record.place_placeholder" = "Décrivez le contexte où vous êtes";
 "new_record.feeling_placeholder" = "Décrivez vos émotions en quelques mots...";
 "new_record.comment_placeholder" = "Ajouter un commentaire";
+"new_record.modify_title" = "Modifier une entrée";
+"new_record.modify" = "Modifier";
 
 "export.date" = "date";
 "export.time" = "heure";
@@ -81,7 +83,7 @@
 
 "settings.title" = "Paramètres";
 "settings.manage_addictions" = "Gèrer mes addictions";
-"settings.use_passcode" = "Utiliser un passcode";
+"settings.use_passcode" = "Utiliser TouchID";
 
 "addiction_list.title" = "Mes addictions";
 "addiction_list.new.title" = "Ajouter une addiction";
@@ -102,7 +104,7 @@
 "addiction_list.modify" = "Modifier";
 
 "passcode.reason" = "Accèdez à vos données";
-"passcode.unset" = "Désactiver l'utilisation du passcode";
+"passcode.unset" = "Désactiver TouchID";
 
 "search.placeholder" = "Rechercher une addiction";
 "search.add_addiction" = "Ajouter une nouvelle addiction";

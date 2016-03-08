@@ -65,7 +65,7 @@ final class AddRecordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = L("new_record.title")
+        title = record != nil ? L("new_record.modify_title") : L("new_record.title")
         
         locationManager.delegate = self
         
@@ -75,8 +75,9 @@ final class AddRecordViewController: UIViewController {
         
         cancelBtn = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelBtnClicked:")
         navigationItem.leftBarButtonItem = cancelBtn
-        
-        doneBtn = UIBarButtonItem(title: L("new_record.add_btn"), style: .Plain, target: self, action: "addBtnClicked:")
+
+        let doneText = record != nil ? L("new_record.modify") : L("new_record.add_btn")
+        doneBtn = UIBarButtonItem(title: doneText, style: .Plain, target: self, action: "addBtnClicked:")
         navigationItem.rightBarButtonItem = doneBtn
         
         chosenAddiction = try! Addiction.getAllAddictions(inContext: CoreDataStack.shared.managedObjectContext).first
@@ -121,20 +122,20 @@ final class AddRecordViewController: UIViewController {
     private func fillWithRecord(record: Record) {
         chosenAddiction = record.addiction
         chosenIntensity = record.intensity.floatValue
-        chosenDate = record.date
-        chosenPlace = record.place
-        chosenFeeling = record.before
-        chosenComment = record.comment
+        chosenDate      = record.date
+        chosenPlace     = record.place
+        chosenFeeling   = record.before
+        chosenComment   = record.comment
     }
     
     func addBtnClicked(sender: UIBarButtonItem) {
         if let record = record {
             record.addiction = chosenAddiction
             record.intensity = chosenIntensity
-            record.before = chosenFeeling
-            record.comment = chosenComment
-            record.date = chosenDate
-            record.place = chosenPlace
+            record.before    = chosenFeeling
+            record.comment   = chosenComment
+            record.date      = chosenDate
+            record.place     = chosenPlace
         } else {
             Record.insertNewRecord(chosenAddiction,
                 intensity: chosenIntensity,
@@ -458,6 +459,10 @@ extension AddRecordViewController: CLLocationManagerDelegate {
         }
     }
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        if !Defaults[.useLocation] {
+            return
+        }
+
         userLocation = newLocation
         
         DDLogInfo("Location found \(newLocation)")

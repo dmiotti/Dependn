@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="m1w-06-UvH">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="vt6-A9-mYG">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Yg2-sq-9OM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="m1w-06-UvH" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="history" id="bVj-hg-9IO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Fdc-aN-snx">
@@ -19,6 +17,7 @@
                         <segue destination="XEm-uK-lsk" kind="relationship" relationship="rootViewController" id="xIb-ec-ilm"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yg2-sq-9OM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="698" y="169"/>
         </scene>
