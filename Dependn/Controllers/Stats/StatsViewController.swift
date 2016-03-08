@@ -14,7 +14,6 @@ enum StatsRowType: Int {
     case AverageBtwTakes
     case AverageIntensity
     case GlobalCount
-    case Version
     static let count: Int = {
         var max: Int = 0
         while let _ = StatsRowType(rawValue: max) { max += 1 }
@@ -185,9 +184,6 @@ extension StatsViewController: UITableViewDataSource {
                 if let total = model.total {
                     cell.valueLbl.text = numberFormatter.stringFromNumber(total)
                 }
-            case .Version:
-                cell.titleLbl.text = L("stats.version")
-                cell.valueLbl.text = appVersion()
             }
         }
     }

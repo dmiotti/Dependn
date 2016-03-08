@@ -27,6 +27,8 @@ enum SettingsSectionType: Int {
 enum GeneralRowType: Int {
     case ManageAddictions
     case UsePasscode
+    case MemorisePlaces
+    case Version
 
     static let count: Int = {
         var max: Int = 0
@@ -50,6 +52,7 @@ final class SettingsViewController: UIViewController {
     
     private var tableView: UITableView!
     private var passcodeSwitch: UISwitch!
+    private var memorizePlacesSwitch: UISwitch!
     
     private var pinNavigationController: UINavigationController?
     
@@ -69,6 +72,10 @@ final class SettingsViewController: UIViewController {
         passcodeSwitch = UISwitch()
         passcodeSwitch.on = Defaults[.usePasscode]
         passcodeSwitch.addTarget(self, action: "passcodeSwitchValueChanged:", forControlEvents: .ValueChanged)
+        
+        memorizePlacesSwitch = UISwitch()
+        memorizePlacesSwitch.on = Defaults[.useLocation]
+        memorizePlacesSwitch.addTarget(self, action: "memorizePlacesSwitchValueChanged:", forControlEvents: .ValueChanged)
         
         configureLayoutConstraints()
     }
@@ -95,6 +102,10 @@ final class SettingsViewController: UIViewController {
         } else {
             sender.setOn(!sender.on, animated: true)
         }
+    }
+    
+    func memorizePlacesSwitchValueChanged(sender: UISwitch) {
+        Defaults[.useLocation] = sender.on
     }
     
     private func supportedOwnerAuthentications() -> [LAPolicy] {
@@ -175,6 +186,7 @@ extension SettingsViewController: UITableViewDataSource {
         cell.accessoryView = nil
         cell.accessoryType = .None
         cell.textLabel?.text = nil
+        cell.textLabel?.textColor = UIColor.appBlackColor()
 
         let type = SettingsSectionType(rawValue: indexPath.section)!
         switch type {
@@ -189,16 +201,29 @@ extension SettingsViewController: UITableViewDataSource {
                 passcodeSwitch.setOn(Defaults[.usePasscode], animated: true)
                 passcodeSwitch.enabled = supportedOwnerAuthentications().count > 0
                 cell.accessoryView = passcodeSwitch
+            case .MemorisePlaces:
+                cell.textLabel?.text = L("settings.memorise_places")
+                memorizePlacesSwitch.setOn(Defaults[.useLocation], animated: true)
+                cell.accessoryView = memorizePlacesSwitch
+            case .Version:
+                cell.textLabel?.text = L("settings.version")
+                let lbl = UILabel()
+                lbl.textColor = UIColor.appBlackColor()
+                lbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+                lbl.text = appVersion()
+                lbl.sizeToFit()
+                cell.accessoryView = lbl
+                
             }
         case .ImportExport:
             let rowType = ImportExportRowType(rawValue: indexPath.row)!
             switch rowType {
             case .Import:
                 cell.textLabel?.textAlignment = .Center
-                cell.textLabel?.text = L("history.action.import")
+                cell.textLabel?.text = L("settings.action.import")
             case .Export:
                 cell.textLabel?.textAlignment = .Center
-                cell.textLabel?.text = L("history.action.export")
+                cell.textLabel?.text = L("settings.action.export")
             }
         }
 
@@ -218,6 +243,10 @@ extension SettingsViewController: UITableViewDelegate {
                 case .ManageAddictions:
                     showManageAddictions()
                 case .UsePasscode:
+                    break
+                case .MemorisePlaces:
+                    break
+                case .Version:
                     break
                 }
             case .ImportExport:

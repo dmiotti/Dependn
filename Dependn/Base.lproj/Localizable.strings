@@ -10,20 +10,7 @@
 
 "cancel" = "Annuler";
 
-"new.cig" = "Cig";
-"new.weed" = "Weed";
-"new.intensity" = "Intensité de l'envie";
-"new.feeling_before" = "Ressenti avant";
-"new.feeling_after" = "Ressenti après";
-"new.date" = "Date";
-"new.hour" = "Heure";
-"new.type" = "Type";
-"new.comment" = "Commentaire";
-"new.place" = "Lieu";
-"new.place_placeholder" = "Donner un nom à ce lieu (rayon 80m)";
-"new.allow_map" = "Utiliser ma position afin de mieux comprendre mes consommations";
-"new.use_my_position" = "Utiliser ma position";
-
+"new_record.cancel" = "Annuler";
 "new_record.date" = "Date";
 "new_record.place" = "Lieu";
 "new_record.add_btn" = "Ajouter";
@@ -56,9 +43,6 @@
 "history.weed" = "Weed";
 "history.action.title" = "Quelle action voulez-vous lancer ?";
 "history.action.message" = "Pour importer des données vous devez ajouter des fichiers à l'application via iTunes";
-"history.action.export" = "Exporter mes données";
-"history.action.import" = "Importer mes données";
-"history.action.settings" = "Paramètres";
 "history.no_addictions.ok" = "OK";
 "history.no_addictions.add" = "Ajouter";
 "history.no_addictions.title" = "Ajouter une entrée";
@@ -73,17 +57,20 @@
 
 "stats.title" = "Statistiques";
 "stats.total" = "Total";
-"stats.average_per_day" = "Moyenne par jour";
-"stats.version" = "Version";
-"stats.average_btw_takes" = "Temps moyen entre 2 prises";
-"stats.not_available" = "nc.";
+"stats.not_available" = "-";
 "stats.minutes" = "minutes";
 "stats.hours" = "heures";
+"stats.average_per_day" = "Moyenne par jour";
+"stats.average_btw_takes" = "Temps moyen entre 2 prises";
 "stats.average_intensity" = "Intensité moyenne";
 
 "settings.title" = "Paramètres";
 "settings.manage_addictions" = "Gèrer mes addictions";
+"settings.memorise_places" = "Se souvenir des mes lieux";
 "settings.use_passcode" = "Utiliser TouchID";
+"settings.version" = "Version";
+"settings.action.export" = "Exporter mes données";
+"settings.action.import" = "Importer mes données";
 
 "addiction_list.title" = "Mes addictions";
 "addiction_list.new.title" = "Ajouter une addiction";

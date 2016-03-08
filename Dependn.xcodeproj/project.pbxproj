@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		581CCC351C8F76B3006A8FAD /* IntensityGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CCC341C8F76B3006A8FAD /* IntensityGradientView.swift */; };
 		581DC5D21C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5CF1C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift */; };
 		581DC5D31C8B2ED0006DE551 /* Addiction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5D01C8B2ED0006DE551 /* Addiction.swift */; };
 		581DC5D41C8B2ED0006DE551 /* Record+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5D11C8B2ED0006DE551 /* Record+CoreDataProperties.swift */; };
@@ -75,6 +76,7 @@
 
 /* Begin PBXFileReference section */
 		1B3495A2BA0FC80954921D93 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		581CCC341C8F76B3006A8FAD /* IntensityGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntensityGradientView.swift; sourceTree = "<group>"; };
 		581DC5CF1C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Addiction+CoreDataProperties.swift"; path = "../Addiction+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		581DC5D01C8B2ED0006DE551 /* Addiction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Addiction.swift; sourceTree = "<group>"; };
 		581DC5D11C8B2ED0006DE551 /* Record+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Record+CoreDataProperties.swift"; path = "../Record+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				58548BC81C8BBBCF00C7C940 /* RecordCircleTypeView.swift */,
+				581CCC341C8F76B3006A8FAD /* IntensityGradientView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				58DF62D31C83BDEE0035F608 /* ExportOperation.swift in Sources */,
 				58548BE11C8BE18100C7C940 /* NewIntensityTableViewCell.swift in Sources */,
 				581DC5D21C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift in Sources */,
+				581CCC351C8F76B3006A8FAD /* IntensityGradientView.swift in Sources */,
 				58548BE91C8BE1E400C7C940 /* SearchAdditionViewController.swift in Sources */,
 				58DF62D91C83BDEE0035F608 /* StyleSheet.swift in Sources */,
 				58DF62CF1C83BDEE0035F608 /* AverageIntensityOperation.swift in Sources */,

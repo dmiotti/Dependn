@@ -197,7 +197,7 @@ extension HistoryViewController: UITableViewDataSource {
             if let first = addiction.name.capitalizedString.characters.first {
                 cell.circleTypeView.textLbl.text = "\(first)"
             }
-            cell.intensityLbl.text = "\(record.intensity.integerValue)"
+            cell.intensityCircle.progress = record.intensity.floatValue / 10.0
         }
     }
     private func attributedStringForDate(date: NSDate, addiction: Addiction) -> NSAttributedString {

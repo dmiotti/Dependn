@@ -15,7 +15,7 @@ final class HistoryTableViewCell: SHCommonInitTableViewCell {
     
     private(set) var circleTypeView: RecordCircleTypeView!
     private(set) var dateLbl: UILabel!
-    private(set) var intensityLbl: UILabel!
+    private(set) var intensityCircle: IntensityGradientView!
     
     override func commonInit() {
         super.commonInit()
@@ -29,9 +29,8 @@ final class HistoryTableViewCell: SHCommonInitTableViewCell {
         dateLbl.numberOfLines = 0
         contentView.addSubview(dateLbl)
         
-        intensityLbl = UILabel()
-        intensityLbl.textAlignment = .Right
-        contentView.addSubview(intensityLbl)
+        intensityCircle = IntensityGradientView()
+        contentView.addSubview(intensityCircle)
         
         configureLayoutConstraints()
     }
@@ -43,17 +42,17 @@ final class HistoryTableViewCell: SHCommonInitTableViewCell {
             $0.width.height.equalTo(30)
         }
         
-        intensityLbl.snp_makeConstraints {
-            $0.right.equalTo(contentView).offset(-20)
-            $0.top.equalTo(contentView)
-            $0.bottom.equalTo(contentView)
+        intensityCircle.snp_makeConstraints {
+            $0.centerY.equalTo(contentView)
+            $0.right.equalTo(contentView)
+            $0.width.height.equalTo(28)
         }
         
         dateLbl.snp_makeConstraints {
             $0.left.equalTo(circleTypeView.snp_right).offset(10)
             $0.top.equalTo(contentView)
             $0.bottom.equalTo(contentView)
-            $0.right.equalTo(intensityLbl.snp_left).offset(-10)
+            $0.right.equalTo(intensityCircle.snp_left).offset(-10)
         }
     }
 

@@ -22,11 +22,13 @@ final class StatsCell: SHCommonInitTableViewCell {
         titleLbl = UILabel()
         titleLbl.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         titleLbl.adjustsFontSizeToFitWidth = true
+        titleLbl.textColor = UIColor.appBlackColor()
         contentView.addSubview(titleLbl)
         
         valueLbl = UILabel()
         valueLbl.textAlignment = .Right
         valueLbl.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+        valueLbl.textColor = UIColor.appBlackColor()
         contentView.addSubview(valueLbl)
         
         configureLayoutConstraints()
@@ -37,14 +39,19 @@ final class StatsCell: SHCommonInitTableViewCell {
             $0.left.equalTo(contentView).offset(20)
             $0.top.equalTo(contentView)
             $0.bottom.equalTo(contentView)
-            $0.right.lessThanOrEqualTo(valueLbl.snp_left).offset(-10)
+            $0.right.equalTo(valueLbl.snp_left)
         }
         
         valueLbl.snp_makeConstraints {
+            $0.centerY.equalTo(titleLbl)
             $0.right.equalTo(contentView).offset(-20)
-            $0.top.equalTo(contentView)
-            $0.bottom.equalTo(contentView)
         }
+        
+        titleLbl.setContentCompressionResistancePriority(
+            UILayoutPriorityDefaultLow, forAxis: .Horizontal)
+        
+        valueLbl.setContentCompressionResistancePriority(
+            UILayoutPriorityDefaultHigh, forAxis: .Horizontal)
     }
     
 }

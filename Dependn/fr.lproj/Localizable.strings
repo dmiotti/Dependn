@@ -74,7 +74,6 @@
 "stats.title" = "Statistiques";
 "stats.total" = "Total";
 "stats.average_per_day" = "Moyenne par jour";
-"stats.version" = "Version";
 "stats.average_btw_takes" = "Temps moyen entre 2 prises";
 "stats.not_available" = "nc.";
 "stats.minutes" = "minutes";

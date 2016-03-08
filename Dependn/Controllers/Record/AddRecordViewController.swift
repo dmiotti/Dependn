@@ -45,8 +45,6 @@ final class AddRecordViewController: UIViewController {
     private var doneBtn: UIBarButtonItem!
     
     private var dateFormatter: NSDateFormatter!
-    private var datePicker: UIDatePicker!
-    private var hiddenDateTextField: UITextField!
     
     private let locationManager = CLLocationManager()
     private var userLocation: CLLocation?
@@ -55,12 +53,16 @@ final class AddRecordViewController: UIViewController {
     
     var record: Record?
     
+    // MARK: - Editing Record properties
+    
     private var chosenDate = NSDate()
     private var chosenAddiction: Addiction!
     private var chosenPlace: String?
     private var chosenIntensity: Float = 3
     private var chosenFeeling: String?
     private var chosenComment: String?
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,7 +75,7 @@ final class AddRecordViewController: UIViewController {
         
         view.backgroundColor = UIColor.lightBackgroundColor()
         
-        cancelBtn = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelBtnClicked:")
+        cancelBtn = UIBarButtonItem(title: L("new_record.cancel"), style: .Plain, target: self, action: "cancelBtnClicked:")
         navigationItem.leftBarButtonItem = cancelBtn
 
         let doneText = record != nil ? L("new_record.modify") : L("new_record.add_btn")
@@ -81,11 +83,6 @@ final class AddRecordViewController: UIViewController {
         navigationItem.rightBarButtonItem = doneBtn
         
         chosenAddiction = try! Addiction.getAllAddictions(inContext: CoreDataStack.shared.managedObjectContext).first
-        
-        hiddenDateTextField = UITextField()
-        hiddenDateTextField.alpha = 0
-        
-        configureDateField()
         
         tableView = UITableView(frame: .zero, style: .Grouped)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
@@ -116,6 +113,7 @@ final class AddRecordViewController: UIViewController {
     }
     
     deinit {
+        stopLocationManager()
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
@@ -128,54 +126,13 @@ final class AddRecordViewController: UIViewController {
         chosenComment   = record.comment
     }
     
-    func addBtnClicked(sender: UIBarButtonItem) {
-        if let record = record {
-            record.addiction = chosenAddiction
-            record.intensity = chosenIntensity
-            record.before    = chosenFeeling
-            record.comment   = chosenComment
-            record.date      = chosenDate
-            record.place     = chosenPlace
-        } else {
-            Record.insertNewRecord(chosenAddiction,
-                intensity: chosenIntensity,
-                before: chosenFeeling,
-                after: nil,
-                comment: chosenComment,
-                place: chosenPlace,
-                latitude: userLocation?.coordinate.latitude,
-                longitude: userLocation?.coordinate.longitude,
-                date: chosenDate,
-                inContext: CoreDataStack.shared.managedObjectContext)
-        }
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func cancelBtnClicked(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     private func configureLayoutConstraints() {
         tableView.snp_makeConstraints {
             $0.edges.equalTo(view)
         }
     }
     
-    private func configureDateField() {
-        datePicker = UIDatePicker()
-        datePicker.datePickerMode = .DateAndTime
-        hiddenDateTextField.inputView = datePicker
-        
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
-        let dateDoneItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "datePickerDidSelectDate:")
-        dateDoneItem.setTitleTextAttributes([
-            NSForegroundColorAttributeName: UIColor.appBlueColor(),
-            NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
-            ], forState: .Normal)
-        let dateSpaceItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-        toolbar.items = [ dateSpaceItem, dateDoneItem ]
-        hiddenDateTextField.inputAccessoryView = toolbar
-    }
+    // MARK: - Keyboard
     
     private func registerNotificationObservers() {
         let ns = NSNotificationCenter.defaultCenter()
@@ -203,6 +160,35 @@ final class AddRecordViewController: UIViewController {
         contentInsets.bottom = 0
         tableView.contentInset = contentInsets
         tableView.scrollIndicatorInsets = contentInsets
+    }
+    
+    // MARK: - UIBarButtonItems
+    
+    func addBtnClicked(sender: UIBarButtonItem) {
+        if let record = record {
+            record.addiction = chosenAddiction
+            record.intensity = chosenIntensity
+            record.before    = chosenFeeling
+            record.comment   = chosenComment
+            record.date      = chosenDate
+            record.place     = chosenPlace
+        } else {
+            Record.insertNewRecord(chosenAddiction,
+                intensity: chosenIntensity,
+                before: chosenFeeling,
+                after: nil,
+                comment: chosenComment,
+                place: chosenPlace,
+                latitude: userLocation?.coordinate.latitude,
+                longitude: userLocation?.coordinate.longitude,
+                date: chosenDate,
+                inContext: CoreDataStack.shared.managedObjectContext)
+        }
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func cancelBtnClicked(sender: UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
 }
@@ -283,58 +269,6 @@ extension AddRecordViewController: UITableViewDataSource {
         }
         return 44.0
     }
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let sec = AddRecordSectionType(rawValue: section)!
-        switch sec {
-        case .DateAndPlace:
-            let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 44))
-            
-            let positionSwitch = UISwitch()
-            positionSwitch.on = Defaults[.useLocation]
-            positionSwitch.addTarget(self, action: "locationSwitchDidChanged:", forControlEvents: .ValueChanged)
-            footer.addSubview(positionSwitch)
-            
-            let usePosition = UILabel()
-            usePosition.textAlignment = .Right
-            usePosition.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
-            usePosition.numberOfLines = 0
-            usePosition.text = L("new_record.use_position")
-            footer.addSubview(usePosition)
-            
-            positionSwitch.snp_makeConstraints {
-                $0.centerY.equalTo(usePosition)
-                $0.right.equalTo(footer).offset(-20)
-            }
-            
-            usePosition.snp_makeConstraints {
-                $0.left.equalTo(footer).offset(20)
-                $0.right.equalTo(positionSwitch.snp_left).offset(-10)
-                $0.top.equalTo(footer)
-                $0.bottom.equalTo(footer)
-            }
-            
-            return footer
-        default:
-            return nil
-        }
-    }
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let sec = AddRecordSectionType(rawValue: section)!
-        switch sec {
-        case .DateAndPlace:
-            return 44
-        default:
-            return 0
-        }
-    }
-    func locationSwitchDidChanged(sender: UISwitch) {
-        Defaults[.useLocation] = sender.on
-        if sender.on {
-            launchLocationManager()
-        } else {
-            stopLocationManager()
-        }
-    }
 }
 
 // MARK: - UITableViewDelegate
@@ -362,9 +296,7 @@ extension AddRecordViewController: UITableViewDelegate {
         case .DateAndPlace:
             switch DateAndPlaceRowType(rawValue: indexPath.row)! {
             case .Date:
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.hiddenDateTextField.becomeFirstResponder()
-                }
+                break
             case .Place:
                 editingStep = .Place
                 showTextRecord()
@@ -475,6 +407,7 @@ extension AddRecordViewController: NewIntensityTableViewCellDelegate {
     }
 }
 
+// MARK: - NewDateTableViewCellDelegate
 extension AddRecordViewController: NewDateTableViewCellDelegate {
     func dateTableViewCell(cell: NewDateTableViewCell, didSelectDate date: NSDate) {
         chosenDate = date
