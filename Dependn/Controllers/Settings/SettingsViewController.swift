@@ -11,14 +11,37 @@ import SwiftHelpers
 import SwiftyUserDefaults
 import LocalAuthentication
 import CocoaLumberjack
+import PKHUD
 
-enum SettingsRowType: Int {
-    case ManageAddictions
-    case UsePasscode
-    
+enum SettingsSectionType: Int {
+    case General
+    case ImportExport
+
     static let count: Int = {
         var max: Int = 0
-        while let _ = SettingsRowType(rawValue: max) { max += 1 }
+        while let _ = SettingsSectionType(rawValue: max) { max += 1 }
+        return max
+    }()
+}
+
+enum GeneralRowType: Int {
+    case ManageAddictions
+    case UsePasscode
+
+    static let count: Int = {
+        var max: Int = 0
+        while let _ = GeneralRowType(rawValue: max) { max += 1 }
+        return max
+    }()
+}
+
+enum ImportExportRowType: Int {
+    case Export
+    case Import
+
+    static let count: Int = {
+        var max: Int = 0
+        while let _ = ImportExportRowType(rawValue: max) { max += 1 }
         return max
     }()
 }
@@ -54,6 +77,8 @@ final class SettingsViewController: UIViewController {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
+
+    // MARK: - Passcode
     
     func passcodeSwitchValueChanged(sender: UISwitch) {
         let reason = sender.on ? L("passcode.reason") : L("passcode.unset")
@@ -85,6 +110,8 @@ final class SettingsViewController: UIViewController {
         DDLogError("\(error)")
         return supportedAuthentications
     }
+
+    // MARK: - Layout
     
     private func configureLayoutConstraints() {
         tableView.snp_makeConstraints {
@@ -92,31 +119,89 @@ final class SettingsViewController: UIViewController {
         }
     }
 
+    // MARK: - Import/Export
+
+    private let queue = NSOperationQueue()
+    private func launchExport() {
+        HUD.show(.Progress)
+        let exportOp = ExportOperation()
+        exportOp.completionBlock = {
+            dispatch_async(dispatch_get_main_queue()) {
+                HUD.hide(animated: true) { finished in
+                    if let err = exportOp.error {
+                        HUD.flash(HUDContentType.Label(err.localizedDescription))
+                    } else if let path = exportOp.exportedPath {
+                        let items = [ "export.csv", NSURL(fileURLWithPath: path) ]
+                        let share = UIActivityViewController(activityItems: items, applicationActivities: nil)
+                        self.presentViewController(share, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+        queue.addOperation(exportOp)
+    }
+
+    private func launchImport() {
+        let importOp = ImportOperation(controller: self)
+        importOp.completionBlock = {
+            dispatch_async(dispatch_get_main_queue()) {
+                if let err = importOp.error {
+                    if err.code != kImportOperationUserCancelledCode {
+                        UIAlertController.presentError(err, inController: self)
+                    }
+                } else {
+                    HUD.flash(.Success)
+                }
+            }
+        }
+        queue.addOperation(importOp)
+    }
+
 }
 
 extension SettingsViewController: UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return SettingsSectionType.count
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SettingsRowType.count
+        let type = SettingsSectionType(rawValue: section)!
+        switch type {
+        case .General:       return GeneralRowType.count
+        case .ImportExport:  return ImportExportRowType.count
+        }
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(SettingsTableViewCell.reuseIdentifier, forIndexPath: indexPath)
-        let rowType = SettingsRowType(rawValue: indexPath.row)!
-        
         cell.accessoryView = nil
+        cell.accessoryType = .None
         cell.textLabel?.text = nil
-        
-        switch rowType {
-        case .ManageAddictions:
-            cell.textLabel?.text = L("settings.manage_addictions")
-        case .UsePasscode:
-            cell.textLabel?.text = L("settings.use_passcode")
-            passcodeSwitch.setOn(Defaults[.usePasscode], animated: true)
-            passcodeSwitch.enabled = supportedOwnerAuthentications().count > 0
-            cell.accessoryView = passcodeSwitch
+
+        let type = SettingsSectionType(rawValue: indexPath.section)!
+        switch type {
+        case .General:
+            let rowType = GeneralRowType(rawValue: indexPath.row)!
+            switch rowType {
+            case .ManageAddictions:
+                cell.textLabel?.text = L("settings.manage_addictions")
+                cell.accessoryType = .DisclosureIndicator
+            case .UsePasscode:
+                cell.textLabel?.text = L("settings.use_passcode")
+                passcodeSwitch.setOn(Defaults[.usePasscode], animated: true)
+                passcodeSwitch.enabled = supportedOwnerAuthentications().count > 0
+                cell.accessoryView = passcodeSwitch
+            }
+        case .ImportExport:
+            let rowType = ImportExportRowType(rawValue: indexPath.row)!
+            switch rowType {
+            case .Import:
+                cell.textLabel?.textAlignment = .Center
+                cell.textLabel?.text = L("history.action.import")
+            case .Export:
+                cell.textLabel?.textAlignment = .Center
+                cell.textLabel?.text = L("history.action.export")
+            }
         }
+
         return cell
     }
 }
@@ -124,12 +209,25 @@ extension SettingsViewController: UITableViewDataSource {
 extension SettingsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let rowType = SettingsRowType(rawValue: indexPath.row)!
-        switch rowType {
-        case .ManageAddictions:
-            showManageAddictions()
-        case .UsePasscode:
-            break
+
+        let sectionType = SettingsSectionType(rawValue: indexPath.section)!
+        switch sectionType {
+            case .General:
+                let rowType = GeneralRowType(rawValue: indexPath.row)!
+                switch rowType {
+                case .ManageAddictions:
+                    showManageAddictions()
+                case .UsePasscode:
+                    break
+                }
+            case .ImportExport:
+                let rowType = ImportExportRowType(rawValue: indexPath.row)!
+                switch rowType {
+                case .Import:
+                    launchImport()
+                case .Export:
+                    launchExport()
+                }
         }
     }
     

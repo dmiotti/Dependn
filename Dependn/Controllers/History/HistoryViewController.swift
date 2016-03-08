@@ -96,26 +96,8 @@ final class HistoryViewController: UIViewController {
     // MARK: - Add button handler
     
     func actionBtnClicked(sender: UIBarButtonItem) {
-        let alert = UIAlertController(
-            title: L("history.action.title"),
-            message: L("history.action.message"),
-            preferredStyle: .ActionSheet)
-        let cancelAction = UIAlertAction(title: L("cancel"), style: .Cancel, handler: nil)
-        let exportAction = UIAlertAction(title: L("history.action.export"), style: .Default) { action in
-            self.launchExport()
-        }
-        let importAction = UIAlertAction(title: L("history.action.import"), style: .Default) { action in
-            self.launchImport()
-        }
-        let settingsAction = UIAlertAction(title: L("history.action.settings"), style: .Default) { action in
-            let settings = SettingsViewController()
-            self.navigationController?.pushViewController(settings, animated: true)
-        }
-        alert.addAction(exportAction)
-        alert.addAction(importAction)
-        alert.addAction(settingsAction)
-        alert.addAction(cancelAction)
-        presentViewController(alert, animated: true, completion: nil)
+        let settings = SettingsViewController()
+        self.navigationController?.pushViewController(settings, animated: true)
     }
     
     func addBtnClicked(sender: UIButton) {
@@ -148,42 +130,6 @@ final class HistoryViewController: UIViewController {
     func statsBtnClicked(sender: UIBarButtonItem) {
         let stats = StatsViewController()
         navigationController?.pushViewController(stats, animated: true)
-    }
-    
-    private let queue = NSOperationQueue()
-    private func launchExport() {
-        HUD.show(.Progress)
-        let exportOp = ExportOperation()
-        exportOp.completionBlock = {
-            dispatch_async(dispatch_get_main_queue()) {
-                HUD.hide(animated: true) { finished in
-                    if let err = exportOp.error {
-                        HUD.flash(HUDContentType.Label(err.localizedDescription))
-                    } else if let path = exportOp.exportedPath {
-                        let items = [ "export.csv", NSURL(fileURLWithPath: path) ]
-                        let share = UIActivityViewController(activityItems: items, applicationActivities: nil)
-                        self.presentViewController(share, animated: true, completion: nil)
-                    }
-                }
-            }
-        }
-        queue.addOperation(exportOp)
-    }
-    
-    private func launchImport() {
-        let importOp = ImportOperation(controller: self)
-        importOp.completionBlock = {
-            dispatch_async(dispatch_get_main_queue()) {
-                if let err = importOp.error {
-                    if err.code != kImportOperationUserCancelledCode {
-                        UIAlertController.presentError(err, inController: self)
-                    }
-                } else {
-                    HUD.flash(.Success)
-                }
-            }
-        }
-        queue.addOperation(importOp)
     }
     
 }

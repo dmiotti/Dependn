@@ -15,7 +15,7 @@ final class SettingsTableViewCell: SHCommonInitTableViewCell {
     
     override func commonInit() {
         super.commonInit()
-        accessoryType = .DisclosureIndicator
+
     }
 
 }
