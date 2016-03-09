@@ -90,7 +90,6 @@ final class AddRecordViewController: UIViewController {
         tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = 55
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.registerClass(AddictionTableViewCell.self,    forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
         tableView.registerClass(NewDateTableViewCell.self,      forCellReuseIdentifier: NewDateTableViewCell.reuseIdentifier)
@@ -269,7 +268,7 @@ extension AddRecordViewController: UITableViewDataSource {
         if row == .Intensity {
             return 105.0
         }
-        return 44.0
+        return 55.0
     }
 }
 
