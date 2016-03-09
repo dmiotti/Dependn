@@ -19,7 +19,7 @@ final class HistoryViewController: UIViewController {
     private var statsBtn: UIBarButtonItem!
     private var tableView: UITableView!
     private var addBtn: UIButton!
-    
+    private var statsView: StatsPanelScroller!
     private var dateFormatter: NSDateFormatter!
     
     private let managedObjectContext = CoreDataStack.shared.managedObjectContext
@@ -35,6 +35,8 @@ final class HistoryViewController: UIViewController {
         
         title = L("app_name")
         
+        edgesForExtendedLayout = .None
+        
         dateFormatter = NSDateFormatter(dateFormat: "HH'h'mm")
         
         actionBtn = UIBarButtonItem(image: UIImage(named: "settings_icon"), style: .Plain, target: self, action: "actionBtnClicked:")
@@ -42,6 +44,9 @@ final class HistoryViewController: UIViewController {
         
         statsBtn = UIBarButtonItem(image: UIImage(named: "stats_icon"), style: .Plain, target: self, action: "statsBtnClicked:")
         navigationItem.rightBarButtonItem = statsBtn
+        
+        statsView = StatsPanelScroller()
+        view.addSubview(statsView)
         
         tableView = UITableView(frame: .zero, style: .Plain)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
@@ -62,8 +67,24 @@ final class HistoryViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        launchFetchIfNeeded()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        launchFetchIfNeeded()
+        configureStatsView()
+    }
+    
+    private func configureStatsView() {
+        let addictions = try! Addiction.getAllAddictions(inContext: CoreDataStack.shared.managedObjectContext)
+        statsView.addictions = addictions
+        
+        statsView.snp_updateConstraints {
+            if addictions.count > 0 {
+                $0.height.equalTo(150)
+            } else {
+                $0.height.equalTo(0)
+            }
+        }
+        
+        statsView.layoutIfNeeded()
     }
     
     // MARK: - Data Fetch
@@ -83,8 +104,18 @@ final class HistoryViewController: UIViewController {
     // MARK: - Configure Layout Constraints
     
     private func configureLayoutConstraints() {
+        statsView.snp_makeConstraints {
+            $0.top.equalTo(view)
+            $0.left.equalTo(view)
+            $0.right.equalTo(view)
+            $0.height.equalTo(150)
+        }
+        
         tableView.snp_makeConstraints {
-            $0.edges.equalTo(view)
+            $0.top.equalTo(statsView.snp_bottom)
+            $0.left.equalTo(view)
+            $0.right.equalTo(view)
+            $0.bottom.equalTo(view)
         }
         
         addBtn.snp_makeConstraints {
@@ -167,23 +198,8 @@ extension HistoryViewController: UITableViewDataSource {
         date.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
         date.textColor = "7D9BB8".UIColor
         header.addSubview(date)
-        let countLbl = UILabel()
-        countLbl.text = fetchedResultsController.sections?[section].name.uppercaseString
-        countLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
-        countLbl.textColor = "7D9BB8".UIColor
-        header.addSubview(countLbl)
-        if let numberOfObjects = fetchedResultsController.sections?[section].numberOfObjects {
-            countLbl.text = "\(numberOfObjects)"
-        } else {
-            countLbl.text = nil
-        }
         date.snp_makeConstraints {
             $0.left.equalTo(header).offset(15)
-            $0.right.equalTo(countLbl.snp_left).offset(-15)
-            $0.bottom.equalTo(header).offset(-6)
-        }
-        countLbl.snp_makeConstraints {
-            $0.right.equalTo(header).offset(-15)
             $0.bottom.equalTo(header).offset(-6)
         }
         return header

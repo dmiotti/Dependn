@@ -46,6 +46,8 @@ final class StatsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        edgesForExtendedLayout = .None
 
         title = L("stats.title")
         

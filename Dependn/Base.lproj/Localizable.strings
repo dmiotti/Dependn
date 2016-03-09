@@ -1,10 +1,10 @@
-/* 
-  Localizable.strings
-  Dependn
-
-  Created by David Miotti on 22/02/16.
-  Copyright © 2016 David Miotti. All rights reserved.
-*/
+/*
+ Localizable.strings
+ Dependn
+ 
+ Created by David Miotti on 22/02/16.
+ Copyright © 2016 David Miotti. All rights reserved.
+ */
 
 "app_name" = "DEPENDN’";
 
@@ -48,12 +48,9 @@
 "history.no_addictions.title" = "Ajouter une entrée";
 "history.no_addictions.message" = "Vous n'avez pas encore ajouté d'addiction, vous devez dabors ajouter vos addictions";
 
-"import.choose_file" = "Choisissez un ficher à importer";
-"import.choose_file_message" = "Vos données actuelles seront supprimées";
-"import.no_data" = "Il n'y a aucune donnée à importer";
-"import.no_data_suggestion" = "Ajouter un fichier d'import dans l'application grâce à iTunes";
-"import.cancelled_by_user" = "L'utilisateur a annuler l'import";
-"import.cancelled_by_user_recovery" = "Veuillez recommencer";
+"statspanel.today" = "Aujourd'hui";
+"statspanel.this_week" = "Cette semaine";
+"statspanel.interval" = "Entre 2 prises";
 
 "stats.title" = "Statistiques";
 "stats.total" = "Total";
@@ -71,6 +68,13 @@
 "settings.version" = "Version";
 "settings.action.export" = "Exporter mes données";
 "settings.action.import" = "Importer mes données";
+
+"import.choose_file" = "Choisissez un ficher à importer";
+"import.choose_file_message" = "Vos données actuelles seront supprimées";
+"import.no_data" = "Il n'y a aucune donnée à importer";
+"import.no_data_suggestion" = "Ajouter un fichier d'import dans l'application grâce à iTunes";
+"import.cancelled_by_user" = "L'utilisateur a annuler l'import";
+"import.cancelled_by_user_recovery" = "Veuillez recommencer";
 
 "addiction_list.title" = "Mes addictions";
 "addiction_list.new.title" = "Ajouter une addiction";

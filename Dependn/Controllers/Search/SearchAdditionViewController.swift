@@ -38,6 +38,8 @@ final class SearchAdditionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        edgesForExtendedLayout = .None
+        
         title = L("addiction_list.title")
         
         searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
@@ -75,7 +77,6 @@ final class SearchAdditionViewController: UIViewController {
         
         searchBar.backgroundImage = image
         
-//        searchBar.barTintColor = UIColor.lightBackgroundColor()
         searchBar.tintColor = UIColor.appBlueColor()
         searchBar.searchBarStyle = .Minimal
     }
@@ -199,6 +200,7 @@ extension SearchAdditionViewController: UITableViewDelegate {
         }
         alert.addTextFieldWithConfigurationHandler { textField in
             textField.placeholder = L("addiction_list.new.placeholder")
+            textField.autocapitalizationType = .Words
         }
         alert.addAction(cancelAction)
         alert.addAction(addAction)

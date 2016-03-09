@@ -1,29 +1,16 @@
-/* 
-  Localizable.strings
-  Dependn
-
-  Created by David Miotti on 22/02/16.
-  Copyright © 2016 David Miotti. All rights reserved.
-*/
+/*
+ Localizable.strings
+ Dependn
+ 
+ Created by David Miotti on 22/02/16.
+ Copyright © 2016 David Miotti. All rights reserved.
+ */
 
 "app_name" = "DEPENDN’";
 
 "cancel" = "Annuler";
 
-"new.cig" = "Cig";
-"new.weed" = "Weed";
-"new.intensity" = "Intensité de l'envie";
-"new.feeling_before" = "Ressenti avant";
-"new.feeling_after" = "Ressenti après";
-"new.date" = "Date";
-"new.hour" = "Heure";
-"new.type" = "Type";
-"new.comment" = "Commentaire";
-"new.place" = "Lieu";
-"new.place_placeholder" = "Donner un nom à ce lieu (rayon 80m)";
-"new.allow_map" = "Utiliser ma position afin de mieux comprendre mes consommations";
-"new.use_my_position" = "Utiliser ma position";
-
+"new_record.cancel" = "Annuler";
 "new_record.date" = "Date";
 "new_record.place" = "Lieu";
 "new_record.add_btn" = "Ajouter";
@@ -56,13 +43,31 @@
 "history.weed" = "Weed";
 "history.action.title" = "Quelle action voulez-vous lancer ?";
 "history.action.message" = "Pour importer des données vous devez ajouter des fichiers à l'application via iTunes";
-"history.action.export" = "Exporter mes données";
-"history.action.import" = "Importer mes données";
-"history.action.settings" = "Paramètres";
 "history.no_addictions.ok" = "OK";
 "history.no_addictions.add" = "Ajouter";
 "history.no_addictions.title" = "Ajouter une entrée";
 "history.no_addictions.message" = "Vous n'avez pas encore ajouté d'addiction, vous devez dabors ajouter vos addictions";
+
+"statspanel.today" = "Aujourd'hui";
+"statspanel.this_week" = "Cette semaine";
+"statspanel.interval" = "Entre 2 prises";
+
+"stats.title" = "Statistiques";
+"stats.total" = "Total";
+"stats.not_available" = "-";
+"stats.minutes" = "minutes";
+"stats.hours" = "heures";
+"stats.average_per_day" = "Moyenne par jour";
+"stats.average_btw_takes" = "Temps moyen entre 2 prises";
+"stats.average_intensity" = "Intensité moyenne";
+
+"settings.title" = "Paramètres";
+"settings.manage_addictions" = "Gèrer mes addictions";
+"settings.memorise_places" = "Se souvenir des mes lieux";
+"settings.use_passcode" = "Utiliser TouchID";
+"settings.version" = "Version";
+"settings.action.export" = "Exporter mes données";
+"settings.action.import" = "Importer mes données";
 
 "import.choose_file" = "Choisissez un ficher à importer";
 "import.choose_file_message" = "Vos données actuelles seront supprimées";
@@ -70,19 +75,6 @@
 "import.no_data_suggestion" = "Ajouter un fichier d'import dans l'application grâce à iTunes";
 "import.cancelled_by_user" = "L'utilisateur a annuler l'import";
 "import.cancelled_by_user_recovery" = "Veuillez recommencer";
-
-"stats.title" = "Statistiques";
-"stats.total" = "Total";
-"stats.average_per_day" = "Moyenne par jour";
-"stats.average_btw_takes" = "Temps moyen entre 2 prises";
-"stats.not_available" = "nc.";
-"stats.minutes" = "minutes";
-"stats.hours" = "heures";
-"stats.average_intensity" = "Intensité moyenne";
-
-"settings.title" = "Paramètres";
-"settings.manage_addictions" = "Gèrer mes addictions";
-"settings.use_passcode" = "Utiliser TouchID";
 
 "addiction_list.title" = "Mes addictions";
 "addiction_list.new.title" = "Ajouter une addiction";

@@ -30,6 +30,8 @@ final class AddictionListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        edgesForExtendedLayout = .None
+        
         title = L("addiction_list.title")
         
         tableView = UITableView(frame: .zero, style: .Grouped)

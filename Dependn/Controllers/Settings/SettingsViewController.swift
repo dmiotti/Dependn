@@ -61,6 +61,8 @@ final class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        edgesForExtendedLayout = .None
+        
         title = L("settings.title")
 
         tableView = UITableView(frame: .zero, style: .Grouped)

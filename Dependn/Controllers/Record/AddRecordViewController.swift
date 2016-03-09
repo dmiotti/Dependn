@@ -67,6 +67,8 @@ final class AddRecordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        edgesForExtendedLayout = .None
+        
         title = record != nil ? L("new_record.modify_title") : L("new_record.title")
         
         locationManager.delegate = self
