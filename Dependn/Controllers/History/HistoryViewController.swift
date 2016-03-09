@@ -32,7 +32,7 @@ final class HistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = L("app_name")
+        updateTitle(L("app_name"))
         
         edgesForExtendedLayout = .None
         

@@ -35,6 +35,16 @@ enum AddRecordTextEditionType: Int {
     case Place, Feeling, Comment, None
 }
 
+extension UIViewController {
+    func updateTitle(title: String) {
+        let titleLbl = UILabel()
+        titleLbl.attributedText = NSAttributedString(string: title.uppercaseString,
+            attributes: StyleSheet.kernedAttributes)
+        titleLbl.sizeToFit()
+        navigationItem.titleView = titleLbl
+    }
+}
+
 // MARK: - UIViewController
 final class AddRecordViewController: UIViewController {
     
@@ -69,7 +79,8 @@ final class AddRecordViewController: UIViewController {
         
         edgesForExtendedLayout = .None
         
-        title = record != nil ? L("new_record.modify_title") : L("new_record.title")
+        let screenTitle = record != nil ? L("new_record.modify_title") : L("new_record.title")
+        updateTitle(screenTitle)
         
         locationManager.delegate = self
         
@@ -90,6 +101,7 @@ final class AddRecordViewController: UIViewController {
         tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorColor = UIColor.appSeparatorColor()
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.registerClass(AddictionTableViewCell.self,    forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
         tableView.registerClass(NewDateTableViewCell.self,      forCellReuseIdentifier: NewDateTableViewCell.reuseIdentifier)
@@ -263,6 +275,48 @@ extension AddRecordViewController: UITableViewDataSource {
         }
         return nil
     }
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let type = AddRecordSectionType(rawValue: section)!
+        switch type {
+        case .Intensity:
+            return 40
+        case .Optionals:
+            return 40
+        case .Addiction:
+            return 20
+        case .DateAndPlace:
+            return 20
+        }
+    }
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 40))
+        
+        let titleLbl = UILabel()
+        titleLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
+        titleLbl.textColor = UIColor.appDarkBlueColor()
+        header.addSubview(titleLbl)
+        
+        titleLbl.snp_makeConstraints {
+            $0.left.equalTo(header).offset(15)
+            $0.bottom.equalTo(header).offset(-5)
+        }
+        
+        let type = AddRecordSectionType(rawValue: section)!
+        switch type {
+        case .Intensity:
+            titleLbl.text = L("new_record.intensity").uppercaseString
+            break
+        case .Optionals:
+            titleLbl.text = L("new_record.optional").uppercaseString
+            break
+        case .Addiction:
+            break
+        case .DateAndPlace:
+            break
+        }
+        
+        return header
+    }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let row = AddRecordSectionType(rawValue: indexPath.section)!
         if row == .Intensity {
@@ -311,15 +365,15 @@ extension AddRecordViewController: UITableViewDelegate {
         controller.delegate = self
         switch editingStep {
         case .Place:
-            controller.title = L("new_record.place")
+            controller.updateTitle(L("new_record.place"))
             controller.originalText = chosenPlace
             controller.placeholder = L("new_record.place_placeholder")
         case .Feeling:
-            controller.title = L("new_record.feeling")
+            controller.updateTitle(L("new_record.feeling"))
             controller.originalText = chosenFeeling
             controller.placeholder = L("new_record.feeling_placeholder")
         case .Comment:
-            controller.title = L("new_record.comment")
+            controller.updateTitle(L("new_record.comment"))
             controller.originalText = chosenComment
             controller.placeholder = L("new_record.comment_placeholder")
         case .None: break

@@ -63,7 +63,7 @@ final class SettingsViewController: UIViewController {
         
         edgesForExtendedLayout = .None
         
-        title = L("settings.title")
+        updateTitle(L("settings.title"))
 
         tableView = UITableView(frame: .zero, style: .Grouped)
         tableView.registerClass(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.reuseIdentifier)

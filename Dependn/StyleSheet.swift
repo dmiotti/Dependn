@@ -10,33 +10,35 @@ import UIKit
 import SwiftHelpers
 
 class StyleSheet {
+    
+    static var kernedAttributes: [String: AnyObject] = [
+        NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightSemibold),
+        NSForegroundColorAttributeName: UIColor.whiteColor(),
+        NSKernAttributeName: 1.53
+    ]
+    
     class func customizeAppearance(window: UIWindow?) {
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        let attr = [
-            NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightSemibold),
-            NSForegroundColorAttributeName: UIColor.whiteColor()
-        ]
-        UINavigationBar.appearance().titleTextAttributes = attr
-        
+        UINavigationBar.appearance().titleTextAttributes = kernedAttributes
         UINavigationBar.appearance().barTintColor = UIColor.appBlueColor()
         
         UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
-        UIBarButtonItem.appearance().setTitleTextAttributes(attr, forState: .Normal)
-        
+        UIBarButtonItem.appearance().setTitleTextAttributes(kernedAttributes, forState: .Normal)
         UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UIToolbar.self]).tintColor = UIColor.appBlueColor()
         
+        /// The one inside the search bar
         UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).setTitleTextAttributes([
             NSForegroundColorAttributeName: UIColor.appBlueColor(),
             NSFontAttributeName: UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
             ], forState: .Normal)
         UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).tintColor = UIColor.appBlueColor()
-        
         window?.tintColor = UIColor.appBlueColor()
     }
 }
 
 extension UIColor {
     
+    class func appDarkBlueColor()       -> UIColor { return "7D9BB8".UIColor }
     class func appBlueColor()           -> UIColor { return "27A9F1".UIColor }
     class func appBlackColor()          -> UIColor { return "030303".UIColor }
     class func appLightTextColor()      -> UIColor { return "A2B8CC".UIColor }

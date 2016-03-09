@@ -32,7 +32,7 @@ final class AddictionListViewController: UIViewController {
         
         edgesForExtendedLayout = .None
         
-        title = L("addiction_list.title")
+        updateTitle(L("addiction_list.title"))
         
         tableView = UITableView(frame: .zero, style: .Grouped)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
