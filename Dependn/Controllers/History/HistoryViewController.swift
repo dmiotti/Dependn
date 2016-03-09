@@ -16,7 +16,6 @@ import CocoaLumberjack
 final class HistoryViewController: UIViewController {
     
     private var actionBtn: UIBarButtonItem!
-    private var statsBtn: UIBarButtonItem!
     private var tableView: UITableView!
     private var addBtn: UIButton!
     private var statsView: StatsPanelScroller!
@@ -41,9 +40,6 @@ final class HistoryViewController: UIViewController {
         
         actionBtn = UIBarButtonItem(image: UIImage(named: "settings_icon"), style: .Plain, target: self, action: "actionBtnClicked:")
         navigationItem.leftBarButtonItem = actionBtn
-        
-        statsBtn = UIBarButtonItem(image: UIImage(named: "stats_icon"), style: .Plain, target: self, action: "statsBtnClicked:")
-        navigationItem.rightBarButtonItem = statsBtn
         
         statsView = StatsPanelScroller()
         
@@ -134,10 +130,6 @@ final class HistoryViewController: UIViewController {
             alert.addAction(okAction)
             presentViewController(alert, animated: true, completion: nil)
         }
-    }
-    
-    func statsBtnClicked(sender: UIBarButtonItem) {
-        
     }
     
     func ensureThereIsAddictions() -> Bool {
