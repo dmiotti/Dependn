@@ -173,6 +173,8 @@ extension SearchAdditionViewController: UITableViewDelegate {
             if let addiction = fetchedResultsController?.objectAtIndexPath(indexPath) as? Addiction {
                 selectedAddiction = addiction
                 tableView.reloadData()
+                delegate?.searchController(self, didSelectAddiction: addiction)
+                navigationController?.popViewControllerAnimated(true)
             }
         } else {
             addNewAddiction()

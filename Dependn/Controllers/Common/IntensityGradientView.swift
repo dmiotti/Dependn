@@ -39,8 +39,6 @@ final class IntensityGradientView: SHCommonInitView {
             UIColor.appIntensityHighColor().CGColor,
             UIColor(white: 1, alpha: 0).CGColor
         ]
-        gradientLayer.startPoint = CGPointZero;
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         layer.addSublayer(gradientLayer)
     }
     
