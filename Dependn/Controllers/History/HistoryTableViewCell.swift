@@ -49,7 +49,7 @@ final class HistoryTableViewCell: SHCommonInitTableViewCell {
         }
         
         dateLbl.snp_makeConstraints {
-            $0.left.equalTo(circleTypeView.snp_right).offset(10)
+            $0.left.equalTo(circleTypeView.snp_right).offset(14)
             $0.top.equalTo(contentView)
             $0.bottom.equalTo(contentView)
             $0.right.equalTo(intensityCircle.snp_left).offset(-10)

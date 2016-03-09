@@ -51,6 +51,7 @@ final class HistoryViewController: UIViewController {
         tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.rowHeight = 55
         tableView.registerClass(HistoryTableViewCell.self,
             forCellReuseIdentifier: HistoryTableViewCell.reuseIdentifier)
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 120))
