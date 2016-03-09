@@ -72,7 +72,7 @@ final class HistoryViewController: UIViewController {
     }
     
     private func configureStatsView() {
-        let addictions = try! Addiction.getAllAddictions(inContext: CoreDataStack.shared.managedObjectContext)
+        let addictions = try! Addiction.getAllAddictionsOrderedByCount(inContext: CoreDataStack.shared.managedObjectContext)
         
         if addictions.count > 0 {
             statsView.frame = CGRectMake(0, 0, view.bounds.size.width, 150)

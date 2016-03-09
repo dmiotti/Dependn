@@ -17,12 +17,5 @@ extension Addiction {
     @NSManaged var name: String
     @NSManaged var color: String
     @NSManaged var records: NSSet?
-    
-    static func findByName(name: String, inContext context: NSManagedObjectContext) throws -> Addiction? {
-        let req = entityFetchRequest()
-        req.predicate = NSPredicate(format: "name ==[cd] %@", name)
-        req.fetchLimit = 1
-        return try context.executeFetchRequest(req).first as? Addiction
-    }
 
 }

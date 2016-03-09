@@ -13,25 +13,37 @@ import ChameleonFramework
 extension Addiction {
     
     class func findOrInsertNewAddiction(name: String, inContext context: NSManagedObjectContext) throws -> Addiction {
-        let req = entityFetchRequest()
-        req.predicate = NSPredicate(format: "name ==[cd] %@", name)
-        req.fetchLimit = 1
-
-        if let dbAdd = try context.executeFetchRequest(req).last as? Addiction {
+        if let dbAdd = try findByName(name, inContext: context) {
             return dbAdd
         }
         
         let newAdd = NSEntityDescription.insertNewObjectForEntityForName(Addiction.entityName, inManagedObjectContext: context) as! Addiction
         newAdd.name = name.lowercaseString
         newAdd.color = UIColor.randomFlatColor().hexValue()
-        
         return newAdd
+    }
+    
+    static func findByName(name: String, inContext context: NSManagedObjectContext) throws -> Addiction? {
+        let req = entityFetchRequest()
+        req.predicate = NSPredicate(format: "name ==[cd] %@", name)
+        req.fetchLimit = 1
+        return try context.executeFetchRequest(req).first as? Addiction
     }
     
     class func getAllAddictions(inContext context: NSManagedObjectContext) throws -> [Addiction] {
         let req = entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
         return try context.executeFetchRequest(req) as? [Addiction] ?? []
+    }
+    
+    class func getAllAddictionsOrderedByCount(inContext context: NSManagedObjectContext) throws -> [Addiction] {
+        let req = entityFetchRequest()
+        req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
+        var addictions = try context.executeFetchRequest(req) as? [Addiction] ?? [Addiction]()
+        addictions.sortInPlace { (a, b) -> Bool in
+            return a.records?.count > b.records?.count
+        }
+        return addictions
     }
     
     class func deleteAddiction(addiction: Addiction, inContext context: NSManagedObjectContext) throws {
