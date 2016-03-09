@@ -148,6 +148,10 @@ final class HistoryViewController: UIViewController {
         }
     }
     
+    func statsBtnClicked(sender: UIBarButtonItem) {
+        
+    }
+    
     func ensureThereIsAddictions() -> Bool {
         var hasAddictions = false
         do {
@@ -156,11 +160,6 @@ final class HistoryViewController: UIViewController {
             DDLogError("Error while checking there is at least one addiction: \(err)")
         }
         return hasAddictions
-    }
-    
-    func statsBtnClicked(sender: UIBarButtonItem) {
-        let stats = StatsViewController()
-        navigationController?.pushViewController(stats, animated: true)
     }
     
 }

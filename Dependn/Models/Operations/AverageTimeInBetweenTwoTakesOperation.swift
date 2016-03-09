@@ -10,20 +10,33 @@ import UIKit
 import SwiftHelpers
 import CoreData
 
+struct TimeRange {
+    let start: NSDate
+    let end: NSDate
+}
+
 final class AverageTimeInBetweenTwoTakesOperation: SHOperation {
+    
+    let addiction: Addiction
+    let range: TimeRange
     
     private(set) var average: NSTimeInterval?
     private(set) var error: NSError?
     
     private let context: NSManagedObjectContext
     
-    override init() {
+    init(addiction: Addiction, range: TimeRange) {
+        self.addiction = addiction
+        self.range = range
         context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         context.parentContext = CoreDataStack.shared.managedObjectContext
     }
     
     override func execute() {
         let req = NSFetchRequest(entityName: Record.entityName)
+        let addictionPredicate = NSPredicate(format: "addiction == %@", addiction)
+        let rangePredicate = NSPredicate(format: "date >= %@ AND date <= %@", range.start, range.end)
+        req.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [addictionPredicate, rangePredicate])
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
         
         context.performBlockAndWait {

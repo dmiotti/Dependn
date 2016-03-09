@@ -37,8 +37,6 @@
 		58DF62C51C83BDEE0035F608 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58DF62A21C83BDEE0035F608 /* Main.storyboard */; };
 		58DF62C61C83BDEE0035F608 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62A61C83BDEE0035F608 /* HistoryTableViewCell.swift */; };
 		58DF62C71C83BDEE0035F608 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62A71C83BDEE0035F608 /* HistoryViewController.swift */; };
-		58DF62C91C83BDEE0035F608 /* StatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62AB1C83BDEE0035F608 /* StatsCell.swift */; };
-		58DF62CA1C83BDEE0035F608 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62AC1C83BDEE0035F608 /* StatsViewController.swift */; };
 		58DF62CB1C83BDEE0035F608 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58DF62AD1C83BDEE0035F608 /* InfoPlist.strings */; };
 		58DF62CC1C83BDEE0035F608 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58DF62AF1C83BDEE0035F608 /* Localizable.strings */; };
 		58DF62CE1C83BDEE0035F608 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62B31C83BDEE0035F608 /* CoreDataStack.swift */; };
@@ -111,8 +109,6 @@
 		58DF62A31C83BDEE0035F608 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		58DF62A61C83BDEE0035F608 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		58DF62A71C83BDEE0035F608 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
-		58DF62AB1C83BDEE0035F608 /* StatsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsCell.swift; sourceTree = "<group>"; };
-		58DF62AC1C83BDEE0035F608 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		58DF62AE1C83BDEE0035F608 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		58DF62B01C83BDEE0035F608 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		58DF62B11C83BDEE0035F608 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -268,12 +264,11 @@
 			isa = PBXGroup;
 			children = (
 				58548BC71C8BBBB300C7C940 /* Common */,
-				58548BE71C8BE1E400C7C940 /* Search */,
-				58548BD41C8BE18100C7C940 /* Record */,
 				58DF62A51C83BDEE0035F608 /* History */,
-				58DF62AA1C83BDEE0035F608 /* Stats */,
-				581DC5D81C8B37E5006DE551 /* Settings */,
+				58548BD41C8BE18100C7C940 /* Record */,
 				581DC5DD1C8B3C41006DE551 /* Addiction */,
+				58548BE71C8BE1E400C7C940 /* Search */,
+				581DC5D81C8B37E5006DE551 /* Settings */,
 				58548BB91C8B9A6000C7C940 /* Passcode */,
 			);
 			path = Controllers;
@@ -288,15 +283,6 @@
 				581CCC361C8F7FE0006A8FAD /* StatsPanelView.swift */,
 			);
 			path = History;
-			sourceTree = "<group>";
-		};
-		58DF62AA1C83BDEE0035F608 /* Stats */ = {
-			isa = PBXGroup;
-			children = (
-				58DF62AB1C83BDEE0035F608 /* StatsCell.swift */,
-				58DF62AC1C83BDEE0035F608 /* StatsViewController.swift */,
-			);
-			path = Stats;
 			sourceTree = "<group>";
 		};
 		58DF62B21C83BDEE0035F608 /* Models */ = {
@@ -552,8 +538,6 @@
 				58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */,
 				58DF62D41C83BDEE0035F608 /* NearestSmokeOperation.swift in Sources */,
 				581DC5DC1C8B38AD006DE551 /* SettingsTableViewCell.swift in Sources */,
-				58DF62CA1C83BDEE0035F608 /* StatsViewController.swift in Sources */,
-				58DF62C91C83BDEE0035F608 /* StatsCell.swift in Sources */,
 				15FB7F6E4E0BE28215AB023F /* StatsPanelScroller.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -45,19 +45,16 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
     
     func pageControlValueChanged(pc: UIPageControl) {
         var offset = scrollView.contentOffset
-        offset.x = CGFloat(pc.currentPage) * scrollView.bounds.size.width
+        offset.x = CGFloat(pc.currentPage) * scrollView.frame.size.width
         scrollView.setContentOffset(offset, animated: true)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let offset = scrollView.contentOffset
-        if offset.x > 0 {
-            let rounded = round(scrollView.bounds.size.width / CGFloat(addictions.count))
-            let page = Int(offset.x / rounded)
-            pageControl.currentPage = page
-        } else {
-            pageControl.currentPage = 0
-        }
+        let pageWidth = scrollView.frame.size.width
+        let frac = offset.x / pageWidth
+        let page = Int(lround(Double(frac)))
+        pageControl.currentPage = page
     }
     
     private var statsBoards = [StatsPanelView]()
