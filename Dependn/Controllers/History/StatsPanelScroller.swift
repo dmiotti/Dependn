@@ -32,6 +32,7 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
         scrollView = UIScrollView()
         scrollView.delegate = self
         scrollView.pagingEnabled = true
+        scrollView.scrollsToTop = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.directionalLockEnabled = true
         scrollView.alwaysBounceHorizontal = true
