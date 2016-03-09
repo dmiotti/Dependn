@@ -48,6 +48,7 @@ final class HistoryViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 55
+        tableView.separatorColor = UIColor.appSeparatorColor()
         tableView.registerClass(HistoryTableViewCell.self,
             forCellReuseIdentifier: HistoryTableViewCell.reuseIdentifier)
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 120))
@@ -173,15 +174,38 @@ extension HistoryViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView()
         header.backgroundColor = "F5FAFF".UIColor
+        
         let date = UILabel()
         date.text = fetchedResultsController.sections?[section].name.uppercaseString
         date.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
         date.textColor = "7D9BB8".UIColor
         header.addSubview(date)
+        
         date.snp_makeConstraints {
             $0.left.equalTo(header).offset(15)
             $0.bottom.equalTo(header).offset(-6)
         }
+        
+        let sepTop = UIView()
+        sepTop.backgroundColor = UIColor.appSeparatorColor()
+        header.addSubview(sepTop)
+        sepTop.snp_makeConstraints {
+            $0.top.equalTo(header)
+            $0.left.equalTo(header)
+            $0.right.equalTo(header)
+            $0.height.equalTo(0.5)
+        }
+        
+        let sepBtm = UIView()
+        sepBtm.backgroundColor = UIColor.appSeparatorColor()
+        header.addSubview(sepBtm)
+        sepBtm.snp_makeConstraints {
+            $0.bottom.equalTo(header)
+            $0.left.equalTo(header)
+            $0.right.equalTo(header)
+            $0.height.equalTo(0.5)
+        }
+        
         return header
     }
     private func configureCell(cell: UITableViewCell, forIndexPath indexPath: NSIndexPath) {

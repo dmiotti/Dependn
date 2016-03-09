@@ -40,6 +40,7 @@ extension UIColor {
     class func appBlueColor()           -> UIColor { return "27A9F1".UIColor }
     class func appBlackColor()          -> UIColor { return "030303".UIColor }
     class func appLightTextColor()      -> UIColor { return "A2B8CC".UIColor }
+    class func appSeparatorColor()      -> UIColor { return "DCE8F4".UIColor }
     class func lightBackgroundColor()   -> UIColor { return "F5FAFF".UIColor }
     
     class func appIntensityLowColor()   -> UIColor { return "FDDC6A".UIColor }
