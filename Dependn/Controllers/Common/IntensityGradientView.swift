@@ -32,15 +32,15 @@ final class IntensityGradientView: SHCommonInitView {
         
         clipsToBounds = true
         
+        backgroundColor = UIColor.appIntensityLowColor()
+        
         gradientLayer = CAGradientLayer()
         gradientLayer.colors = [
             UIColor.appIntensityHighColor().CGColor,
-            UIColor.appIntensityLowColor().CGColor
+            UIColor(white: 1, alpha: 0).CGColor
         ]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
-        gradientLayer.locations = [ 0, 0.2, 1 ]
-        
+        gradientLayer.startPoint = CGPointZero;
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         layer.addSublayer(gradientLayer)
     }
     
@@ -57,10 +57,12 @@ final class IntensityGradientView: SHCommonInitView {
     }
     
     private func animateProgression(progress: Float) {
-        let endLocations = [ 0, progress, 1 ]
+        let endLocations = [ progress * 0.7, 1 ]
+
         let anim = CABasicAnimation(keyPath: "locations")
         anim.fromValue = gradientLayer.locations
         anim.toValue = endLocations
+        anim.duration = 0.35
         gradientLayer.locations = endLocations
         gradientLayer.addAnimation(anim, forKey: anim.keyPath)
         
