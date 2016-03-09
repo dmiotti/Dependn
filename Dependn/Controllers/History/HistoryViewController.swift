@@ -46,7 +46,6 @@ final class HistoryViewController: UIViewController {
         navigationItem.rightBarButtonItem = statsBtn
         
         statsView = StatsPanelScroller()
-        view.addSubview(statsView)
         
         tableView = UITableView(frame: .zero, style: .Plain)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
@@ -74,17 +73,14 @@ final class HistoryViewController: UIViewController {
     
     private func configureStatsView() {
         let addictions = try! Addiction.getAllAddictions(inContext: CoreDataStack.shared.managedObjectContext)
-        statsView.addictions = addictions
         
-        statsView.snp_updateConstraints {
-            if addictions.count > 0 {
-                $0.height.equalTo(150)
-            } else {
-                $0.height.equalTo(0)
-            }
+        if addictions.count > 0 {
+            statsView.frame = CGRectMake(0, 0, view.bounds.size.width, 150)
+            tableView.tableHeaderView = statsView
+            statsView.addictions = addictions
+        } else {
+            tableView.tableHeaderView = nil
         }
-        
-        statsView.layoutIfNeeded()
     }
     
     // MARK: - Data Fetch
@@ -104,18 +100,8 @@ final class HistoryViewController: UIViewController {
     // MARK: - Configure Layout Constraints
     
     private func configureLayoutConstraints() {
-        statsView.snp_makeConstraints {
-            $0.top.equalTo(view)
-            $0.left.equalTo(view)
-            $0.right.equalTo(view)
-            $0.height.equalTo(150)
-        }
-        
         tableView.snp_makeConstraints {
-            $0.top.equalTo(statsView.snp_bottom)
-            $0.left.equalTo(view)
-            $0.right.equalTo(view)
-            $0.bottom.equalTo(view)
+            $0.edges.equalTo(view)
         }
         
         addBtn.snp_makeConstraints {
@@ -134,6 +120,7 @@ final class HistoryViewController: UIViewController {
     func addBtnClicked(sender: UIButton) {
         if ensureThereIsAddictions() {
             let nav = UINavigationController(rootViewController: AddRecordViewController())
+            nav.modalPresentationStyle = .FormSheet
             presentViewController(nav, animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: L("history.no_addictions.title"), message: L("history.no_addictions.message"), preferredStyle: .Alert)
@@ -184,6 +171,7 @@ extension HistoryViewController: UITableViewDataSource {
         if editingStyle == .Delete {
             let record = fetchedResultsController.objectAtIndexPath(indexPath) as! Record
             Record.deleteRecord(record, inContext: managedObjectContext)
+            configureStatsView()
         }
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -237,6 +225,7 @@ extension HistoryViewController: UITableViewDelegate {
         let recordController = AddRecordViewController()
         recordController.record = fetchedResultsController.objectAtIndexPath(indexPath) as? Record
         let nav = UINavigationController(rootViewController: recordController)
+        nav.modalPresentationStyle = .FormSheet
         presentViewController(nav, animated: true, completion: nil)
     }
 }

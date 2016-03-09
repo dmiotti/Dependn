@@ -11,7 +11,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="9g2-D4-RuA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.15686274509803921" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.15294117647058825" green="0.66274509803921566" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="NZa-HJ-uJA" kind="relationship" relationship="rootViewController" id="MB0-SF-TBa"/>
@@ -19,7 +19,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nqV-nv-XMX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-772" y="-533"/>
+            <point key="canvasLocation" x="-959" y="-632"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="CL9-zd-9SO">

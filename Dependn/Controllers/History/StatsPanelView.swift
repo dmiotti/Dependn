@@ -124,7 +124,7 @@ final class StatsPanelView: SHCommonInitView {
         
         stackView = UIStackView(arrangedSubviews: [todayValue, weekValue, intervalValue])
         stackView.axis = .Horizontal
-        stackView.distribution = .FillProportionally
+        stackView.distribution = .FillEqually
         stackView.spacing = 0
         stackView.backgroundColor = UIColor.brownColor()
         addSubview(stackView)

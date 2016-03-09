@@ -18,11 +18,16 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
     private var scrollView: UIScrollView!
     private var scrollContainerView: UIView!
     private var pageControl: UIPageControl!
+    private var blueBackgroundView: UIView!
 
     override func commonInit() {
         super.commonInit()
-        //52	167	230
+
         backgroundColor = UIColor(r: 52, g: 167, b: 230, a: 1)
+        
+        blueBackgroundView = UIView()
+        blueBackgroundView.backgroundColor = UIColor(r: 52, g: 167, b: 230, a: 1)
+        addSubview(blueBackgroundView)
 
         scrollView = UIScrollView()
         scrollView.delegate = self
@@ -94,6 +99,13 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
     }
 
     private func configureLayoutConstraints() {
+        blueBackgroundView.snp_makeConstraints {
+            $0.bottom.equalTo(self.snp_top)
+            $0.left.equalTo(self)
+            $0.right.equalTo(self)
+            $0.height.equalTo(480)
+        }
+        
         scrollView.snp_makeConstraints {
             $0.edges.equalTo(self)
         }

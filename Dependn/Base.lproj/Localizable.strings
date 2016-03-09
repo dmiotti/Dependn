@@ -52,15 +52,6 @@
 "statspanel.this_week" = "Cette semaine";
 "statspanel.interval" = "Entre 2 prises";
 
-"stats.title" = "Statistiques";
-"stats.total" = "Total";
-"stats.not_available" = "-";
-"stats.minutes" = "minutes";
-"stats.hours" = "heures";
-"stats.average_per_day" = "Moyenne par jour";
-"stats.average_btw_takes" = "Temps moyen entre 2 prises";
-"stats.average_intensity" = "Intensité moyenne";
-
 "settings.title" = "Paramètres";
 "settings.manage_addictions" = "Gèrer mes addictions";
 "settings.memorise_places" = "Se souvenir des mes lieux";
