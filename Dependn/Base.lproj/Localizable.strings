@@ -10,6 +10,8 @@
 
 "cancel" = "Annuler";
 
+"navigation.back" = "Retour";
+
 "new_record.cancel" = "Annuler";
 "new_record.date" = "Date";
 "new_record.place" = "Lieu";
@@ -25,6 +27,7 @@
 "new_record.comment_placeholder" = "Ajouter un commentaire";
 "new_record.modify_title" = "Modifier une entrée";
 "new_record.modify" = "Modifier";
+"new_record.add_text" = "Terminer";
 
 "export.date" = "date";
 "export.time" = "heure";

@@ -62,7 +62,7 @@ final class NewDateTableViewCell: SHCommonInitTableViewCell {
         contentView.addSubview(hiddenDateTextField)
         
         toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: bounds.size.width, height: 44))
-        let dateDoneItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "datePickerDidSelectDate:")
+        let dateDoneItem = UIBarButtonItem(title: L("OK"), style: .Done, target: self, action: "datePickerDidSelectDate:")
         dateDoneItem.setTitleTextAttributes([
             NSForegroundColorAttributeName: UIColor.appBlueColor(),
             NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)

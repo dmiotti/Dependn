@@ -117,8 +117,6 @@ final class AddRecordViewController: UIViewController {
         
         registerNotificationObservers()
         
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        
         if Defaults[.useLocation] {
             launchLocationManager()
         }
@@ -126,6 +124,14 @@ final class AddRecordViewController: UIViewController {
         if let record = record {
             fillWithRecord(record)
         }
+        
+        let bbi = UIBarButtonItem(title: L("navigation.back"), style: .Plain, target: nil, action: nil)
+        bbi.setTitleTextAttributes([
+            NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightRegular),
+            NSForegroundColorAttributeName: UIColor.appBlueColor(),
+            NSKernAttributeName: -0.36
+            ], forState: .Normal)
+        navigationItem.backBarButtonItem = bbi
     }
     
     deinit {
