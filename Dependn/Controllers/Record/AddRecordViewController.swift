@@ -35,16 +35,6 @@ enum AddRecordTextEditionType: Int {
     case Place, Feeling, Comment, None
 }
 
-extension UIViewController {
-    func updateTitle(title: String) {
-        let titleLbl = UILabel()
-        titleLbl.attributedText = NSAttributedString(string: title.uppercaseString,
-            attributes: StyleSheet.kernedAttributes)
-        titleLbl.sizeToFit()
-        navigationItem.titleView = titleLbl
-    }
-}
-
 // MARK: - UIViewController
 final class AddRecordViewController: UIViewController {
     
@@ -80,7 +70,7 @@ final class AddRecordViewController: UIViewController {
         edgesForExtendedLayout = .None
         
         let screenTitle = record != nil ? L("new_record.modify_title") : L("new_record.title")
-        updateTitle(screenTitle)
+        updateTitle(screenTitle, blueBackground: false)
         
         locationManager.delegate = self
         
@@ -88,11 +78,24 @@ final class AddRecordViewController: UIViewController {
         
         view.backgroundColor = UIColor.lightBackgroundColor()
         
+        navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+        navigationController?.navigationBar.tintColor = UIColor.appBlueColor()
+        
         cancelBtn = UIBarButtonItem(title: L("new_record.cancel"), style: .Plain, target: self, action: "cancelBtnClicked:")
+        cancelBtn.setTitleTextAttributes([
+            NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightRegular),
+            NSForegroundColorAttributeName: UIColor.appBlueColor(),
+            NSKernAttributeName: -0.36
+            ], forState: .Normal)
         navigationItem.leftBarButtonItem = cancelBtn
 
         let doneText = record != nil ? L("new_record.modify") : L("new_record.add_btn")
-        doneBtn = UIBarButtonItem(title: doneText, style: .Plain, target: self, action: "addBtnClicked:")
+        doneBtn = UIBarButtonItem(title: doneText, style: .Done, target: self, action: "addBtnClicked:")
+        doneBtn.setTitleTextAttributes([
+            NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold),
+            NSForegroundColorAttributeName: UIColor.appBlueColor(),
+            NSKernAttributeName: -0.36
+            ], forState: .Normal)
         navigationItem.rightBarButtonItem = doneBtn
         
         chosenAddiction = try! Addiction.getAllAddictions(inContext: CoreDataStack.shared.managedObjectContext).first
@@ -365,15 +368,15 @@ extension AddRecordViewController: UITableViewDelegate {
         controller.delegate = self
         switch editingStep {
         case .Place:
-            controller.updateTitle(L("new_record.place"))
+            controller.updateTitle(L("new_record.place"), blueBackground: false)
             controller.originalText = chosenPlace
             controller.placeholder = L("new_record.place_placeholder")
         case .Feeling:
-            controller.updateTitle(L("new_record.feeling"))
+            controller.updateTitle(L("new_record.feeling"), blueBackground: false)
             controller.originalText = chosenFeeling
             controller.placeholder = L("new_record.feeling_placeholder")
         case .Comment:
-            controller.updateTitle(L("new_record.comment"))
+            controller.updateTitle(L("new_record.comment"), blueBackground: false)
             controller.originalText = chosenComment
             controller.placeholder = L("new_record.comment_placeholder")
         case .None: break

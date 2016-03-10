@@ -29,6 +29,7 @@
 		58548BE31C8BE18100C7C940 /* NewTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BDB1C8BE18100C7C940 /* NewTextTableViewCell.swift */; };
 		58548BE91C8BE1E400C7C940 /* SearchAdditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BE81C8BE1E400C7C940 /* SearchAdditionViewController.swift */; };
 		58858ADD1C84520100E8A794 /* Dependn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */; };
+		58AD8B381C9178D40008CD9C /* UIViewController+TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AD8B371C9178D40008CD9C /* UIViewController+TitleView.swift */; };
 		58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */; };
 		58DC7A0D1C8CD873007F9F5D /* NewAddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */; };
 		58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF629E1C83BDEE0035F608 /* AppDelegate.swift */; };
@@ -101,6 +102,7 @@
 		588D8C9D1C8F1898005BA8EB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		588D8C9F1C8F18A4005BA8EB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		589065D01C7A3F2F00F7F6DC /* Dependn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dependn.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		58AD8B371C9178D40008CD9C /* UIViewController+TitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+TitleView.swift"; sourceTree = "<group>"; };
 		58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecordTextViewController.swift; sourceTree = "<group>"; };
 		58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAddictionTableViewCell.swift; sourceTree = "<group>"; };
 		58DF629E1C83BDEE0035F608 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 			children = (
 				58548BC81C8BBBCF00C7C940 /* RecordCircleTypeView.swift */,
 				581CCC341C8F76B3006A8FAD /* IntensityGradientView.swift */,
+				58AD8B371C9178D40008CD9C /* UIViewController+TitleView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 				58DF62D31C83BDEE0035F608 /* ExportOperation.swift in Sources */,
 				58548BE11C8BE18100C7C940 /* NewIntensityTableViewCell.swift in Sources */,
 				581DC5D21C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift in Sources */,
+				58AD8B381C9178D40008CD9C /* UIViewController+TitleView.swift in Sources */,
 				581CCC371C8F7FE0006A8FAD /* StatsPanelView.swift in Sources */,
 				581CCC351C8F76B3006A8FAD /* IntensityGradientView.swift in Sources */,
 				58548BE91C8BE1E400C7C940 /* SearchAdditionViewController.swift in Sources */,

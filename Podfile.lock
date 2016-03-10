@@ -13,7 +13,7 @@ PODS:
     - CocoaLumberjack/Extensions
   - Crashlytics (3.7.0):
     - Fabric (~> 1.6.3)
-  - Fabric (1.6.6)
+  - Fabric (1.6.7)
   - PKHUD (3.1.0)
   - Result (1.0.2)
   - SnapKit (0.19.1)
@@ -37,7 +37,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SwiftHelpers:
-    :commit: 6a898ea0f1ff2a31002887e082e43de4b5258060
+    :commit: 2fa4c960ce723d9fe09ef0bff3c794d7e01e1373
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:
@@ -45,7 +45,7 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
-  Fabric: 1abc1e59f11fa39ede6f690ef7309d8563e3ec59
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   PKHUD: 4167eccdb1b3a892fd80ce2b51cb6ba412a889ab
   Result: dd3dd71af3fa2e262f1a999e14fba2c25ec14f16
   SnapKit: eff58d6e3451bf2f482db2eccf86aecf371dc62d

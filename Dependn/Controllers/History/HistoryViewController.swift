@@ -36,6 +36,10 @@ final class HistoryViewController: UIViewController {
         
         edgesForExtendedLayout = .None
         
+        if let nav = navigationController as? SHStatusBarNavigationController {
+            nav.statusBarStyle = .LightContent
+        }
+        
         dateFormatter = NSDateFormatter(dateFormat: "HH'h'mm")
         
         actionBtn = UIBarButtonItem(image: UIImage(named: "settings_icon"), style: .Plain, target: self, action: "actionBtnClicked:")
@@ -117,7 +121,8 @@ final class HistoryViewController: UIViewController {
     
     func addBtnClicked(sender: UIButton) {
         if ensureThereIsAddictions() {
-            let nav = UINavigationController(rootViewController: AddRecordViewController())
+            let nav = SHStatusBarNavigationController(rootViewController: AddRecordViewController())
+            nav.statusBarStyle = .Default
             nav.modalPresentationStyle = .FormSheet
             presentViewController(nav, animated: true, completion: nil)
         } else {
@@ -241,7 +246,8 @@ extension HistoryViewController: UITableViewDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let recordController = AddRecordViewController()
         recordController.record = fetchedResultsController.objectAtIndexPath(indexPath) as? Record
-        let nav = UINavigationController(rootViewController: recordController)
+        let nav = SHStatusBarNavigationController(rootViewController: recordController)
+        nav.statusBarStyle = .Default
         nav.modalPresentationStyle = .FormSheet
         presentViewController(nav, animated: true, completion: nil)
     }

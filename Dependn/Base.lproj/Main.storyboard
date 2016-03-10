@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Status Bar Navigation Controller-->
         <scene sceneID="vt6-A9-mYG">
             <objects>
-                <navigationController id="m1w-06-UvH" sceneMemberID="viewController">
+                <navigationController id="m1w-06-UvH" customClass="SHStatusBarNavigationController" customModule="SwiftHelpers" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="history" id="bVj-hg-9IO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Fdc-aN-snx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -19,7 +19,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yg2-sq-9OM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="698" y="169"/>
+            <point key="canvasLocation" x="2" y="295"/>
         </scene>
         <!--History View Controller-->
         <scene sceneID="bfQ-Wb-4SF">
@@ -38,7 +38,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OTz-YL-pZu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1423" y="168"/>
+            <point key="canvasLocation" x="727" y="294"/>
         </scene>
     </scenes>
 </document>

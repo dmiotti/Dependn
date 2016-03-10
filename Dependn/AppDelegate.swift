@@ -11,6 +11,7 @@ import Fabric
 import Crashlytics
 import SwiftyUserDefaults
 import CocoaLumberjack
+import SwiftHelpers
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -45,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Passcode management
     
-    private var hidingNav: UINavigationController?
+    private var hidingNav: SHStatusBarNavigationController?
     
     private func showPasscodeIfNeeded() {
         guard
@@ -64,7 +65,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 
                 let passcodeViewController = PasscodeViewController()
-                self.hidingNav = UINavigationController(rootViewController: passcodeViewController)
+                self.hidingNav = SHStatusBarNavigationController(rootViewController: passcodeViewController)
+                self.hidingNav!.statusBarStyle = .LightContent
                 self.hidingNav!.modalTransitionStyle = .CrossDissolve
                 topController.presentViewController(self.hidingNav!, animated: false, completion: nil)
             }

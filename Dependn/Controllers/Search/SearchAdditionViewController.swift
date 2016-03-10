@@ -40,7 +40,7 @@ final class SearchAdditionViewController: UIViewController {
         
         edgesForExtendedLayout = .None
         
-        title = L("addiction_list.title")
+        updateTitle(L("addiction_list.title"), blueBackground: false)
         
         searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
         configureSearchBar()

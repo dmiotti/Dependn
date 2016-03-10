@@ -24,7 +24,11 @@ class StyleSheet {
         UINavigationBar.appearance().translucent = false
         
         UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
-        UIBarButtonItem.appearance().setTitleTextAttributes(kernedAttributes, forState: .Normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightRegular),
+            NSForegroundColorAttributeName: UIColor.whiteColor(),
+            NSKernAttributeName: -0.36
+            ], forState: .Normal)
         UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UIToolbar.self]).tintColor = UIColor.appBlueColor()
         
         /// The one inside the search bar
@@ -33,6 +37,7 @@ class StyleSheet {
             NSFontAttributeName: UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
             ], forState: .Normal)
         UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).tintColor = UIColor.appBlueColor()
+        
         window?.tintColor = UIColor.appBlueColor()
     }
 }
