@@ -16,18 +16,18 @@
 "new_record.date" = "Date";
 "new_record.place" = "Lieu";
 "new_record.add_btn" = "Ajouter";
-"new_record.title" = "Nouvelle entrée";
+"new_record.title" = "Nouvelle prise";
 "new_record.intensity" = "Intensité";
 "new_record.optional" = "Optionnel";
 "new_record.feeling" = "Ressenti";
 "new_record.comment" = "Commentaire";
-"new_record.use_position" = "Mémoriser cet endroit";
-"new_record.place_placeholder" = "Décrivez le contexte où vous êtes";
+"new_record.place_placeholder" = "Décrivez le contexte où vous êtes...";
 "new_record.feeling_placeholder" = "Décrivez vos émotions en quelques mots...";
-"new_record.comment_placeholder" = "Ajouter un commentaire";
-"new_record.modify_title" = "Modifier une entrée";
+"new_record.comment_placeholder" = "Ajouter un commentaire...";
+"new_record.modify_title" = "Modifier une prise";
 "new_record.modify" = "Modifier";
 "new_record.add_text" = "Terminer";
+"new_record.select_date" = "Selectionner";
 
 "export.date" = "date";
 "export.time" = "heure";
@@ -39,13 +39,9 @@
 "export.place" = "lieu";
 "export.lat" = "latitude";
 "export.lon" = "longitude";
-"export.cig" = "Cigarette";
-"export.weed" = "Weed";
 
 "history.cig" = "Cigarette";
 "history.weed" = "Weed";
-"history.action.title" = "Quelle action voulez-vous lancer ?";
-"history.action.message" = "Pour importer des données vous devez ajouter des fichiers à l'application via iTunes";
 "history.no_addictions.ok" = "OK";
 "history.no_addictions.add" = "Ajouter";
 "history.no_addictions.title" = "Ajouter une entrée";
@@ -56,12 +52,12 @@
 "statspanel.interval" = "Entre 2 prises";
 
 "settings.title" = "Paramètres";
-"settings.manage_addictions" = "Gèrer mes addictions";
+"settings.manage_addictions" = "Gérer mes addictions";
 "settings.memorise_places" = "Se souvenir des mes lieux";
-"settings.use_passcode" = "Utiliser TouchID";
+"settings.use_passcode" = "Utiliser un passcode";
 "settings.version" = "Version";
-"settings.action.export" = "Exporter mes données";
-"settings.action.import" = "Importer mes données";
+"settings.action.export" = "Exporter";
+"settings.action.import" = "Importer";
 
 "import.choose_file" = "Choisissez un ficher à importer";
 "import.choose_file_message" = "Vos données actuelles seront supprimées";
@@ -89,10 +85,10 @@
 "addiction_list.modify" = "Modifier";
 
 "passcode.reason" = "Accèdez à vos données";
-"passcode.unset" = "Désactiver TouchID";
+"passcode.unset" = "Désactiver le passcode";
 
-"search.placeholder" = "Rechercher une addiction";
-"search.add_addiction" = "Ajouter une nouvelle addiction";
+"search.placeholder" = "Rechercher";
+"search.add_addiction" = "Ajouter une addiction";
 
 "intensity.low" = "Faible";
 "intensity.medium" = "Moyenne";

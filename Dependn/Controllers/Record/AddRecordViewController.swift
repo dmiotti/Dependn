@@ -82,20 +82,12 @@ final class AddRecordViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.appBlueColor()
         
         cancelBtn = UIBarButtonItem(title: L("new_record.cancel"), style: .Plain, target: self, action: "cancelBtnClicked:")
-        cancelBtn.setTitleTextAttributes([
-            NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightRegular),
-            NSForegroundColorAttributeName: UIColor.appBlueColor(),
-            NSKernAttributeName: -0.36
-            ], forState: .Normal)
+        cancelBtn.setTitleTextAttributes(StyleSheet.cancelBtnAttrs, forState: .Normal)
         navigationItem.leftBarButtonItem = cancelBtn
 
         let doneText = record != nil ? L("new_record.modify") : L("new_record.add_btn")
         doneBtn = UIBarButtonItem(title: doneText, style: .Done, target: self, action: "addBtnClicked:")
-        doneBtn.setTitleTextAttributes([
-            NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold),
-            NSForegroundColorAttributeName: UIColor.appBlueColor(),
-            NSKernAttributeName: -0.36
-            ], forState: .Normal)
+        doneBtn.setTitleTextAttributes(StyleSheet.doneBtnAttrs, forState: .Normal)
         navigationItem.rightBarButtonItem = doneBtn
         
         chosenAddiction = try! Addiction.getAllAddictionsOrderedByCount(inContext: CoreDataStack.shared.managedObjectContext).first

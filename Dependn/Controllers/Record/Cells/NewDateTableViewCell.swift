@@ -57,18 +57,20 @@ final class NewDateTableViewCell: SHCommonInitTableViewCell {
         hiddenDateTextField.hidden = true
         
         datePicker = UIDatePicker()
+        datePicker.backgroundColor = UIColor.lightBackgroundColor()
         datePicker.datePickerMode = .DateAndTime
         hiddenDateTextField.inputView = datePicker
         contentView.addSubview(hiddenDateTextField)
         
         toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: bounds.size.width, height: 44))
-        let dateDoneItem = UIBarButtonItem(title: L("OK"), style: .Done, target: self, action: "datePickerDidSelectDate:")
-        dateDoneItem.setTitleTextAttributes([
-            NSForegroundColorAttributeName: UIColor.appBlueColor(),
-            NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
-            ], forState: .Normal)
+        toolbar.translucent = false
+        let dateDoneItem = UIBarButtonItem(title: L("new_record.select_date"), style: .Done, target: self, action: "datePickerDidSelectDate:")
+        dateDoneItem.setTitleTextAttributes(StyleSheet.doneBtnAttrs, forState: .Normal)
         let dateSpaceItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-        toolbar.items = [ dateSpaceItem, dateDoneItem ]
+        let cancelItem = UIBarButtonItem(title: L("new_record.cancel"), style: .Plain, target: self, action: "datePickerDidCancel:")
+        cancelItem.setTitleTextAttributes(StyleSheet.cancelBtnAttrs, forState: .Normal)
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        toolbar.items = [ cancelItem, flexSpace, dateSpaceItem, dateDoneItem ]
         hiddenDateTextField.inputAccessoryView = toolbar
         
         configureLayoutConstraints()
@@ -102,6 +104,10 @@ final class NewDateTableViewCell: SHCommonInitTableViewCell {
     func datePickerDidSelectDate(sender: UIBarButtonItem) {
         hiddenDateTextField.resignFirstResponder()
         delegate?.dateTableViewCell(self, didSelectDate: datePicker.date)
+    }
+    
+    func datePickerDidCancel(sender: UIBarButtonItem) {
+        hiddenDateTextField.resignFirstResponder()
     }
     
     override func setHighlighted(highlighted: Bool, animated: Bool) {

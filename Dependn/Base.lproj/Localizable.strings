@@ -28,6 +28,7 @@
 "new_record.modify_title" = "Modifier une entrée";
 "new_record.modify" = "Modifier";
 "new_record.add_text" = "Terminer";
+"new_record.select_date" = "Selectionner";
 
 "export.date" = "date";
 "export.time" = "heure";

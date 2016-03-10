@@ -62,9 +62,13 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
         let page = Int(lround(Double(frac)))
         pageControl.currentPage = page
         
+        scrollView.contentOffset = CGPoint(x: scrollView.contentOffset.x, y: 0)
+        
         performTransform()
     }
     
+    
+    // Animate the transition between stats
     private func performTransform() {
         let numberOfPages = pageControl.numberOfPages
         let pageWidth = scrollView.frame.size.width
@@ -145,7 +149,7 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
         }
         
         scrollView.snp_makeConstraints {
-            $0.edges.equalTo(self)
+            $0.edges.equalTo(self).offset(UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
         }
         
         scrollContainerView.snp_makeConstraints {

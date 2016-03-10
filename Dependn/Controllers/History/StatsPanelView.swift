@@ -103,6 +103,8 @@ final class StatsPanelView: SHCommonInitView {
     override func commonInit() {
         super.commonInit()
         
+        UIFontTextStyleHeadline
+        
         nameLbl = UILabel()
         nameLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightSemibold)
         nameLbl.textColor = UIColor.whiteColor()

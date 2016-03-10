@@ -11,10 +11,22 @@ import SwiftHelpers
 
 class StyleSheet {
     
-    static var kernedAttributes: [String: AnyObject] = [
+    static var titleAttributes: [String: AnyObject] = [
         NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightSemibold),
         NSForegroundColorAttributeName: UIColor.whiteColor(),
         NSKernAttributeName: 1.53
+    ]
+    
+    static var doneBtnAttrs: [String: AnyObject] = [
+        NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold),
+        NSForegroundColorAttributeName: UIColor.appBlueColor(),
+        NSKernAttributeName: -0.36
+    ]
+    
+    static var cancelBtnAttrs: [String: AnyObject] = [
+        NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightRegular),
+        NSForegroundColorAttributeName: UIColor.appBlueColor(),
+        NSKernAttributeName: -0.36
     ]
     
     class func customizeAppearance(window: UIWindow?) {
@@ -25,7 +37,7 @@ class StyleSheet {
         UINavigationBar.appearance().shadowImage = img
         
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().titleTextAttributes = kernedAttributes
+        UINavigationBar.appearance().titleTextAttributes = titleAttributes
         UINavigationBar.appearance().barTintColor = UIColor.appBlueColor()
         UINavigationBar.appearance().translucent = false
         

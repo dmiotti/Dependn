@@ -48,6 +48,7 @@ final class HistoryViewController: UIViewController {
         statsView = StatsPanelScroller()
         
         tableView = UITableView(frame: .zero, style: .Plain)
+        tableView.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.dataSource = self
         tableView.delegate = self
@@ -77,7 +78,7 @@ final class HistoryViewController: UIViewController {
         let addictions = try! Addiction.getAllAddictionsOrderedByCount(inContext: CoreDataStack.shared.managedObjectContext)
         
         if addictions.count > 0 {
-            statsView.frame = CGRectMake(0, 0, view.bounds.size.width, 150)
+            statsView.frame = CGRectMake(0, 0, view.bounds.size.width, 160)
             tableView.tableHeaderView = statsView
             statsView.addictions = addictions
         } else {
