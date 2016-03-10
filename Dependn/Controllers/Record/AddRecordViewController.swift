@@ -98,7 +98,7 @@ final class AddRecordViewController: UIViewController {
             ], forState: .Normal)
         navigationItem.rightBarButtonItem = doneBtn
         
-        chosenAddiction = try! Addiction.getAllAddictions(inContext: CoreDataStack.shared.managedObjectContext).first
+        chosenAddiction = try! Addiction.getAllAddictionsOrderedByCount(inContext: CoreDataStack.shared.managedObjectContext).first
         
         tableView = UITableView(frame: .zero, style: .Grouped)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
