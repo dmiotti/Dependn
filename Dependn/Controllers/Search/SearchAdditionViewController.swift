@@ -46,7 +46,6 @@ final class SearchAdditionViewController: UIViewController {
         configureSearchBar()
       
         tableView = UITableView(frame: .zero, style: .Grouped)
-        tableView.rowHeight = 55
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = UIColor.lightBackgroundColor()

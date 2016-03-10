@@ -36,6 +36,7 @@ final class AddictionListViewController: UIViewController {
         
         tableView = UITableView(frame: .zero, style: .Grouped)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
+        tableView.rowHeight = 55
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(AddictionTableViewCell.self, forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
