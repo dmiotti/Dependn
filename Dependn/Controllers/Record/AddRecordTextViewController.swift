@@ -32,6 +32,11 @@ final class AddRecordTextViewController: UIViewController {
         view.backgroundColor = UIColor.whiteColor()
 
         doneBtn = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "doneBtnClicked:")
+        doneBtn.setTitleTextAttributes([
+            NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold),
+            NSForegroundColorAttributeName: UIColor.appBlueColor(),
+            NSKernAttributeName: -0.36
+            ], forState: .Normal)
         navigationItem.rightBarButtonItem = doneBtn
         
         textView = UITextView()

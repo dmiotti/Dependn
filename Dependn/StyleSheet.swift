@@ -18,6 +18,12 @@ class StyleSheet {
     ]
     
     class func customizeAppearance(window: UIWindow?) {
+        
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        let img = UIImage.imageWithColor(UIColor.blackColor().colorWithAlphaComponent(0.13),
+            size: CGSize(width: 2, height: 1.0 / UIScreen.mainScreen().scale))
+        UINavigationBar.appearance().shadowImage = img
+        
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = kernedAttributes
         UINavigationBar.appearance().barTintColor = UIColor.appBlueColor()

@@ -85,6 +85,7 @@ final class AddictionListViewController: UIViewController {
         }
         alert.addTextFieldWithConfigurationHandler { textField in
             textField.placeholder = L("addiction_list.new.placeholder")
+            textField.autocapitalizationType = .Words
         }
         alert.addAction(cancelAction)
         alert.addAction(addAction)
