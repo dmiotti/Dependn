@@ -69,6 +69,7 @@ final class SettingsViewController: UIViewController {
         tableView.registerClass(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.reuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = 55
         view.addSubview(tableView)
         
         passcodeSwitch = UISwitch()
