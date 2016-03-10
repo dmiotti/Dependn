@@ -23,10 +23,10 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
     override func commonInit() {
         super.commonInit()
 
-        backgroundColor = UIColor(r: 52, g: 167, b: 230, a: 1)
+        backgroundColor = UIColor.appBlueColor()
         
         blueBackgroundView = UIView()
-        blueBackgroundView.backgroundColor = UIColor(r: 52, g: 167, b: 230, a: 1)
+        blueBackgroundView.backgroundColor = UIColor.appBlueColor()
         addSubview(blueBackgroundView)
 
         scrollView = UIScrollView()

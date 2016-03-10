@@ -21,6 +21,7 @@ class StyleSheet {
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = kernedAttributes
         UINavigationBar.appearance().barTintColor = UIColor.appBlueColor()
+        UINavigationBar.appearance().translucent = false
         
         UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
         UIBarButtonItem.appearance().setTitleTextAttributes(kernedAttributes, forState: .Normal)
@@ -39,7 +40,7 @@ class StyleSheet {
 extension UIColor {
     
     class func appDarkBlueColor()       -> UIColor { return "7D9BB8".UIColor }
-    class func appBlueColor()           -> UIColor { return "27A9F1".UIColor }
+    class func appBlueColor()           -> UIColor { return "28AFFA".UIColor }
     class func appBlackColor()          -> UIColor { return "030303".UIColor }
     class func appLightTextColor()      -> UIColor { return "A2B8CC".UIColor }
     class func appSeparatorColor()      -> UIColor { return "DCE8F4".UIColor }
