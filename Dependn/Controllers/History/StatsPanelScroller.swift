@@ -61,6 +61,43 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
         let frac = offset.x / pageWidth
         let page = Int(lround(Double(frac)))
         pageControl.currentPage = page
+        
+        performTransform()
+    }
+    
+    private func performTransform() {
+        let numberOfPages = pageControl.numberOfPages
+        let pageWidth = scrollView.frame.size.width
+        let currentXOffset = range(scrollView.contentOffset.x, minimum: 0, maximum: pageWidth * CGFloat(numberOfPages))
+        
+        let currentPage = Int(max(floor(currentXOffset / pageWidth), 0))
+        let nextPage = Int(min(currentPage + 1, numberOfPages - 1))
+        let interpolation = (currentXOffset - (CGFloat(currentPage) * pageWidth)) / pageWidth
+        
+        let minScale = CGFloat(0.75)
+        let currentCellScale = CGFloat(1 - interpolation) * (1 - minScale) + minScale
+        let nextCellScale = CGFloat(interpolation) * (1 - minScale) + minScale
+        
+        let currentBoard = statsBoards[currentPage]
+        let nextBoard = statsBoards[nextPage]
+        
+        currentBoard.layer.transform = CATransform3DMakeScale(currentCellScale, currentCellScale, 1)
+        if currentPage != nextPage {
+            nextBoard.layer.transform = CATransform3DMakeScale(nextCellScale, nextCellScale, 1)
+        }
+    }
+    
+    /**
+     Ranges a value between a maximum and a minimum
+     
+     - Parameter value:   The value that should be ranged
+     - Parameter minimum: The minimum result value
+     - Parameter maximum: The maximum result value
+     
+     - Returns: `minimum` if `value` is less than `minimum`, `maximum` if `value` is more than `value`, `value` otherwise
+     */
+    func range<T: Comparable>(value: T, minimum: T, maximum: T) -> T {
+        return max(min(value, maximum), minimum)
     }
     
     private var statsBoards = [StatsPanelView]()
