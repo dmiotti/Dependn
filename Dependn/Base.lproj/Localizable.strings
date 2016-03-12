@@ -41,6 +41,7 @@
 "export.place" = "lieu";
 "export.lat" = "latitude";
 "export.lon" = "longitude";
+"export.feeling" = "Resenti";
 
 "history.cig" = "Cigarette";
 "history.weed" = "Weed";

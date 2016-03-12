@@ -163,7 +163,7 @@ final class SettingsViewController: UIViewController {
             dispatch_async(dispatch_get_main_queue()) {
                 if let err = importOp.error {
                     if err.code != kImportOperationUserCancelledCode {
-                        UIAlertController.presentError(err, inController: self)
+                        UIAlertController.presentAlertWithTitle(nil, message: err.localizedRecoverySuggestion, inController: self)
                     }
                 } else {
                     HUD.flash(.Success)
@@ -191,6 +191,7 @@ extension SettingsViewController: UITableViewDataSource {
         cell.accessoryView = nil
         cell.accessoryType = .None
         cell.textLabel?.text = nil
+        cell.textLabel?.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
         cell.textLabel?.textColor = UIColor.appBlackColor()
 
         let type = SettingsSectionType(rawValue: indexPath.section)!
