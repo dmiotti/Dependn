@@ -50,7 +50,6 @@
 		58DF62D51C83BDEE0035F608 /* Record+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BC1C83BDEE0035F608 /* Record+Repository.swift */; };
 		58DF62D71C83BDEE0035F608 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BE1C83BDEE0035F608 /* Record.swift */; };
 		58DF62D91C83BDEE0035F608 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62C11C83BDEE0035F608 /* StyleSheet.swift */; };
-		58E429AD1C92325E0095F92D /* applanga_settings.applanga in Resources */ = {isa = PBXBuildFile; fileRef = 58E429AC1C92325E0095F92D /* applanga_settings.applanga */; };
 		58E429B81C9243B80095F92D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58E429B71C9243B80095F92D /* CloudKit.framework */; };
 		FE13DF52A68AA47D8184F97D /* Pods_Dependn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE1FEA29CFCF5CB9F1B7A41 /* Pods_Dependn.framework */; };
 /* End PBXBuildFile section */
@@ -127,7 +126,6 @@
 		58DF62BE1C83BDEE0035F608 /* Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		58DF62C01C83BDEE0035F608 /* Dependn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Dependn.xcdatamodel; sourceTree = "<group>"; };
 		58DF62C11C83BDEE0035F608 /* StyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleSheet.swift; sourceTree = "<group>"; };
-		58E429AC1C92325E0095F92D /* applanga_settings.applanga */ = {isa = PBXFileReference; lastKnownFileType = file; path = applanga_settings.applanga; sourceTree = SOURCE_ROOT; };
 		58E429B21C9232BF0095F92D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		58E429B31C9232BF0095F92D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		58E429B41C9232BF0095F92D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -270,7 +268,6 @@
 				58DF62AF1C83BDEE0035F608 /* Localizable.strings */,
 				58DF62B11C83BDEE0035F608 /* Info.plist */,
 				58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */,
-				58E429AC1C92325E0095F92D /* applanga_settings.applanga */,
 			);
 			path = Dependn;
 			sourceTree = "<group>";
@@ -425,7 +422,6 @@
 			files = (
 				58DF62CC1C83BDEE0035F608 /* Localizable.strings in Resources */,
 				58DF62C51C83BDEE0035F608 /* Main.storyboard in Resources */,
-				58E429AD1C92325E0095F92D /* applanga_settings.applanga in Resources */,
 				58DF62CB1C83BDEE0035F608 /* InfoPlist.strings in Resources */,
 				58DF62C31C83BDEE0035F608 /* Assets.xcassets in Resources */,
 				58DF62C41C83BDEE0035F608 /* LaunchScreen.storyboard in Resources */,
