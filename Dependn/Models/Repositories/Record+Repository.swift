@@ -17,8 +17,7 @@ extension Record {
     
     class func insertNewRecord(addiction: Addiction,
         intensity: Float,
-        before: String?,
-        after: String?,
+        feeling: String?,
         comment: String?,
         place: String?,
         latitude: Double?,
@@ -30,8 +29,7 @@ extension Record {
                     inManagedObjectContext: context) as! Record
             record.intensity = intensity
             record.addiction = addiction
-            record.before = before
-            record.after = after
+            record.feeling = feeling
             record.comment = comment
             record.place = place
             record.lat = latitude

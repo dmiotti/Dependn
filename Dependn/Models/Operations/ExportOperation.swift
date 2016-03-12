@@ -88,7 +88,7 @@ final class ExportOperation: SHOperation {
             kExportOperationHourFormatter.stringFromDate(date),
             String(format: "%.1f", arguments: [ record.intensity.floatValue ]),
             record.place ?? "",
-            (record.before ?? "") + (record.after ?? ""),
+            record.feeling ?? "",
             record.comment ?? "",
             record.lat?.stringValue ?? "",
             record.lon?.stringValue ?? ""
@@ -272,17 +272,15 @@ final class ImportOperation: SHOperation {
             let datestr = "\(daystr) \(hourstr)"
             let date = kImportOperationDateFormatter.dateFromString(datestr) ?? NSDate()
             let intensity = NSString(string: values[3]).floatValue
-            let before = values[4]
-            let after = values[5]
-            let comment = values[6]
-            let place = values[7]
-            let lat = values[8]
-            let lon = values[9]
+            let feeling = values[4]
+            let comment = values[5]
+            let place = values[6]
+            let lat = values[7]
+            let lon = values[8]
             
             Record.insertNewRecord(addiction,
                 intensity: intensity,
-                before: before,
-                after: after,
+                feeling: feeling,
                 comment: comment,
                 place: place,
                 latitude: doubleOrNil(lat),

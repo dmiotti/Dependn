@@ -130,7 +130,7 @@ final class AddRecordViewController: UIViewController {
         chosenIntensity = record.intensity.floatValue
         chosenDate      = record.date
         chosenPlace     = record.place
-        chosenFeeling   = record.before
+        chosenFeeling   = record.feeling
         chosenComment   = record.comment
     }
     
@@ -176,15 +176,14 @@ final class AddRecordViewController: UIViewController {
         if let record = record {
             record.addiction = chosenAddiction
             record.intensity = chosenIntensity
-            record.before    = chosenFeeling
+            record.feeling   = chosenFeeling
             record.comment   = chosenComment
             record.date      = chosenDate
             record.place     = chosenPlace
         } else {
             Record.insertNewRecord(chosenAddiction,
                 intensity: chosenIntensity,
-                before: chosenFeeling,
-                after: nil,
+                feeling: chosenFeeling,
                 comment: chosenComment,
                 place: chosenPlace,
                 latitude: userLocation?.coordinate.latitude,
@@ -410,7 +409,7 @@ extension AddRecordViewController: CLLocationManagerDelegate {
         }
     }
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-        if !Defaults[.useLocation] {
+        if record != nil || !Defaults[.useLocation] {
             return
         }
 

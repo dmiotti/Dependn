@@ -14,8 +14,7 @@ import CoreData
 
 extension Record {
 
-    @NSManaged var after: String?
-    @NSManaged var before: String?
+    @NSManaged var feeling: String?
     @NSManaged var comment: String?
     @NSManaged var date: NSDate
     @NSManaged var intensity: NSNumber
