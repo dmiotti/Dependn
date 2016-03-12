@@ -81,6 +81,8 @@ final class SettingsViewController: UIViewController {
         memorizePlacesSwitch.addTarget(self, action: "memorizePlacesSwitchValueChanged:", forControlEvents: .ValueChanged)
         
         configureLayoutConstraints()
+        
+        setupBackBarButtonItem()
     }
     
     override func viewWillAppear(animated: Bool) {

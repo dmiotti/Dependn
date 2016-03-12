@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SwiftHelpers
 
 extension UIViewController {
     func updateTitle(title: String, blueBackground: Bool = true) {
@@ -20,5 +21,15 @@ extension UIViewController {
             ])
         titleLbl.sizeToFit()
         navigationItem.titleView = titleLbl
+    }
+    
+    func setupBackBarButtonItem() {
+        let bbi = UIBarButtonItem(title: L("navigation.back"), style: .Plain, target: nil, action: nil)
+        bbi.setTitleTextAttributes([
+            NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightRegular),
+            NSForegroundColorAttributeName: UIColor.appBlueColor(),
+            NSKernAttributeName: -0.36
+            ], forState: .Normal)
+        navigationItem.backBarButtonItem = bbi
     }
 }

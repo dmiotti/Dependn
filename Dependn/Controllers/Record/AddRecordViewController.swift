@@ -117,13 +117,7 @@ final class AddRecordViewController: UIViewController {
             fillWithRecord(record)
         }
         
-        let bbi = UIBarButtonItem(title: L("navigation.back"), style: .Plain, target: nil, action: nil)
-        bbi.setTitleTextAttributes([
-            NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightRegular),
-            NSForegroundColorAttributeName: UIColor.appBlueColor(),
-            NSKernAttributeName: -0.36
-            ], forState: .Normal)
-        navigationItem.backBarButtonItem = bbi
+        setupBackBarButtonItem()
     }
     
     deinit {
