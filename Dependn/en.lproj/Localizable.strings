@@ -26,8 +26,10 @@
 "new_record.comment_placeholder" = "Ajouter un commentaire...";
 "new_record.modify_title" = "Modifier une prise";
 "new_record.modify" = "Modifier";
-"new_record.add_text" = "Terminer";
+"new_record.add_text" = "Valider";
 "new_record.select_date" = "Selectionner";
+"new_record.feeling_subtitle" = "Émotions";
+"new_record.comment_subtitle" = "Commentaire";
 
 "export.date" = "date";
 "export.time" = "heure";
@@ -86,7 +88,7 @@
 "addiction_list.modify.placeholder" = "Entrer le nouveau nom";
 "addiction_list.modify" = "Modifier";
 
-"passcode.reason" = "Activer le passcode";
+"passcode.reason" = "Accèder à vos données";
 
 "search.placeholder" = "Rechercher";
 "search.add_addiction" = "Ajouter une addiction";

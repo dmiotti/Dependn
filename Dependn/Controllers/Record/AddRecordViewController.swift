@@ -354,7 +354,7 @@ extension AddRecordViewController: UITableViewDelegate {
             controller.originalText = chosenFeeling
             controller.placeholder = L("new_record.feeling_placeholder")
         case .Comment:
-            controller.updateTitle(L("new_record.comment"), blueBackground: false)
+            controller.updateTitle(L("new_record.comment_subtitle"), blueBackground: false)
             controller.originalText = chosenComment
             controller.placeholder = L("new_record.comment_placeholder")
         case .None: break

@@ -49,6 +49,7 @@ final class SearchAdditionViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = UIColor.lightBackgroundColor()
+        tableView.separatorColor = UIColor.appSeparatorColor()
         tableView.registerClass(NewAddictionTableViewCell.self, forCellReuseIdentifier: NewAddictionTableViewCell.reuseIdentifier)
         tableView.registerClass(AddictionTableViewCell.self, forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
         tableView.tableHeaderView = searchBar

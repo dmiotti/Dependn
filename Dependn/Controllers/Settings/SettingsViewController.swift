@@ -63,10 +63,14 @@ final class SettingsViewController: UIViewController {
         
         edgesForExtendedLayout = .None
         
+        view.backgroundColor = UIColor.lightBackgroundColor()
+        
         updateTitle(L("settings.title"))
 
         tableView = UITableView(frame: .zero, style: .Grouped)
         tableView.registerClass(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.reuseIdentifier)
+        tableView.backgroundColor = UIColor.lightBackgroundColor()
+        tableView.separatorColor = UIColor.appSeparatorColor()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 55
