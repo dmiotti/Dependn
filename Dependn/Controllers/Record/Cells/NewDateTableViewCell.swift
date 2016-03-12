@@ -92,7 +92,7 @@ final class NewDateTableViewCell: SHCommonInitTableViewCell {
         chosenDateLbl.snp_makeConstraints {
             $0.centerY.equalTo(dateLbl)
             $0.right.equalTo(contentView)
-            $0.left.equalTo(dateLbl.snp_right)
+            $0.left.equalTo(dateLbl.snp_right).offset(10)
         }
         hiddenDateTextField.snp_makeConstraints {
             $0.top.equalTo(contentView)
