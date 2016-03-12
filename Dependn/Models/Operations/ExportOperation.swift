@@ -47,9 +47,9 @@ final class ExportOperation: SHOperation {
                     L("export.date"),
                     L("export.time"),
                     L("export.intensity"),
+                    L("export.place"),
                     L("export.feeling"),
                     L("export.comment"),
-                    L("export.place"),
                     L("export.lat"),
                     L("export.lon") ].joinWithSeparator(kExportOperationSeparator)
 
@@ -87,10 +87,9 @@ final class ExportOperation: SHOperation {
             kExportOperationDayFormatter.stringFromDate(date),
             kExportOperationHourFormatter.stringFromDate(date),
             String(format: "%.1f", arguments: [ record.intensity.floatValue ]),
-            record.before ?? "",
-            record.after ?? "",
-            record.comment ?? "",
             record.place ?? "",
+            (record.before ?? "") + (record.after ?? ""),
+            record.comment ?? "",
             record.lat?.stringValue ?? "",
             record.lon?.stringValue ?? ""
         ]
