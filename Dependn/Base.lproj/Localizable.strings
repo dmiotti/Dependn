@@ -83,10 +83,9 @@
 "addiction_list.delete.confirm" = "Continuer";
 "addiction_list.delete.title" = "Êtes-vous sûr de vouloir supprimer %@";
 "addiction_list.delete.message" = "Toutes les informations liées à cette addictions seront effacées";
-"addiction_list.modify.title" = "Modifier une addiction";
-"addiction_list.modify.message" = "Vous pouvez changer le nom de l'addiction";
+"addiction_list.modify.title" = "Renomer";
 "addiction_list.modify.placeholder" = "Entrer le nouveau nom";
-"addiction_list.modify" = "Modifier";
+"addiction_list.modify" = "Renomer";
 
 "passcode.reason" = "Accèder à vos données";
 

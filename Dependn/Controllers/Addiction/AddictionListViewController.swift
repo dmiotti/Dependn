@@ -165,8 +165,9 @@ extension AddictionListViewController: UITableViewDataSource {
         }
     }
     private func deleteAddiction(addiction: Addiction) {
-        let title = String(format: L("addiction_list.delete.title"), addiction.name)
-        let alert = UIAlertController(title: title, message: L("addiction_list.delete.message"), preferredStyle: .Alert)
+        let title = String(format: L("addiction_list.delete.title"), addiction.name.capitalizedString)
+        let reason = String(format: L("addiction_list.delete.message"), addiction.name.capitalizedString)
+        let alert = UIAlertController(title: title, message: reason, preferredStyle: .Alert)
         let cancelAction = UIAlertAction(title: L("addiction_list.delete.cancel"), style: .Default, handler: nil)
         let okAction = UIAlertAction(title: L("addiction_list.delete.confirm"), style: .Default) { action in
             do {
@@ -189,7 +190,7 @@ extension AddictionListViewController: UITableViewDelegate {
     }
     private func updateNameOfAddictionAtIndexPath(indexPath: NSIndexPath) {
         if let addiction = fetchedResultsController.objectAtIndexPath(indexPath) as? Addiction {
-            let alert = UIAlertController(title: L("addiction_list.modify.title"), message: L("addiction_list.modify.message"), preferredStyle: .Alert)
+            let alert = UIAlertController(title: L("addiction_list.modify.title"), message: nil, preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: L("cancel"), style: .Cancel, handler: nil)
             let addAction = UIAlertAction(title: L("addiction_list.modify"), style: .Default) { action in
                 if let name = alert.textFields?.first?.text {

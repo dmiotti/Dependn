@@ -37,12 +37,35 @@ final class ExportOperation: SHOperation {
         
         context.performBlockAndWait {
             do {
-                let req = NSFetchRequest(entityName: Record.entityName)
-                req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
-                let records = try self.context.executeFetchRequest(req) as! [Record]
+                
+                let addictions = try Addiction.getAllAddictionsOrderedByCount(inContext: self.context)
                 
                 let path = self.exportPath()
-                let csv = self.createCSV(records)
+
+                var csv: String = [
+                    L("export.type"),
+                    L("export.date"),
+                    L("export.time"),
+                    L("export.intensity"),
+                    L("export.feeling"),
+                    L("export.comment"),
+                    L("export.place"),
+                    L("export.lat"),
+                    L("export.lon") ].joinWithSeparator(kExportOperationSeparator)
+
+                csv.appendContentsOf(kExportOperationNewLine)
+                
+                for addiction in addictions {
+                    let req = NSFetchRequest(entityName: Record.entityName)
+                    req.predicate = NSPredicate(format: "addiction == %@", addiction)
+                    req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
+                    let records = try self.context.executeFetchRequest(req) as! [Record]
+                    let recordsCsv = records.map({ self.recordToCSV($0) })
+                        .joinWithSeparator(kExportOperationNewLine)
+                    csv.appendContentsOf(recordsCsv)
+                    csv.appendContentsOf(kExportOperationNewLine)
+                    csv.appendContentsOf(kExportOperationNewLine)
+                }
                 
                 try csv.writeToFile(path,
                     atomically: true,
@@ -57,31 +80,12 @@ final class ExportOperation: SHOperation {
         finish()
     }
     
-    private func createCSV(records: [Record]) -> String {
-        let header = [
-            L("export.date"),
-            L("export.time"),
-            L("export.type"),
-            L("export.intensity"),
-            L("export.feeling"),
-            L("export.comment"),
-            L("export.place"),
-            L("export.lat"),
-            L("export.lon") ]
-            .joinWithSeparator(kExportOperationSeparator)
-        
-        let content = records.map({ recordToCSV($0) })
-            .joinWithSeparator(kExportOperationNewLine)
-        return header + kExportOperationNewLine
-            + content + kExportOperationNewLine
-    }
-    
     private func recordToCSV(record: Record) -> String {
         let date = record.date
         let values = [
+            record.addiction.name.capitalizedString,
             kExportOperationDayFormatter.stringFromDate(date),
             kExportOperationHourFormatter.stringFromDate(date),
-            record.addiction.name.capitalizedString,
             String(format: "%.1f", arguments: [ record.intensity.floatValue ]),
             record.before ?? "",
             record.after ?? "",
@@ -261,11 +265,11 @@ final class ImportOperation: SHOperation {
         }
         
         do {
-            let addiction = try Addiction.findOrInsertNewAddiction(values[2],
+            let addiction = try Addiction.findOrInsertNewAddiction(values[0],
                 inContext: context)
             
-            let daystr = values[0]
-            let hourstr = values[1]
+            let daystr = values[1]
+            let hourstr = values[2]
             let datestr = "\(daystr) \(hourstr)"
             let date = kImportOperationDateFormatter.dateFromString(datestr) ?? NSDate()
             let intensity = NSString(string: values[3]).floatValue
