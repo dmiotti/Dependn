@@ -294,5 +294,6 @@ extension HistoryViewController: NSFetchedResultsControllerDelegate {
     }
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         tableView.endUpdates()
+        configureStatsView()
     }
 }

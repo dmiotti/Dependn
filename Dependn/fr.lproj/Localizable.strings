@@ -28,6 +28,7 @@
 "new_record.modify" = "Modifier";
 "new_record.add_text" = "Terminer";
 "new_record.select_date" = "Selectionner";
+"new_record.feeling_subtitle" = "Émotions";
 
 "export.date" = "date";
 "export.time" = "heure";

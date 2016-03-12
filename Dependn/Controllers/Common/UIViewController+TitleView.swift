@@ -13,6 +13,7 @@ import SwiftHelpers
 extension UIViewController {
     func updateTitle(title: String, blueBackground: Bool = true) {
         let titleLbl = UILabel()
+        titleLbl.adjustsFontSizeToFitWidth = true
         titleLbl.attributedText = NSAttributedString(string: title.uppercaseString,
             attributes: [
                 NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightSemibold),
