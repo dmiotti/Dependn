@@ -93,19 +93,15 @@ final class SettingsViewController: UIViewController {
     // MARK: - Passcode
     
     func passcodeSwitchValueChanged(sender: UISwitch) {
-        let reason = sender.on ? L("passcode.reason") : L("passcode.unset")
-        if let policy = supportedOwnerAuthentications().first {
-            authContext.evaluatePolicy(policy,
-                localizedReason: reason) { (success, error) in
-                    if success {
-                        Defaults[.usePasscode] = sender.on
-                    } else {
-                        DDLogError("\(error)")
-                        sender.setOn(!sender.on, animated: true)
-                    }
+        if sender.on {
+            if supportedOwnerAuthentications().count > 0 {
+                Defaults[.usePasscode] = true
+            } else {
+                sender.setOn(false, animated: true)
             }
         } else {
-            sender.setOn(!sender.on, animated: true)
+            Defaults[.usePasscode] = false
+            sender.setOn(false, animated: true)
         }
     }
     
@@ -233,6 +229,32 @@ extension SettingsViewController: UITableViewDataSource {
         }
 
         return cell
+    }
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 40))
+        
+        let titleLbl = UILabel()
+        titleLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
+        titleLbl.textColor = UIColor.appDarkBlueColor()
+        header.addSubview(titleLbl)
+        
+        titleLbl.snp_makeConstraints {
+            $0.left.equalTo(header).offset(15)
+            $0.bottom.equalTo(header).offset(-5)
+        }
+        
+        let type = SettingsSectionType(rawValue: section)!
+        switch type {
+        case .General:
+            titleLbl.text = L("settings.section.general").uppercaseString
+        case .ImportExport:
+            titleLbl.text = L("settings.section.informations").uppercaseString
+        }
+        
+        return header
+    }
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
     }
 }
 

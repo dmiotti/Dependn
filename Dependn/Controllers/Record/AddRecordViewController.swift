@@ -256,20 +256,6 @@ extension AddRecordViewController: UITableViewDataSource {
             return cell
         }
     }
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let type = AddRecordSectionType(rawValue: section)!
-        switch type {
-        case .Intensity:
-            return L("new_record.intensity")
-        case .Optionals:
-            return L("new_record.optional")
-        case .Addiction:
-            break
-        case .DateAndPlace:
-            break
-        }
-        return nil
-    }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let type = AddRecordSectionType(rawValue: section)!
         switch type {

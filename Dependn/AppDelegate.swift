@@ -51,10 +51,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func showPasscodeIfNeeded() {
         guard
             hidingNav == nil &&
-            PasscodeViewController.supportedOwnerAuthentications().count > 0 &&
-            Defaults[.usePasscode] == true else {
-                DDLogInfo("Passcode is already shown or is unsupported")
-                return
+                PasscodeViewController.supportedOwnerAuthentications().count > 0 &&
+                Defaults[.usePasscode] == true else {
+                    DDLogInfo("Passcode is already shown or is unsupported")
+                    return
         }
         
         dispatch_async(dispatch_get_main_queue()) {

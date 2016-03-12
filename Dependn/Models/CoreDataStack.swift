@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CocoaLumberjack
 
 private let kCoreDataStackErrorDomain = "CoreDataStack"
 private let kCoreDataStackMomdFilename = "Dependn"
@@ -24,9 +25,22 @@ extension NamedEntity {
     }
 }
 
-final class CoreDataStack {
+let kCoreDataStackStoreWillChange = "CoreDataStackStoreWillChange"
+let kCoreDataStackStoreDidChange = "CoreDataStackStoreDidChange"
+
+final class CoreDataStack: NSObject {
     
     static let shared = CoreDataStack()
+    
+    override init() {
+        super.init()
+        
+        registerNotificationObservers()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
     
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.wopata.Dependn" in the application's documents Application Support directory.
@@ -47,7 +61,10 @@ final class CoreDataStack {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent(kCoreDataStackSQLLiteFilename)
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            let opts = [
+                NSPersistentStoreUbiquitousContentNameKey: "Dependn"
+            ]
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: opts)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
@@ -69,6 +86,7 @@ final class CoreDataStack {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()
@@ -85,6 +103,41 @@ final class CoreDataStack {
                 let nserror = error as NSError
                 NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
             }
+        }
+    }
+    
+    // MARK: - Handle CoreData notifications
+    
+    private func registerNotificationObservers() {
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.addObserver(self, selector: "storesWillChange:", name: NSPersistentStoreCoordinatorStoresWillChangeNotification, object: nil)
+        nc.addObserver(self, selector: "storesDidChange:", name: NSPersistentStoreCoordinatorStoresDidChangeNotification, object: nil)
+        nc.addObserver(self, selector: "persistentStoreDidImportUbiquitousContentChanges:", name: NSPersistentStoreDidImportUbiquitousContentChangesNotification, object: nil)
+    }
+    
+    func storesWillChange(notification: NSNotification) {
+        managedObjectContext.performBlock {
+            if self.managedObjectContext.hasChanges {
+                do {
+                    try self.managedObjectContext.save()
+                } catch let err as NSError {
+                    DDLogError("Error while saving context from 'storesWillChange:': \(err)")
+                }
+            }
+            self.managedObjectContext.reset()
+        }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(kCoreDataStackStoreWillChange, object: nil, userInfo: nil)
+    }
+    
+    func storesDidChange(notification: NSNotification) {
+        NSNotificationCenter.defaultCenter().postNotificationName(kCoreDataStackStoreDidChange, object: nil, userInfo: nil)
+    }
+    
+    func persistentStoreDidImportUbiquitousContentChanges(notification: NSNotification) {
+        managedObjectContext.performBlock {
+            self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
+            DDLogInfo("NSPersistentStoreDidImportUbiquitousContentChangesNotification executed")
         }
     }
     

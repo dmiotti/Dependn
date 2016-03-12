@@ -58,6 +58,8 @@
 "settings.version" = "Version";
 "settings.action.export" = "Exporter";
 "settings.action.import" = "Importer";
+"settings.section.general" = "General";
+"settings.section.informations" = "Informations";
 
 "import.choose_file" = "Choisissez un ficher à importer";
 "import.choose_file_message" = "Vos données actuelles seront supprimées";
@@ -84,8 +86,7 @@
 "addiction_list.modify.placeholder" = "Entrer le nouveau nom";
 "addiction_list.modify" = "Modifier";
 
-"passcode.reason" = "Accèdez à vos données";
-"passcode.unset" = "Désactiver le passcode";
+"passcode.reason" = "Activer le passcode";
 
 "search.placeholder" = "Rechercher";
 "search.add_addiction" = "Ajouter une addiction";
