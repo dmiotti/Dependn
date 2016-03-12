@@ -258,13 +258,13 @@ extension AddRecordViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let type = AddRecordSectionType(rawValue: section)!
         switch type {
-        case .Intensity:
-            return 40
-        case .Optionals:
-            return 40
         case .Addiction:
             return 20
         case .DateAndPlace:
+            return 5
+        case .Intensity:
+            return 20
+        case .Optionals:
             return 20
         }
     }
