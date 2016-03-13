@@ -44,8 +44,6 @@ final class AddRecordViewController: UIViewController {
     private var cancelBtn: UIBarButtonItem!
     private var doneBtn: UIBarButtonItem!
     
-    private var dateFormatter: NSDateFormatter!
-    
     private let locationManager = CLLocationManager()
     private var userLocation: CLLocation?
     
@@ -73,8 +71,6 @@ final class AddRecordViewController: UIViewController {
         updateTitle(screenTitle, blueBackground: false)
         
         locationManager.delegate = self
-        
-        dateFormatter = NSDateFormatter(dateFormat: "EEEE d MMMM, yyyy | HH:mm")
         
         view.backgroundColor = UIColor.lightBackgroundColor()
         
@@ -230,7 +226,7 @@ extension AddRecordViewController: UITableViewDataSource {
             switch row {
             case .Date:
                 let cell = tableView.dequeueReusableCellWithIdentifier(NewDateTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewDateTableViewCell
-                cell.chosenDateLbl.text = dateFormatter.stringFromDate(chosenDate).capitalizedString
+                cell.date = chosenDate
                 cell.delegate = self
                 return cell
             case .Place:

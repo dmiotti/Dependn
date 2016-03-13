@@ -9,6 +9,8 @@
 import UIKit
 import SwiftHelpers
 
+private var kNewDateTableViewCellFormatter = NSDateFormatter(dateFormat: "EEEE d MMMM, yyyy | HH:mm")
+
 protocol NewDateTableViewCellDelegate {
     func dateTableViewCell(cell: NewDateTableViewCell, didSelectDate date: NSDate)
 }
@@ -19,7 +21,19 @@ final class NewDateTableViewCell: SHCommonInitTableViewCell {
     
     var delegate: NewDateTableViewCellDelegate?
     
-    private(set) var chosenDateLbl: UILabel!
+    var date: NSDate? {
+        didSet {
+            if let date = date {
+                chosenDateLbl.text = kNewDateTableViewCellFormatter.stringFromDate(date).capitalizedString
+                datePicker.date = date
+            } else {
+                chosenDateLbl.text = nil
+                datePicker.date = NSDate()
+            }
+        }
+    }
+    
+    private var chosenDateLbl: UILabel!
     
     private var dateLbl: UILabel!
     private var calImgView: UIImageView!
