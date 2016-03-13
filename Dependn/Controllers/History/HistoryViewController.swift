@@ -98,8 +98,10 @@ final class HistoryViewController: UIViewController {
     }
     
     func coreDataStackDidChange(notification: NSNotification) {
-        fetchExecuted = false
-        reloadInterface()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.fetchExecuted = false
+            self.reloadInterface()
+        }
     }
     
     private var fetchExecuted = false
