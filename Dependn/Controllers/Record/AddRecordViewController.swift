@@ -97,6 +97,8 @@ final class AddRecordViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorColor = UIColor.appSeparatorColor()
+        tableView.sectionHeaderHeight = 0
+        tableView.sectionFooterHeight = 0
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.registerClass(AddictionTableViewCell.self,    forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
         tableView.registerClass(NewDateTableViewCell.self,      forCellReuseIdentifier: NewDateTableViewCell.reuseIdentifier)
@@ -261,11 +263,11 @@ extension AddRecordViewController: UITableViewDataSource {
         case .Addiction:
             return 20
         case .DateAndPlace:
-            return 5
+            return 20
         case .Intensity:
-            return 20
+            return 40
         case .Optionals:
-            return 20
+            return 40
         }
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

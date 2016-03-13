@@ -74,6 +74,8 @@ final class SettingsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 55
+        tableView.sectionHeaderHeight = 0
+        tableView.sectionFooterHeight = 0
         view.addSubview(tableView)
         
         passcodeSwitch = UISwitch()
@@ -259,7 +261,13 @@ extension SettingsViewController: UITableViewDataSource {
         return header
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        let type = SettingsSectionType(rawValue: section)!
+        switch type {
+        case .General:
+            return 40
+        case .ImportExport:
+            return 40
+        }
     }
 }
 

@@ -33,6 +33,7 @@ final class HistoryViewController: UIViewController {
         super.viewDidLoad()
         
         updateTitle(L("app_name"))
+        setupBackBarButtonItem()
         
         edgesForExtendedLayout = .None
         
@@ -50,10 +51,12 @@ final class HistoryViewController: UIViewController {
         tableView = UITableView(frame: .zero, style: .Plain)
         tableView.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
+        tableView.separatorColor = UIColor.appSeparatorColor()
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 55
-        tableView.separatorColor = UIColor.appSeparatorColor()
+        tableView.sectionHeaderHeight = 0
+        tableView.sectionFooterHeight = 0
         tableView.registerClass(HistoryTableViewCell.self,
             forCellReuseIdentifier: HistoryTableViewCell.reuseIdentifier)
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 120))
@@ -65,13 +68,13 @@ final class HistoryViewController: UIViewController {
         view.addSubview(addBtn)
         
         configureLayoutConstraints()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "coreDataStackDidChange:", name: kCoreDataStackStoreDidChange, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        launchFetchIfNeeded()
-        configureStatsView()
+        reloadInterface()
     }
     
     private func configureStatsView() {
@@ -87,6 +90,17 @@ final class HistoryViewController: UIViewController {
     }
     
     // MARK: - Data Fetch
+    
+    private func reloadInterface() {
+        launchFetchIfNeeded()
+        tableView.reloadData()
+        configureStatsView()
+    }
+    
+    func coreDataStackDidChange(notification: NSNotification) {
+        fetchExecuted = false
+        reloadInterface()
+    }
     
     private var fetchExecuted = false
     private func launchFetchIfNeeded() {
