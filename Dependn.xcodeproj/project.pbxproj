@@ -30,6 +30,7 @@
 		58548BE91C8BE1E400C7C940 /* SearchAdditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BE81C8BE1E400C7C940 /* SearchAdditionViewController.swift */; };
 		58858ADD1C84520100E8A794 /* Dependn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */; };
 		58AD8B381C9178D40008CD9C /* UIViewController+TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AD8B371C9178D40008CD9C /* UIViewController+TitleView.swift */; };
+		58CAB1D51C95EFC00079A6B4 /* applanga_settings.applanga in Resources */ = {isa = PBXBuildFile; fileRef = 58CAB1D41C95EFC00079A6B4 /* applanga_settings.applanga */; };
 		58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */; };
 		58DC7A0D1C8CD873007F9F5D /* NewAddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */; };
 		58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF629E1C83BDEE0035F608 /* AppDelegate.swift */; };
@@ -104,6 +105,7 @@
 		588D8C9F1C8F18A4005BA8EB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		589065D01C7A3F2F00F7F6DC /* Dependn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dependn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58AD8B371C9178D40008CD9C /* UIViewController+TitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+TitleView.swift"; sourceTree = "<group>"; };
+		58CAB1D41C95EFC00079A6B4 /* applanga_settings.applanga */ = {isa = PBXFileReference; lastKnownFileType = file; path = applanga_settings.applanga; sourceTree = SOURCE_ROOT; };
 		58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecordTextViewController.swift; sourceTree = "<group>"; };
 		58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAddictionTableViewCell.swift; sourceTree = "<group>"; };
 		58DF629E1C83BDEE0035F608 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				58DF62AF1C83BDEE0035F608 /* Localizable.strings */,
 				58DF62B11C83BDEE0035F608 /* Info.plist */,
 				58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */,
+				58CAB1D41C95EFC00079A6B4 /* applanga_settings.applanga */,
 			);
 			path = Dependn;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 			files = (
 				58DF62CC1C83BDEE0035F608 /* Localizable.strings in Resources */,
 				58DF62C51C83BDEE0035F608 /* Main.storyboard in Resources */,
+				58CAB1D51C95EFC00079A6B4 /* applanga_settings.applanga in Resources */,
 				58DF62CB1C83BDEE0035F608 /* InfoPlist.strings in Resources */,
 				58DF62C31C83BDEE0035F608 /* Assets.xcassets in Resources */,
 				58DF62C41C83BDEE0035F608 /* LaunchScreen.storyboard in Resources */,
@@ -632,6 +636,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -676,6 +681,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
