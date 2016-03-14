@@ -16,6 +16,5 @@ target 'Dependn' do
   pod 'BrightFutures'
   pod 'ChameleonFramework/Swift'
   pod 'SwiftyUserDefaults'
-  pod 'Applanga'
 
 end
