@@ -707,7 +707,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dependn/Dependn.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: David Miotti (A999UM69TM)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -717,9 +717,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.smokereporter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.dependn;
 				PRODUCT_NAME = Dependn;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "da44c5f8-6b01-4277-bfd4-24dc6bd7914c";
 			};
 			name = Debug;
 		};
@@ -729,7 +729,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dependn/Dependn.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: David Miotti (659B2N7HE9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -739,9 +739,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.smokereporter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.dependn;
 				PRODUCT_NAME = Dependn;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8901f76c-0e14-46ac-a282-287181f43c76";
 			};
 			name = Release;
 		};
