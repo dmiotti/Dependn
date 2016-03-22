@@ -891,7 +891,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.dependn;
 				PRODUCT_NAME = Dependn;
-				PROVISIONING_PROFILE = "ec764913-2cd9-436b-8627-a07caae0004b";
+				PROVISIONING_PROFILE = "da44c5f8-6b01-4277-bfd4-24dc6bd7914c";
 			};
 			name = Debug;
 		};

@@ -259,7 +259,7 @@ final class ImportOperation: SHOperation {
     }
     
     private func newRecordFromValues(values: [String]) {
-        if values.count < 10 {
+        if values.count < 9 {
             return
         }
         
