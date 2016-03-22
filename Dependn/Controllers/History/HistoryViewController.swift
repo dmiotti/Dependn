@@ -43,7 +43,7 @@ final class HistoryViewController: UIViewController {
         
         dateFormatter = NSDateFormatter(dateFormat: "HH'h'mm")
         
-        actionBtn = UIBarButtonItem(image: UIImage(named: "settings_icon"), style: .Plain, target: self, action: "actionBtnClicked:")
+        actionBtn = UIBarButtonItem(image: UIImage(named: "settings_icon"), style: .Plain, target: self, action: #selector(HistoryViewController.actionBtnClicked(_:)))
         navigationItem.leftBarButtonItem = actionBtn
         
         statsView = StatsPanelScroller()
@@ -64,12 +64,12 @@ final class HistoryViewController: UIViewController {
         
         addBtn = UIButton(type: .System)
         addBtn.setImage(UIImage(named: "add")?.imageWithRenderingMode(.AlwaysOriginal), forState: .Normal)
-        addBtn.addTarget(self, action: "addBtnClicked:", forControlEvents: .TouchUpInside)
+        addBtn.addTarget(self, action: #selector(HistoryViewController.addBtnClicked(_:)), forControlEvents: .TouchUpInside)
         view.addSubview(addBtn)
         
         configureLayoutConstraints()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "coreDataStackDidChange:", name: kCoreDataStackStoreDidChange, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.coreDataStackDidChange(_:)), name: kCoreDataStackStoreDidChange, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {

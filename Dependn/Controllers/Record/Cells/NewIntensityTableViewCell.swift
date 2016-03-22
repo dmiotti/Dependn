@@ -41,7 +41,7 @@ final class NewIntensityTableViewCell: SHCommonInitTableViewCell {
         contentView.addSubview(intensityLbl)
         
         slide = UISlider()
-        slide.addTarget(self, action: "slideValueChanged:", forControlEvents: .ValueChanged)
+        slide.addTarget(self, action: #selector(NewIntensityTableViewCell.slideValueChanged(_:)), forControlEvents: .ValueChanged)
         slide.tintColor = UIColor.appIntensityLowColor()
         contentView.addSubview(slide)
         

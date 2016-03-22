@@ -78,10 +78,10 @@ final class NewDateTableViewCell: SHCommonInitTableViewCell {
         
         toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: bounds.size.width, height: 44))
         toolbar.translucent = false
-        let dateDoneItem = UIBarButtonItem(title: L("new_record.select_date"), style: .Done, target: self, action: "datePickerDidSelectDate:")
+        let dateDoneItem = UIBarButtonItem(title: L("new_record.select_date"), style: .Done, target: self, action: #selector(NewDateTableViewCell.datePickerDidSelectDate(_:)))
         dateDoneItem.setTitleTextAttributes(StyleSheet.doneBtnAttrs, forState: .Normal)
         let dateSpaceItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-        let cancelItem = UIBarButtonItem(title: L("new_record.cancel"), style: .Plain, target: self, action: "datePickerDidCancel:")
+        let cancelItem = UIBarButtonItem(title: L("new_record.cancel"), style: .Plain, target: self, action: #selector(NewDateTableViewCell.datePickerDidCancel(_:)))
         cancelItem.setTitleTextAttributes(StyleSheet.cancelBtnAttrs, forState: .Normal)
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         toolbar.items = [ cancelItem, flexSpace, dateSpaceItem, dateDoneItem ]

@@ -109,8 +109,8 @@ final class SearchAdditionViewController: UIViewController {
     
     private func registerNotificationObservers() {
         let ns = NSNotificationCenter.defaultCenter()
-        ns.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        ns.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        ns.addObserver(self, selector: #selector(SearchAdditionViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        ns.addObserver(self, selector: #selector(SearchAdditionViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {

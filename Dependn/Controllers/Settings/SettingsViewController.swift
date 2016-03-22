@@ -80,11 +80,11 @@ final class SettingsViewController: UIViewController {
         
         passcodeSwitch = UISwitch()
         passcodeSwitch.on = Defaults[.usePasscode]
-        passcodeSwitch.addTarget(self, action: "passcodeSwitchValueChanged:", forControlEvents: .ValueChanged)
+        passcodeSwitch.addTarget(self, action: #selector(SettingsViewController.passcodeSwitchValueChanged(_:)), forControlEvents: .ValueChanged)
         
         memorizePlacesSwitch = UISwitch()
         memorizePlacesSwitch.on = Defaults[.useLocation]
-        memorizePlacesSwitch.addTarget(self, action: "memorizePlacesSwitchValueChanged:", forControlEvents: .ValueChanged)
+        memorizePlacesSwitch.addTarget(self, action: #selector(SettingsViewController.memorizePlacesSwitchValueChanged(_:)), forControlEvents: .ValueChanged)
         
         configureLayoutConstraints()
         

@@ -77,12 +77,12 @@ final class AddRecordViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
         navigationController?.navigationBar.tintColor = UIColor.appBlueColor()
         
-        cancelBtn = UIBarButtonItem(title: L("new_record.cancel"), style: .Plain, target: self, action: "cancelBtnClicked:")
+        cancelBtn = UIBarButtonItem(title: L("new_record.cancel"), style: .Plain, target: self, action: #selector(AddRecordViewController.cancelBtnClicked(_:)))
         cancelBtn.setTitleTextAttributes(StyleSheet.cancelBtnAttrs, forState: .Normal)
         navigationItem.leftBarButtonItem = cancelBtn
 
         let doneText = record != nil ? L("new_record.modify") : L("new_record.add_btn")
-        doneBtn = UIBarButtonItem(title: doneText, style: .Done, target: self, action: "addBtnClicked:")
+        doneBtn = UIBarButtonItem(title: doneText, style: .Done, target: self, action: #selector(AddRecordViewController.addBtnClicked(_:)))
         doneBtn.setTitleTextAttributes(StyleSheet.doneBtnAttrs, forState: .Normal)
         navigationItem.rightBarButtonItem = doneBtn
         
@@ -142,8 +142,8 @@ final class AddRecordViewController: UIViewController {
     
     private func registerNotificationObservers() {
         let ns = NSNotificationCenter.defaultCenter()
-        ns.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        ns.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        ns.addObserver(self, selector: #selector(AddRecordViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        ns.addObserver(self, selector: #selector(AddRecordViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {

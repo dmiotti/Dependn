@@ -110,9 +110,9 @@ final class CoreDataStack: NSObject {
     
     private func registerNotificationObservers() {
         let nc = NSNotificationCenter.defaultCenter()
-        nc.addObserver(self, selector: "storesWillChange:", name: NSPersistentStoreCoordinatorStoresWillChangeNotification, object: nil)
-        nc.addObserver(self, selector: "storesDidChange:", name: NSPersistentStoreCoordinatorStoresDidChangeNotification, object: nil)
-        nc.addObserver(self, selector: "persistentStoreDidImportUbiquitousContentChanges:", name: NSPersistentStoreDidImportUbiquitousContentChangesNotification, object: nil)
+        nc.addObserver(self, selector: #selector(CoreDataStack.storesWillChange(_:)), name: NSPersistentStoreCoordinatorStoresWillChangeNotification, object: nil)
+        nc.addObserver(self, selector: #selector(CoreDataStack.storesDidChange(_:)), name: NSPersistentStoreCoordinatorStoresDidChangeNotification, object: nil)
+        nc.addObserver(self, selector: #selector(CoreDataStack.persistentStoreDidImportUbiquitousContentChanges(_:)), name: NSPersistentStoreDidImportUbiquitousContentChangesNotification, object: nil)
     }
     
     func storesWillChange(notification: NSNotification) {

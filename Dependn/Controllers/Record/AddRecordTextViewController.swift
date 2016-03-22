@@ -31,7 +31,7 @@ final class AddRecordTextViewController: UIViewController {
         
         view.backgroundColor = UIColor.whiteColor()
 
-        doneBtn = UIBarButtonItem(title: L("new_record.add_text"), style: .Done, target: self, action: "doneBtnClicked:")
+        doneBtn = UIBarButtonItem(title: L("new_record.add_text"), style: .Done, target: self, action: #selector(AddRecordTextViewController.doneBtnClicked(_:)))
         doneBtn.setTitleTextAttributes([
             NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold),
             NSForegroundColorAttributeName: UIColor.appBlueColor(),
@@ -74,8 +74,8 @@ final class AddRecordTextViewController: UIViewController {
     
     private func registerNotificationObservers() {
         let ns = NSNotificationCenter.defaultCenter()
-        ns.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        ns.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        ns.addObserver(self, selector: #selector(AddRecordTextViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        ns.addObserver(self, selector: #selector(AddRecordTextViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {

@@ -43,7 +43,7 @@ final class AddictionListViewController: UIViewController {
         tableView.registerClass(AddictionTableViewCell.self, forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
         view.addSubview(tableView)
         
-        addBtn = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addBtnClicked:")
+        addBtn = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AddictionListViewController.addBtnClicked(_:)))
         navigationItem.rightBarButtonItem = addBtn
         
         configureLayoutConstraints()
@@ -114,8 +114,8 @@ final class AddictionListViewController: UIViewController {
     
     private func registerNotificationObservers() {
         let ns = NSNotificationCenter.defaultCenter()
-        ns.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        ns.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        ns.addObserver(self, selector: #selector(AddictionListViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        ns.addObserver(self, selector: #selector(AddictionListViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {

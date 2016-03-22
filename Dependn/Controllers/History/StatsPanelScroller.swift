@@ -43,7 +43,7 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
         
         pageControl = UIPageControl()
         pageControl.tintColor = UIColor.whiteColor()
-        pageControl.addTarget(self, action: "pageControlValueChanged:", forControlEvents: .ValueChanged)
+        pageControl.addTarget(self, action: #selector(StatsPanelScroller.pageControlValueChanged(_:)), forControlEvents: .ValueChanged)
         addSubview(pageControl)
 
         configureLayoutConstraints()
