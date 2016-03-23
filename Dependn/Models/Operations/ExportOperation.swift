@@ -83,11 +83,11 @@ final class ExportOperation: SHOperation {
     private func recordToCSV(record: Record) -> String {
         let date = record.date
         let values = [
-            record.addiction.name.capitalizedString,
+            record.addiction.name.firstLetterCapitalization,
             kExportOperationDayFormatter.stringFromDate(date),
             kExportOperationHourFormatter.stringFromDate(date),
             String(format: "%.1f", arguments: [ record.intensity.floatValue ]),
-            record.place?.name.capitalizedString ?? "",
+            record.place?.name.firstLetterCapitalization ?? "",
             record.feeling ?? "",
             record.comment ?? "",
             record.lat?.stringValue ?? "",
@@ -292,9 +292,9 @@ final class ImportOperation: SHOperation {
             let datestr = "\(daystr) \(hourstr)"
             let date = kImportOperationDateFormatter.dateFromString(datestr) ?? NSDate()
             let intensity = NSString(string: values[3]).floatValue
-            let feeling = values[4]
-            let comment = values[5]
-            let placeName = values[6]
+            let placeName = values[4]
+            let feeling = values[5]
+            let comment = values[6]
             let lat = values[7]
             let lon = values[8]
             
