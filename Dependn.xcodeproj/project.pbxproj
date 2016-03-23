@@ -469,10 +469,10 @@
 				5890660A1C7A489800F7F6DC /* Embed Frameworks */,
 				5890660E1C7A48B700F7F6DC /* CopyFiles */,
 				5888DC7B1C7B217600E01A32 /* Fabric */,
+				58BF26801C83C0B400263313 /* Reset Build Number */,
 				02752BF4BCE3D4F09066974D /* Embed Pods Frameworks */,
 				CBD50F783DA64145D4A06428 /* Copy Pods Resources */,
 				58F092DD1C9615AB00DF4ADC /* Embed Watch Content */,
-				58BF26801C83C0B400263313 /* Reset Build Number */,
 			);
 			buildRules = (
 			);
