@@ -9,6 +9,7 @@
 import UIKit
 import SwiftHelpers
 import CoreData
+import CocoaLumberjack
 
 struct TimeRange {
     let start: NSDate
@@ -55,6 +56,7 @@ final class AverageTimeInBetweenTwoTakesOperation: SHOperation {
                     self.average = values.reduce(NSTimeInterval(0), combine: +) / NSTimeInterval(values.count)
                 }
             } catch let err as NSError {
+                DDLogError("Error while calculating average between two takes: \(err)")
                 self.error = err
             }
         }

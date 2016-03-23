@@ -112,9 +112,9 @@ final class ExportOperation: SHOperation {
     
 }
 
-public let kImportOperationErrorDomain = "ImportOperation"
-public let kImportOperationNothingToImportCode = 1
-public let kImportOperationUserCancelledCode = 2
+let kImportOperationErrorDomain = "ImportOperation"
+let kImportOperationNothingToImportCode = 1
+let kImportOperationUserCancelledCode = 2
 
 final class ImportOperation: SHOperation {
     

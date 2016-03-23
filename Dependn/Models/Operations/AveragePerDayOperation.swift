@@ -9,6 +9,7 @@
 import UIKit
 import SwiftHelpers
 import CoreData
+import CocoaLumberjack
 
 final class AveragePerDayOperation: SHOperation {
     
@@ -41,6 +42,7 @@ final class AveragePerDayOperation: SHOperation {
                     self.average = values.reduce(Float(0), combine: +) / Float(values.count)
                 }
             } catch let err as NSError {
+                DDLogError("Error while calculating average per day: \(err)")
                 self.error = err
             }
         }

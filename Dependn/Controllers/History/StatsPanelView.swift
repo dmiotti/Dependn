@@ -160,17 +160,14 @@ final class StatsPanelView: SHCommonInitView {
         
         let now = NSDate().endOfDay
         
-        let monthRange = TimeRange(start: now.beginningOfMonth, end: now)
-        let avgBtw2TakesOp = AverageTimeInBetweenTwoTakesOperation(addiction: addiction, range: monthRange)
-        avgBtw2TakesOp.completionBlock = {
+        let sinceLastOp = TimeSinceLastRecord(addiction: addiction)
+        sinceLastOp.completionBlock = {
             dispatch_async(dispatch_get_main_queue()) {
-                if let err = avgBtw2TakesOp.error {
-                    DDLogError("Error while calculating \(addiction.name) average between two takes: \(err)")
-                }
-                if let avg = avgBtw2TakesOp.average {
-                    self.intervalValue.valueLbl.text = self.stringFromTimeInterval(avg);
+                if let interval = sinceLastOp.interval {
+                    self.intervalValue.valueLbl.attributedText = self.attributedStringFromTimeInterval(interval)
                 } else {
-                    self.intervalValue.valueLbl.text = "0h";
+                    self.intervalValue.valueLbl.attributedText = nil
+                    self.intervalValue.valueLbl.text = "0h"
                 }
             }
         }
@@ -179,9 +176,6 @@ final class StatsPanelView: SHCommonInitView {
         let weekCountOp = CountOperation(addiction: addiction, range: weekRange)
         weekCountOp.completionBlock = {
             dispatch_async(dispatch_get_main_queue()) {
-                if let err = weekCountOp.error {
-                    DDLogError("Error while counting \(addiction.name) for this week: \(err)")
-                }
                 if let count = weekCountOp.total {
                     self.weekValue.valueLbl.text = self.numberFormatter.stringFromNumber(count);
                 } else {
@@ -194,9 +188,6 @@ final class StatsPanelView: SHCommonInitView {
         let todayCountOp = CountOperation(addiction: addiction, range: todayRange)
         todayCountOp.completionBlock = {
             dispatch_async(dispatch_get_main_queue()) {
-                if let err = todayCountOp.error {
-                    DDLogError("Error while counting \(addiction.name) for today: \(err)")
-                }
                 if let count = todayCountOp.total {
                     self.todayValue.valueLbl.text = self.numberFormatter.stringFromNumber(count);
                 } else {
@@ -205,7 +196,7 @@ final class StatsPanelView: SHCommonInitView {
             }
         }
         
-        operationQueue.addOperation(avgBtw2TakesOp)
+        operationQueue.addOperation(sinceLastOp)
         operationQueue.addOperation(weekCountOp)
         operationQueue.addOperation(todayCountOp)
         
@@ -214,26 +205,32 @@ final class StatsPanelView: SHCommonInitView {
     
     // MARK: - Private Helpers
     
-    private func stringFromTimeInterval(interval: NSTimeInterval) -> String {
-        let interval = Int(interval)
-        let minutes = (interval / 60) % 60
-        let hours = (interval / 3600)
+    private func attributedStringFromTimeInterval(interval: NSTimeInterval) -> NSAttributedString {
+        let ti = Int(interval)
+        let seconds = ti % 60
+        let minutes = (ti / 60) % 60
+        let hours = (ti / 3600)
+        
+        let valueText: String
+        let unitText: String
         if hours > 0 {
-            if let str = numberFormatter.stringFromNumber(hours) {
-                return String(format:"%@h", str)
-            }
-            return String(format:"%02dh", hours)
+            valueText = "\(hours)"
+            unitText = "h"
+        } else if minutes > 0 {
+            valueText = "\(minutes)"
+            unitText = "m"
+        } else {
+            valueText = "\(seconds)"
+            unitText = "s"
         }
-        if minutes > 0 {
-            if let str = numberFormatter.stringFromNumber(minutes) {
-                return String(format:"%@m", str)
-            }
-            return String(format:"%02dm", minutes)
-        }
-        if let str = numberFormatter.stringFromNumber(interval) {
-            return String(format:"%@s", str)
-        }
-        return String(format:"%02ds", interval)
+        
+        let attr = NSMutableAttributedString(string: "\(valueText)\(unitText)")
+        let range = NSMakeRange(0, attr.length)
+        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(46, weight: UIFontWeightLight), range: range)
+        attr.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: range)
+        let unitRange = attr.string.rangeString(unitText)
+        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(20, weight: UIFontWeightLight), range: unitRange)
+        return attr
     }
     
 }

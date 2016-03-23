@@ -10,6 +10,7 @@ import UIKit
 import SwiftHelpers
 import CoreData
 import CoreLocation
+import CocoaLumberjack
 
 final class NearestPlaceOperation: SHOperation {
     
@@ -48,6 +49,7 @@ final class NearestPlaceOperation: SHOperation {
                     }
                 }
             } catch let err as NSError {
+                DDLogError("Error while fetching nearest location: \(err)")
                 self.error = err
             }
         }

@@ -9,6 +9,7 @@
 import UIKit
 import SwiftHelpers
 import CoreData
+import CocoaLumberjack
 
 final class CountOperation: SHOperation {
     
@@ -38,6 +39,7 @@ final class CountOperation: SHOperation {
             do {
                 self.total = try self.countForRequest(req)
             } catch let err as NSError {
+                DDLogError("Error while counting \(self.addiction.name): \(err)")
                 self.error = err
             }
         }

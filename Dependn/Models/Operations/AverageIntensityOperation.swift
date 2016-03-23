@@ -9,6 +9,7 @@
 import UIKit
 import SwiftHelpers
 import CoreData
+import CocoaLumberjack
 
 final class AverageIntensityOperation: SHOperation {
     
@@ -42,6 +43,7 @@ final class AverageIntensityOperation: SHOperation {
                     self.average = avg.floatValue
                 }
             } catch let err as NSError {
+                DDLogError("Error while calculating average intensity: \(err)")
                 self.error = err
             }
         }
