@@ -42,11 +42,12 @@ final class AddictionListViewController: UIViewController {
         tableView.dataSource = self
         tableView.registerClass(AddictionTableViewCell.self, forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
         view.addSubview(tableView)
+        tableView.snp_makeConstraints {
+            $0.edges.equalTo(view)
+        }
         
         addBtn = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AddictionListViewController.addBtnClicked(_:)))
         navigationItem.rightBarButtonItem = addBtn
-        
-        configureLayoutConstraints()
         
         registerNotificationObservers()
     }
@@ -94,6 +95,25 @@ final class AddictionListViewController: UIViewController {
         presentViewController(alert, animated: true, completion: nil)
     }
     
+    // MARK: - Add/Delete from CoreData
+    
+    private func deleteAddiction(addiction: Addiction) {
+        let title = String(format: L("addiction_list.delete.title"), addiction.name.capitalizedString)
+        let reason = String(format: L("addiction_list.delete.message"), addiction.name.capitalizedString)
+        let alert = UIAlertController(title: title, message: reason, preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: L("addiction_list.delete.cancel"), style: .Default, handler: nil)
+        let okAction = UIAlertAction(title: L("addiction_list.delete.confirm"), style: .Default) { action in
+            do {
+                try Addiction.deleteAddiction(addiction, inContext: self.managedObjectContext)
+            } catch let err as NSError {
+                UIAlertController.presentError(err, inController: self)
+            }
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
     private func addAddictionWithName(name: String) {
         do {
             try Addiction.findOrInsertNewAddiction(name,
@@ -101,12 +121,6 @@ final class AddictionListViewController: UIViewController {
         } catch let err as NSError {
             UIAlertController.presentAlertWithTitle(err.localizedDescription,
                 message: err.localizedRecoverySuggestion, inController: self)
-        }
-    }
-    
-    private func configureLayoutConstraints() {
-        tableView.snp_makeConstraints {
-            $0.edges.equalTo(view)
         }
     }
     
@@ -163,22 +177,6 @@ extension AddictionListViewController: UITableViewDataSource {
             let addiction = fetchedResultsController.objectAtIndexPath(indexPath) as! Addiction
             self.deleteAddiction(addiction)
         }
-    }
-    private func deleteAddiction(addiction: Addiction) {
-        let title = String(format: L("addiction_list.delete.title"), addiction.name.capitalizedString)
-        let reason = String(format: L("addiction_list.delete.message"), addiction.name.capitalizedString)
-        let alert = UIAlertController(title: title, message: reason, preferredStyle: .Alert)
-        let cancelAction = UIAlertAction(title: L("addiction_list.delete.cancel"), style: .Default, handler: nil)
-        let okAction = UIAlertAction(title: L("addiction_list.delete.confirm"), style: .Default) { action in
-            do {
-                try Addiction.deleteAddiction(addiction, inContext: self.managedObjectContext)
-            } catch let err as NSError {
-                UIAlertController.presentError(err, inController: self)
-            }
-        }
-        alert.addAction(cancelAction)
-        alert.addAction(okAction)
-        presentViewController(alert, animated: true, completion: nil)
     }
 }
 

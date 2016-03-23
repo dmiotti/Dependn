@@ -10,7 +10,5 @@ import Foundation
 import CoreData
 
 final class Addiction: NSManagedObject, NamedEntity {
-    
-    static var entityName: String { get { return "Addiction" } }
-
+    static var entityName = "Addiction"
 }

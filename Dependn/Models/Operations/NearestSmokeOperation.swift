@@ -18,7 +18,7 @@ final class NearestPlaceOperation: SHOperation {
     
     private let context: NSManagedObjectContext
     
-    private(set) var place: String?
+    private(set) var place: Place?
     private(set) var error: NSError?
     
     init(location: CLLocation, distance: CLLocationDistance) {

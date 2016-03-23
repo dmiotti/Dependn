@@ -87,7 +87,7 @@ final class ExportOperation: SHOperation {
             kExportOperationDayFormatter.stringFromDate(date),
             kExportOperationHourFormatter.stringFromDate(date),
             String(format: "%.1f", arguments: [ record.intensity.floatValue ]),
-            record.place ?? "",
+            record.place?.name.capitalizedString ?? "",
             record.feeling ?? "",
             record.comment ?? "",
             record.lat?.stringValue ?? "",
@@ -123,6 +123,8 @@ final class ImportOperation: SHOperation {
     private let context: NSManagedObjectContext
     private let controller: UIViewController
     
+    private var cachedPlaces = [Place]()
+    
     init(controller: UIViewController) {
         self.controller = controller
         context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
@@ -142,6 +144,7 @@ final class ImportOperation: SHOperation {
                         do {
                             try self.deleteAllRecords()
                             try self.deleteAllAddictions()
+                            try self.deleteAllPlaces()
                             try self.importFileAtURL(file)
                             try self.saveContext()
                         } catch let err as NSError {
@@ -228,14 +231,14 @@ final class ImportOperation: SHOperation {
                 continue
             }
             let values = line.componentsSeparatedByString(";")
-            self.newRecordFromValues(values)
+            newRecordFromValues(values)
         }
     }
     
     private func deleteAllRecords() throws {
-        let req = NSFetchRequest(entityName: Record.entityName)
+        let req = Record.entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: true) ]
-        let records = try self.context.executeFetchRequest(req) as! [Record]
+        let records = try context.executeFetchRequest(req) as! [Record]
         for r in records {
             context.deleteObject(r)
         }
@@ -244,9 +247,18 @@ final class ImportOperation: SHOperation {
     private func deleteAllAddictions() throws {
         let req = NSFetchRequest(entityName: Addiction.entityName)
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-        let addictions = try self.context.executeFetchRequest(req) as! [Addiction]
+        let addictions = try context.executeFetchRequest(req) as! [Addiction]
         for addiction in addictions {
             context.deleteObject(addiction)
+        }
+    }
+    
+    private func deleteAllPlaces() throws {
+        let req = Place.entityFetchRequest()
+        req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: false) ]
+        let places = try context.executeFetchRequest(req) as! [Place]
+        for place in places {
+            context.deleteObject(place)
         }
     }
     
@@ -256,6 +268,14 @@ final class ImportOperation: SHOperation {
             try c.save()
             ctx = c.parentContext
         }
+    }
+    
+    private func getPlaceOrCreate(name: String) -> Place {
+        let places = Place.allPlaces(inContext: context, usingPredicate: NSPredicate(format: "name == %@", name))
+        if let first = places.first {
+            return first
+        }
+        return Place.insertPlace(name, inContext: context)
     }
     
     private func newRecordFromValues(values: [String]) {
@@ -274,9 +294,11 @@ final class ImportOperation: SHOperation {
             let intensity = NSString(string: values[3]).floatValue
             let feeling = values[4]
             let comment = values[5]
-            let place = values[6]
+            let placeName = values[6]
             let lat = values[7]
             let lon = values[8]
+            
+            let place = getPlaceOrCreate(placeName)
             
             Record.insertNewRecord(addiction,
                 intensity: intensity,

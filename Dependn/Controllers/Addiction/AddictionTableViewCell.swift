@@ -70,5 +70,5 @@ final class AddictionTableViewCell: SHCommonInitTableViewCell {
             circleView.textLbl.text = nil
         }
     }
-
+    
 }

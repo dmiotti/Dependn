@@ -92,3 +92,20 @@
 "intensity.low" = "Faible";
 "intensity.medium" = "Moyenne";
 "intensity.high" = "Forte";
+
+"places.title" = "Mes lieux cléfs";
+"places.new.title" = "Ajouter un lieu";
+"places.new.message" = "Dans quel contexte êtes-vous ?";
+"places.new.cancel" = "Annuler";
+"places.new.add" = "Créer";
+"places.new.placeholder" = "Exemple : Café clope, rail du soir";
+"places.new.error" = "Oups";
+"places.new.name_missing" = "Vous devez renseigner un nom";
+"places.new.error.ok" = "OK";
+"places.delete.cancel" = "Annuler";
+"places.delete.confirm" = "Continuer";
+"places.delete.title" = "Êtes-vous sûr(e) de vouloir supprimer %@ ?";
+"places.delete.message" = "Toutes les entrées de %@ seront supprimées de l'application.";
+"places.modify.title" = "Renomer";
+"places.modify.placeholder" = "Entrer le nouveau nom";
+"places.modify" = "Valider";

@@ -32,7 +32,7 @@ enum OptionalsRowType: Int {
 }
 
 enum AddRecordTextEditionType: Int {
-    case Place, Feeling, Comment, None
+    case Feeling, Comment, None
 }
 
 // MARK: - UIViewController
@@ -55,7 +55,7 @@ final class AddRecordViewController: UIViewController {
     
     private var chosenDate = NSDate()
     private var chosenAddiction: Addiction!
-    private var chosenPlace: String?
+    private var chosenPlace: Place?
     private var chosenIntensity: Float = 3
     private var chosenFeeling: String?
     private var chosenComment: String?
@@ -231,7 +231,7 @@ extension AddRecordViewController: UITableViewDataSource {
                 return cell
             case .Place:
                 let cell = tableView.dequeueReusableCellWithIdentifier(NewPlaceTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewPlaceTableViewCell
-                cell.chosenPlaceLbl.text = chosenPlace
+                cell.chosenPlaceLbl.text = chosenPlace?.name.capitalizedString
                 return cell
             }
         case .Intensity:
@@ -331,21 +331,22 @@ extension AddRecordViewController: UITableViewDelegate {
             case .Date:
                 break
             case .Place:
-                editingStep = .Place
-                showTextRecord()
+                showPlaces()
                 break
             }
             break
         }
     }
+    private func showPlaces() {
+        let places = PlacesViewController()
+        places.delegate = self
+        places.selectedPlace = chosenPlace
+        navigationController?.pushViewController(places, animated: true)
+    }
     private func showTextRecord() {
         let controller = AddRecordTextViewController()
         controller.delegate = self
         switch editingStep {
-        case .Place:
-            controller.updateTitle(L("new_record.place"), blueBackground: false)
-            controller.originalText = chosenPlace
-            controller.placeholder = L("new_record.place_placeholder")
         case .Feeling:
             controller.updateTitle(L("new_record.feeling_subtitle"), blueBackground: false)
             controller.originalText = chosenFeeling
@@ -372,8 +373,6 @@ extension AddRecordViewController: SearchAdditionViewControllerDelegate {
 extension AddRecordViewController: AddRecordTextViewControllerDelegate {
     func addRecordTextViewController(controller: AddRecordTextViewController, didEnterText text: String?) {
         switch editingStep {
-        case .Place:
-            chosenPlace = text
         case .Feeling:
             chosenFeeling = text
         case .Comment:
@@ -416,7 +415,7 @@ extension AddRecordViewController: CLLocationManagerDelegate {
         DDLogInfo("Location found \(newLocation)")
         
         if let location = userLocation
-            where (chosenPlace == nil || chosenPlace?.characters.count == 0) {
+            where (chosenPlace == nil || chosenPlace?.name.characters.count == 0) {
                 let op = NearestPlaceOperation(location: location, distance: 80)
                 op.completionBlock = {
                     dispatch_async(dispatch_get_main_queue()) {
@@ -449,5 +448,21 @@ extension AddRecordViewController: NewDateTableViewCellDelegate {
                 forRow: DateAndPlaceRowType.Date.rawValue,
                 inSection: AddRecordSectionType.DateAndPlace.rawValue)],
             withRowAnimation: .Automatic)
+    }
+}
+
+// MARK: - PlacesViewControllerDelegate
+extension AddRecordViewController: PlacesViewControllerDelegate {
+    func placeController(controller: PlacesViewController, didChoosePlace place: Place?) {
+        if let place = place {
+            chosenPlace = place
+            let indexPath = NSIndexPath(
+                forRow: DateAndPlaceRowType.Place.rawValue,
+                inSection: AddRecordSectionType.DateAndPlace.rawValue)
+            tableView.beginUpdates()
+            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            tableView.endUpdates()
+            navigationController?.popViewControllerAnimated(true)
+        }
     }
 }

@@ -20,7 +20,7 @@ extension Record {
     @NSManaged var intensity: NSNumber
     @NSManaged var lat: NSNumber?
     @NSManaged var lon: NSNumber?
-    @NSManaged var place: String?
+    @NSManaged var place: Place?
     @NSManaged var addiction: Addiction
 
 }

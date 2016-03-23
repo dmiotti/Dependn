@@ -23,6 +23,9 @@ extension NamedEntity {
     static func entityFetchRequest() -> NSFetchRequest {
         return NSFetchRequest(entityName: entityName)
     }
+    static func insertEntity(inContext context: NSManagedObjectContext) -> Self {
+        return NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: context) as! Self
+    }
 }
 
 let kCoreDataStackStoreWillChange = "CoreDataStackStoreWillChange"
