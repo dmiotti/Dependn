@@ -14,7 +14,7 @@ extension Place {
     
     class func placesFetchedResultsController(inContext context: NSManagedObjectContext) -> NSFetchedResultsController {
         let req = entityFetchRequest()
-        req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: false) ]
+        req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
         let controller = NSFetchedResultsController(
             fetchRequest: req,
             managedObjectContext: context,
@@ -44,7 +44,7 @@ extension Place {
     class func deletePlace(place: Place, inContext context: NSManagedObjectContext) {
         let records = Record.recordWithPlace(place, inContext: context)
         for record in records {
-            context.deleteObject(record)
+            record.place = nil
         }
         context.deleteObject(place)
     }

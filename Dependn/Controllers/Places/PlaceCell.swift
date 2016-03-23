@@ -24,7 +24,7 @@ final class PlaceCell: SHCommonInitTableViewCell {
         contentView.addSubview(placeLbl)
         placeLbl.snp_makeConstraints {
             $0.edges.equalTo(contentView).offset(
-                UIEdgeInsets(top: 0, left: 60, bottom: 0, right: -20))
+                UIEdgeInsets(top: 0, left: 30, bottom: 0, right: -30))
         }
     }
 

@@ -37,7 +37,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SwiftHelpers:
-    :commit: da5cf253abf6932953e279a0975f12de1bdec69d
+    :commit: 8007ee45171aa5a9f6e25658c8b9735ae8d0df24
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:

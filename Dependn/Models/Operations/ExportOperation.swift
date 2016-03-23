@@ -298,7 +298,10 @@ final class ImportOperation: SHOperation {
             let lat = values[7]
             let lon = values[8]
             
-            let place = getPlaceOrCreate(placeName)
+            var place: Place? = nil
+            if placeName.characters.count > 0 {
+                place = getPlaceOrCreate(placeName)
+            }
             
             Record.insertNewRecord(addiction,
                 intensity: intensity,

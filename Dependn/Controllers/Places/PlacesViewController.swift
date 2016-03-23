@@ -37,7 +37,10 @@ final class PlacesViewController: UIViewController {
             inContext: CoreDataStack.shared.managedObjectContext)
         fetchedResultsController.delegate = self
 
-        tableView = UITableView(frame: .zero, style: .Grouped)
+        tableView = UITableView(frame: .zero, style: .Plain)
+        tableView.backgroundColor = UIColor.lightBackgroundColor()
+        tableView.separatorColor = UIColor.appSeparatorColor()
+        tableView.rowHeight = 55
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(PlaceCell.self, forCellReuseIdentifier: PlaceCell.reuseIdentifier)
@@ -168,8 +171,12 @@ extension PlacesViewController: UITableViewDataSource {
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(PlaceCell.reuseIdentifier, forIndexPath: indexPath) as! PlaceCell
-        let place = fetchedResultsController.objectAtIndexPath(indexPath) as? Place
-        cell.placeLbl.text = place?.name.capitalizedString
+        let place = fetchedResultsController.objectAtIndexPath(indexPath) as! Place
+        
+        var nameOfString = place.name
+        nameOfString.replaceRange(nameOfString.startIndex...nameOfString.startIndex, with: String(nameOfString[nameOfString.startIndex]).capitalizedString)
+        cell.placeLbl.text = nameOfString
+        
         cell.accessoryType = selectedPlace == place ? .Checkmark : .None
         return cell
     }

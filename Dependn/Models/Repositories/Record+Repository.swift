@@ -61,6 +61,7 @@ extension Record {
     class func recordWithPlace(place: Place, inContext context: NSManagedObjectContext) -> [Record] {
         let req = entityFetchRequest()
         req.predicate = NSPredicate(format: "place == %@", place)
+        req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
         let controller = NSFetchedResultsController(fetchRequest: req,
                                                     managedObjectContext: context,
                                                     sectionNameKeyPath: nil,

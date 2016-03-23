@@ -231,7 +231,7 @@ extension AddRecordViewController: UITableViewDataSource {
                 return cell
             case .Place:
                 let cell = tableView.dequeueReusableCellWithIdentifier(NewPlaceTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewPlaceTableViewCell
-                cell.chosenPlaceLbl.text = chosenPlace?.name.capitalizedString
+                cell.chosenPlaceLbl.text = chosenPlace?.name.firstLetterCapitalization
                 return cell
             }
         case .Intensity:
@@ -419,11 +419,15 @@ extension AddRecordViewController: CLLocationManagerDelegate {
                 let op = NearestPlaceOperation(location: location, distance: 80)
                 op.completionBlock = {
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.chosenPlace = op.place
-                        self.tableView.reloadRowsAtIndexPaths([
-                            NSIndexPath(forRow: DateAndPlaceRowType.Place.rawValue,
-                                inSection: AddRecordSectionType.DateAndPlace.rawValue)
-                            ], withRowAnimation: .Automatic)
+                        if let placeId = op.place?.objectID {
+                            let moc = CoreDataStack.shared.managedObjectContext
+                            let place = moc.objectWithID(placeId) as! Place
+                            self.chosenPlace = place
+                            self.tableView.reloadRowsAtIndexPaths([
+                                NSIndexPath(forRow: DateAndPlaceRowType.Place.rawValue,
+                                    inSection: AddRecordSectionType.DateAndPlace.rawValue)
+                                ], withRowAnimation: .Automatic)
+                        }
                     }
                 }
                 let queue = NSOperationQueue()

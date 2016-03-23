@@ -93,7 +93,7 @@
 "intensity.medium" = "Moyenne";
 "intensity.high" = "Forte";
 
-"places.title" = "Mes lieux cléfs";
+"places.title" = "Mes lieux-clés";
 "places.new.title" = "Ajouter un lieu";
 "places.new.message" = "Dans quel contexte êtes-vous ?";
 "places.new.cancel" = "Annuler";
