@@ -69,12 +69,21 @@ final class HistoryViewController: UIViewController {
         
         configureLayoutConstraints()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.coreDataStackDidChange(_:)), name: kCoreDataStackStoreDidChange, object: nil)
+        configureNotificationObservers()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         reloadInterface()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    private func configureNotificationObservers() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.coreDataStackDidChange(_:)), name: kCoreDataStackStoreDidChange, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.applicationWillEnterForground(_:)), name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
     private func configureStatsView() {
@@ -95,6 +104,12 @@ final class HistoryViewController: UIViewController {
         launchFetchIfNeeded()
         tableView.reloadData()
         configureStatsView()
+    }
+    
+    // MARK: - Notifications
+    
+    func applicationWillEnterForground(notification: NSNotification) {
+        reloadInterface()
     }
     
     func coreDataStackDidChange(notification: NSNotification) {
