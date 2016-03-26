@@ -13,6 +13,7 @@ import CocoaLumberjack
 final class ValueLabelView: SHCommonInitView {
 
     private(set) var valueLbl: UILabel!
+    private(set) var fractionLbl: UILabel!
     private var titleLbl: UILabel!
     
     var title: String? {
@@ -55,6 +56,11 @@ final class ValueLabelView: SHCommonInitView {
         titleLbl = UILabel()
         titleLbl.adjustsFontSizeToFitWidth = true
         addSubview(titleLbl)
+        
+        fractionLbl = UILabel()
+        fractionLbl.textColor = UIColor.whiteColor()
+        fractionLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
+        addSubview(fractionLbl)
 
         configureLayoutConstraints()
     }
@@ -71,6 +77,10 @@ final class ValueLabelView: SHCommonInitView {
             $0.centerX.equalTo(self)
             $0.left.greaterThanOrEqualTo(self)
             $0.right.lessThanOrEqualTo(self)
+        }
+        fractionLbl.snp_makeConstraints {
+            $0.right.equalTo(valueLbl)
+            $0.top.equalTo(valueLbl)
         }
     }
 
@@ -99,6 +109,8 @@ final class StatsPanelView: SHCommonInitView {
     private var todayValue: ValueLabelView!
     private var weekValue: ValueLabelView!
     private var intervalValue: ValueLabelView!
+    
+    private var refreshTimer: NSTimer?
     
     override func commonInit() {
         super.commonInit()
@@ -132,6 +144,16 @@ final class StatsPanelView: SHCommonInitView {
         addSubview(stackView)
         
         configureLayoutConstraints()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(StatsPanelView.applicationDidEnterBackground(_:)), name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(StatsPanelView.applicationWillEnterForeground(_:)), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
+        startTimer()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        stopTimer()
     }
     
     private func configureLayoutConstraints() {
@@ -154,6 +176,14 @@ final class StatsPanelView: SHCommonInitView {
         nameLbl.text = addiction.name.uppercaseString
         periodLbl.text = kStatsPanelDateFormatter.stringFromDate(NSDate()).uppercaseString
         
+        performOperations()
+    }
+    
+    func performOperations() {
+        guard let addiction = addiction else {
+            return
+        }
+        
         operationQueue.cancelAllOperations()
         
         operationQueue.suspended = true
@@ -165,9 +195,11 @@ final class StatsPanelView: SHCommonInitView {
             dispatch_async(dispatch_get_main_queue()) {
                 if let interval = sinceLastOp.interval {
                     self.intervalValue.valueLbl.attributedText = self.attributedStringFromTimeInterval(interval)
+                    self.intervalValue.fractionLbl.text = self.fractionFromInterval(interval)
                 } else {
                     self.intervalValue.valueLbl.attributedText = nil
                     self.intervalValue.valueLbl.text = "0h"
+                    self.intervalValue.fractionLbl.text = nil
                 }
             }
         }
@@ -203,24 +235,53 @@ final class StatsPanelView: SHCommonInitView {
         operationQueue.suspended = false
     }
     
+    // MARK: - Handleling timer
+    
+    private func stopTimer() {
+        refreshTimer?.invalidate()
+        refreshTimer = nil
+    }
+    
+    private func startTimer() {
+        stopTimer()
+        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(
+            15,
+            target: self,
+            selector: #selector(StatsPanelView.performOperations),
+            userInfo: nil, repeats: true)
+    }
+    
+    func applicationDidEnterBackground(notification: NSNotification) {
+        stopTimer()
+    }
+    
+    func applicationWillEnterForeground(notification: NSNotification) {
+        startTimer()
+    }
+    
     // MARK: - Private Helpers
     
-    private func attributedStringFromTimeInterval(interval: NSTimeInterval) -> NSAttributedString {
+    private func hoursMinutesSecondsFromInterval(interval: NSTimeInterval) -> (hours: Int, minutes: Int, seconds: Int) {
         let ti = Int(interval)
         let seconds = ti % 60
         let minutes = (ti / 60) % 60
         let hours = (ti / 3600)
+        return (hours, minutes, seconds)
+    }
+    
+    private func attributedStringFromTimeInterval(interval: NSTimeInterval) -> NSAttributedString {
+        let time = hoursMinutesSecondsFromInterval(interval)
         
         let valueText: String
         let unitText: String
-        if hours > 0 {
-            valueText = "\(hours)"
+        if time.hours > 0 {
+            valueText = "\(time.hours)"
             unitText = "h"
-        } else if minutes > 0 {
-            valueText = "\(minutes)"
+        } else if time.minutes > 0 {
+            valueText = "\(time.minutes)"
             unitText = "m"
         } else {
-            valueText = "\(seconds)"
+            valueText = "\(time.seconds)"
             unitText = "s"
         }
         
@@ -231,6 +292,74 @@ final class StatsPanelView: SHCommonInitView {
         let unitRange = attr.string.rangeString(unitText)
         attr.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(20, weight: UIFontWeightLight), range: unitRange)
         return attr
+    }
+    
+    private func fractionFromInterval(interval: NSTimeInterval) -> String? {
+        let time = self.hoursMinutesSecondsFromInterval(interval)
+        if time.hours <= 0 || time.minutes < 15 {
+            return nil
+        }
+        
+        if time.minutes < 30 {
+            return self.fraction(1, denominator: 4)
+        } else if time.minutes < 45 {
+            return self.fraction(1, denominator: 2)
+        }
+        
+        return self.fraction(3, denominator: 4)
+    }
+    
+    private func fraction(numerator: Int, denominator: Int) -> String {
+        var result = ""
+        
+        // build numerator
+        let one = "\(numerator)"
+        for char in one.characters {
+            if let num = Int(String(char)), val = superscriptFromInt(num) {
+                result.appendContentsOf(val)
+            }
+        }
+        
+        // build denominator
+        let two = "\(denominator)"
+        result.appendContentsOf("/")
+        for char in two.characters {
+            if let num = Int(String(char)), val = subscriptFromInt(num) {
+                result.appendContentsOf(val)
+            }
+        }
+        
+        return result
+    }
+    
+    private func superscriptFromInt(num: Int) -> String? {
+        let superscriptDigits: [Int: String] = [
+            0: "\u{2070}",
+            1: "\u{00B9}",
+            2: "\u{00B2}",
+            3: "\u{00B3}",
+            4: "\u{2074}",
+            5: "\u{2075}",
+            6: "\u{2076}",
+            7: "\u{2077}",
+            8: "\u{2078}",
+            9: "\u{2079}" ]
+        return superscriptDigits[num]
+    }
+    
+    private func subscriptFromInt(num: Int) -> String? {
+        let subscriptDigits: [Int: String] = [
+            0: "\u{2080}",
+            1: "\u{2081}",
+            2: "\u{2082}",
+            3: "\u{2083}",
+            4: "\u{2084}",
+            5: "\u{2085}",
+            6: "\u{2086}",
+            7: "\u{2087}",
+            8: "\u{2088}",
+            9: "\u{2089}" ]
+        return subscriptDigits[num]
     }
     
 }
