@@ -103,7 +103,7 @@ final class SearchAdditionViewController: UIViewController {
             try fetchedResultsController!.performFetch()
             tableView.reloadData()
         } catch let err as NSError {
-            print("\(err)")
+            print("Error while search place with \(searchText): \(err)")
         }
     }
     
@@ -137,6 +137,7 @@ final class SearchAdditionViewController: UIViewController {
 
 }
 
+// MARK: - UITableViewDataSource
 extension SearchAdditionViewController: UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return (fetchedResultsController?.sections?.count ?? 0) + 1
@@ -162,6 +163,7 @@ extension SearchAdditionViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension SearchAdditionViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 55
@@ -190,7 +192,6 @@ extension SearchAdditionViewController: UITableViewDelegate {
                         inContext: self.managedObjectContext)
                     self.searchBar.text = nil
                     self.selectedAddiction = addiction
-                    self.performSearch(nil)
                 } catch let err as NSError {
                     UIAlertController.presentAlertWithTitle(err.localizedDescription,
                         message: err.localizedRecoverySuggestion, inController: self)
@@ -210,6 +211,7 @@ extension SearchAdditionViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - UISearchBarDelegate
 extension SearchAdditionViewController: UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         let pattrn: String? = searchText.characters.count > 0 ? searchText : nil
@@ -224,6 +226,7 @@ extension SearchAdditionViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - NSFetchedResultsControllerDelegate
 extension SearchAdditionViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         tableView.beginUpdates()
