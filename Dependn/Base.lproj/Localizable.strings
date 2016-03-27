@@ -38,7 +38,7 @@
 "export.time" = "Heure";
 "export.intensity" = "Intensité";
 "export.comment" = "Commentaires";
-"export.place" = "Lieu";
+"export.place" = "Contexte";
 "export.lat" = "Latitude";
 "export.lon" = "Longitude";
 "export.feeling" = "Émotions";
@@ -50,6 +50,8 @@
 "history.no_addictions.add" = "Ajouter";
 "history.no_addictions.title" = "Nouvelle entrée";
 "history.no_addictions.message" = "Oups, vous devez d'abord ajouter une dépendance.";
+"history.record.conso" = "Conso";
+"history.record.desire" = "Envie";
 
 "statspanel.today" = "Aujourd'hui";
 "statspanel.this_week" = "Cette semaine";

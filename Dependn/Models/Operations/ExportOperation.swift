@@ -302,9 +302,13 @@ final class ImportOperation: SHOperation {
             let comment = values[6]
             let lat = values[7]
             let lon = values[8]
-            let desire = values[9]
-            
-            let isDesire = desire.characters.count > 0
+            let isDesire: Bool
+            if values.count > 9 {
+                let desire = values[9]
+                isDesire = desire.characters.count > 0
+            } else {
+                isDesire = false
+            }
             
             var place: Place? = nil
             if placeName.characters.count > 0 {

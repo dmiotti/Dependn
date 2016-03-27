@@ -249,7 +249,7 @@ extension HistoryViewController: UITableViewDataSource {
         let record = fetchedResultsController.objectAtIndexPath(indexPath) as! Record
         if let cell = cell as? HistoryTableViewCell {
             let addiction = record.addiction
-            cell.dateLbl.attributedText = attributedStringForDate(record.date, addiction: addiction)
+            cell.dateLbl.attributedText = attributedStringForRecord(record, addiction: addiction)
             cell.circleTypeView.color = addiction.color.UIColor
             if let first = addiction.name.capitalizedString.characters.first {
                 cell.circleTypeView.textLbl.text = "\(first)"
@@ -257,9 +257,10 @@ extension HistoryViewController: UITableViewDataSource {
             cell.intensityCircle.progress = record.intensity.floatValue / 10.0
         }
     }
-    private func attributedStringForDate(date: NSDate, addiction: Addiction) -> NSAttributedString {
-        let dateString = dateFormatter.stringFromDate(date)
-        let typeString = addiction.name.capitalizedString
+    private func attributedStringForRecord(record: Record, addiction: Addiction) -> NSAttributedString {
+        let dateString = dateFormatter.stringFromDate(record.date)
+        let desireType = record.desire.boolValue ? L("history.record.desire") : L("history.record.conso")
+        let typeString = "\(desireType) · \(addiction.name.capitalizedString)"
         let full = "\(dateString)\n\(typeString)"
         let attr = NSMutableAttributedString(string: full)
         let fullRange = NSRange(location: 0, length: attr.length)

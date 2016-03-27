@@ -70,7 +70,7 @@ final class AddRecordViewController: UIViewController {
         
         edgesForExtendedLayout = .None
         
-        segmentedControl = UISegmentedControl(items: [ L("new_record.desire"), L("new_record.conso") ])
+        segmentedControl = UISegmentedControl(items: [ L("new_record.conso"), L("new_record.desire") ])
         segmentedControl.setWidth(76, forSegmentAtIndex: 0)
         segmentedControl.setWidth(76, forSegmentAtIndex: 1)
         segmentedControl.selectedSegmentIndex = 0
@@ -136,6 +136,7 @@ final class AddRecordViewController: UIViewController {
         chosenPlace     = record.place
         chosenFeeling   = record.feeling
         chosenComment   = record.comment
+        segmentedControl.selectedSegmentIndex = record.desire.boolValue ? 1 : 0
     }
     
     private func configureLayoutConstraints() {
@@ -184,6 +185,7 @@ final class AddRecordViewController: UIViewController {
             record.comment   = chosenComment
             record.date      = chosenDate
             record.place     = chosenPlace
+            record.desire    = segmentedControl.selectedSegmentIndex == 1
         } else {
             Record.insertNewRecord(chosenAddiction,
                 intensity: chosenIntensity,

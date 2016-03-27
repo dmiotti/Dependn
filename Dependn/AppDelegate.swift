@@ -86,6 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
+// MARK: - WCSessionDelegate
 extension AppDelegate: WCSessionDelegate {
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
         if let action = message["action"] as? String {
