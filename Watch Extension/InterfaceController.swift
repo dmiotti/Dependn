@@ -8,36 +8,38 @@
 
 import WatchKit
 import Foundation
-
+import WatchConnectivity
 
 class InterfaceController: WKInterfaceController {
     
     @IBOutlet var statsTable: WKInterfaceTable!
     
-    let dataSource = [
-        [
-            "name": "Cigarette",
-            "today": "10",
-            "thisweek": "44",
-            "sincelast": "4h"
-        ],
-        [
-            "name": "Weed",
-            "today": "10",
-            "thisweek": "44",
-            "sincelast": "4h"
-        ]
-    ]
+    var session: WCSession? {
+        didSet {
+            if let session = session {
+                session.delegate = self
+                session.activateSession()
+            }
+        }
+    }
     
-    private func loadTableData() {
+    private func loadTableData(dataSource: [Dictionary<String, AnyObject>]) {
         statsTable.setNumberOfRows(dataSource.count, withRowType: "StatsTableRowController")
         
         for (index, data) in dataSource.enumerate() {
             if let row = statsTable.rowControllerAtIndex(index) as? StatsTableRowController {
-                row.addictionLbl.setText(data["name"])
-                row.todayValueLbl.setText(data["today"])
-                row.thisWeekValueLbl.setText(data["thisweek"])
-                row.sinceLastValueLbl.setText(data["sincelast"])
+                if let name = data["name"] as? String {
+                    row.addictionLbl.setText(name)
+                }
+                if let today = data["today"] as? Int {
+                    row.todayValueLbl.setText("\(today)")
+                }
+                if let thisweek = data["thisweek"] as? Int {
+                    row.thisWeekValueLbl.setText("\(thisweek)")
+                }
+                if let sincelast = data["sincelast"] as? NSTimeInterval {
+                    row.sinceLastValueLbl.setText("\(sincelast)s")
+                }
             }
         }
     }
@@ -46,11 +48,23 @@ class InterfaceController: WKInterfaceController {
         super.awakeWithContext(context)
         
         // Configure interface objects here.
-        
-        loadTableData()
     }
 
     override func willActivate() {
+        
+        if WCSession.isSupported() {
+            session = WCSession.defaultSession()
+            session?.sendMessage(["action": "stats"], replyHandler: { (response) in
+                if let values = response["stats"] as? [Dictionary<String, AnyObject>] {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.loadTableData(values)
+                    }
+                }
+                }, errorHandler: { (err) in
+                    print(err)
+            })
+        }
+        
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
     }
@@ -60,4 +74,8 @@ class InterfaceController: WKInterfaceController {
         super.didDeactivate()
     }
 
+}
+
+extension InterfaceController: WCSessionDelegate {
+    
 }

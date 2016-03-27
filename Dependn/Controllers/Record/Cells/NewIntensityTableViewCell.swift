@@ -81,12 +81,9 @@ final class NewIntensityTableViewCell: SHCommonInitTableViewCell {
         
         let level = IntensityLevel.levelWithProgress(progress)
         switch level {
-        case .Low:
-            intensityLbl.text = L("intensity.low")
-        case .Medium:
-            intensityLbl.text = L("intensity.medium")
-        case .High:
-            intensityLbl.text = L("intensity.high")
+        case .Low:      intensityLbl.text = L("intensity.low")
+        case .Medium:   intensityLbl.text = L("intensity.medium")
+        case .High:     intensityLbl.text = L("intensity.high")
         }
         
         slide.tintColor = UIColor.appIntensityLowColor().blendWithColor(

@@ -186,53 +186,38 @@ final class StatsPanelView: SHCommonInitView {
         
         operationQueue.cancelAllOperations()
         
-        operationQueue.suspended = true
-        
-        let now = NSDate().endOfDay
-        
-        let sinceLastOp = TimeSinceLastRecord(addiction: addiction)
-        sinceLastOp.completionBlock = {
+        let statsOp = ShortStatsOperation(addictions: [addiction])
+        statsOp.completionBlock = {
             dispatch_async(dispatch_get_main_queue()) {
-                if let interval = sinceLastOp.interval {
-                    self.intervalValue.valueLbl.attributedText = self.attributedStringFromTimeInterval(interval)
-                    self.intervalValue.fractionLbl.text = self.fractionFromInterval(interval)
-                } else {
-                    self.intervalValue.valueLbl.attributedText = nil
-                    self.intervalValue.valueLbl.text = "0h"
-                    self.intervalValue.fractionLbl.text = nil
+                if let results = statsOp.results.first {
+                    // Today count
+                    if let todayCount = results.todayCount {
+                        self.todayValue.valueLbl.text = self.numberFormatter.stringFromNumber(todayCount)
+                    } else {
+                        self.todayValue.valueLbl.text = " "
+                    }
+                    
+                    // This week
+                    if let thisWeek = results.thisWeekCount {
+                        self.weekValue.valueLbl.text = self.numberFormatter.stringFromNumber(thisWeek)
+                    } else {
+                        self.weekValue.valueLbl.text = " "
+                    }
+                    
+                    // Since last
+                    if let interval = results.sinceLast {
+                        self.intervalValue.valueLbl.attributedText = self.attributedStringFromTimeInterval(interval)
+                        self.intervalValue.fractionLbl.text = self.fractionFromInterval(interval)
+                    } else {
+                        self.intervalValue.valueLbl.attributedText = nil
+                        self.intervalValue.valueLbl.text = "0h"
+                        self.intervalValue.fractionLbl.text = nil
+                    }
                 }
             }
         }
         
-        let weekRange = TimeRange(start: now.beginningOfWeek, end: now)
-        let weekCountOp = CountOperation(addiction: addiction, range: weekRange)
-        weekCountOp.completionBlock = {
-            dispatch_async(dispatch_get_main_queue()) {
-                if let count = weekCountOp.total {
-                    self.weekValue.valueLbl.text = self.numberFormatter.stringFromNumber(count);
-                } else {
-                    self.weekValue.valueLbl.text = " ";
-                }
-            }
-        }
-        
-        let todayRange = TimeRange(start: now.beginningOfDay, end: now)
-        let todayCountOp = CountOperation(addiction: addiction, range: todayRange)
-        todayCountOp.completionBlock = {
-            dispatch_async(dispatch_get_main_queue()) {
-                if let count = todayCountOp.total {
-                    self.todayValue.valueLbl.text = self.numberFormatter.stringFromNumber(count);
-                } else {
-                    self.todayValue.valueLbl.text = " ";
-                }
-            }
-        }
-        
-        operationQueue.addOperation(sinceLastOp)
-        operationQueue.addOperation(weekCountOp)
-        operationQueue.addOperation(todayCountOp)
-        
-        operationQueue.suspended = false
+        operationQueue.addOperation(statsOp)
     }
     
     // MARK: - Handleling timer
