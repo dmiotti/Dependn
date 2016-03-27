@@ -38,6 +38,9 @@ enum AddRecordTextEditionType: Int {
 // MARK: - UIViewController
 final class AddRecordViewController: UIViewController {
     
+    /// Title segmented control
+    private var segmentedControl: UISegmentedControl!
+    
     /// User selected fields
     private var tableView: UITableView!
     
@@ -67,8 +70,9 @@ final class AddRecordViewController: UIViewController {
         
         edgesForExtendedLayout = .None
         
-        let screenTitle = record != nil ? L("new_record.modify_title") : L("new_record.title")
-        updateTitle(screenTitle, blueBackground: false)
+        segmentedControl = UISegmentedControl(items: [L("new_record.desire"), L("new_record.conso")])
+        segmentedControl.selectedSegmentIndex = 0
+        navigationItem.titleView = segmentedControl
         
         locationManager.delegate = self
         
