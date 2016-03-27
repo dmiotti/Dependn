@@ -36,6 +36,7 @@
 		58BB158F1CA1F98500E3E06A /* Place+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB158E1CA1F98500E3E06A /* Place+Repository.swift */; };
 		58BB15921CA20D0D00E3E06A /* PlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB15911CA20D0D00E3E06A /* PlacesViewController.swift */; };
 		58BB15941CA20D3400E3E06A /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB15931CA20D3400E3E06A /* PlaceCell.swift */; };
+		58CF71801CA809310092458F /* StatsTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CF717F1CA809310092458F /* StatsTableRowController.swift */; };
 		58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */; };
 		58DC7A0D1C8CD873007F9F5D /* NewAddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */; };
 		58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF629E1C83BDEE0035F608 /* AppDelegate.swift */; };
@@ -162,6 +163,7 @@
 		58BB158E1CA1F98500E3E06A /* Place+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Place+Repository.swift"; sourceTree = "<group>"; };
 		58BB15911CA20D0D00E3E06A /* PlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesViewController.swift; sourceTree = "<group>"; };
 		58BB15931CA20D3400E3E06A /* PlaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
+		58CF717F1CA809310092458F /* StatsTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsTableRowController.swift; sourceTree = "<group>"; };
 		58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecordTextViewController.swift; sourceTree = "<group>"; };
 		58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAddictionTableViewCell.swift; sourceTree = "<group>"; };
 		58DF629E1C83BDEE0035F608 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -440,6 +442,7 @@
 			children = (
 				58F092CC1C9615AB00DF4ADC /* InterfaceController.swift */,
 				58F092CE1C9615AB00DF4ADC /* ExtensionDelegate.swift */,
+				58CF717F1CA809310092458F /* StatsTableRowController.swift */,
 				58F092D01C9615AB00DF4ADC /* Assets.xcassets */,
 				58F092D21C9615AB00DF4ADC /* Info.plist */,
 			);
@@ -467,7 +470,6 @@
 				78D910DF7A014E8B954AE046 /* Check Pods Manifest.lock */,
 				589065CC1C7A3F2F00F7F6DC /* Sources */,
 				589065CD1C7A3F2F00F7F6DC /* Frameworks */,
-				58BF267F1C83C06300263313 /* Update Build Number */,
 				589065CE1C7A3F2F00F7F6DC /* Resources */,
 				5890660A1C7A489800F7F6DC /* Embed Frameworks */,
 				5890660E1C7A48B700F7F6DC /* CopyFiles */,
@@ -475,7 +477,6 @@
 				02752BF4BCE3D4F09066974D /* Embed Pods Frameworks */,
 				CBD50F783DA64145D4A06428 /* Copy Pods Resources */,
 				58F092DD1C9615AB00DF4ADC /* Embed Watch Content */,
-				58BF26801C83C0B400263313 /* Reset Build Number */,
 			);
 			buildRules = (
 			);
@@ -639,34 +640,6 @@
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run 1eae28d1e74276b776784b2e624fcafbe8be63d5 ba6ddef5d9aedbe90726d134beae9003786035d9528c15c59a784d82adc87e47";
 		};
-		58BF267F1C83C06300263313 /* Update Build Number */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Update Build Number";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Set the build number to the count of Git commits\nbuildNumber=$(git rev-list --count HEAD)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Watch/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Watch Extension/Info.plist\"";
-		};
-		58BF26801C83C0B400263313 /* Reset Build Number */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Reset Build Number";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Set the build number to \"DEVELOPMENT\"\n# /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion DEVELOPMENT\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n# /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion DEVELOPMENT\" \"${PROJECT_DIR}/Watch/Info.plist\"\n# /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion DEVELOPMENT\" \"${PROJECT_DIR}/Watch Extension/Info.plist\"";
-		};
 		78D910DF7A014E8B954AE046 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -756,6 +729,7 @@
 			files = (
 				58F092CF1C9615AB00DF4ADC /* ExtensionDelegate.swift in Sources */,
 				58F092CD1C9615AB00DF4ADC /* InterfaceController.swift in Sources */,
+				58CF71801CA809310092458F /* StatsTableRowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,15 +1,60 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="6221" systemVersion="13E28" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6213"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="10032"/>
     </dependencies>
     <scenes>
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModuleProvider="target"/>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Watch" customModuleProvider="target">
+                    <items>
+                        <table alignment="left" id="KgH-2N-OVS">
+                            <items>
+                                <tableRow identifier="StatsTableRowController" id="wA6-Pt-Qmw" customClass="StatsTableRowController" customModule="Watch_Extension">
+                                    <group key="rootItem" width="1" height="93.5" alignment="left" layout="vertical" id="1cj-Ec-C1T">
+                                        <items>
+                                            <label alignment="left" text="Cigarette" id="Wum-zA-F9T"/>
+                                            <group width="1" alignment="left" id="PHM-qT-uIp" userLabel="Today Group">
+                                                <items>
+                                                    <label alignment="left" text="Today" id="geO-jg-tGT"/>
+                                                    <label alignment="right" text="10" id="AKe-VV-JD0" userLabel="Value"/>
+                                                </items>
+                                            </group>
+                                            <group width="1" alignment="left" id="ZMe-34-WcR" userLabel="This week group">
+                                                <items>
+                                                    <label alignment="left" text="This week" id="XTN-Dw-Hg6"/>
+                                                    <label alignment="right" text="32" id="v9L-8P-Hr6" userLabel="Value"/>
+                                                </items>
+                                            </group>
+                                            <group width="1" alignment="left" id="9HE-rS-UCp" userLabel="Last take group">
+                                                <items>
+                                                    <label alignment="left" text="Since last" id="ggv-wb-RqC" userLabel="Since Last Lbl"/>
+                                                    <label alignment="right" text="22m" id="8XC-gr-zSb" userLabel="Value"/>
+                                                </items>
+                                            </group>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="addictionLbl" destination="Wum-zA-F9T" id="PYd-Cl-xj7"/>
+                                        <outlet property="sinceLastLbl" destination="ggv-wb-RqC" id="CNG-HZ-RBj"/>
+                                        <outlet property="sinceLastValueLbl" destination="8XC-gr-zSb" id="hWr-4Z-CQV"/>
+                                        <outlet property="thisWeekLbl" destination="XTN-Dw-Hg6" id="fCy-rS-a3t"/>
+                                        <outlet property="thisWeekValueLbl" destination="v9L-8P-Hr6" id="Wnz-lb-GxQ"/>
+                                        <outlet property="todayLbl" destination="geO-jg-tGT" id="s9P-Y2-UIJ"/>
+                                        <outlet property="todayValueLbl" destination="AKe-VV-JD0" id="KBg-7U-ABl"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="statsTable" destination="KgH-2N-OVS" id="5xP-HX-Wmd"/>
+                    </connections>
+                </controller>
             </objects>
+            <point key="canvasLocation" x="550" y="376"/>
         </scene>
     </scenes>
 </document>

@@ -11,11 +11,43 @@ import Foundation
 
 
 class InterfaceController: WKInterfaceController {
+    
+    @IBOutlet var statsTable: WKInterfaceTable!
+    
+    let dataSource = [
+        [
+            "name": "Cigarette",
+            "today": "10",
+            "thisweek": "44",
+            "sincelast": "4h"
+        ],
+        [
+            "name": "Weed",
+            "today": "10",
+            "thisweek": "44",
+            "sincelast": "4h"
+        ]
+    ]
+    
+    private func loadTableData() {
+        statsTable.setNumberOfRows(dataSource.count, withRowType: "StatsTableRowController")
+        
+        for (index, data) in dataSource.enumerate() {
+            if let row = statsTable.rowControllerAtIndex(index) as? StatsTableRowController {
+                row.addictionLbl.setText(data["name"])
+                row.todayValueLbl.setText(data["today"])
+                row.thisWeekValueLbl.setText(data["thisweek"])
+                row.sinceLastValueLbl.setText(data["sincelast"])
+            }
+        }
+    }
 
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
         // Configure interface objects here.
+        
+        loadTableData()
     }
 
     override func willActivate() {

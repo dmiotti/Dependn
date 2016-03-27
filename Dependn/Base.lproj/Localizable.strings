@@ -48,7 +48,7 @@
 
 "statspanel.today" = "Aujourd'hui";
 "statspanel.this_week" = "Cette semaine";
-"statspanel.interval" = "Dernière prise";
+"statspanel.interval" = "Dernière conso";
 
 "settings.title" = "Paramètres";
 "settings.manage_addictions" = "Gérer ma liste de dépendances";

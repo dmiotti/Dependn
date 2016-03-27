@@ -24,12 +24,23 @@ platform :ios do
   before_all do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
     cocoapods
-    
+
   end
 
   desc "Runs all the tests"
   lane :test do
     scan
+  end
+
+  desc "Bump version"
+  lane :bump_version do
+    plist = PlistBuddy.new
+    plist.plist_read "CFBundleVersion" "${PROJECT_DIR}/${INFOPLIST_FILE}"
+    # Set the build number to the count of Git commits
+    # buildNumber=$(git rev-list --count HEAD)
+    # /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "${PROJECT_DIR}/${INFOPLIST_FILE}"
+    # /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "${PROJECT_DIR}/Watch/Info.plist"
+    # /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "${PROJECT_DIR}/Watch Extension/Info.plist"
   end
 
   desc "Submit a new Beta Build to Apple TestFlight"
