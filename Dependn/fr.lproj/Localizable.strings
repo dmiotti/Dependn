@@ -42,6 +42,9 @@
 "export.lat" = "Latitude";
 "export.lon" = "Longitude";
 "export.feeling" = "Émotions";
+"export.desire" = "Envie";
+"export.conso" = "Conso";
+"export.choosen" = "Oui";
 
 "history.no_addictions.ok" = "Annuler";
 "history.no_addictions.add" = "Ajouter";

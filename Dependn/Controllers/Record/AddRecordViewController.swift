@@ -70,7 +70,9 @@ final class AddRecordViewController: UIViewController {
         
         edgesForExtendedLayout = .None
         
-        segmentedControl = UISegmentedControl(items: [L("new_record.desire"), L("new_record.conso")])
+        segmentedControl = UISegmentedControl(items: [ L("new_record.desire"), L("new_record.conso") ])
+        segmentedControl.setWidth(76, forSegmentAtIndex: 0)
+        segmentedControl.setWidth(76, forSegmentAtIndex: 1)
         segmentedControl.selectedSegmentIndex = 0
         navigationItem.titleView = segmentedControl
         
@@ -190,6 +192,7 @@ final class AddRecordViewController: UIViewController {
                 place: chosenPlace,
                 latitude: userLocation?.coordinate.latitude,
                 longitude: userLocation?.coordinate.longitude,
+                desire: segmentedControl.selectedSegmentIndex == 1,
                 date: chosenDate,
                 inContext: CoreDataStack.shared.managedObjectContext)
         }
@@ -199,7 +202,6 @@ final class AddRecordViewController: UIViewController {
     func cancelBtnClicked(sender: UIBarButtonItem) {
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
 }
 
 // MARK: - UITableViewDataSource

@@ -210,6 +210,12 @@ extension PlacesViewController: UITableViewDataSource {
             }
         }
     }
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
 }
 
 // MARK: - NSFetchedResultsControllerDelegate

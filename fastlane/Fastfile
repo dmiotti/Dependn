@@ -34,8 +34,6 @@ platform :ios do
 
   desc "Bump version"
   lane :bump_version do
-    plist = PlistBuddy.new
-    plist.plist_read "CFBundleVersion" "${PROJECT_DIR}/${INFOPLIST_FILE}"
     # Set the build number to the count of Git commits
     # buildNumber=$(git rev-list --count HEAD)
     # /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "${PROJECT_DIR}/${INFOPLIST_FILE}"

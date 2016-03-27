@@ -22,5 +22,6 @@ extension Record {
     @NSManaged var lon: NSNumber?
     @NSManaged var place: Place?
     @NSManaged var addiction: Addiction
+    @NSManaged var desire: NSNumber
 
 }

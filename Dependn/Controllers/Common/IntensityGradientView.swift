@@ -26,6 +26,7 @@ enum IntensityLevel {
 final class IntensityGradientView: SHCommonInitView {
     
     private var gradientLayer: CAGradientLayer!
+    private var intensityValueLbl: UILabel!
     
     override func commonInit() {
         super.commonInit()
@@ -40,6 +41,16 @@ final class IntensityGradientView: SHCommonInitView {
             UIColor(white: 1, alpha: 0).CGColor
         ]
         layer.addSublayer(gradientLayer)
+        
+        intensityValueLbl = UILabel()
+        intensityValueLbl.textColor = UIColor.appBlackColor()
+        intensityValueLbl.font = UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold)
+        intensityValueLbl.textAlignment = .Center
+        addSubview(intensityValueLbl)
+
+        intensityValueLbl.snp_makeConstraints {
+            $0.edges.equalTo(self)
+        }
     }
     
     override func layoutSubviews() {
@@ -51,6 +62,8 @@ final class IntensityGradientView: SHCommonInitView {
     var progress: Float = 0 {
         didSet {
             animateProgression(progress)
+            let rounded = Int(round(progress * 10))
+            intensityValueLbl.text = "\(rounded)"
         }
     }
     

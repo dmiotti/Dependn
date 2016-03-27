@@ -51,7 +51,10 @@ final class ExportOperation: SHOperation {
                     L("export.feeling"),
                     L("export.comment"),
                     L("export.lat"),
-                    L("export.lon") ].joinWithSeparator(kExportOperationSeparator)
+                    L("export.lon"),
+                    L("export.desire"),
+                    L("export.conso")
+                ].joinWithSeparator(kExportOperationSeparator)
 
                 csv.appendContentsOf(kExportOperationNewLine)
                 
@@ -91,7 +94,9 @@ final class ExportOperation: SHOperation {
             record.feeling ?? "",
             record.comment ?? "",
             record.lat?.stringValue ?? "",
-            record.lon?.stringValue ?? ""
+            record.lon?.stringValue ?? "",
+            record.desire.boolValue ? L("export.choosen") : "",
+            record.desire.boolValue ? "" : L("export.choosen")
         ]
         return values.joinWithSeparator(kExportOperationSeparator)
     }
@@ -297,6 +302,9 @@ final class ImportOperation: SHOperation {
             let comment = values[6]
             let lat = values[7]
             let lon = values[8]
+            let desire = values[9]
+            
+            let isDesire = desire.characters.count > 0
             
             var place: Place? = nil
             if placeName.characters.count > 0 {
@@ -310,6 +318,7 @@ final class ImportOperation: SHOperation {
                 place: place,
                 latitude: doubleOrNil(lat),
                 longitude: doubleOrNil(lon),
+                desire: isDesire,
                 date: date,
                 inContext: context)
         } catch let err as NSError {

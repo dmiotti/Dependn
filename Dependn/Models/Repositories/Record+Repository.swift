@@ -22,6 +22,7 @@ extension Record {
                                place: Place?,
                                latitude: Double?,
                                longitude: Double?,
+                               desire: Bool,
                                date: NSDate = NSDate(),
                                inContext context: NSManagedObjectContext) -> Record {
         let record = NSEntityDescription
@@ -35,6 +36,7 @@ extension Record {
         record.lat = latitude
         record.lon = longitude
         record.date = date
+        record.desire = desire
         return record
     }
     
