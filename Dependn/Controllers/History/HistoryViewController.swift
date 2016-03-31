@@ -75,6 +75,9 @@ final class HistoryViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         reloadInterface()
+        
+        let onBoarding = OnBoardingViewController()
+        presentViewController(onBoarding, animated: false, completion: nil)
     }
     
     deinit {

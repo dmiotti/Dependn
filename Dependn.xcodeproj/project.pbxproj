@@ -19,6 +19,7 @@
 		581DC5DF1C8B3C5D006DE551 /* AddictionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5DE1C8B3C5D006DE551 /* AddictionListViewController.swift */; };
 		581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */; };
 		581DC5E71C8B73D3006DE551 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E61C8B73D3006DE551 /* UserDefaults.swift */; };
+		584897861CAC641E00CA18CE /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584897851CAC641E00CA18CE /* OnBoardingViewController.swift */; };
 		58548BBD1C8BA33800C7C940 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */; };
 		58548BBF1C8BA8D900C7C940 /* PasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */; };
 		58548BC91C8BBBCF00C7C940 /* RecordCircleTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BC81C8BBBCF00C7C940 /* RecordCircleTypeView.swift */; };
@@ -144,6 +145,7 @@
 		581DC5DE1C8B3C5D006DE551 /* AddictionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionListViewController.swift; sourceTree = "<group>"; };
 		581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionTableViewCell.swift; sourceTree = "<group>"; };
 		581DC5E61C8B73D3006DE551 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		584897851CAC641E00CA18CE /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeViewController.swift; sourceTree = "<group>"; };
 		58548BC81C8BBBCF00C7C940 /* RecordCircleTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordCircleTypeView.swift; sourceTree = "<group>"; };
@@ -267,6 +269,14 @@
 			path = Addiction;
 			sourceTree = "<group>";
 		};
+		584897841CAC60C800CA18CE /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				584897851CAC641E00CA18CE /* OnBoardingViewController.swift */,
+			);
+			path = OnBoarding;
+			sourceTree = "<group>";
+		};
 		58548BB91C8B9A6000C7C940 /* Passcode */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,6 +377,7 @@
 		58DF62A41C83BDEE0035F608 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				584897841CAC60C800CA18CE /* OnBoarding */,
 				58548BC71C8BBBB300C7C940 /* Common */,
 				58DF62A51C83BDEE0035F608 /* History */,
 				58548BD41C8BE18100C7C940 /* Record */,
@@ -704,6 +715,7 @@
 				58DF62D31C83BDEE0035F608 /* ExportOperation.swift in Sources */,
 				58548BE11C8BE18100C7C940 /* NewIntensityTableViewCell.swift in Sources */,
 				581DC5D21C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift in Sources */,
+				584897861CAC641E00CA18CE /* OnBoardingViewController.swift in Sources */,
 				58BB15941CA20D3400E3E06A /* PlaceCell.swift in Sources */,
 				58AD8B381C9178D40008CD9C /* UIViewController+TitleView.swift in Sources */,
 				581CCC371C8F7FE0006A8FAD /* StatsPanelView.swift in Sources */,
