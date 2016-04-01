@@ -92,7 +92,7 @@ final class OnBoardingViewController: UIViewController {
                 }
                 
                 $0.width.equalTo(view)
-                $0.height.equalTo(view.snp_width)
+                $0.height.equalTo(view.snp_width).multipliedBy(0.93)
                 
                 if index == images.count - 1 {
                     $0.right.equalTo(containerScrollView)

@@ -20,6 +20,7 @@ final class HistoryViewController: UIViewController {
     private var addBtn: UIButton!
     private var statsView: StatsPanelScroller!
     private var dateFormatter: NSDateFormatter!
+    private var emptyView: HistoryEmptyView!
     
     private let managedObjectContext = CoreDataStack.shared.managedObjectContext
     
@@ -61,6 +62,10 @@ final class HistoryViewController: UIViewController {
             forCellReuseIdentifier: HistoryTableViewCell.reuseIdentifier)
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 120))
         view.addSubview(tableView)
+        
+        emptyView = HistoryEmptyView()
+        emptyView.alpha = 0
+        view.addSubview(emptyView)
         
         addBtn = UIButton(type: .System)
         addBtn.setImage(UIImage(named: "add")?.imageWithRenderingMode(.AlwaysOriginal), forState: .Normal)
@@ -114,6 +119,19 @@ final class HistoryViewController: UIViewController {
         launchFetchIfNeeded()
         tableView.reloadData()
         configureStatsView()
+        
+        if fetchedResultsController.fetchedObjects?.count == 0 {
+            toggleEmptyView(true)
+        } else {
+            toggleEmptyView(false)
+        }
+    }
+    
+    private func toggleEmptyView(show: Bool) {
+        UIView.animateWithDuration(0.35) {
+            self.emptyView.alpha = show ? 1 : 0
+            self.tableView.alpha = show ? 0 : 1
+        }
     }
     
     // MARK: - Notifications
@@ -151,6 +169,10 @@ final class HistoryViewController: UIViewController {
         addBtn.snp_makeConstraints {
             $0.bottom.equalTo(view).offset(-20)
             $0.centerX.equalTo(view)
+        }
+        
+        emptyView.snp_makeConstraints {
+            $0.edges.equalTo(view)
         }
     }
     

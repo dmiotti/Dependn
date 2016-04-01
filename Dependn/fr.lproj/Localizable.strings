@@ -52,6 +52,7 @@
 "history.no_addictions.message" = "Oups, vous devez d'abord ajouter une dépendance.";
 "history.record.conso" = "Conso";
 "history.record.desire" = "Envie";
+"history.help" = "Notez votre première envie ou consommation en appuyant sur le bouton “+”";
 
 "statspanel.today" = "Aujourd'hui";
 "statspanel.this_week" = "Cette semaine";

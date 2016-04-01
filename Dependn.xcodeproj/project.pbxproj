@@ -20,6 +20,7 @@
 		581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */; };
 		581DC5E71C8B73D3006DE551 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E61C8B73D3006DE551 /* UserDefaults.swift */; };
 		582820C91CAF1288002DC9AF /* OkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820C81CAF1288002DC9AF /* OkButton.swift */; };
+		582820CB1CAF1DD7002DC9AF /* HistoryEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */; };
 		584897861CAC641E00CA18CE /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584897851CAC641E00CA18CE /* OnBoardingViewController.swift */; };
 		58548BBD1C8BA33800C7C940 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */; };
 		58548BBF1C8BA8D900C7C940 /* PasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */; };
@@ -147,6 +148,7 @@
 		581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionTableViewCell.swift; sourceTree = "<group>"; };
 		581DC5E61C8B73D3006DE551 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		582820C81CAF1288002DC9AF /* OkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OkButton.swift; sourceTree = "<group>"; };
+		582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryEmptyView.swift; sourceTree = "<group>"; };
 		584897851CAC641E00CA18CE /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeViewController.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 				58DF62A61C83BDEE0035F608 /* HistoryTableViewCell.swift */,
 				15FB76A5C4926643FAD8141E /* StatsPanelScroller.swift */,
 				581CCC361C8F7FE0006A8FAD /* StatsPanelView.swift */,
+				582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -710,6 +713,7 @@
 				586EDA361CA3567D00DAE496 /* TimeSinceLastRecord.swift in Sources */,
 				58DF62C61C83BDEE0035F608 /* HistoryTableViewCell.swift in Sources */,
 				58548BBF1C8BA8D900C7C940 /* PasscodeViewController.swift in Sources */,
+				582820CB1CAF1DD7002DC9AF /* HistoryEmptyView.swift in Sources */,
 				581DC5DF1C8B3C5D006DE551 /* AddictionListViewController.swift in Sources */,
 				58DF62D71C83BDEE0035F608 /* Record.swift in Sources */,
 				58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */,
