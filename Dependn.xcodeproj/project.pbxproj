@@ -19,6 +19,7 @@
 		581DC5DF1C8B3C5D006DE551 /* AddictionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5DE1C8B3C5D006DE551 /* AddictionListViewController.swift */; };
 		581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */; };
 		581DC5E71C8B73D3006DE551 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E61C8B73D3006DE551 /* UserDefaults.swift */; };
+		582820C91CAF1288002DC9AF /* OkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820C81CAF1288002DC9AF /* OkButton.swift */; };
 		584897861CAC641E00CA18CE /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584897851CAC641E00CA18CE /* OnBoardingViewController.swift */; };
 		58548BBD1C8BA33800C7C940 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */; };
 		58548BBF1C8BA8D900C7C940 /* PasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */; };
@@ -145,6 +146,7 @@
 		581DC5DE1C8B3C5D006DE551 /* AddictionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionListViewController.swift; sourceTree = "<group>"; };
 		581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionTableViewCell.swift; sourceTree = "<group>"; };
 		581DC5E61C8B73D3006DE551 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		582820C81CAF1288002DC9AF /* OkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OkButton.swift; sourceTree = "<group>"; };
 		584897851CAC641E00CA18CE /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeViewController.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				584897851CAC641E00CA18CE /* OnBoardingViewController.swift */,
+				582820C81CAF1288002DC9AF /* OkButton.swift */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				581DC5D41C8B2ED0006DE551 /* Record+CoreDataProperties.swift in Sources */,
 				58548BC91C8BBBCF00C7C940 /* RecordCircleTypeView.swift in Sources */,
 				581DC5D31C8B2ED0006DE551 /* Addiction.swift in Sources */,
+				582820C91CAF1288002DC9AF /* OkButton.swift in Sources */,
 				58548BE01C8BE18100C7C940 /* NewDateTableViewCell.swift in Sources */,
 				58858ADD1C84520100E8A794 /* Dependn.xcdatamodeld in Sources */,
 				581DC5E71C8B73D3006DE551 /* UserDefaults.swift in Sources */,

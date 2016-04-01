@@ -76,8 +76,15 @@ final class HistoryViewController: UIViewController {
         super.viewWillAppear(animated)
         reloadInterface()
         
-        let onBoarding = OnBoardingViewController()
-        presentViewController(onBoarding, animated: false, completion: nil)
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let alreadyLaunched = userDefaults.boolForKey("alreadyLaunched")
+        if !alreadyLaunched {
+            userDefaults.setBool(true, forKey: "alreadyLaunched")
+            userDefaults.synchronize()
+            
+            let onBoarding = OnBoardingViewController()
+            presentViewController(onBoarding, animated: false, completion: nil)
+        }
     }
     
     deinit {

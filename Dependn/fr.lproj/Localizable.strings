@@ -116,3 +116,7 @@
 "places.modify.title" = "Renomer";
 "places.modify.placeholder" = "Entrer le nouveau nom";
 "places.modify" = "Valider";
+
+"onboarding.tour1" = "Contrôlez vos dépendances au quotidien";
+"onboarding.tour2" = "Notez vos envies et consommations";
+"onboarding.tour3" = "Échangez vos données avec votre spécialiste";
