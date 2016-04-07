@@ -88,7 +88,10 @@ final class HistoryViewController: UIViewController {
             userDefaults.synchronize()
             
             let onBoarding = OnBoardingViewController()
-            presentViewController(onBoarding, animated: false, completion: nil)
+            let nav = SHStatusBarNavigationController(rootViewController: onBoarding)
+            nav.statusBarStyle = .Default
+            nav.modalPresentationStyle = .FormSheet
+            presentViewController(nav, animated: false, completion: nil)
         }
     }
     

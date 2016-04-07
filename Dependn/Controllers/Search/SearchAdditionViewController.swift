@@ -29,7 +29,7 @@ final class SearchAdditionViewController: UIViewController {
     
     private let managedObjectContext = CoreDataStack.shared.managedObjectContext
     
-    private(set) var searchBar: UISearchBar!
+    private var searchBar: UISearchBar!
     
     private var fetchedResultsController: NSFetchedResultsController?
     
@@ -156,10 +156,10 @@ extension SearchAdditionViewController: UITableViewDataSource {
                 cell.choosen = addiction == selectedAddiction
             }
             return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier(NewAddictionTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewAddictionTableViewCell
+            return cell
         }
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier(NewAddictionTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewAddictionTableViewCell
-        return cell
     }
 }
 

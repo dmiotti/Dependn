@@ -21,6 +21,7 @@
 		581DC5E71C8B73D3006DE551 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E61C8B73D3006DE551 /* UserDefaults.swift */; };
 		582820C91CAF1288002DC9AF /* OkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820C81CAF1288002DC9AF /* OkButton.swift */; };
 		582820CB1CAF1DD7002DC9AF /* HistoryEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */; };
+		58416A7A1CB4818D00DB1A4B /* DependencyChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */; };
 		584897861CAC641E00CA18CE /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584897851CAC641E00CA18CE /* OnBoardingViewController.swift */; };
 		58548BBD1C8BA33800C7C940 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */; };
 		58548BBF1C8BA8D900C7C940 /* PasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */; };
@@ -41,6 +42,7 @@
 		58BB15941CA20D3400E3E06A /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB15931CA20D3400E3E06A /* PlaceCell.swift */; };
 		58CF71801CA809310092458F /* StatsTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CF717F1CA809310092458F /* StatsTableRowController.swift */; };
 		58CF71821CA815090092458F /* ShortStatsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CF71811CA815090092458F /* ShortStatsOperation.swift */; };
+		58D7887D1CB16BE500ED3413 /* DependencyChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D7887C1CB16BE500ED3413 /* DependencyChooserViewController.swift */; };
 		58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */; };
 		58DC7A0D1C8CD873007F9F5D /* NewAddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */; };
 		58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF629E1C83BDEE0035F608 /* AppDelegate.swift */; };
@@ -149,6 +151,7 @@
 		581DC5E61C8B73D3006DE551 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		582820C81CAF1288002DC9AF /* OkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OkButton.swift; sourceTree = "<group>"; };
 		582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryEmptyView.swift; sourceTree = "<group>"; };
+		58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserCell.swift; sourceTree = "<group>"; };
 		584897851CAC641E00CA18CE /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeViewController.swift; sourceTree = "<group>"; };
@@ -172,6 +175,7 @@
 		58BB15931CA20D3400E3E06A /* PlaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
 		58CF717F1CA809310092458F /* StatsTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsTableRowController.swift; sourceTree = "<group>"; };
 		58CF71811CA815090092458F /* ShortStatsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortStatsOperation.swift; sourceTree = "<group>"; };
+		58D7887C1CB16BE500ED3413 /* DependencyChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserViewController.swift; sourceTree = "<group>"; };
 		58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecordTextViewController.swift; sourceTree = "<group>"; };
 		58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAddictionTableViewCell.swift; sourceTree = "<group>"; };
 		58DF629E1C83BDEE0035F608 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -278,6 +282,8 @@
 			children = (
 				584897851CAC641E00CA18CE /* OnBoardingViewController.swift */,
 				582820C81CAF1288002DC9AF /* OkButton.swift */,
+				58D7887C1CB16BE500ED3413 /* DependencyChooserViewController.swift */,
+				58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -698,6 +704,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				581DC5D41C8B2ED0006DE551 /* Record+CoreDataProperties.swift in Sources */,
+				58D7887D1CB16BE500ED3413 /* DependencyChooserViewController.swift in Sources */,
 				58548BC91C8BBBCF00C7C940 /* RecordCircleTypeView.swift in Sources */,
 				581DC5D31C8B2ED0006DE551 /* Addiction.swift in Sources */,
 				582820C91CAF1288002DC9AF /* OkButton.swift in Sources */,
@@ -741,6 +748,7 @@
 				58BB15881CA1F91A00E3E06A /* Place+CoreDataProperties.swift in Sources */,
 				58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */,
 				58BB15921CA20D0D00E3E06A /* PlacesViewController.swift in Sources */,
+				58416A7A1CB4818D00DB1A4B /* DependencyChooserCell.swift in Sources */,
 				58DF62D41C83BDEE0035F608 /* NearestPlaceOperation.swift in Sources */,
 				581DC5DC1C8B38AD006DE551 /* SettingsTableViewCell.swift in Sources */,
 				15FB7F6E4E0BE28215AB023F /* StatsPanelScroller.swift in Sources */,

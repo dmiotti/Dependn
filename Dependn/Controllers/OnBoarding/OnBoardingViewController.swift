@@ -38,6 +38,8 @@ final class OnBoardingViewController: UIViewController {
         scrollView = UIScrollView()
         scrollView.pagingEnabled = true
         scrollView.delegate = self
+        scrollView.directionalLockEnabled = true
+        scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         view.addSubview(scrollView)
         
@@ -74,6 +76,8 @@ final class OnBoardingViewController: UIViewController {
         setupScrollViewContent()
         
         setupTextScrollViewContent()
+        
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     private func setupScrollViewContent() {
@@ -215,7 +219,8 @@ final class OnBoardingViewController: UIViewController {
     }
     
     func okBtnClicked(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
+        let controller = DependencyChooserViewController()
+        navigationController?.pushViewController(controller, animated: true)
     }
 
     private func progressForPageIndex(index: Int) -> CGFloat {
@@ -262,6 +267,9 @@ extension OnBoardingViewController: UIScrollViewDelegate {
         updateInterface()
     }
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView.contentOffset.y != 0 {
+            scrollView.contentOffset.y = 0
+        }
         updateInterface()
     }
 }
