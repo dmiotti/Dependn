@@ -498,7 +498,6 @@
 			buildPhases = (
 				78D910DF7A014E8B954AE046 /* Check Pods Manifest.lock */,
 				589065CC1C7A3F2F00F7F6DC /* Sources */,
-				58683B361CB71C01000FE358 /* Inc build number */,
 				589065CD1C7A3F2F00F7F6DC /* Frameworks */,
 				589065CE1C7A3F2F00F7F6DC /* Resources */,
 				5890660A1C7A489800F7F6DC /* Embed Frameworks */,
@@ -655,20 +654,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dependn/Pods-Dependn-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		58683B361CB71C01000FE358 /* Inc build number */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Inc build number";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(git rev-list --count HEAD)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Watch/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Watch Extension/Info.plist\"";
 		};
 		5888DC7B1C7B217600E01A32 /* Fabric */ = {
 			isa = PBXShellScriptBuildPhase;
