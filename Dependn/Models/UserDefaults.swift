@@ -10,6 +10,7 @@ import UIKit
 import SwiftyUserDefaults
 
 extension DefaultsKeys {
+    static let alreadyLaunched = DefaultsKey<Bool>("alreadyLaunched")
     static let usePasscode = DefaultsKey<Bool>("usePasscode")
     static let useLocation = DefaultsKey<Bool>("useLocation")
 }

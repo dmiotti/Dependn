@@ -12,6 +12,7 @@ import CoreData
 import SwiftHelpers
 import PKHUD
 import CocoaLumberjack
+import SwiftyUserDefaults
 
 final class HistoryViewController: UIViewController {
     
@@ -81,17 +82,9 @@ final class HistoryViewController: UIViewController {
         super.viewWillAppear(animated)
         reloadInterface()
         
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let alreadyLaunched = userDefaults.boolForKey("alreadyLaunched")
-        if !alreadyLaunched {
-            userDefaults.setBool(true, forKey: "alreadyLaunched")
-            userDefaults.synchronize()
-            
-            let onBoarding = OnBoardingViewController()
-            let nav = SHStatusBarNavigationController(rootViewController: onBoarding)
-            nav.statusBarStyle = .Default
-            nav.modalPresentationStyle = .FormSheet
-            presentViewController(nav, animated: false, completion: nil)
+        if !Defaults[.alreadyLaunched] {
+            Defaults[.alreadyLaunched] = true
+            OnBoardingViewController.showInController(self, animated: false)
         }
     }
     

@@ -253,6 +253,14 @@ final class OnBoardingViewController: UIViewController {
         let textOffset = CGPoint(x: scrollView.contentOffset.x, y: 0)
         textScrollView.setContentOffset(textOffset, animated: false)
     }
+    
+    static func showInController(controller: UIViewController, animated: Bool = true) {
+        let onBoarding = OnBoardingViewController()
+        let nav = SHStatusBarNavigationController(rootViewController: onBoarding)
+        nav.statusBarStyle = .Default
+        nav.modalPresentationStyle = .FormSheet
+        controller.presentViewController(nav, animated: animated, completion: nil)
+    }
 }
 
 extension OnBoardingViewController: UIScrollViewDelegate {

@@ -67,6 +67,7 @@
 "settings.action.import" = "Importer";
 "settings.section.general" = "Général";
 "settings.section.informations" = "Mes données";
+"settings.show_tour" = "Voir le Tour";
 
 "import.choose_file" = "Choisissez le ficher .csv à importer";
 "import.choose_file_message" = "Vos données actuelles seront remplacées par celles de cet import.";

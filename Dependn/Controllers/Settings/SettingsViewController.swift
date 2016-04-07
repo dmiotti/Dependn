@@ -29,6 +29,7 @@ enum GeneralRowType: Int {
     case UsePasscode
     case MemorisePlaces
     case Version
+    case ShowTour
 
     static let count: Int = {
         var max: Int = 0
@@ -190,6 +191,10 @@ final class SettingsViewController: UIViewController {
         }
         queue.addOperation(importOp)
     }
+    
+    private func showTour() {
+        OnBoardingViewController.showInController(self)
+    }
 
 }
 
@@ -238,7 +243,9 @@ extension SettingsViewController: UITableViewDataSource {
                 lbl.text = appVersion()
                 lbl.sizeToFit()
                 cell.accessoryView = lbl
-                
+            case .ShowTour:
+                cell.textLabel?.text = L("settings.show_tour")
+                cell.accessoryType = .DisclosureIndicator
             }
         case .ImportExport:
             let rowType = ImportExportRowType(rawValue: indexPath.row)!
@@ -305,6 +312,9 @@ extension SettingsViewController: UITableViewDelegate {
                 case .MemorisePlaces:
                     break
                 case .Version:
+                    break
+                case .ShowTour:
+                    showTour()
                     break
                 }
             case .ImportExport:
