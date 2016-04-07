@@ -142,22 +142,38 @@ final class SettingsViewController: UIViewController {
     private let queue = NSOperationQueue()
     private func launchExport() {
         HUD.show(.Progress)
-        let exportOp = ExportOperation()
+        let path = self.exportPath()
+        let exportOp = XLSExportOperation(path: path)
         exportOp.completionBlock = {
             dispatch_async(dispatch_get_main_queue()) {
                 HUD.hide(animated: true) { finished in
                     if let err = exportOp.error {
                         HUD.flash(HUDContentType.Label(err.localizedDescription))
-                    } else if let path = exportOp.exportedPath {
-                        let items = [ "export.csv", NSURL(fileURLWithPath: path) ]
-                        let share = UIActivityViewController(activityItems: items, applicationActivities: nil)
-                        self.presentViewController(share, animated: true, completion: nil)
+                    } else {
+                        let URL = NSURL(fileURLWithPath: path)
+                        let controller = UIDocumentInteractionController(URL: URL)
+                        controller.delegate = self
+                        controller.presentPreviewAnimated(true)
                     }
                 }
             }
         }
         queue.addOperation(exportOp)
     }
+    
+    private func exportPath() -> String {
+        let dateFormatter = NSDateFormatter(dateFormat: "dd'_'MM'_'yyyy'_'HH'_'mm")
+        let filename = "export_\(dateFormatter.stringFromDate(NSDate()))"
+        return applicationCachesDirectory
+            .URLByAppendingPathComponent(filename)
+            .URLByAppendingPathExtension("xlsx").path!
+    }
+    
+    private lazy var applicationCachesDirectory: NSURL = {
+        let urls = NSFileManager.defaultManager()
+            .URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
+        return urls[urls.count-1]
+    }()
 
     private func launchImport() {
         let importOp = ImportOperation(controller: self)
@@ -177,6 +193,7 @@ final class SettingsViewController: UIViewController {
 
 }
 
+// MARK: - UITableViewDataSource
 extension SettingsViewController: UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return SettingsSectionType.count
@@ -271,6 +288,7 @@ extension SettingsViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension SettingsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -303,5 +321,12 @@ extension SettingsViewController: UITableViewDelegate {
     private func showManageAddictions() {
         let controller = AddictionListViewController()
         navigationController?.pushViewController(controller, animated: true)
+    }
+}
+
+// MARK: - UIDocumentInteractionControllerDelegate
+extension SettingsViewController: UIDocumentInteractionControllerDelegate {
+    func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
+        return tabBarController ?? self
     }
 }
