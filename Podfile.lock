@@ -17,8 +17,8 @@ PODS:
   - libxlsxwriter (0.3.1)
   - PKHUD (3.1.0)
   - Result (1.0.2)
-  - SnapKit (0.19.1)
-  - SwiftHelpers (1.0.3)
+  - SnapKit (0.20.0)
+  - SwiftHelpers (1.0.4)
   - SwiftyUserDefaults (2.1.3)
 
 DEPENDENCIES:
@@ -39,7 +39,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SwiftHelpers:
-    :commit: 8007ee45171aa5a9f6e25658c8b9735ae8d0df24
+    :commit: dedd4a57956725a390b203b2c4c4c84db87f21dd
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:
@@ -51,8 +51,8 @@ SPEC CHECKSUMS:
   libxlsxwriter: 4b1a3133ddb273cf49b3541a04567f647697c3ed
   PKHUD: 4167eccdb1b3a892fd80ce2b51cb6ba412a889ab
   Result: dd3dd71af3fa2e262f1a999e14fba2c25ec14f16
-  SnapKit: eff58d6e3451bf2f482db2eccf86aecf371dc62d
-  SwiftHelpers: d4599f7b98292b530d8bfa1ebd523450bb1eb4ef
+  SnapKit: 5fce3c1bbbf1fbd31de9aa92f33eb9fa03f15650
+  SwiftHelpers: dbbd107af3ab804cefe96283f1cf49b6c50f0a1d
   SwiftyUserDefaults: bd394a09247e3f00e17e402aa535c047c5d12b07
 
 COCOAPODS: 0.39.0
