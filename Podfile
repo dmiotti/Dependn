@@ -17,5 +17,6 @@ target 'Dependn' do
   pod 'ChameleonFramework/Swift'
   pod 'SwiftyUserDefaults'
   pod 'libxlsxwriter'
+  pod 'Applanga'
 
 end
