@@ -29,17 +29,22 @@ DEPENDENCIES:
   - CocoaLumberjack/Swift
   - Crashlytics
   - Fabric
-  - libxlsxwriter
+  - libxlsxwriter (from `git@github.com:dmiotti/libxlsxwriter.git`)
   - PKHUD
   - SnapKit
   - SwiftHelpers (from `git@github.com:dmiotti/SwiftHelpers.git`)
   - SwiftyUserDefaults
 
 EXTERNAL SOURCES:
+  libxlsxwriter:
+    :git: git@github.com:dmiotti/libxlsxwriter.git
   SwiftHelpers:
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 CHECKOUT OPTIONS:
+  libxlsxwriter:
+    :commit: 07734b1af418dd9be25262cd74cbbc17a6bbb1c9
+    :git: git@github.com:dmiotti/libxlsxwriter.git
   SwiftHelpers:
     :commit: b282cc115971b776fd34cb8759951d0d0e24f867
     :git: git@github.com:dmiotti/SwiftHelpers.git
