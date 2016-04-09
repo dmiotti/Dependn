@@ -40,7 +40,6 @@ enum GeneralRowType: Int {
 
 enum ImportExportRowType: Int {
     case Export
-    case Import
 
     static let count: Int = {
         var max: Int = 0
@@ -250,9 +249,6 @@ extension SettingsViewController: UITableViewDataSource {
         case .ImportExport:
             let rowType = ImportExportRowType(rawValue: indexPath.row)!
             switch rowType {
-            case .Import:
-                cell.textLabel?.textAlignment = .Center
-                cell.textLabel?.text = L("settings.action.import")
             case .Export:
                 cell.textLabel?.textAlignment = .Center
                 cell.textLabel?.text = L("settings.action.export")
@@ -320,8 +316,6 @@ extension SettingsViewController: UITableViewDelegate {
             case .ImportExport:
                 let rowType = ImportExportRowType(rawValue: indexPath.row)!
                 switch rowType {
-                case .Import:
-                    launchImport()
                 case .Export:
                     launchExport()
                 }
