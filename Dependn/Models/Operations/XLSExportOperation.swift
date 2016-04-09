@@ -49,8 +49,6 @@ final class XLSExportOperation: SHOperation {
                 L("export.place"),
                 L("export.feeling"),
                 L("export.comment"),
-                L("export.lat"),
-                L("export.lon"),
                 L("export.desire"),
                 L("export.conso")
             ]
@@ -120,8 +118,6 @@ final class XLSExportOperation: SHOperation {
             record.place?.name.firstLetterCapitalization ?? "",
             record.feeling ?? "",
             record.comment ?? "",
-            record.lat?.stringValue ?? "",
-            record.lon?.stringValue ?? "",
             record.desire.boolValue ? L("export.choosen") : "",
             record.desire.boolValue ? "" : L("export.choosen")
         ]
