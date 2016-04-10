@@ -484,6 +484,7 @@
 				589065CC1C7A3F2F00F7F6DC /* Sources */,
 				589065CD1C7A3F2F00F7F6DC /* Frameworks */,
 				589065CE1C7A3F2F00F7F6DC /* Resources */,
+				583C014E1CBA4FEC00E0D41C /* Inc build number */,
 				5890660A1C7A489800F7F6DC /* Embed Frameworks */,
 				5890660E1C7A48B700F7F6DC /* CopyFiles */,
 				5888DC7B1C7B217600E01A32 /* Fabric */,
@@ -637,6 +638,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dependn/Pods-Dependn-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		583C014E1CBA4FEC00E0D41C /* Inc build number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Inc build number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(git rev-list --count HEAD)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
 		5888DC7B1C7B217600E01A32 /* Fabric */ = {
 			isa = PBXShellScriptBuildPhase;
