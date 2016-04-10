@@ -278,7 +278,7 @@
 "export.type" = "Titre";
 
 /*  */
-"statspanel.interval" = "Last dose";
+"statspanel.interval" = "Last time";
 
 /*  */
 "places.title" = "My key locations";
