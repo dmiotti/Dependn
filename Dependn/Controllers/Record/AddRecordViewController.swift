@@ -358,7 +358,10 @@ extension AddRecordViewController: UITableViewDelegate {
         case .Feeling:
             controller.updateTitle(L("new_record.feeling_subtitle"), blueBackground: false)
             controller.originalText = chosenFeeling
-            controller.placeholder = L("new_record.feeling_placeholder")
+            if !Defaults[.hasSeenEmotionPlaceholder] {
+                controller.placeholder = L("new_record.feeling_placeholder")
+                Defaults[.hasSeenEmotionPlaceholder] = true
+            }
         case .Comment:
             controller.updateTitle(L("new_record.comment_subtitle"), blueBackground: false)
             controller.originalText = chosenComment
