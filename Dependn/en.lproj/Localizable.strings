@@ -320,7 +320,7 @@
 "places.new.add" = "Create";
 
 /*  */
-"new_record.conso" = "Consumption";
+"new_record.conso" = "Done";
 
 /*  */
 "places.delete.title" = "Are you sure you want to delete %@?";
@@ -335,7 +335,7 @@
 "onboarding.sex" = "Sex";
 
 /*  */
-"history.record.desire" = "Envie";
+"history.record.desire" = "Craving";
 
 /*  */
 "places.new.error.ok" = "OK";
