@@ -19,7 +19,7 @@ PODS:
   - Result (1.0.2)
   - SnapKit (0.20.0)
   - SwiftHelpers (1.0.4)
-  - SwiftyUserDefaults (2.1.3)
+  - SwiftyUserDefaults (2.2.0)
 
 DEPENDENCIES:
   - BrightFutures
@@ -58,6 +58,6 @@ SPEC CHECKSUMS:
   Result: dd3dd71af3fa2e262f1a999e14fba2c25ec14f16
   SnapKit: 5fce3c1bbbf1fbd31de9aa92f33eb9fa03f15650
   SwiftHelpers: dbbd107af3ab804cefe96283f1cf49b6c50f0a1d
-  SwiftyUserDefaults: bd394a09247e3f00e17e402aa535c047c5d12b07
+  SwiftyUserDefaults: e7c8197a9d4068702e7f2406a968cae413b8de27
 
 COCOAPODS: 0.39.0
