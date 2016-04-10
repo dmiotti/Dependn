@@ -40,6 +40,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             session = WCSession.defaultSession()
         }
         
+        if InitialImportPlacesOperation.shouldImportPlaces() {
+            let queue = NSOperationQueue()
+            let op = InitialImportPlacesOperation()
+            queue.addOperation(op)
+        }
+        
         return true
     }
     

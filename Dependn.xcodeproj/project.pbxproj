@@ -21,6 +21,7 @@
 		581DC5E71C8B73D3006DE551 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E61C8B73D3006DE551 /* UserDefaults.swift */; };
 		582820C91CAF1288002DC9AF /* OkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820C81CAF1288002DC9AF /* OkButton.swift */; };
 		582820CB1CAF1DD7002DC9AF /* HistoryEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */; };
+		583C01501CBA565700E0D41C /* InitialImportPlacesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */; };
 		58416A7A1CB4818D00DB1A4B /* DependencyChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */; };
 		584897861CAC641E00CA18CE /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584897851CAC641E00CA18CE /* OnBoardingViewController.swift */; };
 		58548BBD1C8BA33800C7C940 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */; };
@@ -133,6 +134,7 @@
 		581DC5E61C8B73D3006DE551 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		582820C81CAF1288002DC9AF /* OkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OkButton.swift; sourceTree = "<group>"; };
 		582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryEmptyView.swift; sourceTree = "<group>"; };
+		583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportPlacesOperation.swift; sourceTree = "<group>"; };
 		58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserCell.swift; sourceTree = "<group>"; };
 		584897851CAC641E00CA18CE /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
@@ -423,6 +425,7 @@
 				58DF62BA1C83BDEE0035F608 /* NearestPlaceOperation.swift */,
 				586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */,
 				58683B331CB7089B000FE358 /* XLSExportOperation.swift */,
+				583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -742,6 +745,7 @@
 				58683B341CB7089B000FE358 /* XLSExportOperation.swift in Sources */,
 				581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */,
 				58548BDE1C8BE18100C7C940 /* AddRecordViewController.swift in Sources */,
+				583C01501CBA565700E0D41C /* InitialImportPlacesOperation.swift in Sources */,
 				58DC7A0D1C8CD873007F9F5D /* NewAddictionTableViewCell.swift in Sources */,
 				58BB15881CA1F91A00E3E06A /* Place+CoreDataProperties.swift in Sources */,
 				58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */,

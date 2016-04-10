@@ -4,7 +4,7 @@
  * Release: Working copy
  * Locale: en, English
  * Exported by: Unregistered user
- * Exported at: Sun, 10 Apr 2016 10:22:20 +0100
+ * Exported at: Sun, 10 Apr 2016 15:10:08 +0100
  */
 
 /*  */
@@ -254,22 +254,22 @@
 "suggested.addictions.videogames" = "Video games";
 
 /*  */
-"export.desire" = "Envie";
+"export.desire" = "Craving";
 
 /*  */
-"onboarding.addiction.title" = "Mes dépendances";
+"onboarding.addiction.title" = "My addictions";
 
 /*  */
-"onboarding.select_dependencies" = "Sélectionnez la ou les dépendances que vous souhaitez contrôler.";
+"onboarding.select_dependencies" = "Please select one or more addictions you want to control.";
 
 /*  */
-"places.delete.confirm" = "Continuer";
+"places.delete.confirm" = "Continue";
 
 /*  */
-"export.choosen" = "Oui";
+"export.choosen" = "Yes";
 
 /*  */
-"export.conso" = "Conso";
+"export.conso" = "Consumption";
 
 /*  */
 "export.lon" = "Longitude";
@@ -278,67 +278,58 @@
 "export.type" = "Titre";
 
 /*  */
-"statspanel.interval" = "Last time";
+"statspanel.interval" = "Last dose";
 
 /*  */
-"places.title" = "Mes lieux-clés";
+"places.title" = "My key locations";
 
 /*  */
 "onboarding.addiction.cancel" = "Cancel";
 
 /*  */
-"history.record.conso" = "Conso";
+"history.record.conso" = "Consumption";
 
 /*  */
-"places.modify.title" = "Renomer";
+"places.modify.title" = "Rename";
 
 /*  */
-"onboarding.addiction.done" = "Valider";
+"onboarding.addiction.done" = "Confirm";
 
 /*  */
 "onboarding.cig" = "Cigarette";
 
 /*  */
-"onboarding.heroine" = "Héroine";
-
-/*  */
-"onboarding.tour1" = "Manange your addictions on a daily basis";
+"onboarding.tour1" = "Manage your addictions on a daily basis";
 
 /*  */
 "onboarding.tour3" = "Share your data with your medical specialist";
 
 /*  */
-"places.new.message" = "Dans quel contexte êtes-vous ?";
+"places.new.message" = "Give it some context";
 
 /*  */
-"onboarding.tour2" = "Notez vos envies et consommations";
+"onboarding.tour2" = "Record your cravings and consumption";
 
 /*  */
-"new_record.desire" = "Envie";
+"new_record.desire" = "Craving";
 
 /*  */
-"onboarding.food" = "Alimentaire";
+"places.modify" = "Confirm";
 
 /*  */
-"places.modify" = "Valider";
+"places.new.add" = "Create";
 
 /*  */
-"places.new.add" = "Créer";
+"new_record.conso" = "Consumption";
 
 /*  */
-"new_record.conso" = "Conso";
-
-/*  */
-"places.modify.placeholder" = "Entrer le nouveau nom";
-
-/*  */
-"places.delete.title" = "Êtes-vous sûr(e) de vouloir supprimer %@ ?";
+"places.delete.title" = "Are you sure you want to delete %@?";
 
 /*  */
 "onboarding.weed" = "Cannabis";
 
 /*  */
-"places.new.title" = "Ajouter un lieu";
+"places.new.title" = "Add a new place";
 
 /*  */
 "onboarding.sex" = "Sex";
@@ -350,16 +341,16 @@
 "places.new.error.ok" = "OK";
 
 /*  */
-"history.help" = "Notez votre première envie ou consommation en appuyant sur le bouton “+”";
+"history.help" = "Note your first craving or consumption by pressing the “+” button";
 
 /*  */
-"places.new.cancel" = "Annuler";
+"places.new.cancel" = "Cancel";
 
 /*  */
-"places.new.error" = "Oups";
+"places.new.error" = "Oops...";
 
 /*  */
-"places.delete.cancel" = "Annuler";
+"places.delete.cancel" = "Cancel";
 
 /*  */
 "places.new.name_missing" = "Vous devez renseigner un nom";
@@ -368,7 +359,7 @@
 "places.delete.message" = "Toutes les entrées de %@ seront supprimées de l'application.";
 
 /*  */
-"places.new.placeholder" = "Exemple : Café clope, rail du soir";
+"places.new.placeholder" = "Example: Before sleeping; After lunch...";
 
 /*  */
 "export.lat" = "Latitude";
@@ -390,3 +381,48 @@
 
 /*  */
 "settings.show_tour" = "Show tour";
+
+/*  */
+"suggested.places.wakeup" = "Waking-up";
+
+/*  */
+"suggested.places.coffee" = "At coffee time";
+
+/*  */
+"suggested.places.ontheway" = "On my way";
+
+/*  */
+"suggested.places.beforelunch" = "Before lunch";
+
+/*  */
+"suggested.places.afterlunch" = "After lunch";
+
+/*  */
+"suggested.places.workbreak" = "Break from work";
+
+/*  */
+"suggested.places.phone" = "On the phone";
+
+/*  */
+"suggested.places.waiting" = "To fill in the time";
+
+/*  */
+"suggested.places.inthecar" = "In the car";
+
+/*  */
+"suggested.places.watchingmovie" = "Watching a movie";
+
+/*  */
+"suggested.places.withfriends" = "With friends";
+
+/*  */
+"suggested.places.drinking" = "While drinking";
+
+/*  */
+"suggested.places.party" = "In a party";
+
+/*  */
+"suggested.places.beforesleeping" = "Before sleeping";
+
+/*  */
+"places.suggested" = "Suggested places";

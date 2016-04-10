@@ -13,6 +13,6 @@ extension DefaultsKeys {
     static let alreadyLaunched = DefaultsKey<Bool>("alreadyLaunched")
     static let usePasscode = DefaultsKey<Bool>("usePasscode")
     static let useLocation = DefaultsKey<Bool>("useLocation")
-    
     static let hasSeenEmotionPlaceholder = DefaultsKey<Bool>("emotionPlaceholderSeen")
+    static let initialPlacesImported = DefaultsKey<Bool>("initialPlacesImported")
 }

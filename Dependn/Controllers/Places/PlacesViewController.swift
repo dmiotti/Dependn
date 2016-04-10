@@ -69,7 +69,7 @@ final class PlacesViewController: UIViewController {
         let alert = UIAlertController(title: L("places.new.title"), message: L("places.new.message"), preferredStyle: .Alert)
         let cancelAction = UIAlertAction(title: L("places.new.cancel"), style: .Cancel, handler: nil)
         let addAction = UIAlertAction(title: L("places.new.add"), style: .Default) { action in
-            if let name = alert.textFields?.first?.text {
+            if let name = alert.textFields?.first?.text where name.characters.count > 0 {
                 self.addPlace(name)
             } else {
                 UIAlertController.presentAlertWithTitle(

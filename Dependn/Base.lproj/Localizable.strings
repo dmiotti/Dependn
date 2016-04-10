@@ -4,7 +4,7 @@
  * Release: Working copy
  * Locale: fr, French
  * Exported by: Unregistered user
- * Exported at: Sun, 10 Apr 2016 10:22:25 +0100
+ * Exported at: Sun, 10 Apr 2016 15:10:10 +0100
  */
 
 /*  */
@@ -191,7 +191,7 @@
 "import.cancelled_by_user" = "Veuillez recommencer";
 
 /*  */
-"addiction_list.new.error" = "Oups";
+"addiction_list.new.error" = "Oups !";
 
 /*  */
 "addiction_list.delete.message" = "Toutes les entrées de %@ seront supprimées de l'application.";
@@ -299,9 +299,6 @@
 "onboarding.cig" = "Cigarette";
 
 /*  */
-"onboarding.heroine" = "Héroine";
-
-/*  */
 "onboarding.tour1" = "Contrôlez vos dépendances au quotidien";
 
 /*  */
@@ -317,9 +314,6 @@
 "new_record.desire" = "Envie";
 
 /*  */
-"onboarding.food" = "Alimentaire";
-
-/*  */
 "places.modify" = "Valider";
 
 /*  */
@@ -327,9 +321,6 @@
 
 /*  */
 "new_record.conso" = "Conso";
-
-/*  */
-"places.modify.placeholder" = "Entrer le nouveau nom";
 
 /*  */
 "places.delete.title" = "Êtes-vous sûr(e) de vouloir supprimer %@ ?";
@@ -356,19 +347,19 @@
 "places.new.cancel" = "Annuler";
 
 /*  */
-"places.new.error" = "Oups";
+"places.new.error" = "Oups !";
 
 /*  */
 "places.delete.cancel" = "Annuler";
 
 /*  */
-"places.new.name_missing" = "Vous devez renseigner un nom";
+"places.new.name_missing" = "Vous devez d'abord renseigner un lieu";
 
 /*  */
 "places.delete.message" = "Toutes les entrées de %@ seront supprimées de l'application.";
 
 /*  */
-"places.new.placeholder" = "Exemple : Café clope, rail du soir";
+"places.new.placeholder" = "Exemple : Avant de me coucher; Pour patienter...";
 
 /*  */
 "export.lat" = "Latitude";
@@ -390,3 +381,48 @@
 
 /*  */
 "settings.show_tour" = "Revoir l'introduction";
+
+/*  */
+"suggested.places.wakeup" = "Au réveil";
+
+/*  */
+"suggested.places.coffee" = "En prenant un café";
+
+/*  */
+"suggested.places.ontheway" = "En chemin";
+
+/*  */
+"suggested.places.beforelunch" = "Avant le repas";
+
+/*  */
+"suggested.places.afterlunch" = "Après le repas";
+
+/*  */
+"suggested.places.workbreak" = "À la pause au travail";
+
+/*  */
+"suggested.places.phone" = "Au téléphone";
+
+/*  */
+"suggested.places.waiting" = "Pour patienter";
+
+/*  */
+"suggested.places.inthecar" = "Dans la voiture";
+
+/*  */
+"suggested.places.watchingmovie" = "Devant un film";
+
+/*  */
+"suggested.places.withfriends" = "Avec des amis";
+
+/*  */
+"suggested.places.drinking" = "En prenant un verre";
+
+/*  */
+"suggested.places.party" = "Pendant une fête";
+
+/*  */
+"suggested.places.beforesleeping" = "Avant de me coucher";
+
+/*  */
+"places.suggested" = "Suggestions";

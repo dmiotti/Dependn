@@ -151,7 +151,7 @@ final class ImportOperation: SHOperation {
                             try self.deleteAllAddictions()
                             try self.deleteAllPlaces()
                             try self.importFileAtURL(file)
-                            try self.saveContext()
+                            try self.context.cascadeSave()
                         } catch let err as NSError {
                             self.error = err
                         }
@@ -264,14 +264,6 @@ final class ImportOperation: SHOperation {
         let places = try context.executeFetchRequest(req) as! [Place]
         for place in places {
             context.deleteObject(place)
-        }
-    }
-    
-    private func saveContext() throws {
-        var ctx: NSManagedObjectContext? = context
-        while let c = ctx {
-            try c.save()
-            ctx = c.parentContext
         }
     }
     
