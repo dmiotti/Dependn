@@ -35,6 +35,7 @@ final class DependencyChooserViewController: UIViewController {
     
     private var proposedAddictions = [SuggestedAddiction]()
     private var selectedAddictions = [SuggestedAddiction]()
+    private var searchResult = [SuggestedAddiction]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -221,7 +222,8 @@ final class DependencyChooserViewController: UIViewController {
                 let addiction = SuggestedAddiction(name: name, color: UIColor.randomFlatColor().hexValue())
                 self.proposedAddictions.append(addiction)
                 self.selectedAddictions.append(addiction)
-                self.tableView.reloadData()
+                let idxPath = NSIndexPath(forRow: self.proposedAddictions.count - 1, inSection: 0)
+                self.tableView.insertRowsAtIndexPaths([idxPath], withRowAnimation: .Automatic)
             } else {
                 UIAlertController.presentAlertWithTitle(L("addiction_list.new.error"),
                                                         message: L("addiction_list.new.name_missing"), inController: self)
