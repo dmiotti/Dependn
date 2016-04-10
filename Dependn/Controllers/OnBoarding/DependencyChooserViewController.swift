@@ -71,15 +71,22 @@ final class DependencyChooserViewController: UIViewController {
     // MARK: - Create suggested addictions
     
     private func fillWithData() {
-        let cig     = SuggestedAddiction(name: L("onboarding.cig"),     color: "#27A9F1")
-        let weed    = SuggestedAddiction(name: L("onboarding.weed"),    color: "#2DD7AA")
-        let heroine = SuggestedAddiction(name: L("onboarding.heroine"), color: "#8B572A")
-        let sex     = SuggestedAddiction(name: L("onboarding.sex"),     color: "#BD10E0")
-        
-        proposedAddictions.append(cig)
-        proposedAddictions.append(weed)
-        proposedAddictions.append(heroine)
-        proposedAddictions.append(sex)
+        proposedAddictions.appendContentsOf([
+            SuggestedAddiction(name: L("suggested.addictions.tobacco"),     color: "#27A9F1"),
+            SuggestedAddiction(name: L("suggested.addictions.alcohol"),     color: "#BD10E0"),
+            SuggestedAddiction(name: L("suggested.addictions.cannabis"),    color: "#2DD7AA"),
+            SuggestedAddiction(name: L("suggested.addictions.antidepressant"), color: "#16a085"),
+            SuggestedAddiction(name: L("suggested.addictions.tranquilizer"), color: "#7f8c8d"),
+            SuggestedAddiction(name: L("suggested.addictions.videogames"),  color: "#e67e22"),
+            SuggestedAddiction(name: L("suggested.addictions.screentime"),  color: "#c0392b"),
+            SuggestedAddiction(name: L("suggested.addictions.gambling"),    color: "#f1c40f"),
+            SuggestedAddiction(name: L("suggested.addictions.sex"),         color: "#1abc9c"),
+            SuggestedAddiction(name: L("suggested.addictions.food"),        color: "#2980b9"),
+            SuggestedAddiction(name: L("suggested.addictions.heroin"),      color: "#8B572A"),
+            SuggestedAddiction(name: L("suggested.addictions.mdma"),        color: "#BD10E0"),
+            SuggestedAddiction(name: L("suggested.addictions.ecigarette"),  color: "#e74c3c"),
+            SuggestedAddiction(name: L("suggested.addictions.sport"),       color: "#2c3e50")
+        ])
     }
     
     // MARK: - Button Events
@@ -258,7 +265,10 @@ extension DependencyChooserViewController: UITableViewDataSource {
         return 55
     }
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.01
+        if section == 1 {
+            return 50.0
+        }
+        return 0
     }
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()

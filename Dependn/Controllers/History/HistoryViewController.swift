@@ -288,7 +288,7 @@ extension HistoryViewController: UITableViewDataSource {
     private func attributedStringForRecord(record: Record, addiction: Addiction) -> NSAttributedString {
         let dateString = dateFormatter.stringFromDate(record.date)
         let desireType = record.desire.boolValue ? L("history.record.desire") : L("history.record.conso")
-        let typeString = "\(desireType) · \(addiction.name.capitalizedString)"
+        let typeString = "\(desireType) · \(addiction.name)"
         let full = "\(dateString)\n\(typeString)"
         let attr = NSMutableAttributedString(string: full)
         let fullRange = NSRange(location: 0, length: attr.length)

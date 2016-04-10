@@ -59,7 +59,7 @@ final class AddictionTableViewCell: SHCommonInitTableViewCell {
     
     private func configureWithAddiction() {
         if let addiction = addiction {
-            let name = addiction.name.capitalizedString
+            let name = addiction.name
             textLbl.text = name
             circleView.color = addiction.color.UIColor
             if let first = addiction.name.capitalizedString.characters.first {

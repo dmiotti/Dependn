@@ -64,7 +64,7 @@ final class XLSExportOperation: SHOperation {
                 for addiction in addictions {
                     
                     // Build xlsx header
-                    let name = addiction.name.firstLetterCapitalization
+                    let name = addiction.name
                     let worksheet = workbook_add_worksheet(workbook, name)
                     worksheet_set_column(worksheet, 0, UInt16(headers.count), 15, nil)
                     

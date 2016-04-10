@@ -18,7 +18,7 @@ extension Addiction {
         }
         
         let newAdd = NSEntityDescription.insertNewObjectForEntityForName(Addiction.entityName, inManagedObjectContext: context) as! Addiction
-        newAdd.name = name.lowercaseString
+        newAdd.name = name
         newAdd.color = UIColor.randomFlatColor().hexValue()
         return newAdd
     }

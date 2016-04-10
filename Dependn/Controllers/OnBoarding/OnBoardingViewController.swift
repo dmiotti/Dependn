@@ -67,7 +67,7 @@ final class OnBoardingViewController: UIViewController {
         view.addSubview(nextBtn)
         
         okBtn = OkButton()
-        okBtn.textLbl.text = L("OK")
+        okBtn.textLbl.text = L("onboarding.ok")
         okBtn.button.addTarget(self, action: #selector(OnBoardingViewController.okBtnClicked(_:)), forControlEvents: .TouchUpInside)
         view.addSubview(okBtn)
         
