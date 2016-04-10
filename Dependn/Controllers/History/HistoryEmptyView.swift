@@ -20,7 +20,7 @@ final class HistoryEmptyView: SHCommonInitView {
         backgroundColor = UIColor.lightBackgroundColor()
         
         imageView = UIImageView(image: UIImage(named: "tour_specialist"))
-        imageView.contentMode = .Center
+        imageView.contentMode = .ScaleAspectFit
         addSubview(imageView)
         
         textLbl = UILabel()
@@ -31,17 +31,25 @@ final class HistoryEmptyView: SHCommonInitView {
         addSubview(textLbl)
         
         imageView.snp_makeConstraints {
-            $0.top.equalTo(self).offset(51)
+            if DeviceType.IS_IPHONE_4_OR_LESS || DeviceType.IS_IPHONE_5 {
+                $0.top.greaterThanOrEqualTo(self).offset(20).priorityLow()
+            } else {
+                $0.top.greaterThanOrEqualTo(self).offset(50)
+            }
+            
             $0.left.equalTo(self)
             $0.right.equalTo(self)
-            $0.height.equalTo(self.snp_width).multipliedBy(0.93)
+            $0.bottom.lessThanOrEqualTo(textLbl.snp_top).offset(-10)
         }
         
         textLbl.snp_makeConstraints {
-            $0.top.equalTo(imageView.snp_bottom).offset(10)
             $0.left.equalTo(self).offset(50)
             $0.right.equalTo(self).offset(-50)
-            $0.bottom.lessThanOrEqualTo(self)
+            if DeviceType.IS_IPHONE_4_OR_LESS {
+                $0.bottom.equalTo(self).offset(-100)
+            } else {
+                $0.bottom.equalTo(self).offset(-130)
+            }
         }
     }
 

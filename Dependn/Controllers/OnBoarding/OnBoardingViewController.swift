@@ -87,7 +87,11 @@ final class OnBoardingViewController: UIViewController {
             imgView.contentMode = .Center
             containerScrollView.addSubview(imgView)
             imgView.snp_makeConstraints {
-                $0.top.equalTo(containerScrollView).offset(85)
+                if DeviceType.IS_IPHONE_4_OR_LESS {
+                    $0.top.equalTo(containerScrollView).offset(20)
+                } else {
+                    $0.top.equalTo(containerScrollView).offset(85)
+                }
                 
                 if let last = lastImageView {
                     $0.left.equalTo(last.snp_right)
@@ -177,7 +181,11 @@ final class OnBoardingViewController: UIViewController {
         }
         
         textScrollView.snp_makeConstraints {
-            $0.bottom.equalTo(pageControl.snp_top).offset(-80)
+            if DeviceType.IS_IPHONE_4_OR_LESS {
+                $0.bottom.equalTo(pageControl.snp_top).offset(-35)
+            } else {
+                $0.bottom.equalTo(pageControl.snp_top).offset(-80)
+            }
             $0.left.equalTo(view)
             $0.right.equalTo(view)
             $0.height.equalTo(42);

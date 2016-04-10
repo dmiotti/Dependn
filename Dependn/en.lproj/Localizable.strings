@@ -260,7 +260,7 @@
 "onboarding.addiction.title" = "My addictions";
 
 /*  */
-"onboarding.select_dependencies" = "Please select one or more addictions you want to control.";
+"onboarding.select_dependencies" = "Please select the addiction(s) you wish to monitor";
 
 /*  */
 "places.delete.confirm" = "Continue";
