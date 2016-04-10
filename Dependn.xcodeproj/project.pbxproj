@@ -72,7 +72,6 @@
 		58F092CD1C9615AB00DF4ADC /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F092CC1C9615AB00DF4ADC /* InterfaceController.swift */; };
 		58F092CF1C9615AB00DF4ADC /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F092CE1C9615AB00DF4ADC /* ExtensionDelegate.swift */; };
 		58F092D11C9615AB00DF4ADC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58F092D01C9615AB00DF4ADC /* Assets.xcassets */; };
-		58F092D51C9615AB00DF4ADC /* Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 58F092BB1C9615AA00DF4ADC /* Watch.app */; };
 		FE13DF52A68AA47D8184F97D /* Pods_Dependn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE1FEA29CFCF5CB9F1B7A41 /* Pods_Dependn.framework */; };
 /* End PBXBuildFile section */
 
@@ -83,13 +82,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 58F092C61C9615AB00DF4ADC;
 			remoteInfo = "Watch Extension";
-		};
-		58F092D31C9615AB00DF4ADC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 589065C81C7A3F2F00F7F6DC /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 58F092BA1C9615AA00DF4ADC;
-			remoteInfo = Watch;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -122,17 +114,6 @@
 				58F092C81C9615AB00DF4ADC /* Watch Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		58F092DD1C9615AB00DF4ADC /* Embed Watch Content */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
-			dstSubfolderSpec = 16;
-			files = (
-				58F092D51C9615AB00DF4ADC /* Watch.app in Embed Watch Content */,
-			);
-			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -508,12 +489,10 @@
 				5888DC7B1C7B217600E01A32 /* Fabric */,
 				02752BF4BCE3D4F09066974D /* Embed Pods Frameworks */,
 				CBD50F783DA64145D4A06428 /* Copy Pods Resources */,
-				58F092DD1C9615AB00DF4ADC /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				58F092D41C9615AB00DF4ADC /* PBXTargetDependency */,
 			);
 			name = Dependn;
 			productName = SmokeReporter;
@@ -780,11 +759,6 @@
 			isa = PBXTargetDependency;
 			target = 58F092C61C9615AB00DF4ADC /* Watch Extension */;
 			targetProxy = 58F092C91C9615AB00DF4ADC /* PBXContainerItemProxy */;
-		};
-		58F092D41C9615AB00DF4ADC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 58F092BA1C9615AA00DF4ADC /* Watch */;
-			targetProxy = 58F092D31C9615AB00DF4ADC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
