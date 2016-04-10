@@ -35,7 +35,11 @@ final class DependencyChooserViewController: UIViewController {
     
     private var proposedAddictions = [SuggestedAddiction]()
     private var selectedAddictions = [SuggestedAddiction]()
-    private var searchResult = [SuggestedAddiction]()
+    
+    private var isSearching: Bool {
+        return searchedResult.count > 0
+    }
+    private var searchedResult = [SuggestedAddiction]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -247,6 +251,9 @@ extension DependencyChooserViewController: UITableViewDataSource {
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
+            if isSearching {
+                return searchedResult.count
+            }
             return proposedAddictions.count
         }
         return 1
@@ -254,7 +261,12 @@ extension DependencyChooserViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier(DependencyChooserCell.reuseIdentifier, forIndexPath: indexPath) as! DependencyChooserCell
-            let addiction = proposedAddictions[indexPath.row]
+            let addiction: SuggestedAddiction
+            if isSearching {
+                addiction = searchedResult[indexPath.row]
+            } else {
+                addiction = proposedAddictions[indexPath.row]
+            }
             cell.addiction = addiction
             cell.choosen = selectedAddictions.contains(addiction)
             return cell
@@ -282,7 +294,12 @@ extension DependencyChooserViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if indexPath.section == 0 {
-            let addiction = proposedAddictions[indexPath.row]
+            let addiction: SuggestedAddiction
+            if isSearching {
+                addiction = searchedResult[indexPath.row]
+            } else {
+                addiction = proposedAddictions[indexPath.row]
+            }
             if let idx = selectedAddictions.indexOf(addiction) {
                 selectedAddictions.removeAtIndex(idx)
             } else {
@@ -298,8 +315,10 @@ extension DependencyChooserViewController: UITableViewDelegate {
 // MARK: - UISearchBarDelegate
 extension DependencyChooserViewController: UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-//        let pattrn: String? = searchText.characters.count > 0 ? searchText : nil
-//        performSearch(pattrn)
+        searchedResult = proposedAddictions.filter {
+            $0.name.containsString(searchText)
+        }
+        self.tableView.reloadData()
     }
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
@@ -307,5 +326,6 @@ extension DependencyChooserViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
+        searchedResult = []
     }
 }
