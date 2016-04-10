@@ -1,135 +1,392 @@
 /*
- Localizable.strings
- Dependn
- 
- Created by David Miotti on 22/02/16.
- Copyright © 2016 David Miotti. All rights reserved.
+ * Loco ios export: iOS Localizable.strings
+ * Project: Dependn_main_fr.xliff conversion
+ * Release: Working copy
+ * Locale: fr, French
+ * Exported by: Unregistered user
+ * Exported at: Sun, 10 Apr 2016 10:22:25 +0100
  */
 
-"app_name" = "DEPENDN’";
+/*  */
+"addiction_list.new.cancel" = "Annuler";
 
-"cancel" = "Annuler";
+/*  */
+"addiction_list.modify.title" = "Renommer";
 
-"navigation.back" = "Retour";
-
-"new_record.title" = "Nouvelle entrée";
-"new_record.cancel" = "Annuler";
-"new_record.date" = "Date";
-"new_record.place" = "Où êtes-vous ?";
-"new_record.add_btn" = "Ajouter";
-"new_record.intensity" = "Intensité";
-"new_record.optional" = "Aller plus loin";
-"new_record.feeling" = "Émotions";
-"new_record.comment" = "Commentaires additionnels";
-"new_record.place_placeholder" = "Exemple : à la maison";
-"new_record.feeling_placeholder" = "Exemple : je suis tendu et fatigué";
-"new_record.comment_placeholder" = "Autre chose à ajouter ?";
-"new_record.modify_title" = "Modifier cette entrée";
-"new_record.modify" = "Modifier";
-"new_record.add_text" = "Valider";
-"new_record.select_date" = "Valider";
-"new_record.feeling_subtitle" = "Émotions";
-"new_record.comment_subtitle" = "Commentaires";
-"new_record.conso" = "Conso";
-"new_record.desire" = "Envie";
-
-"export.type" = "Titre";
-"export.date" = "Date";
-"export.time" = "Heure";
-"export.intensity" = "Intensité";
-"export.comment" = "Commentaires";
-"export.place" = "Contexte";
-"export.lat" = "Latitude";
-"export.lon" = "Longitude";
-"export.feeling" = "Émotions";
-"export.desire" = "Envie";
-"export.conso" = "Conso";
-"export.choosen" = "Oui";
-
-"history.no_addictions.ok" = "Annuler";
-"history.no_addictions.add" = "Ajouter";
-"history.no_addictions.title" = "Nouvelle entrée";
-"history.no_addictions.message" = "Oups, vous devez d'abord ajouter une dépendance.";
-"history.record.conso" = "Conso";
-"history.record.desire" = "Envie";
-"history.help" = "Notez votre première envie ou consommation en appuyant sur le bouton “+”";
-
+/*  */
 "statspanel.today" = "Aujourd'hui";
-"statspanel.this_week" = "Cette semaine";
-"statspanel.interval" = "Dernière conso";
 
-"settings.title" = "Paramètres";
-"settings.manage_addictions" = "Gérer ma liste de dépendances";
-"settings.memorise_places" = "Mémoriser mes lieux";
-"settings.use_passcode" = "Activer le Passcode";
-"settings.version" = "Ma version de Dependn'";
-"settings.action.export" = "Exporter";
-"settings.action.import" = "Importer";
-"settings.section.general" = "Général";
-"settings.section.informations" = "Mes données";
-"settings.show_tour" = "Voir le Tour";
-
-"import.choose_file" = "Choisissez le ficher .csv à importer";
-"import.choose_file_message" = "Vos données actuelles seront remplacées par celles de cet import.";
-"import.no_data" = "Il n'y a aucune donnée à importer";
-"import.no_data_suggestion" = "Ajouter un fichier d'import dans l'application grâce à iTunes";
-"import.cancelled_by_user" = "Veuillez recommencer";
+/*  */
 "import.cancelled_by_user_recovery" = "Veuillez recommencer";
 
+/*  */
 "addiction_list.title" = "Mes dépendances";
-"addiction_list.new.title" = "Ajouter une dépendance";
-"addiction_list.new.message" = "Comment souhaiteriez-vous la nommer ?";
-"addiction_list.new.cancel" = "Annuler";
-"addiction_list.new.add" = "Créer";
-"addiction_list.new.placeholder" = "Exemple : Clopinettes";
-"addiction_list.new.error" = "Oups";
-"addiction_list.new.name_missing" = "Vous devez renseigner un nom";
-"addiction_list.new.error.ok" = "OK";
-"addiction_list.delete.cancel" = "Annuler";
-"addiction_list.delete.confirm" = "Continuer";
-"addiction_list.delete.title" = "Êtes-vous sûr(e) de vouloir supprimer %@ ?";
-"addiction_list.delete.message" = "Toutes les entrées de %@ seront supprimées de l'application.";
-"addiction_list.modify.title" = "Renomer";
-"addiction_list.modify.placeholder" = "Entrer le nouveau nom";
+
+/*  */
+"export.time" = "Heure";
+
+/*  */
+"search.placeholder" = "Rechercher";
+
+/*  */
+"import.no_data_suggestion" = "Ajouter un fichier d'import dans l'application grâce à iTunes";
+
+/*  */
 "addiction_list.modify" = "Valider";
 
-"passcode.reason" = "Accèder à vos données";
+/*  */
+"new_record.place_placeholder" = "Exemple : à la maison";
 
-"search.placeholder" = "Rechercher";
-"search.add_addiction" = "Ajouter une dépendance";
+/*  */
+"settings.action.export" = "Exporter";
 
+/*  */
+"import.no_data" = "Il n'y a aucune donnée à importer";
+
+/*  */
+"addiction_list.modify.placeholder" = "Entrer le nouveau nom";
+
+/*  */
+"addiction_list.new.message" = "Comment souhaiteriez-vous la nommer ?";
+
+/*  */
+"history.no_addictions.ok" = "Annuler";
+
+/*  */
+"addiction_list.delete.cancel" = "Annuler";
+
+/*  */
+"import.choose_file" = "Choisissez le ficher .csv à importer";
+
+/*  */
+"addiction_list.new.placeholder" = "Exemple : Clopinettes";
+
+/*  */
+"settings.memorise_places" = "Mémoriser mes lieux";
+
+/*  */
+"new_record.modify" = "Modifier";
+
+/*  */
 "intensity.low" = "Faible";
+
+/*  */
+"export.intensity" = "Intensité";
+
+/*  */
+"new_record.select_date" = "Valider";
+
+/*  */
+"new_record.add_text" = "Valider";
+
+/*  */
+"new_record.place" = "Où êtes-vous ?";
+
+/*  */
+"settings.manage_addictions" = "Gérer ma liste de dépendances";
+
+/*  */
+"new_record.date" = "Date";
+
+/*  */
+"new_record.modify_title" = "Modifier cette entrée";
+
+/*  */
 "intensity.medium" = "Moyenne";
+
+/*  */
+"new_record.feeling_subtitle" = "Émotions";
+
+/*  */
+"settings.use_passcode" = "Activer le Passcode";
+
+/*  */
+"addiction_list.new.add" = "Créer";
+
+/*  */
+"new_record.title" = "Nouvelle entrée";
+
+/*  */
+"history.no_addictions.add" = "Ajouter";
+
+/*  */
+"new_record.comment_placeholder" = "Autre chose à ajouter ?";
+
+/*  */
+"history.no_addictions.message" = "Oups, vous devez d'abord ajouter une dépendance.";
+
+/*  */
+"new_record.optional" = "Aller plus loin";
+
+/*  */
+"new_record.cancel" = "Annuler";
+
+/*  */
+"new_record.feeling" = "Émotions";
+
+/*  */
 "intensity.high" = "Forte";
 
-"places.title" = "Mes lieux-clés";
-"places.new.title" = "Ajouter un lieu";
-"places.new.message" = "Dans quel contexte êtes-vous ?";
-"places.new.cancel" = "Annuler";
-"places.new.add" = "Créer";
-"places.new.placeholder" = "Exemple : Café clope, rail du soir";
-"places.new.error" = "Oups";
-"places.new.name_missing" = "Vous devez renseigner un nom";
-"places.new.error.ok" = "OK";
-"places.delete.cancel" = "Annuler";
-"places.delete.confirm" = "Continuer";
-"places.delete.title" = "Êtes-vous sûr(e) de vouloir supprimer %@ ?";
-"places.delete.message" = "Toutes les entrées de %@ seront supprimées de l'application.";
-"places.modify.title" = "Renomer";
-"places.modify.placeholder" = "Entrer le nouveau nom";
-"places.modify" = "Valider";
+/*  */
+"new_record.comment" = "Commentaires additionnels";
 
-"onboarding.tour1" = "Contrôlez vos dépendances au quotidien";
-"onboarding.tour2" = "Notez vos envies et consommations";
-"onboarding.tour3" = "Échangez vos données avec votre spécialiste";
+/*  */
+"new_record.comment_subtitle" = "Commentaires";
 
+/*  */
+"passcode.reason" = "Accèder à vos données";
+
+/*  */
+"navigation.back" = "Retour";
+
+/*  */
+"new_record.feeling_placeholder" = "Exemple : je suis tendu et fatigué";
+
+/*  */
+"addiction_list.new.name_missing" = "Vous devez renseigner un nom";
+
+/*  */
+"import.choose_file_message" = "Vos données actuelles seront remplacées par celles de cet import.";
+
+/*  */
+"export.date" = "Date";
+
+/*  */
+"addiction_list.new.title" = "Ajouter une dépendance";
+
+/*  */
+"statspanel.this_week" = "Cette semaine";
+
+/*  */
+"settings.section.general" = "Général";
+
+/*  */
+"settings.section.informations" = "Mes données";
+
+/*  */
+"addiction_list.delete.confirm" = "Continuer";
+
+/*  */
+"settings.action.import" = "Importer";
+
+/*  */
+"addiction_list.new.error.ok" = "OK";
+
+/*  */
+"search.add_addiction" = "Ajouter une dépendance";
+
+/*  */
+"new_record.add_btn" = "Ajouter";
+
+/*  */
+"export.place" = "Lieu";
+
+/*  */
+"addiction_list.delete.title" = "Êtes-vous sûr(e) de vouloir supprimer %@ ?";
+
+/*  */
+"cancel" = "Annuler";
+
+/*  */
+"import.cancelled_by_user" = "Veuillez recommencer";
+
+/*  */
+"addiction_list.new.error" = "Oups";
+
+/*  */
+"addiction_list.delete.message" = "Toutes les entrées de %@ seront supprimées de l'application.";
+
+/*  */
+"export.comment" = "Commentaires";
+
+/*  */
+"settings.version" = "Ma version de Dependn'";
+
+/*  */
+"export.feeling" = "Émotions";
+
+/*  */
+"settings.title" = "Paramètres";
+
+/*  */
+"new_record.intensity" = "Intensité";
+
+/*  */
+"history.no_addictions.title" = "Nouvelle entrée";
+
+/*  */
+"app_name" = "DEPENDN’";
+
+/*  */
+"suggested.addictions.tobacco" = "Tabac";
+
+/*  */
+"suggested.addictions.cocaine" = "Cocaïne";
+
+/*  */
+"suggested.addictions.heroin" = "Héroïne";
+
+/*  */
+"suggested.addictions.lsd" = "LSD";
+
+/*  */
+"suggested.addictions.ecigarette" = "E-cigarette";
+
+/*  */
+"suggested.addictions.alcohol" = "Alcool";
+
+/*  */
+"suggested.addictions.cannabis" = "Cannabis";
+
+/*  */
+"suggested.addictions.food" = "Nourriture";
+
+/*  */
+"suggested.addictions.sport" = "Sport";
+
+/*  */
+"suggested.addictions.sex" = "Sexe";
+
+/*  */
+"suggested.addictions.gambling" = "Jeux d'argent";
+
+/*  */
+"suggested.addictions.videogames" = "Jeux vidéos";
+
+/*  */
+"export.desire" = "Envie";
+
+/*  */
 "onboarding.addiction.title" = "Mes dépendances";
+
+/*  */
+"onboarding.select_dependencies" = "Sélectionnez la ou les dépendances que vous souhaitez contrôler.";
+
+/*  */
+"places.delete.confirm" = "Continuer";
+
+/*  */
+"export.choosen" = "Oui";
+
+/*  */
+"export.conso" = "Conso";
+
+/*  */
+"export.lon" = "Longitude";
+
+/*  */
+"export.type" = "Titre";
+
+/*  */
+"statspanel.interval" = "Dernière conso";
+
+/*  */
+"places.title" = "Mes lieux-clés";
+
+/*  */
 "onboarding.addiction.cancel" = "Annuler";
+
+/*  */
+"history.record.conso" = "Conso";
+
+/*  */
+"places.modify.title" = "Renomer";
+
+/*  */
 "onboarding.addiction.done" = "Valider";
 
-"onboarding.select_dependencies" = "Sélectionnez la ou les dépendances que vous souhaitez contrôler.";
+/*  */
 "onboarding.cig" = "Cigarette";
-"onboarding.weed" = "Cannabis";
-"onboarding.sex" = "Sexuelle";
+
+/*  */
+"onboarding.heroine" = "Héroine";
+
+/*  */
+"onboarding.tour1" = "Contrôlez vos dépendances au quotidien";
+
+/*  */
+"onboarding.tour3" = "Échangez vos données avec votre spécialiste";
+
+/*  */
+"places.new.message" = "Dans quel contexte êtes-vous ?";
+
+/*  */
+"onboarding.tour2" = "Notez vos envies et consommations";
+
+/*  */
+"new_record.desire" = "Envie";
+
+/*  */
 "onboarding.food" = "Alimentaire";
 
+/*  */
+"places.modify" = "Valider";
+
+/*  */
+"places.new.add" = "Créer";
+
+/*  */
+"new_record.conso" = "Conso";
+
+/*  */
+"places.modify.placeholder" = "Entrer le nouveau nom";
+
+/*  */
+"places.delete.title" = "Êtes-vous sûr(e) de vouloir supprimer %@ ?";
+
+/*  */
+"onboarding.weed" = "Cannabis";
+
+/*  */
+"places.new.title" = "Ajouter un lieu";
+
+/*  */
+"onboarding.sex" = "Sexuelle";
+
+/*  */
+"history.record.desire" = "Envie";
+
+/*  */
+"places.new.error.ok" = "OK";
+
+/*  */
+"history.help" = "Notez votre première envie ou consommation en appuyant sur le bouton “+”";
+
+/*  */
+"places.new.cancel" = "Annuler";
+
+/*  */
+"places.new.error" = "Oups";
+
+/*  */
+"places.delete.cancel" = "Annuler";
+
+/*  */
+"places.new.name_missing" = "Vous devez renseigner un nom";
+
+/*  */
+"places.delete.message" = "Toutes les entrées de %@ seront supprimées de l'application.";
+
+/*  */
+"places.new.placeholder" = "Exemple : Café clope, rail du soir";
+
+/*  */
+"export.lat" = "Latitude";
+
+/*  */
+"suggested.addictions.mdma" = "MDMA";
+
+/*  */
+"suggested.addictions.screentime" = "Écrans";
+
+/*  */
+"onboarding.ok" = "OK";
+
+/*  */
+"suggested.addictions.tranquilizer" = "Anxiolytiques";
+
+/*  */
+"suggested.addictions.antidepressant" = "Antidépresseurs";
+
+/*  */
+"settings.show_tour" = "Revoir l'introduction";

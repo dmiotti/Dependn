@@ -1,5 +1,4 @@
 PODS:
-  - Applanga (1.0.38)
   - BrightFutures (3.3.0):
     - Result (~> 1.0)
   - ChameleonFramework/Default (2.1.0)
@@ -23,7 +22,6 @@ PODS:
   - SwiftyUserDefaults (2.1.3)
 
 DEPENDENCIES:
-  - Applanga
   - BrightFutures
   - ChameleonFramework/Swift
   - CocoaLumberjack/Swift
@@ -50,7 +48,6 @@ CHECKOUT OPTIONS:
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:
-  Applanga: 46cc63b00ad15a29c6505eb9c19294793bffcab2
   BrightFutures: f4b491b3107487a0469973a74f81f334eb0ed60a
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0

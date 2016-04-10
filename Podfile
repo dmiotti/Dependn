@@ -17,6 +17,5 @@ target 'Dependn' do
   pod 'ChameleonFramework/Swift'
   pod 'SwiftyUserDefaults'
   pod 'libxlsxwriter', :git => 'git@github.com:dmiotti/libxlsxwriter.git'
-  pod 'Applanga'
 
 end
