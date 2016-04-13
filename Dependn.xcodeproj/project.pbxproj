@@ -926,6 +926,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.dependn;
 				PRODUCT_NAME = Dependn;
 				PROVISIONING_PROFILE = "da44c5f8-6b01-4277-bfd4-24dc6bd7914c";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -947,6 +948,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.dependn;
 				PRODUCT_NAME = Dependn;
 				PROVISIONING_PROFILE = "8901f76c-0e14-46ac-a282-287181f43c76";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
