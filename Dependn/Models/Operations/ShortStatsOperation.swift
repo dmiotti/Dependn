@@ -69,6 +69,7 @@ final class ShortStatsOperation: SHOperation {
             
         } catch let err as NSError {
             self.error = err
+            finish()
         }
     }
     
@@ -78,7 +79,7 @@ final class ShortStatsOperation: SHOperation {
         
         let now = NSDate()
         
-        let todayRange = TimeRange(start: now.beginningOfDay, end: now)
+        let todayRange = TimeRange(start: now.beginningOfDay, end: now.endOfDay)
         let todayOp = CountOperation(addiction: addiction, range: todayRange)
         todayOp.completionBlock = {
             if let count = todayOp.total {

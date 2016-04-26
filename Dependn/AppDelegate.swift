@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    private let statQueue = NSOperationQueue()
+    private let watchQueue = NSOperationQueue()
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
@@ -98,33 +98,16 @@ extension AppDelegate: WCSessionDelegate {
         if let action = message["action"] as? String {
             switch action {
             case "stats":
-                let statsOp = ShortStatsOperation()
+                let statsOp = WatchStatsOperation()
                 statsOp.completionBlock = {
-                    replyHandler([
-                        "stats": self.formatStatsResultsForAppleWatch(statsOp.results)
-                    ])
+                    let res = WatchStatsOperation.formatStatsResultsForAppleWatch(statsOp.results)
+                    replyHandler([ "stats": res ])
                 }
-                statQueue.addOperation(statsOp)
+                watchQueue.addOperation(statsOp)
                 break
             default:
                 break
             }
         }
-    }
-    
-    private func formatStatsResultsForAppleWatch(results: [StatsResult]) -> [Dictionary<String, AnyObject>] {
-        var data = [Dictionary<String, AnyObject>]()
-        for result in results {
-            if let today = result.todayCount, week = result.thisWeekCount, sinceLast = result.sinceLast {
-                let dict: Dictionary<String, AnyObject> = [
-                    "name": result.addiction,
-                    "today": today,
-                    "thisweek": week,
-                    "sincelast": sinceLast
-                ]
-                data.append(dict)
-            }
-        }
-        return data
     }
 }

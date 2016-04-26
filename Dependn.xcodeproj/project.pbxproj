@@ -22,6 +22,13 @@
 		582820C91CAF1288002DC9AF /* OkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820C81CAF1288002DC9AF /* OkButton.swift */; };
 		582820CB1CAF1DD7002DC9AF /* HistoryEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */; };
 		583C01501CBA565700E0D41C /* InitialImportPlacesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */; };
+		583C9C661CCEBAC600E6FD9D /* Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 58F092BB1C9615AA00DF4ADC /* Watch.app */; };
+		583C9C681CCEC62900E6FD9D /* YesterdayInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */; };
+		583C9C6A1CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C691CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift */; };
+		583C9C6C1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C6B1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift */; };
+		583C9C6E1CCEC77E00E6FD9D /* CoreStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C6D1CCEC77E00E6FD9D /* CoreStack.swift */; };
+		583C9C701CCECA9500E6FD9D /* WatchStatsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C6F1CCECA9500E6FD9D /* WatchStatsOperation.swift */; };
+		583C9C721CCEE28500E6FD9D /* DayInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C711CCEE28500E6FD9D /* DayInterfaceController.swift */; };
 		58416A7A1CB4818D00DB1A4B /* DependencyChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */; };
 		584897861CAC641E00CA18CE /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584897851CAC641E00CA18CE /* OnBoardingViewController.swift */; };
 		58548BBD1C8BA33800C7C940 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */; };
@@ -69,13 +76,20 @@
 		58F092BF1C9615AA00DF4ADC /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58F092BD1C9615AA00DF4ADC /* Interface.storyboard */; };
 		58F092C11C9615AA00DF4ADC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58F092C01C9615AA00DF4ADC /* Assets.xcassets */; };
 		58F092C81C9615AB00DF4ADC /* Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 58F092C71C9615AB00DF4ADC /* Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		58F092CD1C9615AB00DF4ADC /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F092CC1C9615AB00DF4ADC /* InterfaceController.swift */; };
+		58F092CD1C9615AB00DF4ADC /* TodayInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F092CC1C9615AB00DF4ADC /* TodayInterfaceController.swift */; };
 		58F092CF1C9615AB00DF4ADC /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F092CE1C9615AB00DF4ADC /* ExtensionDelegate.swift */; };
 		58F092D11C9615AB00DF4ADC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58F092D01C9615AB00DF4ADC /* Assets.xcassets */; };
 		FE13DF52A68AA47D8184F97D /* Pods_Dependn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE1FEA29CFCF5CB9F1B7A41 /* Pods_Dependn.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		583C9C621CCEBA9C00E6FD9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 589065C81C7A3F2F00F7F6DC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 58F092BA1C9615AA00DF4ADC;
+			remoteInfo = Watch;
+		};
 		58F092C91C9615AB00DF4ADC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 589065C81C7A3F2F00F7F6DC /* Project object */;
@@ -86,6 +100,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		583C9C641CCEBAA200E6FD9D /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				583C9C661CCEBAC600E6FD9D /* Watch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5890660A1C7A489800F7F6DC /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -135,6 +160,12 @@
 		582820C81CAF1288002DC9AF /* OkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OkButton.swift; sourceTree = "<group>"; };
 		582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryEmptyView.swift; sourceTree = "<group>"; };
 		583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportPlacesOperation.swift; sourceTree = "<group>"; };
+		583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YesterdayInterfaceController.swift; sourceTree = "<group>"; };
+		583C9C691CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoDaysAgoInterfaceController.swift; sourceTree = "<group>"; };
+		583C9C6B1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreeDaysAgoInterfaceController.swift; sourceTree = "<group>"; };
+		583C9C6D1CCEC77E00E6FD9D /* CoreStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreStack.swift; sourceTree = "<group>"; };
+		583C9C6F1CCECA9500E6FD9D /* WatchStatsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchStatsOperation.swift; sourceTree = "<group>"; };
+		583C9C711CCEE28500E6FD9D /* DayInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayInterfaceController.swift; sourceTree = "<group>"; };
 		58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserCell.swift; sourceTree = "<group>"; };
 		584897851CAC641E00CA18CE /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
@@ -194,7 +225,7 @@
 		58F092C01C9615AA00DF4ADC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		58F092C21C9615AA00DF4ADC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58F092C71C9615AB00DF4ADC /* Watch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Watch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		58F092CC1C9615AB00DF4ADC /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		58F092CC1C9615AB00DF4ADC /* TodayInterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayInterfaceController.swift; sourceTree = "<group>"; };
 		58F092CE1C9615AB00DF4ADC /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		58F092D01C9615AB00DF4ADC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		58F092D21C9615AB00DF4ADC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -416,6 +447,7 @@
 		58DF62B41C83BDEE0035F608 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
+				583C9C6F1CCECA9500E6FD9D /* WatchStatsOperation.swift */,
 				58CF71811CA815090092458F /* ShortStatsOperation.swift */,
 				58DF62B51C83BDEE0035F608 /* AverageIntensityOperation.swift */,
 				58DF62B61C83BDEE0035F608 /* AveragePerDayOperation.swift */,
@@ -453,8 +485,13 @@
 		58F092CB1C9615AB00DF4ADC /* Watch Extension */ = {
 			isa = PBXGroup;
 			children = (
-				58F092CC1C9615AB00DF4ADC /* InterfaceController.swift */,
+				583C9C6D1CCEC77E00E6FD9D /* CoreStack.swift */,
 				58F092CE1C9615AB00DF4ADC /* ExtensionDelegate.swift */,
+				583C9C711CCEE28500E6FD9D /* DayInterfaceController.swift */,
+				58F092CC1C9615AB00DF4ADC /* TodayInterfaceController.swift */,
+				583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */,
+				583C9C691CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift */,
+				583C9C6B1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift */,
 				58CF717F1CA809310092458F /* StatsTableRowController.swift */,
 				58F092D01C9615AB00DF4ADC /* Assets.xcassets */,
 				58F092D21C9615AB00DF4ADC /* Info.plist */,
@@ -490,10 +527,12 @@
 				5888DC7B1C7B217600E01A32 /* Fabric */,
 				02752BF4BCE3D4F09066974D /* Embed Pods Frameworks */,
 				CBD50F783DA64145D4A06428 /* Copy Pods Resources */,
+				583C9C641CCEBAA200E6FD9D /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				583C9C631CCEBA9C00E6FD9D /* PBXTargetDependency */,
 			);
 			name = Dependn;
 			productName = SmokeReporter;
@@ -750,6 +789,7 @@
 				58BB15881CA1F91A00E3E06A /* Place+CoreDataProperties.swift in Sources */,
 				58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */,
 				58BB15921CA20D0D00E3E06A /* PlacesViewController.swift in Sources */,
+				583C9C701CCECA9500E6FD9D /* WatchStatsOperation.swift in Sources */,
 				58416A7A1CB4818D00DB1A4B /* DependencyChooserCell.swift in Sources */,
 				58DF62D41C83BDEE0035F608 /* NearestPlaceOperation.swift in Sources */,
 				581DC5DC1C8B38AD006DE551 /* SettingsTableViewCell.swift in Sources */,
@@ -762,14 +802,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				58F092CF1C9615AB00DF4ADC /* ExtensionDelegate.swift in Sources */,
-				58F092CD1C9615AB00DF4ADC /* InterfaceController.swift in Sources */,
+				583C9C681CCEC62900E6FD9D /* YesterdayInterfaceController.swift in Sources */,
+				583C9C721CCEE28500E6FD9D /* DayInterfaceController.swift in Sources */,
+				583C9C6A1CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift in Sources */,
+				583C9C6C1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift in Sources */,
+				58F092CD1C9615AB00DF4ADC /* TodayInterfaceController.swift in Sources */,
 				58CF71801CA809310092458F /* StatsTableRowController.swift in Sources */,
+				583C9C6E1CCEC77E00E6FD9D /* CoreStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		583C9C631CCEBA9C00E6FD9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 58F092BA1C9615AA00DF4ADC /* Watch */;
+			targetProxy = 583C9C621CCEBA9C00E6FD9D /* PBXContainerItemProxy */;
+		};
 		58F092CA1C9615AB00DF4ADC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 58F092C61C9615AB00DF4ADC /* Watch Extension */;

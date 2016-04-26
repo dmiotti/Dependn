@@ -5,45 +5,32 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="10032"/>
     </dependencies>
     <scenes>
-        <!--Interface Controller-->
+        <!--Today Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Watch" customModuleProvider="target">
+                <controller id="AgC-eL-Hgc" customClass="TodayInterfaceController" customModule="Watch_Extension">
                     <items>
                         <table alignment="left" id="KgH-2N-OVS">
                             <items>
                                 <tableRow identifier="StatsTableRowController" id="wA6-Pt-Qmw" customClass="StatsTableRowController" customModule="Watch_Extension">
-                                    <group key="rootItem" width="1" height="93.5" alignment="left" layout="vertical" id="1cj-Ec-C1T">
+                                    <group key="rootItem" width="1" height="1" alignment="left" layout="vertical" id="1cj-Ec-C1T">
                                         <items>
-                                            <label alignment="left" text="Cigarette" id="Wum-zA-F9T"/>
-                                            <group width="1" alignment="left" id="PHM-qT-uIp" userLabel="Today Group">
-                                                <items>
-                                                    <label alignment="left" text="Today" id="geO-jg-tGT"/>
-                                                    <label alignment="right" text="10" id="AKe-VV-JD0" userLabel="Value"/>
-                                                </items>
-                                            </group>
-                                            <group width="1" alignment="left" id="ZMe-34-WcR" userLabel="This week group">
-                                                <items>
-                                                    <label alignment="left" text="This week" id="XTN-Dw-Hg6"/>
-                                                    <label alignment="right" text="32" id="v9L-8P-Hr6" userLabel="Value"/>
-                                                </items>
-                                            </group>
-                                            <group width="1" alignment="left" id="9HE-rS-UCp" userLabel="Last take group">
-                                                <items>
-                                                    <label alignment="left" text="Since last" id="ggv-wb-RqC" userLabel="Since Last Lbl"/>
-                                                    <label alignment="right" text="22m" id="8XC-gr-zSb" userLabel="Value"/>
-                                                </items>
-                                            </group>
+                                            <label width="1" height="68" alignment="left" text="3" textAlignment="center" id="ZJ4-AJ-bax">
+                                                <fontDescription key="font" type="system" pointSize="50"/>
+                                            </label>
+                                            <label width="1" alignment="left" text="Cigarettes" textAlignment="center" id="Prq-9a-s9z">
+                                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                            </label>
+                                            <label width="1" alignment="left" alpha="0.35999999999999999" text="Auj." textAlignment="center" id="Xhl-8v-iHV">
+                                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                            </label>
                                         </items>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </group>
                                     <connections>
-                                        <outlet property="addictionLbl" destination="Wum-zA-F9T" id="PYd-Cl-xj7"/>
-                                        <outlet property="sinceLastLbl" destination="ggv-wb-RqC" id="CNG-HZ-RBj"/>
-                                        <outlet property="sinceLastValueLbl" destination="8XC-gr-zSb" id="hWr-4Z-CQV"/>
-                                        <outlet property="thisWeekLbl" destination="XTN-Dw-Hg6" id="fCy-rS-a3t"/>
-                                        <outlet property="thisWeekValueLbl" destination="v9L-8P-Hr6" id="Wnz-lb-GxQ"/>
-                                        <outlet property="todayLbl" destination="geO-jg-tGT" id="s9P-Y2-UIJ"/>
-                                        <outlet property="todayValueLbl" destination="AKe-VV-JD0" id="KBg-7U-ABl"/>
+                                        <outlet property="addictionLbl" destination="Prq-9a-s9z" id="Pxa-7P-2F1"/>
+                                        <outlet property="dateLbl" destination="Xhl-8v-iHV" id="Pv3-aH-uTe"/>
+                                        <outlet property="valueLbl" destination="ZJ4-AJ-bax" id="EgI-c0-Adk"/>
                                     </connections>
                                 </tableRow>
                             </items>
@@ -51,10 +38,127 @@
                     </items>
                     <connections>
                         <outlet property="statsTable" destination="KgH-2N-OVS" id="5xP-HX-Wmd"/>
+                        <segue destination="lbC-MP-CuM" kind="relationship" relationship="nextPage" id="yK8-hA-t3C"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="550" y="376"/>
+            <point key="canvasLocation" x="471" y="464.5"/>
+        </scene>
+        <!--Yesterday Interface Controller-->
+        <scene sceneID="xfm-dt-fQY">
+            <objects>
+                <controller id="lbC-MP-CuM" customClass="YesterdayInterfaceController" customModule="Watch_Extension">
+                    <items>
+                        <table alignment="left" id="Tm4-5I-BQU">
+                            <items>
+                                <tableRow identifier="StatsTableRowController" id="LAm-r8-Xjt" customClass="StatsTableRowController" customModule="Watch_Extension">
+                                    <group key="rootItem" width="1" height="1" alignment="left" layout="vertical" id="7YZ-5p-Pbj">
+                                        <items>
+                                            <label width="1" height="68" alignment="left" text="8" textAlignment="center" id="gxc-JH-Ako">
+                                                <fontDescription key="font" type="system" pointSize="50"/>
+                                            </label>
+                                            <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" id="HRA-Mi-7h7">
+                                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                            </label>
+                                            <label width="1" alignment="left" verticalAlignment="center" alpha="0.35999999999999999" text="Hier" textAlignment="center" id="mXC-K4-CTz">
+                                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                            </label>
+                                        </items>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </group>
+                                    <connections>
+                                        <outlet property="addictionLbl" destination="HRA-Mi-7h7" id="H1U-DQ-gXe"/>
+                                        <outlet property="dateLbl" destination="mXC-K4-CTz" id="rQr-eJ-AOi"/>
+                                        <outlet property="valueLbl" destination="gxc-JH-Ako" id="mfm-iB-g5d"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="statsTable" destination="Tm4-5I-BQU" id="IPV-uv-vHo"/>
+                        <segue destination="uCo-M6-f4i" kind="relationship" relationship="nextPage" id="bni-IT-ZPB"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="757" y="464.5"/>
+        </scene>
+        <!--Two Days Ago Interface Controller-->
+        <scene sceneID="Mhh-qQ-mZm">
+            <objects>
+                <controller id="uCo-M6-f4i" customClass="TwoDaysAgoInterfaceController" customModule="Watch_Extension">
+                    <items>
+                        <table alignment="left" id="bIz-KN-6xh">
+                            <items>
+                                <tableRow identifier="StatsTableRowController" id="SVs-P7-QfF" customClass="StatsTableRowController" customModule="Watch_Extension">
+                                    <group key="rootItem" width="1" height="1" alignment="left" layout="vertical" id="Gnh-Ce-Xwf">
+                                        <items>
+                                            <label width="1" height="68" alignment="left" text="4" textAlignment="center" id="Rct-Nx-2dq">
+                                                <fontDescription key="font" type="system" pointSize="50"/>
+                                            </label>
+                                            <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" id="CV3-j5-rWT">
+                                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                            </label>
+                                            <label width="1" alignment="left" verticalAlignment="center" alpha="0.35999999999999999" text="lundi 4 mars" textAlignment="center" id="LZY-hd-ivk">
+                                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                            </label>
+                                        </items>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </group>
+                                    <connections>
+                                        <outlet property="addictionLbl" destination="CV3-j5-rWT" id="n2o-im-uk7"/>
+                                        <outlet property="dateLbl" destination="LZY-hd-ivk" id="MZA-gG-Wo6"/>
+                                        <outlet property="valueLbl" destination="Rct-Nx-2dq" id="PVj-Ta-AbV"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="statsTable" destination="bIz-KN-6xh" id="0bN-5A-H2s"/>
+                        <segue destination="F3b-cj-xyp" kind="relationship" relationship="nextPage" id="SNz-cS-gIz"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="471" y="883.5"/>
+        </scene>
+        <!--Three Days Ago Interface Controller-->
+        <scene sceneID="e2V-ra-Xac">
+            <objects>
+                <controller id="F3b-cj-xyp" customClass="ThreeDaysAgoInterfaceController" customModule="Watch_Extension">
+                    <items>
+                        <table alignment="left" id="H2q-E8-XTt">
+                            <items>
+                                <tableRow identifier="StatsTableRowController" id="DDb-m0-bGM" customClass="StatsTableRowController" customModule="Watch_Extension">
+                                    <group key="rootItem" width="1" height="1" alignment="left" layout="vertical" id="Ign-GL-gj8">
+                                        <items>
+                                            <label width="1" height="68" alignment="left" text="18" textAlignment="center" id="TCp-Hh-cNG">
+                                                <fontDescription key="font" type="system" pointSize="50"/>
+                                            </label>
+                                            <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" id="wbr-cl-rzS">
+                                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                            </label>
+                                            <label width="1" alignment="left" verticalAlignment="center" alpha="0.35999999999999999" text="dimanche 3 mars" textAlignment="center" minimumScaleFactor="0.80000000000000004" id="5Tb-b3-B4C">
+                                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                            </label>
+                                        </items>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </group>
+                                    <connections>
+                                        <outlet property="addictionLbl" destination="wbr-cl-rzS" id="EdT-yt-kIe"/>
+                                        <outlet property="dateLbl" destination="5Tb-b3-B4C" id="GdH-yU-PfQ"/>
+                                        <outlet property="valueLbl" destination="TCp-Hh-cNG" id="oHh-VG-jcb"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="statsTable" destination="H2q-E8-XTt" id="ALX-cX-M6b"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="757" y="883.5"/>
         </scene>
     </scenes>
 </document>

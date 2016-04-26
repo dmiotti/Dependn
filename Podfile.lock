@@ -44,7 +44,7 @@ CHECKOUT OPTIONS:
     :commit: 07734b1af418dd9be25262cd74cbbc17a6bbb1c9
     :git: git@github.com:dmiotti/libxlsxwriter.git
   SwiftHelpers:
-    :commit: b282cc115971b776fd34cb8759951d0d0e24f867
+    :commit: 436692c182401c9876ad319a0ceb69eba9009207
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:

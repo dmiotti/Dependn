@@ -11,11 +11,7 @@ import WatchKit
 class StatsTableRowController: NSObject {
     
     @IBOutlet var addictionLbl: WKInterfaceLabel!
-    @IBOutlet var todayLbl: WKInterfaceLabel!
-    @IBOutlet var todayValueLbl: WKInterfaceLabel!
-    @IBOutlet var thisWeekLbl: WKInterfaceLabel!
-    @IBOutlet var thisWeekValueLbl: WKInterfaceLabel!
-    @IBOutlet var sinceLastLbl: WKInterfaceLabel!
-    @IBOutlet var sinceLastValueLbl: WKInterfaceLabel!
+    @IBOutlet var valueLbl: WKInterfaceLabel!
+    @IBOutlet var dateLbl: WKInterfaceLabel!
 
 }
