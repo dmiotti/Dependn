@@ -71,8 +71,6 @@ final class CoreStack: NSObject {
     
 }
 
-
-
 extension CoreStack: WCSessionDelegate {
     
 }

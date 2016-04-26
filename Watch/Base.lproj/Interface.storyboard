@@ -160,5 +160,31 @@
             </objects>
             <point key="canvasLocation" x="757" y="883.5"/>
         </scene>
+        <!--AddictionList-->
+        <scene sceneID="5QY-9H-7VW">
+            <objects>
+                <controller identifier="AddictionList" id="Eaa-UU-zL7">
+                    <items>
+                        <table alignment="left" id="7EL-PB-TXd">
+                            <items>
+                                <tableRow identifier="AddictionsTableRowController" id="7fO-UY-gL0">
+                                    <group key="rootItem" width="1" alignment="left" id="6wg-gI-i4B">
+                                        <items>
+                                            <group width="1" alignment="left" id="ajW-1P-Upm">
+                                                <items>
+                                                    <imageView width="44" alignment="left" id="P8g-wV-xHe"/>
+                                                    <label alignment="left" verticalAlignment="center" text="Label" id="hJZ-za-XA0"/>
+                                                </items>
+                                            </group>
+                                        </items>
+                                    </group>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="1076" y="691"/>
+        </scene>
     </scenes>
 </document>

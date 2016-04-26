@@ -7,7 +7,6 @@
 //
 
 import WatchKit
-import Foundation
 
 class DayInterfaceController: WKInterfaceController {
     
@@ -37,6 +36,9 @@ class DayInterfaceController: WKInterfaceController {
         super.awakeWithContext(context)
         
         // Configure interface objects here.
+        
+        addMenuItemWithItemIcon(.Play, title: NSLocalizedString("Conso", comment: ""), action: #selector(DayInterfaceController.doMenuAddConso))
+        addMenuItemWithItemIcon(.Mute, title: NSLocalizedString("Craving", comment: ""), action: #selector(DayInterfaceController.doMenuAddCraving))
     }
     
     override func willActivate() {
@@ -66,4 +68,13 @@ class DayInterfaceController: WKInterfaceController {
         }
     }
     
+    // MARK: Menu actions
+    
+    @IBAction func doMenuAddConso() {
+        presentControllerWithName("AddictionList", context: nil)
+    }
+    
+    @IBAction func doMenuAddCraving() {
+        presentControllerWithName("AddictionList", context: nil)
+    }
 }

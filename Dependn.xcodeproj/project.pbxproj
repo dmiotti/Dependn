@@ -29,6 +29,8 @@
 		583C9C6E1CCEC77E00E6FD9D /* CoreStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C6D1CCEC77E00E6FD9D /* CoreStack.swift */; };
 		583C9C701CCECA9500E6FD9D /* WatchStatsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C6F1CCECA9500E6FD9D /* WatchStatsOperation.swift */; };
 		583C9C721CCEE28500E6FD9D /* DayInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C711CCEE28500E6FD9D /* DayInterfaceController.swift */; };
+		583C9C741CCEEC3400E6FD9D /* AddictionsTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C731CCEEC3400E6FD9D /* AddictionsTableRowController.swift */; };
+		583C9C761CCEEC5700E6FD9D /* AddictionListInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */; };
 		58416A7A1CB4818D00DB1A4B /* DependencyChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */; };
 		584897861CAC641E00CA18CE /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584897851CAC641E00CA18CE /* OnBoardingViewController.swift */; };
 		58548BBD1C8BA33800C7C940 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */; };
@@ -166,6 +168,8 @@
 		583C9C6D1CCEC77E00E6FD9D /* CoreStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreStack.swift; sourceTree = "<group>"; };
 		583C9C6F1CCECA9500E6FD9D /* WatchStatsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchStatsOperation.swift; sourceTree = "<group>"; };
 		583C9C711CCEE28500E6FD9D /* DayInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayInterfaceController.swift; sourceTree = "<group>"; };
+		583C9C731CCEEC3400E6FD9D /* AddictionsTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionsTableRowController.swift; sourceTree = "<group>"; };
+		583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionListInterfaceController.swift; sourceTree = "<group>"; };
 		58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserCell.swift; sourceTree = "<group>"; };
 		584897851CAC641E00CA18CE /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
@@ -493,6 +497,8 @@
 				583C9C691CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift */,
 				583C9C6B1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift */,
 				58CF717F1CA809310092458F /* StatsTableRowController.swift */,
+				583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */,
+				583C9C731CCEEC3400E6FD9D /* AddictionsTableRowController.swift */,
 				58F092D01C9615AB00DF4ADC /* Assets.xcassets */,
 				58F092D21C9615AB00DF4ADC /* Info.plist */,
 			);
@@ -802,9 +808,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				58F092CF1C9615AB00DF4ADC /* ExtensionDelegate.swift in Sources */,
+				583C9C741CCEEC3400E6FD9D /* AddictionsTableRowController.swift in Sources */,
 				583C9C681CCEC62900E6FD9D /* YesterdayInterfaceController.swift in Sources */,
 				583C9C721CCEE28500E6FD9D /* DayInterfaceController.swift in Sources */,
 				583C9C6A1CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift in Sources */,
+				583C9C761CCEEC5700E6FD9D /* AddictionListInterfaceController.swift in Sources */,
 				583C9C6C1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift in Sources */,
 				58F092CD1C9615AB00DF4ADC /* TodayInterfaceController.swift in Sources */,
 				58CF71801CA809310092458F /* StatsTableRowController.swift in Sources */,
