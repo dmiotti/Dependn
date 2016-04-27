@@ -64,12 +64,9 @@ final class CoreDataStack: NSObject {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent(kCoreDataStackSQLLiteFilename)
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            var opts: [String: AnyObject]?
-            if NSFileManager.defaultManager().ubiquityIdentityToken != nil {
-                opts = [String: AnyObject]()
-                opts?[NSPersistentStoreUbiquitousContentNameKey] = "Dependn"
-                opts?[NSPersistentStoreFileProtectionKey] = NSFileProtectionCompleteUntilFirstUserAuthentication
-            }
+            var opts = [String: AnyObject]()
+            opts[NSPersistentStoreUbiquitousContentNameKey] = "Dependn"
+            opts[NSPersistentStoreFileProtectionKey] = NSFileProtectionCompleteUntilFirstUserAuthentication
             try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: opts)
         } catch {
             // Report any error we got.

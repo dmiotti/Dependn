@@ -198,7 +198,9 @@ final class AddRecordViewController: UIViewController {
                 date: chosenDate,
                 inContext: CoreDataStack.shared.managedObjectContext)
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: { finished in
+            WatchSessionManager.sharedManager.updateApplicationContext()
+        })
     }
     
     func cancelBtnClicked(sender: UIBarButtonItem) {

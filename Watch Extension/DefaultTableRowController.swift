@@ -8,6 +8,6 @@
 
 import WatchKit
 
-class AddictionsTableRowController: NSObject {
-
+final class DefaultTableRowController: NSObject {
+    @IBOutlet var titleLbl: WKInterfaceLabel!
 }

@@ -17,8 +17,6 @@ final class InfoInterfaceController: WKInterfaceController {
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        setTitle(NSLocalizedString("appname", comment: ""))
-        
         if let context = context as? Dictionary<String, String> {
             if let info = context["info"] {
                 infoLbl.setText(info)
@@ -33,15 +31,11 @@ final class InfoInterfaceController: WKInterfaceController {
     }
     
     override func willActivate() {
-        let nc = NSNotificationCenter.defaultCenter()
-        nc.addObserver(self,
-                       selector: #selector(InfoInterfaceController.statsGetUpdated(_:)),
-                       name: kWatchExtensionStatsUpdatedNotificationName,
-                       object: nil)
-        nc.addObserver(self,
-                       selector: #selector(InfoInterfaceController.statsGetError(_:)),
-                       name: kWatchExtensionStatsErrorNotificationName,
-                       object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: #selector(InfoInterfaceController.contextDidFail(_:)),
+            name: kWatchExtensionContextErrorNotificationName,
+            object: nil)
         
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
@@ -54,20 +48,7 @@ final class InfoInterfaceController: WKInterfaceController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func statsGetUpdated(notification: NSNotification) {
-        if let _ = notification.userInfo?["stats"] as? WatchStatsAddiction {
-            dispatch_async(dispatch_get_main_queue()) {
-                WKInterfaceController.reloadRootControllersWithNames([
-                    "ThreeDaysAgoInterfaceController",
-                    "TwoDaysAgoInterfaceController",
-                    "YesterdayInterfaceController",
-                    "TodayInterfaceController"
-                    ], contexts: nil)
-            }
-        }
-    }
-    
-    func statsGetError(notification: NSNotification) {
+    func contextDidFail(notification: NSNotification) {
         if let err = notification.userInfo?["error"] as? NSError {
             dispatch_async(dispatch_get_main_queue()) {
                 self.infoLbl.setText(err.localizedDescription)

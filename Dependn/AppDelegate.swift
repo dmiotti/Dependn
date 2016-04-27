@@ -20,26 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    var session: WCSession? {
-        didSet {
-            if let session = session {
-                session.delegate = self
-                session.activateSession()
-            }
-        }
-    }
-    
-    private let watchQueue = NSOperationQueue()
-    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         Fabric.with([Crashlytics.self])
-        StyleSheet.customizeAppearance(window)
-        showPasscodeIfNeeded()
         
-        if WCSession.isSupported() {
-            session = WCSession.defaultSession()
-        }
+        StyleSheet.customizeAppearance(window)
         
         if InitialImportPlacesOperation.shouldImportPlaces() {
             let queue = NSOperationQueue()
@@ -47,14 +32,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             queue.addOperation(op)
         }
         
-        prepareDataForAppleWatch()
+        WatchSessionManager.sharedManager.startSession()
+        WatchSessionManager.sharedManager.updateApplicationContext()
+        
+        showPasscodeIfNeeded()
         
         return true
     }
     
     func applicationDidEnterBackground(application: UIApplication) {
         CoreDataStack.shared.saveContext()
+        
         showPasscodeIfNeeded()
+        
+        WatchSessionManager.sharedManager.updateApplicationContext()
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
@@ -102,92 +93,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             topController.presentViewController(hidingNav!, animated: false, completion: nil)
         }
     }
-    
 }
 
-// MARK: - WCSessionDelegate
-extension AppDelegate: WCSessionDelegate {
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
-        if let action = message["action"] as? String {
-            switch action {
-            case "get_context":
-                prepareDataForAppleWatch().onComplete { r in
-                    if let dict = r.value {
-                        replyHandler(dict)
-                    } else if let err = r.error, sugg = err.localizedRecoverySuggestion {
-                        replyHandler([ "error": [
-                            "description": err.localizedDescription,
-                            "suggestion": sugg
-                        ] ])
-                    } else {
-                        replyHandler([ "error": [
-                            "description": L("error.unknown"),
-                            "suggestion": L("error.unknown.suggestion")
-                        ] ])
-                    }
-                }
-                break
-            default:
-                break
-            }
-        }
-    }
-    
-    /// Gather all data from CoreData and format it for reply to Watch
-    private func prepareDataForAppleWatch() -> Future<WatchDictionary, NSError> {
-        let promise = Promise<WatchDictionary, NSError>()
-        
-        var replyDict = WatchDictionary()
-        
-        watchQueue.suspended = true
-        
-        let statsOp = WatchStatsOperation()
-        statsOp.completionBlock = {
-            if let result = statsOp.result {
-                let res = WatchStatsOperation.formatStatsResultsForAppleWatch(result)
-                replyDict["stats"] = res
-            } else if let err = statsOp.error, sugg = err.localizedRecoverySuggestion {
-                replyDict["error"] = [
-                    "description": err.localizedDescription,
-                    "suggestion": sugg
-                ]
-            } else {
-                replyDict["error"] = [
-                    "description": L("error.unknown"),
-                    "suggestion": L("error.unknown.suggestion")
-                ]
-            }
-        }
-        watchQueue.addOperation(statsOp)
-        
-        let newEntryOp = WatchNewEntryInfoOperation()
-        newEntryOp.completionBlock = {
-            if let result = newEntryOp.watchInfo {
-                let res = WatchNewEntryInfoOperation.formatNewEntryResultsForAppleWatch(result)
-                replyDict["new_entry"] = res
-            } else if let err = newEntryOp.error, sugg = err.localizedRecoverySuggestion {
-                replyDict["error"] = [
-                    "description": err.localizedDescription,
-                    "suggestion": sugg
-                ]
-            } else {
-                replyDict["error"] = [
-                    "description": L("error.unknown"),
-                    "suggestion": L("error.unknown.suggestion")
-                ]
-            }
-        }
-        watchQueue.addOperation(newEntryOp)
-        
-        let finalBlock = NSBlockOperation {
-            promise.success(replyDict)
-        }
-        finalBlock.addDependency(statsOp)
-        finalBlock.addDependency(newEntryOp)
-        watchQueue.addOperation(finalBlock)
-        
-        watchQueue.suspended = false
-        
-        return promise.future
-    }
-}

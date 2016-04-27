@@ -1,38 +1,38 @@
 //
-//  AddictionListInterfaceController.swift
+//  PlaceListInterfaceController.swift
 //  Dependn
 //
-//  Created by David Miotti on 26/04/16.
+//  Created by David Miotti on 28/04/16.
 //  Copyright © 2016 David Miotti. All rights reserved.
 //
 
 import WatchKit
 import Foundation
 
-final class AddictionListInterfaceController: WKInterfaceController {
 
+final class PlaceListInterfaceController: WKInterfaceController {
+    
     @IBOutlet var table: WKInterfaceTable!
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
         // Configure interface objects here.
+        let places = WatchSessionManager.sharedManager.context.places
         
-        let addictions = WatchSessionManager.sharedManager.context.addictions
+        table.setNumberOfRows(places.count, withRowType: "DefaultTableRowController")
         
-        table.setNumberOfRows(addictions.count, withRowType: "DefaultTableRowController")
-        
-        for (index, add) in addictions.enumerate() {
+        for (index, add) in places.enumerate() {
             let row = table.rowControllerAtIndex(index) as! DefaultTableRowController
             row.titleLbl.setText(add.name)
         }
     }
-
+    
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
     }
-
+    
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
@@ -40,10 +40,10 @@ final class AddictionListInterfaceController: WKInterfaceController {
     
     override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
         let manager = WatchSessionManager.sharedManager
-        let addiction = manager.context.addictions[rowIndex]
-        manager.newEntryData["addiction"] = addiction.name
+        let place = manager.context.places[rowIndex]
+        manager.newEntryData["place"] = place.name
         
-        presentControllerWithName("PlaceList", context: nil)
+        pushControllerWithName("PlaceListInterfaceController", context: nil)
     }
 
 }

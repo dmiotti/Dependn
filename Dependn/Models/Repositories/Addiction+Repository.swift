@@ -26,6 +26,8 @@ extension Addiction {
            Defaults[.watchAddiction] = name
         }
         
+        WatchSessionManager.sharedManager.updateApplicationContext()
+        
         return newAdd
     }
     

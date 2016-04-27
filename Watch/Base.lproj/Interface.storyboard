@@ -30,17 +30,17 @@
         <!--Dependn'-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller identifier="TodayInterfaceController" title="Dependn'" id="AgC-eL-Hgc" customClass="TodayInterfaceController" customModule="Watch_Extension">
+                <controller identifier="Today" title="Dependn'" id="AgC-eL-Hgc" customClass="TodayInterfaceController" customModule="Watch_Extension">
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" id="Ya2-Vs-pd1">
                             <items>
-                                <label width="1" alignment="left" verticalAlignment="center" text="3" textAlignment="center" id="71a-xJ-tEd">
+                                <label width="1" alignment="left" verticalAlignment="center" text="0" textAlignment="center" id="71a-xJ-tEd">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
-                                <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="9Xs-hl-zWx">
+                                <label width="1" alignment="left" verticalAlignment="center" text="Things" textAlignment="center" numberOfLines="0" id="9Xs-hl-zWx">
                                     <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                 </label>
-                                <label width="1" alignment="left" verticalAlignment="center" alpha="0.35999999999999999" text="Auj." textAlignment="center" numberOfLines="0" id="Nog-P5-1cE">
+                                <label width="1" alignment="left" verticalAlignment="center" alpha="0.35999999999999999" text="Today" textAlignment="center" numberOfLines="0" id="Nog-P5-1cE">
                                     <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                 </label>
                             </items>
@@ -60,17 +60,17 @@
         <!--Dependn'-->
         <scene sceneID="xfm-dt-fQY">
             <objects>
-                <controller identifier="YesterdayInterfaceController" title="Dependn'" id="lbC-MP-CuM" customClass="YesterdayInterfaceController" customModule="Watch_Extension">
+                <controller identifier="Yesterday" title="Dependn'" id="lbC-MP-CuM" customClass="YesterdayInterfaceController" customModule="Watch_Extension">
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" id="kuc-Sb-zhv">
                             <items>
-                                <label width="1" alignment="left" verticalAlignment="center" text="8" textAlignment="center" id="Ofi-WH-y6T">
+                                <label width="1" alignment="left" verticalAlignment="center" text="0" textAlignment="center" id="Ofi-WH-y6T">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
-                                <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="NMQ-Pm-tnN">
+                                <label width="1" alignment="left" verticalAlignment="center" text="things" textAlignment="center" numberOfLines="0" id="NMQ-Pm-tnN">
                                     <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                 </label>
-                                <label width="1" alignment="left" verticalAlignment="center" alpha="0.35999999999999999" text="Hier" textAlignment="center" numberOfLines="0" id="dKp-wk-PfM">
+                                <label width="1" alignment="left" verticalAlignment="center" alpha="0.35999999999999999" text="Yesterday" textAlignment="center" numberOfLines="0" id="dKp-wk-PfM">
                                     <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                 </label>
                             </items>
@@ -90,11 +90,11 @@
         <!--Dependn'-->
         <scene sceneID="Mhh-qQ-mZm">
             <objects>
-                <controller identifier="TwoDaysAgoInterfaceController" title="Dependn'" id="uCo-M6-f4i" customClass="TwoDaysAgoInterfaceController" customModule="Watch_Extension">
+                <controller identifier="TwoDaysAgo" title="Dependn'" id="uCo-M6-f4i" customClass="TwoDaysAgoInterfaceController" customModule="Watch_Extension">
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" id="Ui9-9e-zEX">
                             <items>
-                                <label width="1" alignment="left" verticalAlignment="center" text="4" textAlignment="center" id="JCv-3F-sGV">
+                                <label width="1" alignment="left" verticalAlignment="center" text="0" textAlignment="center" id="JCv-3F-sGV">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
                                 <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="4A1-8m-eEZ">
@@ -120,11 +120,11 @@
         <!--Dependn'-->
         <scene sceneID="e2V-ra-Xac">
             <objects>
-                <controller identifier="ThreeDaysAgoInterfaceController" title="Dependn'" id="F3b-cj-xyp" customClass="ThreeDaysAgoInterfaceController" customModule="Watch_Extension">
+                <controller identifier="ThreeDaysAgo" title="Dependn'" id="F3b-cj-xyp" customClass="ThreeDaysAgoInterfaceController" customModule="Watch_Extension">
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" id="Vog-np-dli">
                             <items>
-                                <label width="1" alignment="left" verticalAlignment="center" text="18" textAlignment="center" id="HvE-5R-Mmp">
+                                <label width="1" alignment="left" verticalAlignment="center" text="0" textAlignment="center" id="HvE-5R-Mmp">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
                                 <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="LF6-zg-YGK">
@@ -149,28 +149,60 @@
         <!--AddictionList-->
         <scene sceneID="5QY-9H-7VW">
             <objects>
-                <controller identifier="AddictionList" id="Eaa-UU-zL7">
+                <controller identifier="AddictionList" id="Eaa-UU-zL7" customClass="AddictionListInterfaceController" customModule="Watch_Extension">
                     <items>
                         <table alignment="left" id="7EL-PB-TXd">
                             <items>
-                                <tableRow identifier="AddictionsTableRowController" id="7fO-UY-gL0">
+                                <tableRow identifier="DefaultTableRowController" id="7fO-UY-gL0" customClass="DefaultTableRowController" customModule="Watch_Extension">
                                     <group key="rootItem" width="1" alignment="left" id="6wg-gI-i4B">
                                         <items>
-                                            <group width="1" alignment="left" id="ajW-1P-Upm">
-                                                <items>
-                                                    <imageView width="44" alignment="left" id="P8g-wV-xHe"/>
-                                                    <label alignment="left" verticalAlignment="center" text="Label" id="hJZ-za-XA0"/>
-                                                </items>
-                                            </group>
+                                            <label width="1" height="1" alignment="left" verticalAlignment="center" text="Label" minimumScaleFactor="0.40000000000000002" id="hJZ-za-XA0">
+                                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                            </label>
                                         </items>
                                     </group>
+                                    <connections>
+                                        <outlet property="titleLbl" destination="hJZ-za-XA0" id="U0F-VN-0eI"/>
+                                    </connections>
                                 </tableRow>
                             </items>
                         </table>
                     </items>
+                    <connections>
+                        <outlet property="table" destination="7EL-PB-TXd" id="5gl-uE-5hm"/>
+                    </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="1041" y="863"/>
+            <point key="canvasLocation" x="1055" y="863"/>
+        </scene>
+        <!--PlaceList-->
+        <scene sceneID="75K-Se-vzK">
+            <objects>
+                <controller identifier="PlaceList" id="Quw-jq-785" customClass="PlaceListInterfaceController" customModule="Watch_Extension">
+                    <items>
+                        <table alignment="left" id="Sk3-eN-3Rs">
+                            <items>
+                                <tableRow identifier="DefaultTableRowController" id="aiy-4T-Y52" customClass="DefaultTableRowController" customModule="Watch_Extension">
+                                    <group key="rootItem" width="1" alignment="left" id="M79-q7-wNP">
+                                        <items>
+                                            <label width="1" height="1" alignment="left" verticalAlignment="center" text="Label" minimumScaleFactor="0.40000000000000002" id="67H-ct-x24">
+                                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                            </label>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="titleLbl" destination="67H-ct-x24" id="oo4-eC-NB0"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="table" destination="Sk3-eN-3Rs" id="c52-uG-LSh"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="1337" y="863"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.1529411765" green="0.66274509800000003" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>

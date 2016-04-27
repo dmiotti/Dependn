@@ -12,7 +12,6 @@ import SwiftHelpers
 struct WatchAddictionModel {
     let uri: String
     let name: String
-    var imageData: NSData?
 }
 
 struct WatchPlaceModel {
@@ -41,14 +40,9 @@ final class WatchNewEntryInfoOperation: CoreDataOperation {
             /// For each addiction, get the name and and image
             for addiction in addictions {
                 let name = addiction.name
-                if let
-                    image = createIconImageWithName(name, color: addiction.color.UIColor),
-                    data = UIImagePNGRepresentation(image) {
-                    
-                    let addictionPath = addiction.objectID.URIRepresentation().absoluteString
-                    let model = WatchAddictionModel(uri: addictionPath, name: name, imageData: data)
-                    info.addictions.append(model)
-                }
+                let addictionPath = addiction.objectID.URIRepresentation().absoluteString
+                let model = WatchAddictionModel(uri: addictionPath, name: name)
+                info.addictions.append(model)
             }
             
             /// Fetch all places
@@ -72,9 +66,6 @@ final class WatchNewEntryInfoOperation: CoreDataOperation {
         var addictions = [WatchDictionary]()
         for element in result.addictions {
             var addiction = WatchDictionary()
-            if let data = element.imageData {
-                addiction["image"] = data
-            }
             addiction["name"] = element.name
             addiction["uri"] = element.uri
             addictions.append(addiction)

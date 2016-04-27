@@ -26,10 +26,9 @@
 		583C9C681CCEC62900E6FD9D /* YesterdayInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */; };
 		583C9C6A1CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C691CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift */; };
 		583C9C6C1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C6B1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift */; };
-		583C9C6E1CCEC77E00E6FD9D /* CoreStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C6D1CCEC77E00E6FD9D /* CoreStack.swift */; };
 		583C9C701CCECA9500E6FD9D /* WatchStatsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C6F1CCECA9500E6FD9D /* WatchStatsOperation.swift */; };
 		583C9C721CCEE28500E6FD9D /* DayInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C711CCEE28500E6FD9D /* DayInterfaceController.swift */; };
-		583C9C741CCEEC3400E6FD9D /* AddictionsTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C731CCEEC3400E6FD9D /* AddictionsTableRowController.swift */; };
+		583C9C741CCEEC3400E6FD9D /* DefaultTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C731CCEEC3400E6FD9D /* DefaultTableRowController.swift */; };
 		583C9C761CCEEC5700E6FD9D /* AddictionListInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */; };
 		58416A7A1CB4818D00DB1A4B /* DependencyChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */; };
 		584897861CAC641E00CA18CE /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584897851CAC641E00CA18CE /* OnBoardingViewController.swift */; };
@@ -48,6 +47,9 @@
 		58683B341CB7089B000FE358 /* XLSExportOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58683B331CB7089B000FE358 /* XLSExportOperation.swift */; };
 		586EDA361CA3567D00DAE496 /* TimeSinceLastRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */; };
 		587046BA1CD0C93D00C2F23B /* InfoInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587046B91CD0C93D00C2F23B /* InfoInterfaceController.swift */; };
+		587CB0F11CD1577B00FCDB48 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587CB0F01CD1577B00FCDB48 /* WatchSessionManager.swift */; };
+		587CB0F31CD157A000FCDB48 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587CB0F21CD157A000FCDB48 /* WatchSessionManager.swift */; };
+		587CB0F51CD170AE00FCDB48 /* PlaceListInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587CB0F41CD170AE00FCDB48 /* PlaceListInterfaceController.swift */; };
 		58858ADD1C84520100E8A794 /* Dependn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */; };
 		58AD8B381C9178D40008CD9C /* UIViewController+TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AD8B371C9178D40008CD9C /* UIViewController+TitleView.swift */; };
 		58AED4861CD121330037BFB1 /* CoreDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AED4851CD121330037BFB1 /* CoreDataOperation.swift */; };
@@ -169,10 +171,9 @@
 		583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YesterdayInterfaceController.swift; sourceTree = "<group>"; };
 		583C9C691CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoDaysAgoInterfaceController.swift; sourceTree = "<group>"; };
 		583C9C6B1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreeDaysAgoInterfaceController.swift; sourceTree = "<group>"; };
-		583C9C6D1CCEC77E00E6FD9D /* CoreStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreStack.swift; sourceTree = "<group>"; };
 		583C9C6F1CCECA9500E6FD9D /* WatchStatsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchStatsOperation.swift; sourceTree = "<group>"; };
 		583C9C711CCEE28500E6FD9D /* DayInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayInterfaceController.swift; sourceTree = "<group>"; };
-		583C9C731CCEEC3400E6FD9D /* AddictionsTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionsTableRowController.swift; sourceTree = "<group>"; };
+		583C9C731CCEEC3400E6FD9D /* DefaultTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTableRowController.swift; sourceTree = "<group>"; };
 		583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionListInterfaceController.swift; sourceTree = "<group>"; };
 		58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserCell.swift; sourceTree = "<group>"; };
 		584897851CAC641E00CA18CE /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -193,6 +194,9 @@
 		58683B331CB7089B000FE358 /* XLSExportOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLSExportOperation.swift; sourceTree = "<group>"; };
 		586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSinceLastRecord.swift; sourceTree = "<group>"; };
 		587046B91CD0C93D00C2F23B /* InfoInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoInterfaceController.swift; sourceTree = "<group>"; };
+		587CB0F01CD1577B00FCDB48 /* WatchSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
+		587CB0F21CD157A000FCDB48 /* WatchSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
+		587CB0F41CD170AE00FCDB48 /* PlaceListInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListInterfaceController.swift; sourceTree = "<group>"; };
 		588D8C9B1C8F1861005BA8EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		588D8C9D1C8F1898005BA8EB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		588D8C9F1C8F18A4005BA8EB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -365,6 +369,28 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		587CB0F61CD178FC00FCDB48 /* Time scale */ = {
+			isa = PBXGroup;
+			children = (
+				583C9C711CCEE28500E6FD9D /* DayInterfaceController.swift */,
+				58F092CC1C9615AB00DF4ADC /* TodayInterfaceController.swift */,
+				583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */,
+				583C9C691CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift */,
+				583C9C6B1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift */,
+			);
+			name = "Time scale";
+			sourceTree = "<group>";
+		};
+		587CB0F71CD1790D00FCDB48 /* AddRecord */ = {
+			isa = PBXGroup;
+			children = (
+				583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */,
+				587CB0F41CD170AE00FCDB48 /* PlaceListInterfaceController.swift */,
+				583C9C731CCEEC3400E6FD9D /* DefaultTableRowController.swift */,
+			);
+			name = AddRecord;
+			sourceTree = "<group>";
+		};
 		589065C71C7A3F2F00F7F6DC = {
 			isa = PBXGroup;
 			children = (
@@ -454,6 +480,7 @@
 				58DF62BB1C83BDEE0035F608 /* Repositories */,
 				58DF62B41C83BDEE0035F608 /* Operations */,
 				581DC5E61C8B73D3006DE551 /* UserDefaults.swift */,
+				587CB0F21CD157A000FCDB48 /* WatchSessionManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -501,16 +528,11 @@
 		58F092CB1C9615AB00DF4ADC /* Watch Extension */ = {
 			isa = PBXGroup;
 			children = (
-				583C9C6D1CCEC77E00E6FD9D /* CoreStack.swift */,
+				587CB0F01CD1577B00FCDB48 /* WatchSessionManager.swift */,
 				58F092CE1C9615AB00DF4ADC /* ExtensionDelegate.swift */,
+				587CB0F61CD178FC00FCDB48 /* Time scale */,
+				587CB0F71CD1790D00FCDB48 /* AddRecord */,
 				587046B91CD0C93D00C2F23B /* InfoInterfaceController.swift */,
-				583C9C711CCEE28500E6FD9D /* DayInterfaceController.swift */,
-				58F092CC1C9615AB00DF4ADC /* TodayInterfaceController.swift */,
-				583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */,
-				583C9C691CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift */,
-				583C9C6B1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift */,
-				583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */,
-				583C9C731CCEEC3400E6FD9D /* AddictionsTableRowController.swift */,
 				58669AA01CD10376002BDED3 /* SHDateFormatterProximity.swift */,
 				58F092D01C9615AB00DF4ADC /* Assets.xcassets */,
 				58F092D21C9615AB00DF4ADC /* Info.plist */,
@@ -782,6 +804,7 @@
 				58548BBF1C8BA8D900C7C940 /* PasscodeViewController.swift in Sources */,
 				582820CB1CAF1DD7002DC9AF /* HistoryEmptyView.swift in Sources */,
 				581DC5DF1C8B3C5D006DE551 /* AddictionListViewController.swift in Sources */,
+				587CB0F31CD157A000FCDB48 /* WatchSessionManager.swift in Sources */,
 				58DF62D71C83BDEE0035F608 /* Record.swift in Sources */,
 				58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */,
 				58DF62D51C83BDEE0035F608 /* Record+Repository.swift in Sources */,
@@ -826,14 +849,15 @@
 			files = (
 				587046BA1CD0C93D00C2F23B /* InfoInterfaceController.swift in Sources */,
 				58F092CF1C9615AB00DF4ADC /* ExtensionDelegate.swift in Sources */,
-				583C9C741CCEEC3400E6FD9D /* AddictionsTableRowController.swift in Sources */,
+				583C9C741CCEEC3400E6FD9D /* DefaultTableRowController.swift in Sources */,
 				583C9C681CCEC62900E6FD9D /* YesterdayInterfaceController.swift in Sources */,
 				583C9C721CCEE28500E6FD9D /* DayInterfaceController.swift in Sources */,
 				583C9C6A1CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift in Sources */,
+				587CB0F11CD1577B00FCDB48 /* WatchSessionManager.swift in Sources */,
+				587CB0F51CD170AE00FCDB48 /* PlaceListInterfaceController.swift in Sources */,
 				583C9C761CCEEC5700E6FD9D /* AddictionListInterfaceController.swift in Sources */,
 				583C9C6C1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift in Sources */,
 				58F092CD1C9615AB00DF4ADC /* TodayInterfaceController.swift in Sources */,
-				583C9C6E1CCEC77E00E6FD9D /* CoreStack.swift in Sources */,
 				58669AA11CD10376002BDED3 /* SHDateFormatterProximity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

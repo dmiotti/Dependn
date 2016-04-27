@@ -372,5 +372,7 @@ extension SettingsViewController: UIDocumentInteractionControllerDelegate {
 extension SettingsViewController: SearchAdditionViewControllerDelegate {
     func searchController(searchController: SearchAdditionViewController, didSelectAddiction addiction: Addiction) {
         Defaults[.watchAddiction] = addiction.name
+        
+        WatchSessionManager.sharedManager.updateApplicationContext()
     }
 }

@@ -27,15 +27,6 @@ class DayInterfaceController: WKInterfaceController {
         
         setTitle(NSLocalizedString("appname", comment: ""))
         
-        // Configure interface objects here.
-        if let data = CoreStack.shared.context.stats {
-            self.loadData(data)
-        } else {
-            valueLbl.setText(nil)
-            addictionLbl.setText(nil)
-            dayLbl.setText(nil)
-        }
-        
         addMenuItemWithItemIcon(.Play,
                                 title: NSLocalizedString("Conso", comment: ""),
                                 action: #selector(DayInterfaceController.doMenuAddConso))
@@ -47,13 +38,18 @@ class DayInterfaceController: WKInterfaceController {
     override func willActivate() {
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(TodayInterfaceController.statsGetUpdated(_:)),
-                                                         name: kWatchExtensionStatsUpdatedNotificationName,
+                                                         selector: #selector(DayInterfaceController.contextDidUpdate(_:)),
+                                                         name: kWatchExtensionContextUpdatedNotificationName,
                                                          object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(TodayInterfaceController.statsGetError(_:)),
-                                                         name: kWatchExtensionStatsErrorNotificationName,
-                                                         object: nil)
+        
+        // Configure interface objects here.
+        if let data = WatchSessionManager.sharedManager.context.stats {
+            self.loadData(data)
+        } else {
+            valueLbl.setText(nil)
+            addictionLbl.setText(nil)
+            dayLbl.setText(nil)
+        }
         
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
@@ -66,24 +62,10 @@ class DayInterfaceController: WKInterfaceController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func statsGetUpdated(notification: NSNotification) {
+    func contextDidUpdate(notification: NSNotification) {
         if let stats = notification.userInfo?["stats"] as? WatchStatsAddiction {
             dispatch_async(dispatch_get_main_queue()) {
                 self.loadData(stats)
-            }
-        }
-    }
-    
-    func statsGetError(notification: NSNotification) {
-        if let error = notification.userInfo?["error"] as? NSError {
-            var context = [String: String]()
-            context["info"] = error.localizedDescription
-            if let desc = error.localizedRecoverySuggestion {
-                context["desc"] = desc
-            }
-            dispatch_async(dispatch_get_main_queue()) {
-                WKInterfaceController.reloadRootControllersWithNames([
-                    "InfoInterfaceController"], contexts: [context])
             }
         }
     }
