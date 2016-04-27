@@ -426,3 +426,21 @@
 
 /*  */
 "places.suggested" = "Suggestions";
+
+"error.unknown" = "Une erreur est survenue";
+
+"error.unknown.suggestion" = "Veuillez ré-essayer ultérieurement";
+
+"error.no_addiction" = "Aucune addiction n'a été trouvée";
+
+"error.no_addiction.suggestion" = "Lancez l'application Dependn' et ajouter vos premières consomations";
+
+"settings.apple_watch.addiction" = "Dépendance sur Apple Watch";
+
+"settings.no_addiction" = "Aucune";
+
+"settings.no_applewatch" = "Aucune Apple Watch configurée";
+
+"settings.no_applewatch.message" = "Installer Dependn' depuis l'application Apple Watch";
+
+"ok" = "OK";

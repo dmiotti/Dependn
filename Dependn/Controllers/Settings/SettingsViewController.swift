@@ -12,6 +12,7 @@ import SwiftyUserDefaults
 import LocalAuthentication
 import CocoaLumberjack
 import PKHUD
+import WatchConnectivity
 
 enum SettingsSectionType: Int {
     case General
@@ -28,6 +29,7 @@ enum GeneralRowType: Int {
     case ManageAddictions
     case UsePasscode
     case MemorisePlaces
+    case WatchAddiction
     case Version
     case ShowTour
 
@@ -234,14 +236,16 @@ extension SettingsViewController: UITableViewDataSource {
                 cell.textLabel?.text = L("settings.memorise_places")
                 memorizePlacesSwitch.setOn(Defaults[.useLocation], animated: true)
                 cell.accessoryView = memorizePlacesSwitch
+            case .WatchAddiction:
+                cell.textLabel?.text = L("settings.apple_watch.addiction")
+                if let addiction = Defaults[.watchAddiction] {
+                    cell.accessoryView = buildAccessoryLabel(addiction)
+                } else {
+                    cell.accessoryView = buildAccessoryLabel(L("settings.no_addiction"))
+                }
             case .Version:
                 cell.textLabel?.text = L("settings.version")
-                let lbl = UILabel()
-                lbl.textColor = UIColor.appBlackColor()
-                lbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
-                lbl.text = appVersion()
-                lbl.sizeToFit()
-                cell.accessoryView = lbl
+                cell.accessoryView = buildAccessoryLabel(appVersion())
             case .ShowTour:
                 cell.textLabel?.text = L("settings.show_tour")
                 cell.accessoryType = .DisclosureIndicator
@@ -289,6 +293,15 @@ extension SettingsViewController: UITableViewDataSource {
             return 40
         }
     }
+    
+    private func buildAccessoryLabel(text: String) -> UILabel {
+        let lbl = UILabel()
+        lbl.textColor = UIColor.appLightTextColor()
+        lbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+        lbl.text = text
+        lbl.sizeToFit()
+        return lbl
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -309,6 +322,8 @@ extension SettingsViewController: UITableViewDelegate {
                     break
                 case .Version:
                     break
+                case .WatchAddiction:
+                    showSelectAppleWatchAddiction()
                 case .ShowTour:
                     showTour()
                     break
@@ -322,6 +337,23 @@ extension SettingsViewController: UITableViewDelegate {
         }
     }
     
+    private func showSelectAppleWatchAddiction() {
+        if WCSession.isSupported() {
+            let session = WCSession.defaultSession()
+            if session.paired {
+                let search = SearchAdditionViewController()
+                search.delegate = self
+                search.useBlueNavigationBar = true
+                navigationController?.pushViewController(search, animated: true)
+            } else {
+                let alert = UIAlertController(title: L("settings.no_applewatch"), message: L("settings.no_applewatch.message"), preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: L("ok"), style: .Default, handler: nil)
+                alert.addAction(okAction)
+                presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
     private func showManageAddictions() {
         let controller = AddictionListViewController()
         navigationController?.pushViewController(controller, animated: true)
@@ -332,5 +364,11 @@ extension SettingsViewController: UITableViewDelegate {
 extension SettingsViewController: UIDocumentInteractionControllerDelegate {
     func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
         return tabBarController ?? self
+    }
+}
+
+extension SettingsViewController: SearchAdditionViewControllerDelegate {
+    func searchController(searchController: SearchAdditionViewController, didSelectAddiction addiction: Addiction) {
+        Defaults[.watchAddiction] = addiction.name
     }
 }

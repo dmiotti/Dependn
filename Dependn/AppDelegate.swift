@@ -100,8 +100,20 @@ extension AppDelegate: WCSessionDelegate {
             case "stats":
                 let statsOp = WatchStatsOperation()
                 statsOp.completionBlock = {
-                    let res = WatchStatsOperation.formatStatsResultsForAppleWatch(statsOp.results)
-                    replyHandler([ "stats": res ])
+                    if let result = statsOp.result {
+                        let res = WatchStatsOperation.formatStatsResultsForAppleWatch(result)
+                        replyHandler([ "stats": res ])
+                    } else if let err = statsOp.error, sugg = err.localizedRecoverySuggestion {
+                        replyHandler([ "error": [
+                            "description": err.localizedDescription,
+                            "suggestion": sugg
+                            ] ])
+                    } else {
+                        replyHandler([ "error": [
+                            "description": L("error.unknown"),
+                            "suggestion": L("error.unknown.suggestion")
+                            ] ])
+                    }
                 }
                 watchQueue.addOperation(statsOp)
                 break

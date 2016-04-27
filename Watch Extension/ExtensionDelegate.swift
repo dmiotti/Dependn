@@ -9,6 +9,7 @@
 import WatchKit
 
 let kWatchExtensionStatsUpdatedNotificationName = "kWatchExtensionStatsUpdated"
+let kWatchExtensionStatsErrorNotificationName = "kWatchExtensionError"
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
 
@@ -19,10 +20,16 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     func applicationDidBecomeActive() {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         
-        CoreStack.shared.getStats { stats in
-            NSNotificationCenter.defaultCenter().postNotificationName(
-                kWatchExtensionStatsUpdatedNotificationName,
-                object: nil, userInfo: ["stats": stats])
+        CoreStack.shared.getStats { stats, err in
+            if let stats = stats {
+                NSNotificationCenter.defaultCenter().postNotificationName(
+                    kWatchExtensionStatsUpdatedNotificationName,
+                    object: nil, userInfo: ["stats": stats])
+            } else if let err = err {
+                NSNotificationCenter.defaultCenter().postNotificationName(
+                    kWatchExtensionStatsErrorNotificationName,
+                    object: nil, userInfo: [ "error": err ])
+            }
         }
     }
 

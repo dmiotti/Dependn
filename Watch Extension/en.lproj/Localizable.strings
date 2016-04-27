@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  Dependn
+
+  Created by David Miotti on 27/04/16.
+  Copyright © 2016 David Miotti. All rights reserved.
+*/
+
+"watch.loading" = "Loading data";
+
+"watch.loading.pleasewait" = "Please wait";
+
+"watch.today" = "Today";
+
+"watch.yesterday" = "yesterday";

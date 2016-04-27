@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 import ChameleonFramework
+import SwiftyUserDefaults
 
 extension Addiction {
     
@@ -20,6 +21,11 @@ extension Addiction {
         let newAdd = NSEntityDescription.insertNewObjectForEntityForName(Addiction.entityName, inManagedObjectContext: context) as! Addiction
         newAdd.name = name
         newAdd.color = UIColor.randomFlatColor().hexValue()
+         
+        if Defaults[.watchAddiction] == nil {
+           Defaults[.watchAddiction] = name
+        }
+        
         return newAdd
     }
     
@@ -47,7 +53,12 @@ extension Addiction {
     }
     
     class func deleteAddiction(addiction: Addiction, inContext context: NSManagedObjectContext) throws {
+        if Defaults[.watchAddiction] == addiction.name {
+           Defaults[.watchAddiction] = nil
+        }
+        
         let records = try Record.recordForAddiction(addiction, inContext: context)
+        
         for record in records {
             context.deleteObject(record)
         }

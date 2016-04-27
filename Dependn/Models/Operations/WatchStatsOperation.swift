@@ -9,18 +9,23 @@
 import WatchKit
 import SwiftHelpers
 import CoreData
+import SwiftyUserDefaults
+import BrightFutures
 
 typealias WatchDictionary = Dictionary<String, AnyObject>
 typealias WatchStatsValueTime = (value: String, date: NSDate)
 
-class WatchStatsAddiction {
+final class WatchStatsAddiction {
     var addiction = ""
     var values = [WatchStatsValueTime]()
 }
 
+private let kWatchStatsOperationErrorDomain = "WatchStatsOperation"
+private let kWatchStatsOperationNoAddictionErrorCode = 1
+
 final class WatchStatsOperation: SHOperation {
     
-    var results = [WatchStatsAddiction]()
+    var result: WatchStatsAddiction?
     var error: NSError?
     
     private let context: NSManagedObjectContext
@@ -32,53 +37,84 @@ final class WatchStatsOperation: SHOperation {
     
     override func execute() {
         
-        do {
-            let addictions = try Addiction.getAllAddictions(inContext: self.context)
-            
-            for addiction in addictions {
-                
+        getAddiction().onComplete { r in
+            if let err = r.error {
+                self.error = err
+            } else {
+                let addiction = r.value!
+
                 let statsAddiction = WatchStatsAddiction()
                 statsAddiction.addiction = addiction.name
-                
+
                 let now = NSDate()
                 let req = NSFetchRequest(entityName: Record.entityName)
-                
+
                 for i in 0...3 {
                     let date = now - i.days
                     let start = date.beginningOfDay
                     let end = date.endOfDay
-                    
+
                     let rangepre = NSPredicate(format: "date >= %@ AND date <= %@", start, end)
                     let addicpred = NSPredicate(format: "addiction == %@", addiction)
                     req.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [rangepre, addicpred])
-                    
+
                     var error: NSError?
                     let count = self.context.countForFetchRequest(req, error: &error)
                     if let err = error {
-                        throw err
+                        self.error = err
+                    } else {
+                        statsAddiction.values.append(("\(count)", start))
                     }
-                    
-                    statsAddiction.values.append(("\(count)", start))
                 }
                 
-                self.results.append(statsAddiction)
+                self.result = statsAddiction
             }
-        } catch let err as NSError {
-            self.error = err
+            self.finish()
         }
-        
-        finish()
     }
     
-    static func formatStatsResultsForAppleWatch(results: [WatchStatsAddiction]) -> [WatchDictionary] {
-        var data = [WatchDictionary]()
-        for result in results {
-            var addiction = WatchDictionary()
-            addiction["name"] = result.addiction
-            addiction["value"] = result.values.map({ [$0.value, $0.date] })
-            data.append(addiction)
+    private func getAddiction() -> Future<Addiction, NSError> {
+        let promise = Promise<Addiction, NSError>()
+        
+        do {
+            if let addictionName = Defaults[.watchAddiction] {
+                if let addiction = try Addiction.findByName(addictionName, inContext: context) {
+                    promise.success(addiction)
+                } else {
+                    promise.failure(NSError(
+                        domain: kWatchStatsOperationErrorDomain,
+                        code: kWatchStatsOperationNoAddictionErrorCode,
+                        userInfo: [
+                            NSLocalizedDescriptionKey: L("error.no_addiction"),
+                            NSLocalizedRecoverySuggestionErrorKey: L("error.no_addiction.suggestion")
+                        ]))
+                }
+            } else {
+                let addictions = try Addiction.getAllAddictionsOrderedByCount(inContext: context)
+                if let first = addictions.first {
+                    promise.success(first)
+                } else {
+                    promise.failure(NSError(
+                        domain: kWatchStatsOperationErrorDomain,
+                        code: kWatchStatsOperationNoAddictionErrorCode,
+                        userInfo: [
+                            NSLocalizedDescriptionKey: L("error.no_addiction"),
+                            NSLocalizedRecoverySuggestionErrorKey: L("error.no_addiction.suggestion")
+                        ]))
+                }
+            }
+        } catch let err as NSError {
+            promise.failure(err)
         }
-        return data
+        
+        return promise.future
+    }
+    
+    static func formatStatsResultsForAppleWatch(result: WatchStatsAddiction) -> WatchDictionary {
+        var dict = WatchDictionary()
+        dict["name"] = result.addiction
+        dict["value"] = result.values.map({ [$0.value, $0.date] })
+        return dict
     }
 
 }

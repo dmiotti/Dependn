@@ -42,8 +42,11 @@
 		58548BE21C8BE18100C7C940 /* NewPlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BDA1C8BE18100C7C940 /* NewPlaceTableViewCell.swift */; };
 		58548BE31C8BE18100C7C940 /* NewTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BDB1C8BE18100C7C940 /* NewTextTableViewCell.swift */; };
 		58548BE91C8BE1E400C7C940 /* SearchAdditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BE81C8BE1E400C7C940 /* SearchAdditionViewController.swift */; };
+		58669A9B1CD0FEB0002BDED3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58669A9D1CD0FEB0002BDED3 /* Localizable.strings */; };
+		58669AA11CD10376002BDED3 /* SHDateFormatterProximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58669AA01CD10376002BDED3 /* SHDateFormatterProximity.swift */; };
 		58683B341CB7089B000FE358 /* XLSExportOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58683B331CB7089B000FE358 /* XLSExportOperation.swift */; };
 		586EDA361CA3567D00DAE496 /* TimeSinceLastRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */; };
+		587046BA1CD0C93D00C2F23B /* InfoInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587046B91CD0C93D00C2F23B /* InfoInterfaceController.swift */; };
 		58858ADD1C84520100E8A794 /* Dependn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */; };
 		58AD8B381C9178D40008CD9C /* UIViewController+TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AD8B371C9178D40008CD9C /* UIViewController+TitleView.swift */; };
 		58BB15881CA1F91A00E3E06A /* Place+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB15861CA1F91A00E3E06A /* Place+CoreDataProperties.swift */; };
@@ -51,7 +54,6 @@
 		58BB158F1CA1F98500E3E06A /* Place+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB158E1CA1F98500E3E06A /* Place+Repository.swift */; };
 		58BB15921CA20D0D00E3E06A /* PlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB15911CA20D0D00E3E06A /* PlacesViewController.swift */; };
 		58BB15941CA20D3400E3E06A /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB15931CA20D3400E3E06A /* PlaceCell.swift */; };
-		58CF71801CA809310092458F /* StatsTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CF717F1CA809310092458F /* StatsTableRowController.swift */; };
 		58CF71821CA815090092458F /* ShortStatsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CF71811CA815090092458F /* ShortStatsOperation.swift */; };
 		58D7887D1CB16BE500ED3413 /* DependencyChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D7887C1CB16BE500ED3413 /* DependencyChooserViewController.swift */; };
 		58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */; };
@@ -181,8 +183,13 @@
 		58548BDA1C8BE18100C7C940 /* NewPlaceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPlaceTableViewCell.swift; sourceTree = "<group>"; };
 		58548BDB1C8BE18100C7C940 /* NewTextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTextTableViewCell.swift; sourceTree = "<group>"; };
 		58548BE81C8BE1E400C7C940 /* SearchAdditionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAdditionViewController.swift; sourceTree = "<group>"; };
+		58669A9C1CD0FEB0002BDED3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		58669A9E1CD0FEB3002BDED3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		58669A9F1CD0FEB4002BDED3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		58669AA01CD10376002BDED3 /* SHDateFormatterProximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHDateFormatterProximity.swift; sourceTree = "<group>"; };
 		58683B331CB7089B000FE358 /* XLSExportOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLSExportOperation.swift; sourceTree = "<group>"; };
 		586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSinceLastRecord.swift; sourceTree = "<group>"; };
+		587046B91CD0C93D00C2F23B /* InfoInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoInterfaceController.swift; sourceTree = "<group>"; };
 		588D8C9B1C8F1861005BA8EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		588D8C9D1C8F1898005BA8EB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		588D8C9F1C8F18A4005BA8EB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -193,7 +200,6 @@
 		58BB158E1CA1F98500E3E06A /* Place+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Place+Repository.swift"; sourceTree = "<group>"; };
 		58BB15911CA20D0D00E3E06A /* PlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesViewController.swift; sourceTree = "<group>"; };
 		58BB15931CA20D3400E3E06A /* PlaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
-		58CF717F1CA809310092458F /* StatsTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsTableRowController.swift; sourceTree = "<group>"; };
 		58CF71811CA815090092458F /* ShortStatsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortStatsOperation.swift; sourceTree = "<group>"; };
 		58D7887C1CB16BE500ED3413 /* DependencyChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserViewController.swift; sourceTree = "<group>"; };
 		58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecordTextViewController.swift; sourceTree = "<group>"; };
@@ -491,16 +497,18 @@
 			children = (
 				583C9C6D1CCEC77E00E6FD9D /* CoreStack.swift */,
 				58F092CE1C9615AB00DF4ADC /* ExtensionDelegate.swift */,
+				587046B91CD0C93D00C2F23B /* InfoInterfaceController.swift */,
 				583C9C711CCEE28500E6FD9D /* DayInterfaceController.swift */,
 				58F092CC1C9615AB00DF4ADC /* TodayInterfaceController.swift */,
 				583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */,
 				583C9C691CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift */,
 				583C9C6B1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift */,
-				58CF717F1CA809310092458F /* StatsTableRowController.swift */,
 				583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */,
 				583C9C731CCEEC3400E6FD9D /* AddictionsTableRowController.swift */,
+				58669AA01CD10376002BDED3 /* SHDateFormatterProximity.swift */,
 				58F092D01C9615AB00DF4ADC /* Assets.xcassets */,
 				58F092D21C9615AB00DF4ADC /* Info.plist */,
+				58669A9D1CD0FEB0002BDED3 /* Localizable.strings */,
 			);
 			path = "Watch Extension";
 			sourceTree = "<group>";
@@ -662,6 +670,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58F092D11C9615AB00DF4ADC /* Assets.xcassets in Resources */,
+				58669A9B1CD0FEB0002BDED3 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -807,6 +816,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				587046BA1CD0C93D00C2F23B /* InfoInterfaceController.swift in Sources */,
 				58F092CF1C9615AB00DF4ADC /* ExtensionDelegate.swift in Sources */,
 				583C9C741CCEEC3400E6FD9D /* AddictionsTableRowController.swift in Sources */,
 				583C9C681CCEC62900E6FD9D /* YesterdayInterfaceController.swift in Sources */,
@@ -815,8 +825,8 @@
 				583C9C761CCEEC5700E6FD9D /* AddictionListInterfaceController.swift in Sources */,
 				583C9C6C1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift in Sources */,
 				58F092CD1C9615AB00DF4ADC /* TodayInterfaceController.swift in Sources */,
-				58CF71801CA809310092458F /* StatsTableRowController.swift in Sources */,
 				583C9C6E1CCEC77E00E6FD9D /* CoreStack.swift in Sources */,
+				58669AA11CD10376002BDED3 /* SHDateFormatterProximity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -836,6 +846,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		58669A9D1CD0FEB0002BDED3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				58669A9C1CD0FEB0002BDED3 /* Base */,
+				58669A9E1CD0FEB3002BDED3 /* fr */,
+				58669A9F1CD0FEB4002BDED3 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		58DF62A01C83BDEE0035F608 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1014,7 +1034,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: David Miotti (A999UM69TM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				IBSC_MODULE = Watch_Extension;
@@ -1033,7 +1053,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: David Miotti (659B2N7HE9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				IBSC_MODULE = Watch_Extension;

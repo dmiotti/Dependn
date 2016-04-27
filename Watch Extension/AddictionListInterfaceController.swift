@@ -9,8 +9,7 @@
 import WatchKit
 import Foundation
 
-
-class AddictionListInterfaceController: WKInterfaceController {
+final class AddictionListInterfaceController: WKInterfaceController {
 
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)

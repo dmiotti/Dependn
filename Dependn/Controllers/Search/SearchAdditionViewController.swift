@@ -35,12 +35,14 @@ final class SearchAdditionViewController: UIViewController {
     
     private var tableView: UITableView!
     
+    var useBlueNavigationBar: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         edgesForExtendedLayout = .None
         
-        updateTitle(L("addiction_list.title"), blueBackground: false)
+        updateTitle(L("addiction_list.title"), blueBackground: useBlueNavigationBar)
         
         searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
         configureSearchBar()

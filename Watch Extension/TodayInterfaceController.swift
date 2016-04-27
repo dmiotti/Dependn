@@ -8,15 +8,23 @@
 
 import WatchKit
 
-class TodayInterfaceController: DayInterfaceController {
+final class TodayInterfaceController: DayInterfaceController {
     
-    override func configureRow(row: StatsTableRowController, withElement element: WatchStatsAddiction) {
-        row.addictionLbl.setText(element.addiction)
+    override func loadData(data: WatchStatsAddiction) {
+        super.loadData(data)
         
-        if let value = element.values.first {
-            let date = dateFormatter.stringFromDate(value.date)
-            row.dateLbl.setText(date)
-            row.valueLbl.setText(value.value)
+        addictionLbl.setText(data.addiction)
+        valueLbl.setText(data.values[0].value)
+        
+        let date = data.values[0].date
+        let proximity = SHDateProximityToDate(date)
+        switch proximity {
+        case .Today:
+            dayLbl.setText(NSLocalizedString("watch.today", comment: ""))
+        case .Yesterday:
+            dayLbl.setText(NSLocalizedString("watch.yesterday", comment: ""))
+        default:
+            dayLbl.setText(dateFormatter.stringFromDate(date))
         }
     }
     

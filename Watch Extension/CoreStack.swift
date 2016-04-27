@@ -17,6 +17,8 @@ class WatchStatsAddiction {
     var values = [WatchStatsValueTime]()
 }
 
+private let kCoreStackErrorDomain = "CoreStack"
+
 final class CoreStack: NSObject {
     
     static let shared = CoreStack()
@@ -30,41 +32,49 @@ final class CoreStack: NSObject {
         }
     }
     
-    var cachedStats: [WatchStatsAddiction]?
+    var cachedStats: WatchStatsAddiction?
     
-    func getStats(block: [WatchStatsAddiction] -> Void) {
+    func getStats(block: (WatchStatsAddiction?, NSError?) -> Void) {
         if WCSession.isSupported() {
             session = WCSession.defaultSession()
             session?.sendMessage(["action": "stats"], replyHandler: { (response) in
                 
-                var addictions = [WatchStatsAddiction]()
-                if let values = response["stats"] as? [WatchDictionary] {
+                if let
+                    error = response["error"] as? WatchDictionary,
+                    desc = error["description"] as? String,
+                    suggestion = error["suggestion"] {
                     
-                    for rawAddiction in values {
-                        if let name = rawAddiction["name"] as? String {
-                            let statsAddiction = WatchStatsAddiction()
-                            statsAddiction.addiction = name
-                            if let rawValues = rawAddiction["value"] as? [Array<AnyObject>] {
-                                for rawValue in rawValues {
-                                    if let date = rawValue.last as? NSDate, count = rawValue.first as? String {
-                                        statsAddiction.values.append((count, date))
-                                    }
-                                }
+                    let err = NSError(domain: kCoreStackErrorDomain, code: 0, userInfo: [
+                        NSLocalizedDescriptionKey: desc,
+                        NSLocalizedRecoverySuggestionErrorKey: suggestion
+                        ])
+                    
+                    block(nil, err)
+                    
+                } else if let rawAddiction = response["stats"] as? WatchDictionary, name = rawAddiction["name"] as? String {
+                    let addictions = WatchStatsAddiction()
+                    addictions.addiction = name
+                    if let rawValues = rawAddiction["value"] as? [Array<AnyObject>] {
+                        for rawValue in rawValues {
+                            if let date = rawValue.last as? NSDate, count = rawValue.first as? String {
+                                addictions.values.append((count, date))
                             }
-                            addictions.append(statsAddiction)
                         }
                     }
-                }
-                
-                self.cachedStats = addictions
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    block(addictions)
+                    self.cachedStats = addictions
+                    block(addictions, nil)
+                } else {
+                    let err = NSError(domain: kCoreStackErrorDomain, code: 0, userInfo: [
+                        NSLocalizedDescriptionKey: "An unknown error has occur",
+                        NSLocalizedRecoverySuggestionErrorKey: "Please try again later"
+                        ])
+                    
+                    block(nil, err)
                 }
                 
                 }, errorHandler: { (err) in
-                    print(err)
-                    block([])
+                    
+                    block(nil, err)
             })
         }
     }
