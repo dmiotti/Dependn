@@ -32,6 +32,10 @@ final class TodayInterfaceController: DayInterfaceController {
         default:
             dayLbl.setText(dateFormatter.stringFromDate(date))
         }
+        
+        if let sinceLast = data.sinceLast {
+            setTitle("Last " + sinceLast)
+        }
     }
     
 }

@@ -280,7 +280,7 @@ final class StatsPanelView: SHCommonInitView {
     }
     
     private func fractionFromInterval(interval: NSTimeInterval) -> String? {
-        let time = self.hoursMinutesSecondsFromInterval(interval)
+        let time = hoursMinutesSecondsFromInterval(interval)
         if time.hours <= 0 || time.minutes < 15 {
             return nil
         }

@@ -40,11 +40,14 @@ final class ExtensionDelegate: NSObject, WKExtensionDelegate {
     }
     
     private func showMainController() {
+        if WKExtension.sharedExtension().rootInterfaceController is TodayInterfaceController {
+            return
+        }
         WKInterfaceController.reloadRootControllersWithNames([
-            "ThreeDaysAgo",
-            "TwoDaysAgo",
+            "Today",
             "Yesterday",
-            "Today"
+            "TwoDaysAgo",
+            "ThreeDaysAgo"
             ], contexts: nil)
     }
     

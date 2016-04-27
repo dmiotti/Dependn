@@ -22,6 +22,7 @@ struct WatchSimpleModel {
 final class WatchStatsAddiction {
     var addiction = ""
     var values = [WatchStatsValueTime]()
+    var sinceLast: String?
 }
 
 final class AppContext {
@@ -63,17 +64,22 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             rawAddiction = appContext["stats"] as? WatchDictionary,
             name = rawAddiction["name"] as? String {
             
-            let addictions = WatchStatsAddiction()
-            addictions.addiction = name
+            let addiction = WatchStatsAddiction()
+            addiction.addiction = name
+            
+            if let sinceLast = rawAddiction["sinceLast"] as? String {
+                addiction.sinceLast = sinceLast
+            }
+            
             if let rawValues = rawAddiction["value"] as? [Array<AnyObject>] {
                 for rawValue in rawValues {
                     if let date = rawValue.last as? NSDate, count = rawValue.first as? String {
-                        addictions.values.append((count, date))
+                        addiction.values.append((count, date))
                     }
                 }
             }
             
-            context.stats = addictions
+            context.stats = addiction
         }
         
         let newEntry = appContext["new_entry"] as? WatchDictionary
