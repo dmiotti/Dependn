@@ -29,6 +29,14 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
                 NSNotificationCenter.defaultCenter().postNotificationName(
                     kWatchExtensionStatsErrorNotificationName,
                     object: nil, userInfo: [ "error": err ])
+            } else {
+                let err = NSError(domain: "Dependn Watch App", code: 0, userInfo: [
+                    NSLocalizedDescriptionKey: "Unknown Error",
+                    NSLocalizedRecoverySuggestionErrorKey: "Please restart"
+                    ])
+                NSNotificationCenter.defaultCenter().postNotificationName(
+                    kWatchExtensionStatsErrorNotificationName,
+                    object: nil, userInfo: [ "error": err ])
             }
         }
     }

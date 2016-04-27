@@ -17,10 +17,15 @@ final class InfoInterfaceController: WKInterfaceController {
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        // Configure interface objects here.
-        if let error = context as? NSError {
-            infoLbl.setText(error.localizedDescription)
-            descriptionLbl.setText(error.localizedRecoverySuggestion)
+        setTitle(NSLocalizedString("appname", comment: ""))
+        
+        if let context = context as? Dictionary<String, String> {
+            if let info = context["info"] {
+                infoLbl.setText(info)
+            }
+            if let desc = context["desc"] {
+                descriptionLbl.setText(desc)
+            }
         } else {
             infoLbl.setText(NSLocalizedString("watch.loading", comment: ""))
             descriptionLbl.setText(NSLocalizedString("watch.loading.pleasewait", comment: ""))

@@ -12,7 +12,7 @@ import WatchConnectivity
 typealias WatchDictionary = Dictionary<String, AnyObject>
 typealias WatchStatsValueTime = (value: String, date: NSDate)
 
-class WatchStatsAddiction {
+final class WatchStatsAddiction {
     var addiction = ""
     var values = [WatchStatsValueTime]()
 }
@@ -47,7 +47,7 @@ final class CoreStack: NSObject {
                     let err = NSError(domain: kCoreStackErrorDomain, code: 0, userInfo: [
                         NSLocalizedDescriptionKey: desc,
                         NSLocalizedRecoverySuggestionErrorKey: suggestion
-                        ])
+                    ])
                     
                     block(nil, err)
                     
@@ -67,7 +67,7 @@ final class CoreStack: NSObject {
                     let err = NSError(domain: kCoreStackErrorDomain, code: 0, userInfo: [
                         NSLocalizedDescriptionKey: "An unknown error has occur",
                         NSLocalizedRecoverySuggestionErrorKey: "Please try again later"
-                        ])
+                    ])
                     
                     block(nil, err)
                 }

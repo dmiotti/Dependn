@@ -25,13 +25,15 @@ class DayInterfaceController: WKInterfaceController {
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
+        setTitle(NSLocalizedString("appname", comment: ""))
+        
         // Configure interface objects here.
         if let cached = CoreStack.shared.cachedStats {
             self.loadData(cached)
         } else {
             valueLbl.setText(nil)
-            addictionLbl.setText(NSLocalizedString("watch.loading", comment: ""))
-            dayLbl.setText(NSLocalizedString("watch.loading.pleasewait", comment: ""))
+            addictionLbl.setText(nil)
+            dayLbl.setText(nil)
         }
         
         addMenuItemWithItemIcon(.Play,
@@ -78,9 +80,14 @@ class DayInterfaceController: WKInterfaceController {
     
     func statsGetError(notification: NSNotification) {
         if let error = notification.userInfo?["error"] as? NSError {
+            var context = [String: String]()
+            context["info"] = error.localizedDescription
+            if let desc = error.localizedRecoverySuggestion {
+                context["desc"] = desc
+            }
             dispatch_async(dispatch_get_main_queue()) {
                 WKInterfaceController.reloadRootControllersWithNames([
-                    "InfoInterfaceController"], contexts: [error])
+                    "InfoInterfaceController"], contexts: [context])
             }
         }
     }

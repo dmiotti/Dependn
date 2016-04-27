@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="IBL-Fq-oql">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="10032"/>
@@ -12,8 +12,8 @@
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" id="c01-Rm-yp4">
                             <items>
-                                <label alignment="center" verticalAlignment="center" text="Une erreur est survenue" textAlignment="center" numberOfLines="0" minimumScaleFactor="0.80000000000000004" id="642-TY-v3P"/>
-                                <label alignment="center" verticalAlignment="center" text="Veuillez ré-essayer" textAlignment="center" numberOfLines="0" id="zYz-6m-Os9">
+                                <label width="1" alignment="center" verticalAlignment="center" text="Chargement en cours" textAlignment="center" numberOfLines="0" minimumScaleFactor="0.80000000000000004" id="642-TY-v3P"/>
+                                <label width="1" alignment="center" verticalAlignment="center" text="Veuillez patienter" textAlignment="center" numberOfLines="0" id="zYz-6m-Os9">
                                     <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
                                 </label>
                             </items>
@@ -25,22 +25,22 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="1041" y="464"/>
+            <point key="canvasLocation" x="188" y="682"/>
         </scene>
-        <!--TodayInterfaceController-->
+        <!--Dependn'-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller identifier="TodayInterfaceController" id="AgC-eL-Hgc" customClass="TodayInterfaceController" customModule="Watch_Extension">
+                <controller identifier="TodayInterfaceController" title="Dependn'" id="AgC-eL-Hgc" customClass="TodayInterfaceController" customModule="Watch_Extension">
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" id="Ya2-Vs-pd1">
                             <items>
-                                <label width="1" height="68" alignment="left" text="3" textAlignment="center" id="71a-xJ-tEd">
+                                <label width="1" height="68" alignment="left" verticalAlignment="center" text="3" textAlignment="center" id="71a-xJ-tEd">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
-                                <label width="1" alignment="left" text="Cigarettes" textAlignment="center" numberOfLines="0" id="9Xs-hl-zWx">
+                                <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="9Xs-hl-zWx">
                                     <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                 </label>
-                                <label width="1" alignment="left" alpha="0.35999999999999999" text="Auj." textAlignment="center" numberOfLines="0" id="Nog-P5-1cE">
+                                <label width="1" alignment="left" verticalAlignment="center" alpha="0.35999999999999999" text="Auj." textAlignment="center" numberOfLines="0" id="Nog-P5-1cE">
                                     <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                 </label>
                             </items>
@@ -57,14 +57,14 @@
             </objects>
             <point key="canvasLocation" x="471" y="464.5"/>
         </scene>
-        <!--YesterdayInterfaceController-->
+        <!--Dependn'-->
         <scene sceneID="xfm-dt-fQY">
             <objects>
-                <controller identifier="YesterdayInterfaceController" id="lbC-MP-CuM" customClass="YesterdayInterfaceController" customModule="Watch_Extension">
+                <controller identifier="YesterdayInterfaceController" title="Dependn'" id="lbC-MP-CuM" customClass="YesterdayInterfaceController" customModule="Watch_Extension">
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" id="kuc-Sb-zhv">
                             <items>
-                                <label width="1" height="68" alignment="left" text="8" textAlignment="center" id="Ofi-WH-y6T">
+                                <label width="1" height="68" alignment="left" verticalAlignment="center" text="8" textAlignment="center" id="Ofi-WH-y6T">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
                                 <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="NMQ-Pm-tnN">
@@ -87,14 +87,14 @@
             </objects>
             <point key="canvasLocation" x="757" y="464.5"/>
         </scene>
-        <!--TwoDaysAgoInterfaceController-->
+        <!--Dependn'-->
         <scene sceneID="Mhh-qQ-mZm">
             <objects>
-                <controller identifier="TwoDaysAgoInterfaceController" id="uCo-M6-f4i" customClass="TwoDaysAgoInterfaceController" customModule="Watch_Extension">
+                <controller identifier="TwoDaysAgoInterfaceController" title="Dependn'" id="uCo-M6-f4i" customClass="TwoDaysAgoInterfaceController" customModule="Watch_Extension">
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" id="Ui9-9e-zEX">
                             <items>
-                                <label width="1" height="68" alignment="left" text="4" textAlignment="center" id="JCv-3F-sGV">
+                                <label width="1" height="68" alignment="left" verticalAlignment="center" text="4" textAlignment="center" id="JCv-3F-sGV">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
                                 <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="4A1-8m-eEZ">
@@ -117,14 +117,14 @@
             </objects>
             <point key="canvasLocation" x="471" y="863"/>
         </scene>
-        <!--ThreeDaysAgoInterfaceController-->
+        <!--Dependn'-->
         <scene sceneID="e2V-ra-Xac">
             <objects>
-                <controller identifier="ThreeDaysAgoInterfaceController" id="F3b-cj-xyp" customClass="ThreeDaysAgoInterfaceController" customModule="Watch_Extension">
+                <controller identifier="ThreeDaysAgoInterfaceController" title="Dependn'" id="F3b-cj-xyp" customClass="ThreeDaysAgoInterfaceController" customModule="Watch_Extension">
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" id="Vog-np-dli">
                             <items>
-                                <label width="1" height="68" alignment="left" text="18" textAlignment="center" id="HvE-5R-Mmp">
+                                <label width="1" height="68" alignment="left" verticalAlignment="center" text="18" textAlignment="center" id="HvE-5R-Mmp">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
                                 <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="LF6-zg-YGK">
@@ -146,10 +146,10 @@
             </objects>
             <point key="canvasLocation" x="757" y="863"/>
         </scene>
-        <!--AddictionList-->
+        <!--Mes dépendances-->
         <scene sceneID="5QY-9H-7VW">
             <objects>
-                <controller identifier="AddictionList" id="Eaa-UU-zL7">
+                <controller identifier="AddictionList" title="Mes dépendances" id="Eaa-UU-zL7">
                     <items>
                         <table alignment="left" id="7EL-PB-TXd">
                             <items>
@@ -173,4 +173,5 @@
             <point key="canvasLocation" x="1041" y="863"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.1529411765" green="0.66274509800000003" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
 </document>

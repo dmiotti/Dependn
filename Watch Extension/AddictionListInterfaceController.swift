@@ -15,6 +15,8 @@ final class AddictionListInterfaceController: WKInterfaceController {
         super.awakeWithContext(context)
         
         // Configure interface objects here.
+        
+        setTitle(NSLocalizedString("addictionlist.title", comment: ""))
     }
 
     override func willActivate() {
