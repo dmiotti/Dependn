@@ -34,7 +34,7 @@
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" id="Ya2-Vs-pd1">
                             <items>
-                                <label width="1" height="68" alignment="left" verticalAlignment="center" text="3" textAlignment="center" id="71a-xJ-tEd">
+                                <label width="1" alignment="left" verticalAlignment="center" text="3" textAlignment="center" id="71a-xJ-tEd">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
                                 <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="9Xs-hl-zWx">
@@ -64,7 +64,7 @@
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" id="kuc-Sb-zhv">
                             <items>
-                                <label width="1" height="68" alignment="left" verticalAlignment="center" text="8" textAlignment="center" id="Ofi-WH-y6T">
+                                <label width="1" alignment="left" verticalAlignment="center" text="8" textAlignment="center" id="Ofi-WH-y6T">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
                                 <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="NMQ-Pm-tnN">
@@ -94,7 +94,7 @@
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" id="Ui9-9e-zEX">
                             <items>
-                                <label width="1" height="68" alignment="left" verticalAlignment="center" text="4" textAlignment="center" id="JCv-3F-sGV">
+                                <label width="1" alignment="left" verticalAlignment="center" text="4" textAlignment="center" id="JCv-3F-sGV">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
                                 <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="4A1-8m-eEZ">
@@ -124,7 +124,7 @@
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" id="Vog-np-dli">
                             <items>
-                                <label width="1" height="68" alignment="left" verticalAlignment="center" text="18" textAlignment="center" id="HvE-5R-Mmp">
+                                <label width="1" alignment="left" verticalAlignment="center" text="18" textAlignment="center" id="HvE-5R-Mmp">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
                                 <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="LF6-zg-YGK">
@@ -146,10 +146,10 @@
             </objects>
             <point key="canvasLocation" x="757" y="863"/>
         </scene>
-        <!--Mes dépendances-->
+        <!--AddictionList-->
         <scene sceneID="5QY-9H-7VW">
             <objects>
-                <controller identifier="AddictionList" title="Mes dépendances" id="Eaa-UU-zL7">
+                <controller identifier="AddictionList" id="Eaa-UU-zL7">
                     <items>
                         <table alignment="left" id="7EL-PB-TXd">
                             <items>
