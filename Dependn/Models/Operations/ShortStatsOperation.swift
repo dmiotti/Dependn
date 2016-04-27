@@ -21,20 +21,16 @@ class StatsResult {
     }
 }
 
-final class ShortStatsOperation: SHOperation {
+final class ShortStatsOperation: CoreDataOperation {
     
     var results = [StatsResult]()
-    var error: NSError?
     
     private let internalQueue = NSOperationQueue()
-    private let context: NSManagedObjectContext
     
     var userAddictions: [Addiction]?
     
     init(addictions: [Addiction]? = nil) {
         userAddictions = addictions
-        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        context.parentContext = CoreDataStack.shared.managedObjectContext
     }
     
     override func execute() {

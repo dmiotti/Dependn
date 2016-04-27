@@ -40,7 +40,7 @@ final class InfoInterfaceController: WKInterfaceController {
                        object: nil)
         nc.addObserver(self,
                        selector: #selector(InfoInterfaceController.statsGetError(_:)),
-                       name: kWatchExtensionStatsUpdatedNotificationName,
+                       name: kWatchExtensionStatsErrorNotificationName,
                        object: nil)
         
         // This method is called when watch view controller is about to be visible to user
@@ -58,10 +58,10 @@ final class InfoInterfaceController: WKInterfaceController {
         if let _ = notification.userInfo?["stats"] as? WatchStatsAddiction {
             dispatch_async(dispatch_get_main_queue()) {
                 WKInterfaceController.reloadRootControllersWithNames([
-                    "TodayInterfaceController",
-                    "YesterdayInterfaceController",
+                    "ThreeDaysAgoInterfaceController",
                     "TwoDaysAgoInterfaceController",
-                    "ThreeDaysAgoInterfaceController"
+                    "YesterdayInterfaceController",
+                    "TodayInterfaceController"
                     ], contexts: nil)
             }
         }

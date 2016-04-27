@@ -10,6 +10,12 @@ import WatchKit
 
 final class TodayInterfaceController: DayInterfaceController {
     
+    override func awakeWithContext(context: AnyObject?) {
+        super.awakeWithContext(context)
+        
+        becomeCurrentPage()
+    }
+    
     override func loadData(data: WatchStatsAddiction) {
         super.loadData(data)
         

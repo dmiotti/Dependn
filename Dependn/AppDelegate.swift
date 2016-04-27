@@ -13,6 +13,7 @@ import SwiftyUserDefaults
 import CocoaLumberjack
 import SwiftHelpers
 import WatchConnectivity
+import BrightFutures
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -46,11 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             queue.addOperation(op)
         }
         
+        prepareDataForAppleWatch()
+        
         return true
     }
     
     func applicationDidEnterBackground(application: UIApplication) {
         CoreDataStack.shared.saveContext()
+        showPasscodeIfNeeded()
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
@@ -64,6 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Passcode management
     
     private var hidingNav: SHStatusBarNavigationController?
+    private var lastPasscodeShown: NSDate?
     
     private func showPasscodeIfNeeded() {
         guard
@@ -74,19 +79,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     return
         }
         
-        dispatch_async(dispatch_get_main_queue()) {
-            if let rootViewController = self.window?.rootViewController where rootViewController.isViewLoaded() {
-                var topController = rootViewController
-                while let top = topController.presentedViewController {
-                    topController = top
-                }
-                
-                let passcodeViewController = PasscodeViewController()
-                self.hidingNav = SHStatusBarNavigationController(rootViewController: passcodeViewController)
-                self.hidingNav!.statusBarStyle = .LightContent
-                self.hidingNav!.modalTransitionStyle = .CrossDissolve
-                topController.presentViewController(self.hidingNav!, animated: false, completion: nil)
+        if lastPasscodeShown?.timeIntervalSinceDate(NSDate()) < 15 * 60 {
+            return
+        }
+        
+        presentPasscode()
+    }
+    
+    private func presentPasscode() {
+        if let rootViewController = window?.rootViewController where rootViewController.isViewLoaded() {
+            var topController = rootViewController
+            while let top = topController.presentedViewController {
+                topController = top
             }
+            
+            lastPasscodeShown = NSDate()
+            
+            let passcodeViewController = PasscodeViewController()
+            hidingNav = SHStatusBarNavigationController(rootViewController: passcodeViewController)
+            hidingNav!.statusBarStyle = .LightContent
+            hidingNav!.modalTransitionStyle = .CrossDissolve
+            topController.presentViewController(hidingNav!, animated: false, completion: nil)
         }
     }
     
@@ -97,29 +110,84 @@ extension AppDelegate: WCSessionDelegate {
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
         if let action = message["action"] as? String {
             switch action {
-            case "stats":
-                let statsOp = WatchStatsOperation()
-                statsOp.completionBlock = {
-                    if let result = statsOp.result {
-                        let res = WatchStatsOperation.formatStatsResultsForAppleWatch(result)
-                        replyHandler([ "stats": res ])
-                    } else if let err = statsOp.error, sugg = err.localizedRecoverySuggestion {
+            case "get_context":
+                prepareDataForAppleWatch().onComplete { r in
+                    if let dict = r.value {
+                        replyHandler(dict)
+                    } else if let err = r.error, sugg = err.localizedRecoverySuggestion {
                         replyHandler([ "error": [
                             "description": err.localizedDescription,
                             "suggestion": sugg
-                            ] ])
+                        ] ])
                     } else {
                         replyHandler([ "error": [
                             "description": L("error.unknown"),
                             "suggestion": L("error.unknown.suggestion")
-                            ] ])
+                        ] ])
                     }
                 }
-                watchQueue.addOperation(statsOp)
                 break
             default:
                 break
             }
         }
+    }
+    
+    /// Gather all data from CoreData and format it for reply to Watch
+    private func prepareDataForAppleWatch() -> Future<WatchDictionary, NSError> {
+        let promise = Promise<WatchDictionary, NSError>()
+        
+        var replyDict = WatchDictionary()
+        
+        watchQueue.suspended = true
+        
+        let statsOp = WatchStatsOperation()
+        statsOp.completionBlock = {
+            if let result = statsOp.result {
+                let res = WatchStatsOperation.formatStatsResultsForAppleWatch(result)
+                replyDict["stats"] = res
+            } else if let err = statsOp.error, sugg = err.localizedRecoverySuggestion {
+                replyDict["error"] = [
+                    "description": err.localizedDescription,
+                    "suggestion": sugg
+                ]
+            } else {
+                replyDict["error"] = [
+                    "description": L("error.unknown"),
+                    "suggestion": L("error.unknown.suggestion")
+                ]
+            }
+        }
+        watchQueue.addOperation(statsOp)
+        
+        let newEntryOp = WatchNewEntryInfoOperation()
+        newEntryOp.completionBlock = {
+            if let result = newEntryOp.watchInfo {
+                let res = WatchNewEntryInfoOperation.formatNewEntryResultsForAppleWatch(result)
+                replyDict["new_entry"] = res
+            } else if let err = newEntryOp.error, sugg = err.localizedRecoverySuggestion {
+                replyDict["error"] = [
+                    "description": err.localizedDescription,
+                    "suggestion": sugg
+                ]
+            } else {
+                replyDict["error"] = [
+                    "description": L("error.unknown"),
+                    "suggestion": L("error.unknown.suggestion")
+                ]
+            }
+        }
+        watchQueue.addOperation(newEntryOp)
+        
+        let finalBlock = NSBlockOperation {
+            promise.success(replyDict)
+        }
+        finalBlock.addDependency(statsOp)
+        finalBlock.addDependency(newEntryOp)
+        watchQueue.addOperation(finalBlock)
+        
+        watchQueue.suspended = false
+        
+        return promise.future
     }
 }

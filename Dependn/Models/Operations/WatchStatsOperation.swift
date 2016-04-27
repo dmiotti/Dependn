@@ -23,17 +23,9 @@ final class WatchStatsAddiction {
 private let kWatchStatsOperationErrorDomain = "WatchStatsOperation"
 private let kWatchStatsOperationNoAddictionErrorCode = 1
 
-final class WatchStatsOperation: SHOperation {
+final class WatchStatsOperation: CoreDataOperation {
     
     var result: WatchStatsAddiction?
-    var error: NSError?
-    
-    private let context: NSManagedObjectContext
-    
-    override init() {
-        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        context.parentContext = CoreDataStack.shared.managedObjectContext
-    }
     
     override func execute() {
         

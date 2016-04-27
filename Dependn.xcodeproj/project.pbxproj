@@ -44,11 +44,13 @@
 		58548BE91C8BE1E400C7C940 /* SearchAdditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BE81C8BE1E400C7C940 /* SearchAdditionViewController.swift */; };
 		58669A9B1CD0FEB0002BDED3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58669A9D1CD0FEB0002BDED3 /* Localizable.strings */; };
 		58669AA11CD10376002BDED3 /* SHDateFormatterProximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58669AA01CD10376002BDED3 /* SHDateFormatterProximity.swift */; };
+		58669AA51CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58669AA41CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift */; };
 		58683B341CB7089B000FE358 /* XLSExportOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58683B331CB7089B000FE358 /* XLSExportOperation.swift */; };
 		586EDA361CA3567D00DAE496 /* TimeSinceLastRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */; };
 		587046BA1CD0C93D00C2F23B /* InfoInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587046B91CD0C93D00C2F23B /* InfoInterfaceController.swift */; };
 		58858ADD1C84520100E8A794 /* Dependn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */; };
 		58AD8B381C9178D40008CD9C /* UIViewController+TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AD8B371C9178D40008CD9C /* UIViewController+TitleView.swift */; };
+		58AED4861CD121330037BFB1 /* CoreDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AED4851CD121330037BFB1 /* CoreDataOperation.swift */; };
 		58BB15881CA1F91A00E3E06A /* Place+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB15861CA1F91A00E3E06A /* Place+CoreDataProperties.swift */; };
 		58BB158D1CA1F93400E3E06A /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB158C1CA1F93400E3E06A /* Place.swift */; };
 		58BB158F1CA1F98500E3E06A /* Place+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB158E1CA1F98500E3E06A /* Place+Repository.swift */; };
@@ -187,6 +189,7 @@
 		58669A9E1CD0FEB3002BDED3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		58669A9F1CD0FEB4002BDED3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		58669AA01CD10376002BDED3 /* SHDateFormatterProximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHDateFormatterProximity.swift; sourceTree = "<group>"; };
+		58669AA41CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchNewEntryInfoOperation.swift; sourceTree = "<group>"; };
 		58683B331CB7089B000FE358 /* XLSExportOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLSExportOperation.swift; sourceTree = "<group>"; };
 		586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSinceLastRecord.swift; sourceTree = "<group>"; };
 		587046B91CD0C93D00C2F23B /* InfoInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoInterfaceController.swift; sourceTree = "<group>"; };
@@ -195,6 +198,7 @@
 		588D8C9F1C8F18A4005BA8EB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		589065D01C7A3F2F00F7F6DC /* Dependn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dependn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58AD8B371C9178D40008CD9C /* UIViewController+TitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+TitleView.swift"; sourceTree = "<group>"; };
+		58AED4851CD121330037BFB1 /* CoreDataOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataOperation.swift; sourceTree = "<group>"; };
 		58BB15861CA1F91A00E3E06A /* Place+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Place+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		58BB158C1CA1F93400E3E06A /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		58BB158E1CA1F98500E3E06A /* Place+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Place+Repository.swift"; sourceTree = "<group>"; };
@@ -457,6 +461,7 @@
 		58DF62B41C83BDEE0035F608 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
+				58669AA41CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift */,
 				583C9C6F1CCECA9500E6FD9D /* WatchStatsOperation.swift */,
 				58CF71811CA815090092458F /* ShortStatsOperation.swift */,
 				58DF62B51C83BDEE0035F608 /* AverageIntensityOperation.swift */,
@@ -468,6 +473,7 @@
 				586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */,
 				58683B331CB7089B000FE358 /* XLSExportOperation.swift */,
 				583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */,
+				58AED4851CD121330037BFB1 /* CoreDataOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -779,6 +785,7 @@
 				58DF62D71C83BDEE0035F608 /* Record.swift in Sources */,
 				58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */,
 				58DF62D51C83BDEE0035F608 /* Record+Repository.swift in Sources */,
+				58AED4861CD121330037BFB1 /* CoreDataOperation.swift in Sources */,
 				58BB158D1CA1F93400E3E06A /* Place.swift in Sources */,
 				581DC5DA1C8B37F4006DE551 /* SettingsViewController.swift in Sources */,
 				58DF62D31C83BDEE0035F608 /* ExportOperation.swift in Sources */,
@@ -800,6 +807,7 @@
 				581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */,
 				58548BDE1C8BE18100C7C940 /* AddRecordViewController.swift in Sources */,
 				583C01501CBA565700E0D41C /* InitialImportPlacesOperation.swift in Sources */,
+				58669AA51CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift in Sources */,
 				58DC7A0D1C8CD873007F9F5D /* NewAddictionTableViewCell.swift in Sources */,
 				58BB15881CA1F91A00E3E06A /* Place+CoreDataProperties.swift in Sources */,
 				58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */,

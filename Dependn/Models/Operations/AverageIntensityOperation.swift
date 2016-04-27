@@ -11,17 +11,9 @@ import SwiftHelpers
 import CoreData
 import CocoaLumberjack
 
-final class AverageIntensityOperation: SHOperation {
+final class AverageIntensityOperation: CoreDataOperation {
     
     private(set) var average: Float?
-    private(set) var error: NSError?
-    
-    private let context: NSManagedObjectContext
-    
-    override init() {
-        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        context.parentContext = CoreDataStack.shared.managedObjectContext
-    }
     
     override func execute() {
         

@@ -124,10 +124,6 @@ final class SettingsViewController: UIViewController {
             supportedAuthentications.append(.DeviceOwnerAuthenticationWithBiometrics)
         }
         DDLogError("\(error)")
-        if authContext.canEvaluatePolicy(.DeviceOwnerAuthentication, error: &error) {
-            supportedAuthentications.append(.DeviceOwnerAuthentication)
-        }
-        DDLogError("\(error)")
         return supportedAuthentications
     }
 
@@ -342,6 +338,12 @@ extension SettingsViewController: UITableViewDelegate {
             let session = WCSession.defaultSession()
             if session.paired {
                 let search = SearchAdditionViewController()
+                if let
+                    name = Defaults[.watchAddiction],
+                    addiction = try? Addiction.findByName(name, inContext: CoreDataStack.shared.managedObjectContext) {
+                    
+                    search.selectedAddiction = addiction
+                }
                 search.delegate = self
                 search.useBlueNavigationBar = true
                 navigationController?.pushViewController(search, animated: true)

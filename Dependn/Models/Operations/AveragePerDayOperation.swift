@@ -11,17 +11,14 @@ import SwiftHelpers
 import CoreData
 import CocoaLumberjack
 
-final class AveragePerDayOperation: SHOperation {
+final class AveragePerDayOperation: CoreDataOperation {
     
     private(set) var average: Float?
-    private(set) var error: NSError?
     
-    private let context: NSManagedObjectContext
-    private(set) var fetchedResultsController: NSFetchedResultsController
+    private(set) var fetchedResultsController: NSFetchedResultsController!
     
     override init() {
-        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        context.parentContext = CoreDataStack.shared.managedObjectContext
+        super.init()
         fetchedResultsController = Record.historyFetchedResultsController(inContext: context)
     }
 

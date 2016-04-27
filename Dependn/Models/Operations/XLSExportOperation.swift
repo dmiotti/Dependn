@@ -14,17 +14,12 @@ import xlsxwriter
 private let kExportOperationDayFormatter = NSDateFormatter(dateFormat: "dd/MM/yyyy")
 private let kExportOperationHourFormatter = NSDateFormatter(dateFormat: "HH:mm")
 
-final class XLSExportOperation: SHOperation {
+final class XLSExportOperation: CoreDataOperation {
     
     let path: String
-    var error: NSError?
-    
-    let context: NSManagedObjectContext
     
     init(path: String) {
         self.path = path
-        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        context.parentContext = CoreDataStack.shared.managedObjectContext
     }
     
     override func execute() {

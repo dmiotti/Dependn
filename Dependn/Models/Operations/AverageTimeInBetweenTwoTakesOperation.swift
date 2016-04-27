@@ -16,21 +16,16 @@ struct TimeRange {
     let end: NSDate
 }
 
-final class AverageTimeInBetweenTwoTakesOperation: SHOperation {
+final class AverageTimeInBetweenTwoTakesOperation: CoreDataOperation {
     
     let addiction: Addiction
     let range: TimeRange
     
     private(set) var average: NSTimeInterval?
-    private(set) var error: NSError?
-    
-    private let context: NSManagedObjectContext
     
     init(addiction: Addiction, range: TimeRange) {
         self.addiction = addiction
         self.range = range
-        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        context.parentContext = CoreDataStack.shared.managedObjectContext
     }
     
     override func execute() {

@@ -28,8 +28,8 @@ class DayInterfaceController: WKInterfaceController {
         setTitle(NSLocalizedString("appname", comment: ""))
         
         // Configure interface objects here.
-        if let cached = CoreStack.shared.cachedStats {
-            self.loadData(cached)
+        if let data = CoreStack.shared.context.stats {
+            self.loadData(data)
         } else {
             valueLbl.setText(nil)
             addictionLbl.setText(nil)
@@ -54,10 +54,6 @@ class DayInterfaceController: WKInterfaceController {
                                                          selector: #selector(TodayInterfaceController.statsGetError(_:)),
                                                          name: kWatchExtensionStatsErrorNotificationName,
                                                          object: nil)
-        
-        if let cached = CoreStack.shared.cachedStats {
-            loadData(cached)
-        }
         
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()

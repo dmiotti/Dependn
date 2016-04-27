@@ -17,6 +17,11 @@ final class WatchStatsAddiction {
     var values = [WatchStatsValueTime]()
 }
 
+final class CoreStackContext {
+    var stats: WatchStatsAddiction?
+    var newEntry: WatchDictionary?
+}
+
 private let kCoreStackErrorDomain = "CoreStack"
 
 final class CoreStack: NSObject {
@@ -32,12 +37,12 @@ final class CoreStack: NSObject {
         }
     }
     
-    var cachedStats: WatchStatsAddiction?
+    let context = CoreStackContext()
     
-    func getStats(block: (WatchStatsAddiction?, NSError?) -> Void) {
+    func getContext(block: (CoreStackContext?, NSError?) -> Void) {
         if WCSession.isSupported() {
             session = WCSession.defaultSession()
-            session?.sendMessage(["action": "stats"], replyHandler: { (response) in
+            session?.sendMessage(["action": "get_context"], replyHandler: { (response) in
                 
                 if let
                     error = response["error"] as? WatchDictionary,
@@ -50,8 +55,10 @@ final class CoreStack: NSObject {
                     ])
                     
                     block(nil, err)
-                    
-                } else if let rawAddiction = response["stats"] as? WatchDictionary, name = rawAddiction["name"] as? String {
+                    return
+                }
+                
+                if let rawAddiction = response["stats"] as? WatchDictionary, name = rawAddiction["name"] as? String {
                     let addictions = WatchStatsAddiction()
                     addictions.addiction = name
                     if let rawValues = rawAddiction["value"] as? [Array<AnyObject>] {
@@ -61,21 +68,23 @@ final class CoreStack: NSObject {
                             }
                         }
                     }
-                    self.cachedStats = addictions
-                    block(addictions, nil)
-                } else {
-                    let err = NSError(domain: kCoreStackErrorDomain, code: 0, userInfo: [
-                        NSLocalizedDescriptionKey: "An unknown error has occur",
-                        NSLocalizedRecoverySuggestionErrorKey: "Please try again later"
-                    ])
                     
-                    block(nil, err)
+                    self.context.stats = addictions
                 }
+                
+                if let newEntry = response["new_entry"] as? WatchDictionary {
+                    print("newEntry: \(newEntry)")
+                    self.context.newEntry = newEntry
+                }
+                
+                block(self.context, nil)
                 
                 }, errorHandler: { (err) in
                     
                     block(nil, err)
             })
+        } else {
+            block(nil, nil)
         }
     }
     

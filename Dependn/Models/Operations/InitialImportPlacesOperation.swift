@@ -11,11 +11,7 @@ import SwiftHelpers
 import CoreData
 import SwiftyUserDefaults
 
-final class InitialImportPlacesOperation: SHOperation {
-    
-    var error: NSError?
-    
-    let context: NSManagedObjectContext
+final class InitialImportPlacesOperation: CoreDataOperation {
     
     let placeNames = [
         L("suggested.places.wakeup"),
@@ -31,11 +27,6 @@ final class InitialImportPlacesOperation: SHOperation {
         L("suggested.places.withfriends"),
         L("suggested.places.watchingmovie")
     ]
-    
-    override init() {
-        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        context.parentContext = CoreDataStack.shared.managedObjectContext
-    }
     
     override func execute() {
         context.performBlockAndWait {

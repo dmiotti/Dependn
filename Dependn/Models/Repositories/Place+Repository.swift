@@ -23,16 +23,11 @@ extension Place {
         return controller
     }
     
-    class func allPlaces(inContext context: NSManagedObjectContext, usingPredicate predicate: NSPredicate? = nil) -> [Place] {
+    class func allPlaces(inContext context: NSManagedObjectContext, usingPredicate predicate: NSPredicate? = nil) throws -> [Place] {
         let req = entityFetchRequest()
         req.predicate = predicate
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: false) ]
-        do {
-            return try context.executeFetchRequest(req) as! [Place]
-        } catch let err as NSError {
-            DDLogError("Error while fetching all places: \(err)")
-        }
-        return []
+        return try context.executeFetchRequest(req) as! [Place]
     }
     
     class func insertPlace(name: String, inContext context: NSManagedObjectContext) -> Place {

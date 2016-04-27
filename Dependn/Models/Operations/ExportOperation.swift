@@ -268,10 +268,16 @@ final class ImportOperation: SHOperation {
     }
     
     private func getPlaceOrCreate(name: String) -> Place {
-        let places = Place.allPlaces(inContext: context, usingPredicate: NSPredicate(format: "name == %@", name))
-        if let first = places.first {
-            return first
+        do {
+            let pred = NSPredicate(format: "name == %@", name)
+            let places = try Place.allPlaces(inContext: context, usingPredicate: pred)
+            if let first = places.first {
+                return first
+            }
+        } catch let err as NSError {
+            print("Error while getting all places: \(err)")
         }
+        
         return Place.insertPlace(name, inContext: context)
     }
     
