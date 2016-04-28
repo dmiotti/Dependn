@@ -18,6 +18,8 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     
     private let session: WCSession? = WCSession.isSupported() ? WCSession.defaultSession() : nil
     
+    private let watchQueue = NSOperationQueue()
+    
     private var validSession: WCSession? {
         
         // paired - the user has to have their device paired to the watch
@@ -49,79 +51,128 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         }
     }
     
-    private func buildApplicationContext(completion: [String: AnyObject] -> Void) {
-        let watchQueue = NSOperationQueue()
-        watchQueue.maxConcurrentOperationCount = 1
-        
-        var context = WatchDictionary()
-        
-        watchQueue.suspended = true
-        
-        let newEntryOp = WatchNewEntryInfoOperation()
-        newEntryOp.completionBlock = {
-            if let result = newEntryOp.watchInfo {
-                let res = WatchNewEntryInfoOperation.formatNewEntryResultsForAppleWatch(result)
-                context["new_entry"] = res
-            } else if let err = newEntryOp.error, sugg = err.localizedRecoverySuggestion {
-                context["error"] = [
-                    "description": err.localizedDescription,
-                    "suggestion": sugg
-                ]
-            } else {
-                context["error"] = [
-                    "description": L("error.unknown"),
-                    "suggestion": L("error.unknown.suggestion")
-                ]
-            }
-            
-            let finalBlock = NSBlockOperation {
+    private func buildApplicationContext(completion: WatchDictionary -> Void) {
+        getNewEntry { entries in
+            self.getStats { stats in
+                var context = entries
+                context += stats
+                
+//                print("context: \(context)")
+                
                 completion(context)
             }
-            watchQueue.addOperation(finalBlock)
         }
-        
-        let statsOp = WatchStatsOperation()
-        statsOp.completionBlock = {
-            if let result = statsOp.result {
-                let res = WatchStatsOperation.formatStatsResultsForAppleWatch(result)
-                context["stats"] = res
-            } else if let err = statsOp.error, sugg = err.localizedRecoverySuggestion {
-                context["error"] = [
+    }
+    
+    private func getNewEntry(completion: WatchDictionary -> Void) {
+        let newEntryOp = WatchNewEntryInfoOperation()
+        newEntryOp.completionBlock = {
+            
+            var entryDict = WatchDictionary()
+            if let result = newEntryOp.watchInfo {
+                let value = WatchNewEntryInfoOperation.formatNewEntryResultsForAppleWatch(result)
+                entryDict["value"] = value
+            } else if let err = newEntryOp.error, sugg = err.localizedRecoverySuggestion {
+                entryDict["error"] = [
                     "description": err.localizedDescription,
                     "suggestion": sugg
                 ]
             } else {
-                context["error"] = [
+                entryDict["error"] = [
                     "description": L("error.unknown"),
                     "suggestion": L("error.unknown.suggestion")
                 ]
             }
             
-            watchQueue.addOperation(newEntryOp)
+            var globalDict = WatchDictionary()
+            globalDict["new_entry"] = entryDict
+            completion(globalDict)
         }
-        
+        watchQueue.addOperation(newEntryOp)
+    }
+    
+    private func getStats(completion: WatchDictionary -> Void) {
+        let statsOp = WatchStatsOperation()
+        statsOp.completionBlock = {
+            
+            var stats = WatchDictionary()
+            if let result = statsOp.result {
+                let res = WatchStatsOperation.formatStatsResultsForAppleWatch(result)
+                stats["value"] = res
+            } else if let err = statsOp.error, sugg = err.localizedRecoverySuggestion {
+                stats["error"] = [
+                    "description": err.localizedDescription,
+                    "suggestion": sugg
+                ]
+            } else {
+                stats["error"] = [
+                    "description": L("error.unknown"),
+                    "suggestion": L("error.unknown.suggestion")
+                ]
+            }
+            
+            var globalDict = WatchDictionary()
+            globalDict["stats"] = stats
+            completion(globalDict)
+        }
         watchQueue.addOperation(statsOp)
-        
-        watchQueue.suspended = false
     }
 }
 
+func +=<K, V> (inout left: [K : V], right: [K : V]) {
+    for (k, v) in right {
+        left[k] = v
+    }
+}
 
 extension WatchSessionManager {
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
         
         if let action = message["action"] as? String {
-            
             switch action {
-            case "get_context":
-                buildApplicationContext { context in
-                    replyHandler(context)
+            case "add":
+                let data = message["data"] as? WatchDictionary
+                let rawAddiction = data?["addiction"] as? String
+                let rawPlace = data?["place"] as? String
+                let rawIntensity = data?["intensity"] as? String
+                let isCraving = data?["type"] as? String == "craving"
+                
+                if let
+                    rawAddiction = rawAddiction,
+                    rawPlace = rawPlace,
+                    rawIntensity = rawIntensity,
+                    intensity = Float(rawIntensity) {
+                    
+                    let ctx = CoreDataStack.shared.managedObjectContext
+                    do {
+                        
+                        let addiction = try Addiction.findByName(rawAddiction, inContext: ctx)
+                        let place = try Place.findByName(rawPlace, inContext: ctx)
+                        
+                        if let add = addiction, place = place {
+                            Record.insertNewRecord(
+                                add,
+                                intensity: intensity,
+                                feeling: nil,
+                                comment: nil,
+                                place: place,
+                                latitude: nil,
+                                longitude: nil, desire:
+                                isCraving,
+                                inContext: ctx)
+                        }
+                        
+                        
+                    } catch let err as NSError {
+                        print("Error while replying to Apple Watch: \(err)")
+                    }
                 }
+                break
             default:
                 break
             }
             
+            buildApplicationContext { replyHandler($0) }
         }
-        
     }
 }

@@ -50,9 +50,28 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     }
     
     func requestContext() {
-        session.sendMessage(["action": "get_context"], replyHandler: { res in
-            self.parseApplicationContext(res)
+        let message = ["action": "context"]
+        session.sendMessage(message, replyHandler: { response in
+            
+            self.parseApplicationContext(response)
+            
             }, errorHandler: { err in
+                
+                NSNotificationCenter.defaultCenter().postNotificationName(
+                    kWatchExtensionContextErrorNotificationName,
+                    object: nil, userInfo: [ "error": err ])
+        })
+    }
+    
+    func sendAdd() {
+        let entry = WatchSessionManager.sharedManager.newEntryData
+        let message: [String: AnyObject] = [ "action": "add", "data": entry ]
+        session.sendMessage(message, replyHandler: { response in
+            
+            self.parseApplicationContext(response)
+            
+            }, errorHandler: { err in
+                
                 NSNotificationCenter.defaultCenter().postNotificationName(
                     kWatchExtensionContextErrorNotificationName,
                     object: nil, userInfo: [ "error": err ])
@@ -60,66 +79,84 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     }
     
     private func parseApplicationContext(appContext: [String: AnyObject]) {
-        if let
-            rawAddiction = appContext["stats"] as? WatchDictionary,
-            name = rawAddiction["name"] as? String {
+        
+//        print("appContext: \(appContext)")
+        
+        /// Parse stats context
+        let statsContext = appContext["stats"] as? WatchDictionary
+        let statsContextValue = statsContext?["value"] as? WatchDictionary
+        
+        if let name = statsContextValue?["name"] as? String {
+            let stats = WatchStatsAddiction()
+            stats.addiction = name
             
-            let addiction = WatchStatsAddiction()
-            addiction.addiction = name
-            
-            if let sinceLast = rawAddiction["sinceLast"] as? String {
-                addiction.sinceLast = sinceLast
+            if let sinceLast = statsContextValue?["sinceLast"] as? String {
+                stats.sinceLast = sinceLast
             }
             
-            if let rawValues = rawAddiction["value"] as? [Array<AnyObject>] {
-                for rawValue in rawValues {
-                    if let date = rawValue.last as? NSDate, count = rawValue.first as? String {
-                        addiction.values.append((count, date))
+            if let rawValues = statsContextValue?["value"] as? [Array<AnyObject>] {
+                for raw in rawValues {
+                    if let date = raw.last as? NSDate, count = raw.first as? String {
+                        stats.values.append((count, date))
                     }
                 }
             }
             
-            context.stats = addiction
+            context.stats = stats
         }
         
-        let newEntry = appContext["new_entry"] as? WatchDictionary
-        if let newEntry = newEntry {
-            if let addictions = newEntry["addictions"] as? [WatchDictionary] {
-                for add in addictions {
-                    if let name = add["name"] as? String, uri = add["uri"] as? String {
-                        let model = WatchSimpleModel(name: name, uri: uri)
-                        context.addictions.append(model)
-                    }
+        
+        /// Parse new entry context
+        let addContext = appContext["new_entry"] as? WatchDictionary
+        let addContextValue = addContext?["value"] as? WatchDictionary
+        
+        /// Starts with addictions
+        if let addictions = addContextValue?["addictions"] as? [WatchDictionary] {
+            var adds = [WatchSimpleModel]()
+            for add in addictions {
+                if let name = add["name"] as? String, uri = add["uri"] as? String {
+                    let model = WatchSimpleModel(name: name, uri: uri)
+                    adds.append(model)
                 }
             }
-            if let places = newEntry["places"] as? [WatchDictionary] {
-                for place in places {
-                    if let name = place["name"] as? String, uri = place["uri"] as? String {
-                        let model = WatchSimpleModel(name: name, uri: uri)
-                        context.places.append(model)
-                    }
+            context.addictions = adds
+        }
+        
+        /// Parse places
+        if let places = addContextValue?["places"] as? [WatchDictionary] {
+            var all = [WatchSimpleModel]()
+            for place in places {
+                if let name = place["name"] as? String, uri = place["uri"] as? String {
+                    let model = WatchSimpleModel(name: name, uri: uri)
+                    all.append(model)
                 }
             }
+            context.places = all
+        }
+        
+        if let statsError = statsContext?["error"] as? WatchDictionary, err = parseError(statsError) {
+            NSNotificationCenter.defaultCenter().postNotificationName(
+                kWatchExtensionContextErrorNotificationName,
+                object: nil, userInfo: [ "error": err ])
+        } else if let addError = addContext?["error"] as? WatchDictionary, err = parseError(addError) {
+            NSNotificationCenter.defaultCenter().postNotificationName(
+                kWatchExtensionContextErrorNotificationName,
+                object: nil, userInfo: [ "error": err ])
         }
         
         NSNotificationCenter.defaultCenter().postNotificationName(
             kWatchExtensionContextUpdatedNotificationName,
             object: nil, userInfo: ["context": context])
-        
-        if let
-            error = appContext["error"] as? WatchDictionary,
-            desc = error["description"] as? String,
-            suggestion = error["suggestion"] as? String {
-            
-            let err = NSError(domain: "WatchSessionManager", code: 0, userInfo: [
+    }
+    
+    private func parseError(dict: WatchDictionary) -> NSError? {
+        if let desc = dict["description"] as? String, sugg = dict["suggestion"] as? String {
+            return NSError(domain: "WatchSessionManager", code: 0, userInfo: [
                 NSLocalizedDescriptionKey: desc,
-                NSLocalizedRecoverySuggestionErrorKey: suggestion
-                ])
-            
-            NSNotificationCenter.defaultCenter().postNotificationName(
-                kWatchExtensionContextErrorNotificationName,
-                object: nil, userInfo: [ "error": err ])
+                NSLocalizedRecoverySuggestionErrorKey: sugg
+            ])
         }
+        return nil
     }
 }
 

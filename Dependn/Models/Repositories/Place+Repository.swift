@@ -44,4 +44,11 @@ extension Place {
         context.deleteObject(place)
     }
     
+    static func findByName(name: String, inContext context: NSManagedObjectContext) throws -> Place? {
+        let req = entityFetchRequest()
+        req.predicate = NSPredicate(format: "name ==[cd] %@", name)
+        req.fetchLimit = 1
+        return try context.executeFetchRequest(req).first as? Place
+    }
+    
 }

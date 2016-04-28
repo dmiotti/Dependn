@@ -14,7 +14,7 @@ class DayInterfaceController: WKInterfaceController {
     @IBOutlet var addictionLbl: WKInterfaceLabel!
     @IBOutlet var dayLbl: WKInterfaceLabel!
     
-    let dateFormatter = NSDateFormatter()
+    internal let dateFormatter = NSDateFormatter()
     
     func loadData(data: WatchStatsAddiction) { }
     
@@ -36,7 +36,6 @@ class DayInterfaceController: WKInterfaceController {
     }
     
     override func willActivate() {
-        
         NSNotificationCenter.defaultCenter().addObserver(self,
                                                          selector: #selector(DayInterfaceController.contextDidUpdate(_:)),
                                                          name: kWatchExtensionContextUpdatedNotificationName,
@@ -44,7 +43,7 @@ class DayInterfaceController: WKInterfaceController {
         
         // Configure interface objects here.
         if let data = WatchSessionManager.sharedManager.context.stats {
-            self.loadData(data)
+            loadData(data)
         } else {
             valueLbl.setText(nil)
             addictionLbl.setText(nil)
@@ -63,20 +62,20 @@ class DayInterfaceController: WKInterfaceController {
     }
     
     func contextDidUpdate(notification: NSNotification) {
-        if let stats = notification.userInfo?["stats"] as? WatchStatsAddiction {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.loadData(stats)
-            }
+        if let context = notification.userInfo?["context"] as? AppContext, stats = context.stats {
+            loadData(stats)
         }
     }
     
     // MARK: Menu actions
     
     @IBAction func doMenuAddConso() {
-        presentControllerWithName("AddictionList", context: nil)
+        WatchSessionManager.sharedManager.newEntryData["type"] = "conso"
+        presentControllerWithName("NewRecord", context: nil)
     }
     
     @IBAction func doMenuAddCraving() {
-        presentControllerWithName("AddictionList", context: nil)
+        WatchSessionManager.sharedManager.newEntryData["type"] = "craving"
+        presentControllerWithName("NewRecord", context: nil)
     }
 }

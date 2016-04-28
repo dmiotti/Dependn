@@ -17,6 +17,9 @@ final class AddictionListInterfaceController: WKInterfaceController {
         super.awakeWithContext(context)
         
         // Configure interface objects here.
+    }
+
+    override func willActivate() {
         
         let addictions = WatchSessionManager.sharedManager.context.addictions
         
@@ -26,9 +29,7 @@ final class AddictionListInterfaceController: WKInterfaceController {
             let row = table.rowControllerAtIndex(index) as! DefaultTableRowController
             row.titleLbl.setText(add.name)
         }
-    }
-
-    override func willActivate() {
+        
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
     }
@@ -42,8 +43,7 @@ final class AddictionListInterfaceController: WKInterfaceController {
         let manager = WatchSessionManager.sharedManager
         let addiction = manager.context.addictions[rowIndex]
         manager.newEntryData["addiction"] = addiction.name
-        
-        presentControllerWithName("PlaceList", context: nil)
+        dismissController()
     }
 
 }

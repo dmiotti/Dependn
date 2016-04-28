@@ -31,6 +31,7 @@
 		583C9C741CCEEC3400E6FD9D /* DefaultTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C731CCEEC3400E6FD9D /* DefaultTableRowController.swift */; };
 		583C9C761CCEEC5700E6FD9D /* AddictionListInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */; };
 		58416A7A1CB4818D00DB1A4B /* DependencyChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */; };
+		5841B3341CD228910024AC99 /* NewRecordInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5841B3331CD228910024AC99 /* NewRecordInterfaceController.swift */; };
 		584897861CAC641E00CA18CE /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584897851CAC641E00CA18CE /* OnBoardingViewController.swift */; };
 		58548BBD1C8BA33800C7C940 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */; };
 		58548BBF1C8BA8D900C7C940 /* PasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */; };
@@ -46,7 +47,7 @@
 		58669AA51CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58669AA41CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift */; };
 		58683B341CB7089B000FE358 /* XLSExportOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58683B331CB7089B000FE358 /* XLSExportOperation.swift */; };
 		586EDA361CA3567D00DAE496 /* TimeSinceLastRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */; };
-		587046BA1CD0C93D00C2F23B /* InfoInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587046B91CD0C93D00C2F23B /* InfoInterfaceController.swift */; };
+		587046BA1CD0C93D00C2F23B /* MainInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587046B91CD0C93D00C2F23B /* MainInterfaceController.swift */; };
 		587CB0F11CD1577B00FCDB48 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587CB0F01CD1577B00FCDB48 /* WatchSessionManager.swift */; };
 		587CB0F31CD157A000FCDB48 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587CB0F21CD157A000FCDB48 /* WatchSessionManager.swift */; };
 		587CB0F51CD170AE00FCDB48 /* PlaceListInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587CB0F41CD170AE00FCDB48 /* PlaceListInterfaceController.swift */; };
@@ -176,6 +177,7 @@
 		583C9C731CCEEC3400E6FD9D /* DefaultTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTableRowController.swift; sourceTree = "<group>"; };
 		583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionListInterfaceController.swift; sourceTree = "<group>"; };
 		58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserCell.swift; sourceTree = "<group>"; };
+		5841B3331CD228910024AC99 /* NewRecordInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRecordInterfaceController.swift; sourceTree = "<group>"; };
 		584897851CAC641E00CA18CE /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeViewController.swift; sourceTree = "<group>"; };
@@ -193,7 +195,7 @@
 		58669AA41CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchNewEntryInfoOperation.swift; sourceTree = "<group>"; };
 		58683B331CB7089B000FE358 /* XLSExportOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLSExportOperation.swift; sourceTree = "<group>"; };
 		586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSinceLastRecord.swift; sourceTree = "<group>"; };
-		587046B91CD0C93D00C2F23B /* InfoInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoInterfaceController.swift; sourceTree = "<group>"; };
+		587046B91CD0C93D00C2F23B /* MainInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainInterfaceController.swift; sourceTree = "<group>"; };
 		587CB0F01CD1577B00FCDB48 /* WatchSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
 		587CB0F21CD157A000FCDB48 /* WatchSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
 		587CB0F41CD170AE00FCDB48 /* PlaceListInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListInterfaceController.swift; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 		587CB0F71CD1790D00FCDB48 /* AddRecord */ = {
 			isa = PBXGroup;
 			children = (
+				5841B3331CD228910024AC99 /* NewRecordInterfaceController.swift */,
 				583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */,
 				587CB0F41CD170AE00FCDB48 /* PlaceListInterfaceController.swift */,
 				583C9C731CCEEC3400E6FD9D /* DefaultTableRowController.swift */,
@@ -530,9 +533,9 @@
 			children = (
 				587CB0F01CD1577B00FCDB48 /* WatchSessionManager.swift */,
 				58F092CE1C9615AB00DF4ADC /* ExtensionDelegate.swift */,
+				587046B91CD0C93D00C2F23B /* MainInterfaceController.swift */,
 				587CB0F61CD178FC00FCDB48 /* Time scale */,
 				587CB0F71CD1790D00FCDB48 /* AddRecord */,
-				587046B91CD0C93D00C2F23B /* InfoInterfaceController.swift */,
 				58669AA01CD10376002BDED3 /* SHDateFormatterProximity.swift */,
 				58F092D01C9615AB00DF4ADC /* Assets.xcassets */,
 				58F092D21C9615AB00DF4ADC /* Info.plist */,
@@ -847,10 +850,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				587046BA1CD0C93D00C2F23B /* InfoInterfaceController.swift in Sources */,
+				587046BA1CD0C93D00C2F23B /* MainInterfaceController.swift in Sources */,
 				58F092CF1C9615AB00DF4ADC /* ExtensionDelegate.swift in Sources */,
 				583C9C741CCEEC3400E6FD9D /* DefaultTableRowController.swift in Sources */,
 				583C9C681CCEC62900E6FD9D /* YesterdayInterfaceController.swift in Sources */,
+				5841B3341CD228910024AC99 /* NewRecordInterfaceController.swift in Sources */,
 				583C9C721CCEE28500E6FD9D /* DayInterfaceController.swift in Sources */,
 				583C9C6A1CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift in Sources */,
 				587CB0F11CD1577B00FCDB48 /* WatchSessionManager.swift in Sources */,
