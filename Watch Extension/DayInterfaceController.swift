@@ -27,19 +27,22 @@ class DayInterfaceController: WKInterfaceController {
         
         setTitle(NSLocalizedString("appname", comment: ""))
         
-        addMenuItemWithItemIcon(.Play,
-                                title: NSLocalizedString("Conso", comment: ""),
-                                action: #selector(DayInterfaceController.doMenuAddConso))
-        addMenuItemWithItemIcon(.Mute,
-                                title: NSLocalizedString("Craving", comment: ""),
-                                action: #selector(DayInterfaceController.doMenuAddCraving))
+        addMenuItemWithItemIcon(
+            .Play,
+            title: NSLocalizedString("Conso", comment: ""),
+            action: #selector(DayInterfaceController.doMenuAddConso))
+        addMenuItemWithItemIcon(
+            .Mute,
+            title: NSLocalizedString("Craving", comment: ""),
+            action: #selector(DayInterfaceController.doMenuAddCraving))
     }
     
     override func willActivate() {
-        NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(DayInterfaceController.contextDidUpdate(_:)),
-                                                         name: kWatchExtensionContextUpdatedNotificationName,
-                                                         object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: #selector(DayInterfaceController.contextDidUpdate(_:)),
+            name: kWatchExtensionContextUpdatedNotificationName,
+            object: nil)
         
         // Configure interface objects here.
         if let data = WatchSessionManager.sharedManager.context.stats {

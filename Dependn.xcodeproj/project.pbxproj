@@ -32,6 +32,7 @@
 		583C9C761CCEEC5700E6FD9D /* AddictionListInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */; };
 		58416A7A1CB4818D00DB1A4B /* DependencyChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */; };
 		5841B3341CD228910024AC99 /* NewRecordInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5841B3331CD228910024AC99 /* NewRecordInterfaceController.swift */; };
+		5841B3381CD2495A0024AC99 /* GlanceInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5841B3371CD2495A0024AC99 /* GlanceInterfaceController.swift */; };
 		584897861CAC641E00CA18CE /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584897851CAC641E00CA18CE /* OnBoardingViewController.swift */; };
 		58548BBD1C8BA33800C7C940 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */; };
 		58548BBF1C8BA8D900C7C940 /* PasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */; };
@@ -178,6 +179,7 @@
 		583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionListInterfaceController.swift; sourceTree = "<group>"; };
 		58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserCell.swift; sourceTree = "<group>"; };
 		5841B3331CD228910024AC99 /* NewRecordInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRecordInterfaceController.swift; sourceTree = "<group>"; };
+		5841B3371CD2495A0024AC99 /* GlanceInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlanceInterfaceController.swift; sourceTree = "<group>"; };
 		584897851CAC641E00CA18CE /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		58548BBE1C8BA8D900C7C940 /* PasscodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeViewController.swift; sourceTree = "<group>"; };
@@ -533,6 +535,7 @@
 			children = (
 				587CB0F01CD1577B00FCDB48 /* WatchSessionManager.swift */,
 				58F092CE1C9615AB00DF4ADC /* ExtensionDelegate.swift */,
+				5841B3371CD2495A0024AC99 /* GlanceInterfaceController.swift */,
 				587046B91CD0C93D00C2F23B /* MainInterfaceController.swift */,
 				587CB0F61CD178FC00FCDB48 /* Time scale */,
 				587CB0F71CD1790D00FCDB48 /* AddRecord */,
@@ -861,6 +864,7 @@
 				587CB0F51CD170AE00FCDB48 /* PlaceListInterfaceController.swift in Sources */,
 				583C9C761CCEEC5700E6FD9D /* AddictionListInterfaceController.swift in Sources */,
 				583C9C6C1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift in Sources */,
+				5841B3381CD2495A0024AC99 /* GlanceInterfaceController.swift in Sources */,
 				58F092CD1C9615AB00DF4ADC /* TodayInterfaceController.swift in Sources */,
 				58669AA11CD10376002BDED3 /* SHDateFormatterProximity.swift in Sources */,
 			);

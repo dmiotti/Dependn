@@ -5,6 +5,29 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="10032"/>
     </dependencies>
     <scenes>
+        <!--Glance-->
+        <scene sceneID="YaT-uV-8bZ">
+            <objects>
+                <glanceController identifier="Glance" topTemplateType="body3" bottomTemplateType="extraLargeLargeBody1Footer" id="aNy-G8-B2T" customClass="GlanceInterfaceController" customModule="Watch_Extension">
+                    <items>
+                        <label alignment="left" text="Dependn'" id="BHz-5L-ubJ">
+                            <color key="textColor" red="0.1529411765" green="0.66274509800000003" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                        </label>
+                        <label alignment="left" semanticContentAttribute="forceRightToLeft" text="26" baselineAdjustment="alignCenters" id="NW1-sn-7lK"/>
+                        <label alignment="left" semanticContentAttribute="forceLeftToRight" text="Tobacco" baselineAdjustment="alignCenters" minimumScaleFactor="0.59999999999999998" id="Pv6-wO-39h"/>
+                        <label alignment="left" text="Today" id="jqW-Tj-uIG"/>
+                        <label alignment="left" text="5h ago" id="Uqs-YR-JGt"/>
+                    </items>
+                    <connections>
+                        <outlet property="addictionLbl" destination="Pv6-wO-39h" id="VF3-61-thV"/>
+                        <outlet property="dayLbl" destination="jqW-Tj-uIG" id="fIr-8d-hpW"/>
+                        <outlet property="sinceLastLbl" destination="Uqs-YR-JGt" id="6cX-sa-EFW"/>
+                        <outlet property="valueLbl" destination="NW1-sn-7lK" id="Jo0-8h-LI8"/>
+                    </connections>
+                </glanceController>
+            </objects>
+            <point key="canvasLocation" x="-203" y="682"/>
+        </scene>
         <!--Main-->
         <scene sceneID="O3g-et-630">
             <objects>
@@ -109,6 +132,7 @@
                                     </items>
                                 </table>
                                 <button width="1" alignment="left" verticalAlignment="bottom" title="Add" id="XpY-hO-xt5">
+                                    <color key="titleColor" red="0.1529411765" green="0.66274509800000003" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <connections>
                                         <action selector="addBtnClicked" destination="ngH-pp-hgK" id="ifM-iM-9gb"/>
                                     </connections>

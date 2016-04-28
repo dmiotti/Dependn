@@ -23,3 +23,5 @@
 "new_record.intensity" = "Intensité";
 
 "new_record.add" = "Ajouter";
+
+"watch.sinceLast" = "Il y a %@";

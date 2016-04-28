@@ -23,3 +23,5 @@
 "new_record.intensity" = "Intensity";
 
 "new_record.add" = "Add";
+
+"watch.sinceLast" = "%@ ago";
