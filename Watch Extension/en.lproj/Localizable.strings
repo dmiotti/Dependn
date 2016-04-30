@@ -21,3 +21,5 @@
 "new_record.add" = "Add";
 
 "intensity.select" = "Select";
+
+"watch.sinceLast" = "Last since %@";
