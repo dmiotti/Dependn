@@ -17,6 +17,14 @@ typealias WatchStatsValueTime = (value: String, date: NSDate)
 struct WatchSimpleModel {
     var name: String
     var uri: String
+    
+    init?(dict: WatchDictionary) {
+        if let name = dict["name"] as? String, uri = dict["uri"] as? String {
+            self.name = name
+            self.uri = uri
+        }
+        return nil
+    }
 }
 
 final class WatchStatsAddiction {
@@ -29,6 +37,19 @@ final class AppContext {
     var stats: WatchStatsAddiction?
     var addictions = [WatchSimpleModel]()
     var places = [WatchSimpleModel]()
+    var mostUsedAddiction: WatchSimpleModel?
+    var mostUsedPlace: WatchSimpleModel?
+}
+
+enum NewRecordType {
+    case Conso, Craving
+}
+
+final class NewRecordModel {
+    var type: NewRecordType = .Conso
+    var place: WatchSimpleModel?
+    var addiction: WatchSimpleModel?
+    var intensity: Float = 7
 }
 
 final class WatchSessionManager: NSObject, WCSessionDelegate {
@@ -42,7 +63,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     
     private let session: WCSession = WCSession.defaultSession()
     
-    var newEntryData = [String: AnyObject]()
+    let newRecordModel = NewRecordModel()
     
     func startSession() {
         session.delegate = self
@@ -64,23 +85,37 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     }
     
     func sendAdd() {
-        let entry = WatchSessionManager.sharedManager.newEntryData
-        let message: [String: AnyObject] = [ "action": "add", "data": entry ]
-        session.sendMessage(message, replyHandler: { response in
+        let record = WatchSessionManager.sharedManager.newRecordModel
+        if let
+            addiction = record.addiction?.name,
+            place = record.place?.name {
             
-            self.parseApplicationContext(response)
+            let message: [String: AnyObject] = [
+                "action": "add",
+                "data": [
+                    "type": record.type == .Conso ? "conso" : "craving",
+                    "addiction": addiction,
+                    "place": place,
+                    "intensity": "\(record.intensity)"
+                ]
+            ]
             
-            }, errorHandler: { err in
+            session.sendMessage(message, replyHandler: { response in
                 
-                NSNotificationCenter.defaultCenter().postNotificationName(
-                    kWatchExtensionContextErrorNotificationName,
-                    object: nil, userInfo: [ "error": err ])
-        })
+                self.parseApplicationContext(response)
+                
+                }, errorHandler: { err in
+                    
+                    NSNotificationCenter.defaultCenter().postNotificationName(
+                        kWatchExtensionContextErrorNotificationName,
+                        object: nil, userInfo: [ "error": err ])
+            })
+        }
     }
     
     private func parseApplicationContext(appContext: [String: AnyObject]) {
         
-//        print("appContext: \(appContext)")
+        print("appContext: \(appContext)")
         
         /// Parse stats context
         let statsContext = appContext["stats"] as? WatchDictionary
@@ -110,28 +145,32 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         let addContext = appContext["new_entry"] as? WatchDictionary
         let addContextValue = addContext?["value"] as? WatchDictionary
         
-        /// Starts with addictions
+        /// Parse addictions
         if let addictions = addContextValue?["addictions"] as? [WatchDictionary] {
-            var adds = [WatchSimpleModel]()
-            for add in addictions {
-                if let name = add["name"] as? String, uri = add["uri"] as? String {
-                    let model = WatchSimpleModel(name: name, uri: uri)
-                    adds.append(model)
-                }
+            context.addictions = addictions.flatMap {
+                WatchSimpleModel(dict: $0)
             }
-            context.addictions = adds
         }
         
         /// Parse places
         if let places = addContextValue?["places"] as? [WatchDictionary] {
-            var all = [WatchSimpleModel]()
-            for place in places {
-                if let name = place["name"] as? String, uri = place["uri"] as? String {
-                    let model = WatchSimpleModel(name: name, uri: uri)
-                    all.append(model)
-                }
+            context.places = places.flatMap {
+                WatchSimpleModel(dict: $0)
             }
-            context.places = all
+        }
+        
+        /// Parse most used addiction
+        if let
+            mostUsedAddiction = addContextValue?["most_used_addiction"] as? WatchDictionary,
+            model = WatchSimpleModel(dict: mostUsedAddiction) {
+            context.mostUsedAddiction = model
+        }
+        
+        /// Parse most used place
+        if let
+            mostUsedPlace = addContextValue?["most_used_place"] as? WatchDictionary,
+            model = WatchSimpleModel(dict: mostUsedPlace) {
+            context.mostUsedPlace = model
         }
         
         if let statsError = statsContext?["error"] as? WatchDictionary, err = parseError(statsError) {

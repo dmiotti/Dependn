@@ -9,19 +9,23 @@
 import UIKit
 import SwiftHelpers
 
-struct WatchAddictionModel {
+struct WatchSimpleModel {
     let uri: String
     let name: String
-}
-
-struct WatchPlaceModel {
-    let uri: String
-    let name: String
+    
+    func watchDictionaryRepresentation() -> WatchDictionary {
+        var dict = WatchDictionary()
+        dict["name"] = name
+        dict["uri"] = uri
+        return dict
+    }
 }
 
 final class WatchAddInfo {
-    var addictions = [WatchAddictionModel]()
-    var places = [WatchPlaceModel]()
+    var addictions = [WatchSimpleModel]()
+    var places = [WatchSimpleModel]()
+    var mostUsedAddiction: WatchSimpleModel?
+    var mostUsedPlace: WatchSimpleModel?
 }
 
 final class WatchNewEntryInfoOperation: CoreDataOperation {
@@ -35,21 +39,24 @@ final class WatchNewEntryInfoOperation: CoreDataOperation {
             let info = WatchAddInfo()
             
             /// Need all addictions
-            let addictions = try Addiction.getAllAddictions(inContext: context)
+            let addictions = try Addiction.getAllAddictionsOrderedByCount(inContext: context)
             
-            /// For each addiction, get the name and and image
-            for addiction in addictions {
-                let name = addiction.name
-                let addictionPath = addiction.objectID.URIRepresentation().absoluteString
-                let model = WatchAddictionModel(uri: addictionPath, name: name)
-                info.addictions.append(model)
+            let addictionModels = addictions.map {
+                WatchSimpleModel(uri: $0.objectID.URIRepresentation().absoluteString, name: $0.name)
             }
+            
+            info.mostUsedAddiction = addictionModels.first
+            info.addictions = addictionModels
             
             /// Fetch all places
-            let places = try Place.allPlaces(inContext: context)
-            info.places = places.map {
-                WatchPlaceModel(uri: $0.objectID.URIRepresentation().absoluteString, name: $0.name)
+            let places = try Place.getAllPlacesOrderedByCount(inContext: context)
+            
+            let placeModels = places.map {
+                WatchSimpleModel(uri: $0.objectID.URIRepresentation().absoluteString, name: $0.name)
             }
+            
+            info.mostUsedPlace = placeModels.first
+            info.places = placeModels.sort { $0.name < $1.name }
             
             watchInfo = info
             
@@ -63,23 +70,21 @@ final class WatchNewEntryInfoOperation: CoreDataOperation {
     static func formatNewEntryResultsForAppleWatch(result: WatchAddInfo) -> WatchDictionary {
         var dict = WatchDictionary()
         
-        var addictions = [WatchDictionary]()
-        for element in result.addictions {
-            var addiction = WatchDictionary()
-            addiction["name"] = element.name
-            addiction["uri"] = element.uri
-            addictions.append(addiction)
+        dict["addictions"] = result.addictions.map {
+            $0.watchDictionaryRepresentation()
         }
-        dict["addictions"] = addictions
         
-        var places = [WatchDictionary]()
-        for element in result.places {
-            var place = WatchDictionary()
-            place["name"] = element.name
-            place["uri"] = element.uri
-            places.append(place)
+        dict["places"] = result.places.map {
+            $0.watchDictionaryRepresentation()
         }
-        dict["places"] = places
+        
+        if let mostUsedAddiction = result.mostUsedAddiction {
+            dict["most_used_addiction"] = mostUsedAddiction.watchDictionaryRepresentation()
+        }
+        
+        if let mostUsedPlace = result.mostUsedPlace {
+            dict["most_used_place"] = mostUsedPlace.watchDictionaryRepresentation()
+        }
         
         return dict
     }

@@ -56,9 +56,6 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             self.getStats { stats in
                 var context = entries
                 context += stats
-                
-//                print("context: \(context)")
-                
                 completion(context)
             }
         }

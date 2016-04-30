@@ -48,9 +48,7 @@ extension Addiction {
         let req = entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
         var addictions = try context.executeFetchRequest(req) as? [Addiction] ?? [Addiction]()
-        addictions.sortInPlace { (a, b) -> Bool in
-            return a.records?.count > b.records?.count
-        }
+        addictions.sortInPlace { $0.records?.count > $1.records?.count }
         return addictions
     }
     

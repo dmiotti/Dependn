@@ -42,7 +42,7 @@ final class AddictionListInterfaceController: WKInterfaceController {
     override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
         let manager = WatchSessionManager.sharedManager
         let addiction = manager.context.addictions[rowIndex]
-        manager.newEntryData["addiction"] = addiction.name
+        manager.newRecordModel.addiction = addiction
         dismissController()
     }
 

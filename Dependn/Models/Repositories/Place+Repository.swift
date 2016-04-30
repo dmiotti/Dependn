@@ -30,6 +30,14 @@ extension Place {
         return try context.executeFetchRequest(req) as! [Place]
     }
     
+    class func getAllPlacesOrderedByCount(inContext context: NSManagedObjectContext) throws -> [Place] {
+        let req = entityFetchRequest()
+        req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
+        var places = try context.executeFetchRequest(req) as? [Place] ?? [Place]()
+        places.sortInPlace { $0.records?.count > $1.records?.count }
+        return places
+    }
+    
     class func insertPlace(name: String, inContext context: NSManagedObjectContext) -> Place {
         let place = Place.insertEntity(inContext: context)
         place.name = name

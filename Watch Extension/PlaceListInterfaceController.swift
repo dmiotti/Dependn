@@ -40,7 +40,7 @@ final class PlaceListInterfaceController: WKInterfaceController {
     
     override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
         let place = WatchSessionManager.sharedManager.context.places[rowIndex]
-        WatchSessionManager.sharedManager.newEntryData["place"] = place.name
+        WatchSessionManager.sharedManager.newRecordModel.place = place
         dismissController()
     }
 

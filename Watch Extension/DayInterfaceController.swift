@@ -73,12 +73,12 @@ class DayInterfaceController: WKInterfaceController {
     // MARK: Menu actions
     
     @IBAction func doMenuAddConso() {
-        WatchSessionManager.sharedManager.newEntryData["type"] = "conso"
+        WatchSessionManager.sharedManager.newRecordModel.type = .Conso
         presentControllerWithName("NewRecord", context: nil)
     }
     
     @IBAction func doMenuAddCraving() {
-        WatchSessionManager.sharedManager.newEntryData["type"] = "craving"
+        WatchSessionManager.sharedManager.newRecordModel.type = .Craving
         presentControllerWithName("NewRecord", context: nil)
     }
 }
