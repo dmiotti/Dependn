@@ -43,8 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         CoreDataStack.shared.saveContext()
         
-        showPasscodeIfNeeded()
-        
         WatchSessionManager.sharedManager.updateApplicationContext()
     }
     

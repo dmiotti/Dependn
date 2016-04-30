@@ -317,9 +317,15 @@ extension HistoryViewController: UITableViewDelegate {
 // MARK: - NSFetchedResultsControllerDelegate
 extension HistoryViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        if UIApplication.sharedApplication().applicationState == .Background {
+            return
+        }
         tableView.beginUpdates()
     }
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        if UIApplication.sharedApplication().applicationState == .Background {
+            return
+        }
         switch type {
         case .Insert:
             if let newIndexPath = newIndexPath {
@@ -341,6 +347,9 @@ extension HistoryViewController: NSFetchedResultsControllerDelegate {
         }
     }
     func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        if UIApplication.sharedApplication().applicationState == .Background {
+            return
+        }
         switch type {
         case .Insert:
             tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
@@ -353,6 +362,10 @@ extension HistoryViewController: NSFetchedResultsControllerDelegate {
         }
     }
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        if UIApplication.sharedApplication().applicationState == .Background {
+            tableView.reloadData()
+            return
+        }
         tableView.endUpdates()
         configureStatsView()
     }
