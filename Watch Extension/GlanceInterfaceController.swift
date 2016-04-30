@@ -23,6 +23,8 @@ final class GlanceInterfaceController: WKInterfaceController {
         
         // Configure interface objects here.
         dateFormatter.dateFormat = "dd MMMM"
+        
+        WatchSessionManager.sharedManager.startSession()
     }
 
     override func willActivate() {
@@ -42,12 +44,13 @@ final class GlanceInterfaceController: WKInterfaceController {
     
     private func refreshInterface() {
         if let stats = WatchSessionManager.sharedManager.context.stats {
+            
             if let value = stats.values.first {
                 valueLbl.setText(value.value)
+                dayLbl.setText(value.date)
             }
-            addictionLbl.setText(stats.addiction)
             
-            dayLbl.setText(stats.values[0].date)
+            addictionLbl.setText(stats.addiction)
             
             if let sinceLast = stats.sinceLast {
                 let str = String(format: NSLocalizedString("watch.sinceLast", comment: ""), sinceLast)

@@ -13,7 +13,7 @@
                         <label alignment="left" text="Dependn'" id="BHz-5L-ubJ">
                             <color key="textColor" red="0.1529411765" green="0.66274509800000003" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                         </label>
-                        <label alignment="left" semanticContentAttribute="forceRightToLeft" text="26" baselineAdjustment="alignCenters" id="NW1-sn-7lK"/>
+                        <label alignment="left" semanticContentAttribute="forceRightToLeft" text="0" baselineAdjustment="alignCenters" id="NW1-sn-7lK"/>
                         <label alignment="left" semanticContentAttribute="forceLeftToRight" text="Tobacco" baselineAdjustment="alignCenters" minimumScaleFactor="0.59999999999999998" id="Pv6-wO-39h"/>
                         <label alignment="left" text="Today" id="jqW-Tj-uIG"/>
                         <label alignment="left" text="5h ago" id="Uqs-YR-JGt"/>
