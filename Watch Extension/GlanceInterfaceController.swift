@@ -47,16 +47,7 @@ final class GlanceInterfaceController: WKInterfaceController {
             }
             addictionLbl.setText(stats.addiction)
             
-            let date = stats.values[0].date
-            let proximity = SHDateProximityToDate(date)
-            switch proximity {
-            case .Today:
-                dayLbl.setText(NSLocalizedString("watch.today", comment: ""))
-            case .Yesterday:
-                dayLbl.setText(NSLocalizedString("watch.yesterday", comment: ""))
-            default:
-                dayLbl.setText(dateFormatter.stringFromDate(date))
-            }
+            dayLbl.setText(stats.values[0].date)
             
             if let sinceLast = stats.sinceLast {
                 let str = String(format: NSLocalizedString("watch.sinceLast", comment: ""), sinceLast)

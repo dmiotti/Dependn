@@ -404,7 +404,7 @@
 "suggested.places.phone" = "Au téléphone";
 
 /*  */
-"suggested.places.waiting" = "Pour patienter";
+"suggested.places.waiting" = "Pour passer le temps";
 
 /*  */
 "suggested.places.inthecar" = "Dans la voiture";
@@ -444,3 +444,10 @@
 "settings.no_applewatch.message" = "Installer Dependn' depuis l'application Apple Watch";
 
 "ok" = "OK";
+
+"watch.today" = "Auj.";
+
+"watch.yesterday" = "Hier";
+
+"watch.twoDaysAgo" = "Il y a 2 jours";
+

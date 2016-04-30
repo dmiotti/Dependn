@@ -444,3 +444,9 @@
 "settings.no_applewatch.message" = "Please install Dependn' from the Watch app";
 
 "ok" = "OK";
+
+"watch.today" = "Today";
+
+"watch.yesterday" = "Yesterday";
+
+"watch.twoDaysAgo" = "2 days ago";

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		15FB7F6E4E0BE28215AB023F /* StatsPanelScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FB76A5C4926643FAD8141E /* StatsPanelScroller.swift */; };
+		5803C8691CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */; };
 		581CCC351C8F76B3006A8FAD /* IntensityGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CCC341C8F76B3006A8FAD /* IntensityGradientView.swift */; };
 		581CCC371C8F7FE0006A8FAD /* StatsPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CCC361C8F7FE0006A8FAD /* StatsPanelView.swift */; };
 		581DC5D21C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5CF1C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift */; };
@@ -156,6 +157,7 @@
 /* Begin PBXFileReference section */
 		15FB76A5C4926643FAD8141E /* StatsPanelScroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsPanelScroller.swift; sourceTree = "<group>"; };
 		1B3495A2BA0FC80954921D93 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntensityChooserInterfaceController.swift; sourceTree = "<group>"; };
 		581CCC341C8F76B3006A8FAD /* IntensityGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntensityGradientView.swift; sourceTree = "<group>"; };
 		581CCC361C8F7FE0006A8FAD /* StatsPanelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsPanelView.swift; sourceTree = "<group>"; };
 		581DC5CF1C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Addiction+CoreDataProperties.swift"; path = "../Addiction+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 				583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */,
 				587CB0F41CD170AE00FCDB48 /* PlaceListInterfaceController.swift */,
 				583C9C731CCEEC3400E6FD9D /* DefaultTableRowController.swift */,
+				5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */,
 			);
 			name = AddRecord;
 			sourceTree = "<group>";
@@ -861,6 +864,7 @@
 				583C9C721CCEE28500E6FD9D /* DayInterfaceController.swift in Sources */,
 				583C9C6A1CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift in Sources */,
 				587CB0F11CD1577B00FCDB48 /* WatchSessionManager.swift in Sources */,
+				5803C8691CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift in Sources */,
 				587CB0F51CD170AE00FCDB48 /* PlaceListInterfaceController.swift in Sources */,
 				583C9C761CCEEC5700E6FD9D /* AddictionListInterfaceController.swift in Sources */,
 				583C9C6C1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift in Sources */,

@@ -1,6 +1,6 @@
 PODS:
-  - BrightFutures (3.3.0):
-    - Result (~> 1.0)
+  - BrightFutures (4.0.1):
+    - Result (~> 2.0)
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
@@ -16,7 +16,7 @@ PODS:
   - Fabric (1.6.7)
   - libxlsxwriter (0.3.2)
   - PKHUD (3.1.0)
-  - Result (1.0.2)
+  - Result (2.0.0)
   - SnapKit (0.20.0)
   - SwiftHelpers (1.0.4)
   - SwiftyUserDefaults (2.2.0)
@@ -44,18 +44,18 @@ CHECKOUT OPTIONS:
     :commit: 07734b1af418dd9be25262cd74cbbc17a6bbb1c9
     :git: git@github.com:dmiotti/libxlsxwriter.git
   SwiftHelpers:
-    :commit: 436692c182401c9876ad319a0ceb69eba9009207
+    :commit: 7c468c79c02ff00802af31ee597a496b10057389
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:
-  BrightFutures: f4b491b3107487a0469973a74f81f334eb0ed60a
+  BrightFutures: 786ff7d16e620eb777cf802e545ef7d6237d77f6
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   libxlsxwriter: 40d5a1e4f9006e08c3f44399a10135694589710c
   PKHUD: 4167eccdb1b3a892fd80ce2b51cb6ba412a889ab
-  Result: dd3dd71af3fa2e262f1a999e14fba2c25ec14f16
+  Result: 9e75e1111c774c6ac594e14907b15057053a7959
   SnapKit: 5fce3c1bbbf1fbd31de9aa92f33eb9fa03f15650
   SwiftHelpers: dbbd107af3ab804cefe96283f1cf49b6c50f0a1d
   SwiftyUserDefaults: e7c8197a9d4068702e7f2406a968cae413b8de27

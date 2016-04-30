@@ -234,7 +234,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="1055" y="863"/>
+            <point key="canvasLocation" x="1056" y="863"/>
         </scene>
         <!--PlaceList-->
         <scene sceneID="75K-Se-vzK">
@@ -263,7 +263,39 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="1337" y="863"/>
+            <point key="canvasLocation" x="1338" y="863"/>
+        </scene>
+        <!--IntensityChooser-->
+        <scene sceneID="ky2-yv-q7j">
+            <objects>
+                <controller identifier="IntensityChooser" id="JIw-m4-kAp" customClass="IntensityChooserInterfaceController" customModule="Watch_Extension">
+                    <items>
+                        <group width="1" height="1" alignment="left" layout="vertical" id="uzo-Ai-pSJ">
+                            <items>
+                                <group width="1" alignment="left" id="BWv-q3-Ulu">
+                                    <items>
+                                        <picker width="1" height="1" alignment="center" style="sequence" id="sda-Ly-vvz">
+                                            <connections>
+                                                <action selector="intensityValueChanged:" destination="JIw-m4-kAp" id="9EW-j7-G8c"/>
+                                            </connections>
+                                        </picker>
+                                    </items>
+                                </group>
+                                <button width="1" alignment="center" verticalAlignment="bottom" title="Select" id="Y5o-n8-i6g">
+                                    <connections>
+                                        <action selector="validateBtnClicked" destination="JIw-m4-kAp" id="KeA-QY-Iqt"/>
+                                    </connections>
+                                </button>
+                            </items>
+                        </group>
+                    </items>
+                    <connections>
+                        <outlet property="intensityPicker" destination="sda-Ly-vvz" id="6RF-BN-gyU"/>
+                        <outlet property="validateBtn" destination="Y5o-n8-i6g" id="WNT-Q1-JxJ"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="1614" y="863"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.1529411765" green="0.66274509800000003" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>

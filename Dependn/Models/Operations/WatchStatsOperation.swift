@@ -13,7 +13,7 @@ import SwiftyUserDefaults
 import BrightFutures
 
 typealias WatchDictionary = Dictionary<String, AnyObject>
-typealias WatchStatsValueTime = (value: String, date: NSDate)
+typealias WatchStatsValueTime = (value: String, date: String)
 
 final class WatchStatsAddiction {
     var addiction = ""
@@ -63,7 +63,24 @@ final class WatchStatsOperation: CoreDataOperation {
                         if let err = error {
                             self.error = err
                         } else {
-                            statsAddiction.values.append(("\(count)", start))
+                            let dateFormatter = NSDateFormatter()
+                            dateFormatter.dateFormat = "EE dd MMM"
+                            
+                            let dateFormatted: String
+                            
+                            let proximity = SHDateProximityToDate(start)
+                            switch proximity {
+                            case .Today:
+                                dateFormatted = L("watch.today")
+                            case .Yesterday:
+                                dateFormatted = L("watch.yesterday")
+                            case .TwoDaysAgo:
+                                dateFormatted = L("watch.twoDaysAgo")
+                            default:
+                                dateFormatted = dateFormatter.stringFromDate(start).capitalizedString
+                                break
+                            }
+                            statsAddiction.values.append((String(count), dateFormatted))
                         }
                     }
                     
@@ -174,7 +191,7 @@ final class WatchStatsOperation: CoreDataOperation {
     static func formatStatsResultsForAppleWatch(result: WatchStatsAddiction) -> WatchDictionary {
         var dict = WatchDictionary()
         dict["name"] = result.addiction
-        dict["value"] = result.values.map({ [$0.value, $0.date] })
+        dict["value"] = result.values.map { [$0.value, $0.date] }
         if !result.sinceLast.isEmpty {
             dict["sinceLast"] = result.sinceLast
         }

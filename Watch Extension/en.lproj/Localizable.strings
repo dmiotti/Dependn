@@ -10,10 +10,6 @@
 
 "watch.loading.pleasewait" = "Please wait";
 
-"watch.today" = "Today";
-
-"watch.yesterday" = "yesterday";
-
 "appname" = "Dependn'";
 
 "new_record.addiction" = "Addiction";
@@ -24,4 +20,4 @@
 
 "new_record.add" = "Add";
 
-"watch.sinceLast" = "%@ ago";
+"intensity.select" = "Select";

@@ -100,7 +100,7 @@ final class NewRecordInterfaceController: WKInterfaceController {
             case .Place:
                 presentControllerWithName("PlaceList", context: nil)
             case .Intensity:
-                break
+                presentControllerWithName("IntensityChooser", context: nil)
             }
         }
     }

@@ -12,7 +12,7 @@ let kWatchExtensionContextUpdatedNotificationName = "kWatchExtensionContextUpdat
 let kWatchExtensionContextErrorNotificationName = "kWatchExtensionContextError"
 
 typealias WatchDictionary = Dictionary<String, AnyObject>
-typealias WatchStatsValueTime = (value: String, date: NSDate)
+typealias WatchStatsValueTime = (value: String, date: String)
 
 struct WatchSimpleModel {
     var name: String
@@ -22,8 +22,9 @@ struct WatchSimpleModel {
         if let name = dict["name"] as? String, uri = dict["uri"] as? String {
             self.name = name
             self.uri = uri
+        } else {
+            return nil
         }
-        return nil
     }
 }
 
@@ -115,7 +116,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     
     private func parseApplicationContext(appContext: [String: AnyObject]) {
         
-        print("appContext: \(appContext)")
+//        print("appContext: \(appContext)")
         
         /// Parse stats context
         let statsContext = appContext["stats"] as? WatchDictionary
@@ -131,7 +132,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             
             if let rawValues = statsContextValue?["value"] as? [Array<AnyObject>] {
                 for raw in rawValues {
-                    if let date = raw.last as? NSDate, count = raw.first as? String {
+                    if let date = raw.last as? String, count = raw.first as? String {
                         stats.values.append((count, date))
                     }
                 }
@@ -139,7 +140,6 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             
             context.stats = stats
         }
-        
         
         /// Parse new entry context
         let addContext = appContext["new_entry"] as? WatchDictionary

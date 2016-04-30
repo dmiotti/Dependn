@@ -14,19 +14,10 @@ final class ThreeDaysAgoInterfaceController: DayInterfaceController {
     override func loadData(data: WatchStatsAddiction) {
         super.loadData(data)
         
+        let value = data.values[3]
+        valueLbl.setText(value.value)
         addictionLbl.setText(data.addiction)
-        valueLbl.setText(data.values[3].value)
-        
-        let date = data.values[3].date
-        let proximity = SHDateProximityToDate(date)
-        switch proximity {
-        case .Today:
-            dayLbl.setText(NSLocalizedString("watch.today", comment: ""))
-        case .Yesterday:
-            dayLbl.setText(NSLocalizedString("watch.yesterday", comment: ""))
-        default:
-            dayLbl.setText(dateFormatter.stringFromDate(date))
-        }
+        dayLbl.setText(value.date)
     }
 
 }
