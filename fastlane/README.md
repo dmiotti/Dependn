@@ -15,7 +15,7 @@ Runs all the tests
 ```
 fastlane ios bump_version
 ```
-Bump version
+Update the build number to the count of Git commits
 ### ios beta
 ```
 fastlane ios beta

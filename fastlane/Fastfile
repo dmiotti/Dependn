@@ -1,3 +1,5 @@
+require 'plist'
+
 # Customise this file, documentation can be found here:
 # https://github.com/fastlane/fastlane/tree/master/docs
 # All available actions: https://github.com/fastlane/fastlane/blob/master/docs/Actions.md
@@ -22,8 +24,6 @@ default_platform :ios
 
 platform :ios do
   before_all do
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-    cocoapods
 
   end
 
@@ -32,18 +32,32 @@ platform :ios do
     scan
   end
 
-  desc "Bump version"
+  desc "Update the build number to the count of Git commits"
   lane :bump_version do
-    # Set the build number to the count of Git commits
-    # buildNumber=$(git rev-list --count HEAD)
-    # /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "${PROJECT_DIR}/${INFOPLIST_FILE}"
-    # /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "${PROJECT_DIR}/Watch/Info.plist"
-    # /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "${PROJECT_DIR}/Watch Extension/Info.plist"
+    build_number = sh("git rev-list --count HEAD").delete("\n")
+
+    # Plists to update
+    app_plist = "../Dependn/Info.plist"
+    watch_plist = "../Watch/Info.plist"
+    watch_ext_plist = "../Watch Extension/Info.plist"
+
+    update_plist_build_number app_plist, build_number
+    update_plist_build_number watch_plist, build_number
+    update_plist_build_number watch_ext_plist, build_number
+  end
+
+  def update_plist_build_number(plist_path, build_number)
+    plist_fullpath = File.expand_path(plist_path)
+    info_plist = Plist::parse_xml(plist_fullpath)
+    info_plist['CFBundleVersion'] = build_number
+    File.write(plist_fullpath, info_plist.to_plist)
   end
 
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
+    cocoapods
+
     # match(type: "appstore") # more information: https://codesigning.guide
     gym(scheme: "Dependn") # Build your app - more options available
     pilot
@@ -54,6 +68,8 @@ platform :ios do
 
   desc "Deploy a new version to the App Store"
   lane :appstore do
+    cocoapods
+
     # match(type: "appstore")
     # snapshot
     gym(scheme: "Dependn") # Build your app - more options available
