@@ -14,9 +14,8 @@ target 'Dependn' do
   pod 'CocoaLumberjack/Swift'
   pod 'ChameleonFramework/Swift'
   pod 'SwiftyUserDefaults'
-
+  pod 'Amplitude-iOS'
   pod 'SwiftHelpers', :git => 'git@github.com:dmiotti/SwiftHelpers.git'
   pod 'libxlsxwriter', :git => 'git@github.com:dmiotti/libxlsxwriter.git'
 
 end
-

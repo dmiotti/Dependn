@@ -1049,6 +1049,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.dependn;
 				PRODUCT_NAME = Dependn;
 				PROVISIONING_PROFILE = "da44c5f8-6b01-4277-bfd4-24dc6bd7914c";

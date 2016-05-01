@@ -1,4 +1,5 @@
 PODS:
+  - Amplitude-iOS (3.7.0)
   - BrightFutures (4.0.1):
     - Result (~> 2.0)
   - ChameleonFramework/Default (2.1.0)
@@ -22,6 +23,7 @@ PODS:
   - SwiftyUserDefaults (2.2.0)
 
 DEPENDENCIES:
+  - Amplitude-iOS
   - BrightFutures
   - ChameleonFramework/Swift
   - CocoaLumberjack/Swift
@@ -48,6 +50,7 @@ CHECKOUT OPTIONS:
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:
+  Amplitude-iOS: 8bc8b9dc9c1898dbe5da541e21e8941ec085644f
   BrightFutures: 786ff7d16e620eb777cf802e545ef7d6237d77f6
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0

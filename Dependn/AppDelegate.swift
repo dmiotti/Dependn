@@ -14,9 +14,10 @@ import CocoaLumberjack
 import SwiftHelpers
 import WatchConnectivity
 import BrightFutures
+import Amplitude_iOS
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Types
     
@@ -97,6 +98,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.shortcutItems = [ addShortcut ]
         }
         
+        setupAmplitudeSDK()
+        
         return shouldPerformAdditionalDelegateHandling
     }
     
@@ -107,6 +110,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(application: UIApplication) {
         showPasscodeIfNeeded()
+        
+        Amplitude.instance().logEvent("AppLaunch")
     }
     
     func applicationWillTerminate(application: UIApplication) {
@@ -189,6 +194,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             hidingNav!.modalTransitionStyle = .CrossDissolve
             topController.presentViewController(hidingNav!, animated: false, completion: nil)
         }
+    }
+    
+    // MARK: - Setup Amplitude SDK
+    
+    private func setupAmplitudeSDK() {
+        #if DEBUG
+            Amplitude.instance().initializeApiKey("e0aaa26848db06fa3c1d0ccd7cf283db")
+        #else
+            Amplitude.instance().initializeApiKey("c86e96179f239e19d7fa8a2a7d1d067f")
+        #endif
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let userId = defaults.objectForKey("userId") as? String {
+            Amplitude.instance().setUserId(userId)
+        } else {
+            let userId = NSUUID().UUIDString
+            defaults.setObject(userId, forKey: "userId")
+            defaults.synchronize()
+            Amplitude.instance().setUserId(userId)
+        }
+        
+        Amplitude.instance().trackingSessionEvents = true
+        
+        Amplitude.instance().logEvent("AppLaunch")
     }
 }
 
