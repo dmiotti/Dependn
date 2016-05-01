@@ -450,3 +450,7 @@
 "watch.yesterday" = "Hier";
 
 "watch.twoDaysAgo" = "Il y a 2 jours";
+
+"shortcut.addentry.title" = "Ajouter";
+
+"shortcut.addentry.subtitle" = "Ajoutera une entrée";

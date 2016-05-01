@@ -84,6 +84,7 @@
 		58DF62D71C83BDEE0035F608 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62BE1C83BDEE0035F608 /* Record.swift */; };
 		58DF62D91C83BDEE0035F608 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62C11C83BDEE0035F608 /* StyleSheet.swift */; };
 		58E429B81C9243B80095F92D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58E429B71C9243B80095F92D /* CloudKit.framework */; };
+		58E9C47E1CD6407400991DC8 /* DeeplinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E9C47D1CD6407400991DC8 /* DeeplinkManager.swift */; };
 		58F092BF1C9615AA00DF4ADC /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58F092BD1C9615AA00DF4ADC /* Interface.storyboard */; };
 		58F092C11C9615AA00DF4ADC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58F092C01C9615AA00DF4ADC /* Assets.xcassets */; };
 		58F092C81C9615AB00DF4ADC /* Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 58F092C71C9615AB00DF4ADC /* Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -244,6 +245,7 @@
 		58E429B51C9232BF0095F92D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		58E429B61C923DF20095F92D /* Dependn.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Dependn.entitlements; sourceTree = "<group>"; };
 		58E429B71C9243B80095F92D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		58E9C47D1CD6407400991DC8 /* DeeplinkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeeplinkManager.swift; sourceTree = "<group>"; };
 		58F092BB1C9615AA00DF4ADC /* Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Watch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58F092BE1C9615AA00DF4ADC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		58F092C01C9615AA00DF4ADC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -461,6 +463,7 @@
 				58548BE71C8BE1E400C7C940 /* Search */,
 				581DC5D81C8B37E5006DE551 /* Settings */,
 				58548BB91C8B9A6000C7C940 /* Passcode */,
+				58E9C47D1CD6407400991DC8 /* DeeplinkManager.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -849,6 +852,7 @@
 				58DF62D41C83BDEE0035F608 /* NearestPlaceOperation.swift in Sources */,
 				581DC5DC1C8B38AD006DE551 /* SettingsTableViewCell.swift in Sources */,
 				15FB7F6E4E0BE28215AB023F /* StatsPanelScroller.swift in Sources */,
+				58E9C47E1CD6407400991DC8 /* DeeplinkManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

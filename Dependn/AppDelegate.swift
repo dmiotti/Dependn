@@ -18,9 +18,44 @@ import BrightFutures
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    // MARK: Types
+    
+    enum ShortcutIdentifier: String {
+        case Add
+        
+        // MARK: Initializers
+        
+        init?(fullType: String) {
+            guard let last = fullType.componentsSeparatedByString(".").last else {
+                return nil
+            }
+            
+            self.init(rawValue: last)
+        }
+        
+        // MARK: Properties
+        
+        var type: String {
+            return NSBundle.mainBundle().bundleIdentifier! + ".\(self.rawValue)"
+        }
+    }
+    
+    // MARK: Static properties
+    
+    static let applicationShortcutUserInfoIconKey = "applicationShortcutUserInfoIconKey"
+    
+    // MARK: Properties
+    
     var window: UIWindow?
     
+    /// Saved shortcut item used as a result of an app launch, used later when app is activated.
+    var launchedShortcutItem: UIApplicationShortcutItem?
+    
+    // MARK: - Application Life Cycle
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        // Override point for customization after application launch.
         
         Fabric.with([Crashlytics.self])
         
@@ -37,12 +72,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         showPasscodeIfNeeded()
         
-        return true
+        var shouldPerformAdditionalDelegateHandling = true
+        
+        // If a shortcut was launched, display its information and take the appropriate action
+        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+            
+            launchedShortcutItem = shortcutItem
+            
+            // This will block "performActionForShortcutItem:completionHandler" from being called.
+            shouldPerformAdditionalDelegateHandling = false
+        }
+        
+        // Install initial versions of our shortcuts.
+        if let shortcutItems = application.shortcutItems where shortcutItems.isEmpty {
+            let addShortcut = UIMutableApplicationShortcutItem(
+                type: ShortcutIdentifier.Add.type,
+                localizedTitle: NSLocalizedString("shortcut.addentry.title", comment: ""),
+                localizedSubtitle: NSLocalizedString("shortcut.addentry.subtitle", comment: ""),
+                icon: UIApplicationShortcutIcon(type: .Add),
+                userInfo: [
+                    AppDelegate.applicationShortcutUserInfoIconKey: UIApplicationShortcutIconType.Add.rawValue
+                ])
+            
+            application.shortcutItems = [ addShortcut ]
+        }
+        
+        return shouldPerformAdditionalDelegateHandling
     }
     
     func applicationDidEnterBackground(application: UIApplication) {
         CoreDataStack.shared.saveContext()
-        
         WatchSessionManager.sharedManager.updateApplicationContext()
     }
     
@@ -52,6 +111,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(application: UIApplication) {
         CoreDataStack.shared.saveContext()
+    }
+    
+    func applicationDidBecomeActive(application: UIApplication) {
+        guard let shortcutItem = launchedShortcutItem else {
+            return
+        }
+        handleShortcutItem(shortcutItem)
+        launchedShortcutItem = nil
+    }
+    
+    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+        launchedShortcutItem = shortcutItem
+        completionHandler(true)
+    }
+    
+    // MARK: - Handle shortcut items
+    
+    private func handleShortcutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+        guard ShortcutIdentifier(fullType: shortcutItem.type) != nil else {
+            return false
+        }
+        
+        guard let shortcutType = shortcutItem.type as String? else {
+            return false
+        }
+        
+        var handled = false
+        
+        let context = window!.rootViewController!
+        
+        switch shortcutType {
+        case ShortcutIdentifier.Add.type:
+            DeeplinkManager.invokeAddEntry(inContext: context)
+            handled = true
+            break
+        default:
+            break
+        }
+        
+        return handled
     }
     
     // MARK: - Passcode management

@@ -180,32 +180,7 @@ final class HistoryViewController: UIViewController {
     }
     
     func addBtnClicked(sender: UIButton) {
-        if ensureThereIsAddictions() {
-            let nav = SHStatusBarNavigationController(rootViewController: AddRecordViewController())
-            nav.statusBarStyle = .Default
-            nav.modalPresentationStyle = .FormSheet
-            presentViewController(nav, animated: true, completion: nil)
-        } else {
-            let alert = UIAlertController(title: L("history.no_addictions.title"), message: L("history.no_addictions.message"), preferredStyle: .Alert)
-            let addAction = UIAlertAction(title: L("history.no_addictions.add"), style: .Default) { action in
-                let controller = AddictionListViewController()
-                self.navigationController?.pushViewController(controller, animated: true)
-            }
-            let okAction = UIAlertAction(title: L("history.no_addictions.ok"), style: .Cancel, handler: nil)
-            alert.addAction(addAction)
-            alert.addAction(okAction)
-            presentViewController(alert, animated: true, completion: nil)
-        }
-    }
-    
-    func ensureThereIsAddictions() -> Bool {
-        var hasAddictions = false
-        do {
-            hasAddictions = try Addiction.getAllAddictions(inContext: managedObjectContext).count > 0
-        } catch let err as NSError {
-            DDLogError("Error while checking there is at least one addiction: \(err)")
-        }
-        return hasAddictions
+        DeeplinkManager.invokeAddEntry(inContext: self)
     }
     
 }
