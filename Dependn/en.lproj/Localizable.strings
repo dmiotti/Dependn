@@ -454,3 +454,7 @@
 "shortcut.addentry.title" = "Add";
 
 "shortcut.addentry.subtitle" = "Will add an entry";
+
+"history.today" = "Today";
+
+"history.yesterday" = "Yesterday";

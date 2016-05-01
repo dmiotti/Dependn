@@ -25,6 +25,8 @@ final class HistoryViewController: UIViewController {
     
     private let managedObjectContext = CoreDataStack.shared.managedObjectContext
     
+    private let readDateFormatter = NSDateFormatter()
+    
     private lazy var fetchedResultsController: NSFetchedResultsController = {
         let controller = Record.historyFetchedResultsController(inContext: self.managedObjectContext)
         controller.delegate = self
@@ -36,6 +38,8 @@ final class HistoryViewController: UIViewController {
         
         updateTitle(L("app_name"))
         setupBackBarButtonItem()
+        
+        readDateFormatter.dateFormat = "EEEE dd MMMM yyyy"
         
         edgesForExtendedLayout = .None
         
@@ -215,13 +219,12 @@ extension HistoryViewController: UITableViewDataSource {
         let header = UIView()
         header.backgroundColor = "F5FAFF".UIColor
         
-        let date = UILabel()
-        date.text = fetchedResultsController.sections?[section].name.uppercaseString
-        date.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
-        date.textColor = "7D9BB8".UIColor
-        header.addSubview(date)
+        let dateLbl = UILabel()
+        dateLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
+        dateLbl.textColor = "7D9BB8".UIColor
+        header.addSubview(dateLbl)
         
-        date.snp_makeConstraints {
+        dateLbl.snp_makeConstraints {
             $0.left.equalTo(header).offset(15)
             $0.bottom.equalTo(header).offset(-6)
         }
@@ -244,6 +247,24 @@ extension HistoryViewController: UITableViewDataSource {
             $0.left.equalTo(header)
             $0.right.equalTo(header)
             $0.height.equalTo(0.5)
+        }
+        
+        let dateString = fetchedResultsController.sections?[section].name
+        
+        if let dateString = dateString, date = readDateFormatter.dateFromString(dateString) {
+            let proximity = SHDateProximityToDate(date)
+            switch proximity {
+            case .Today:
+                dateLbl.text = L("history.today").uppercaseString
+                break
+            case .Yesterday:
+                dateLbl.text = L("history.yesterday").uppercaseString
+                break
+            default:
+                dateLbl.text = dateString.uppercaseString
+            }
+        } else {
+            dateLbl.text = dateString?.uppercaseString
         }
         
         return header
