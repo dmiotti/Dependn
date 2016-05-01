@@ -27,14 +27,10 @@ class DayInterfaceController: WKInterfaceController {
         
         setTitle(NSLocalizedString("appname", comment: ""))
         
-        addMenuItemWithItemIcon(
-            .Play,
-            title: NSLocalizedString("Conso", comment: ""),
+        addMenuItemWithImageNamed(
+            "addIcon",
+            title: NSLocalizedString("add.conso", comment: ""),
             action: #selector(DayInterfaceController.doMenuAddConso))
-        addMenuItemWithItemIcon(
-            .Mute,
-            title: NSLocalizedString("Craving", comment: ""),
-            action: #selector(DayInterfaceController.doMenuAddCraving))
     }
     
     override func willActivate() {
