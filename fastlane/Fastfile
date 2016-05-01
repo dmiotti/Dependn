@@ -24,7 +24,8 @@ default_platform :ios
 
 platform :ios do
   before_all do
-
+    cocoapods
+    bump_version
   end
 
   desc "Runs all the tests"
@@ -32,8 +33,7 @@ platform :ios do
     scan
   end
 
-  desc "Update the build number to the count of Git commits"
-  lane :bump_version do
+  def bump_version
     build_number = sh("git rev-list --count HEAD").delete("\n")
 
     # Plists to update
@@ -56,8 +56,6 @@ platform :ios do
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
-    cocoapods
-
     # match(type: "appstore") # more information: https://codesigning.guide
     gym(scheme: "Dependn") # Build your app - more options available
     pilot
@@ -68,8 +66,6 @@ platform :ios do
 
   desc "Deploy a new version to the App Store"
   lane :appstore do
-    cocoapods
-
     # match(type: "appstore")
     # snapshot
     gym(scheme: "Dependn") # Build your app - more options available
