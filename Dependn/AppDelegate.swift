@@ -172,7 +172,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
                     return
         }
         
-        if lastPasscodeShown?.timeIntervalSinceDate(NSDate()) < 15 * 60 {
+        let now = NSDate()
+        if let lastShown = lastPasscodeShown where lastShown.timeIntervalSinceDate(now) < 15 * 60 {
             return
         }
         
