@@ -8,7 +8,7 @@
         <!--Glance-->
         <scene sceneID="YaT-uV-8bZ">
             <objects>
-                <glanceController identifier="Glance" topTemplateType="body3" bottomTemplateType="extraLargeLargeBody1Footer" id="aNy-G8-B2T" customClass="GlanceInterfaceController" customModule="Watch_Extension">
+                <glanceController identifier="Glance" topTemplateType="body3" bottomTemplateType="largeLargeBody2Footer" id="aNy-G8-B2T" customClass="GlanceInterfaceController" customModule="Watch_Extension">
                     <items>
                         <label alignment="left" text="Dependn'" id="BHz-5L-ubJ">
                             <color key="textColor" red="0.1529411765" green="0.66274509800000003" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -90,7 +90,7 @@
                                 <label width="1" alignment="left" verticalAlignment="center" text="0" textAlignment="center" id="Ofi-WH-y6T">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
-                                <label width="1" alignment="left" verticalAlignment="center" text="things" textAlignment="center" numberOfLines="0" id="NMQ-Pm-tnN">
+                                <label width="1" alignment="left" verticalAlignment="center" text="Things" textAlignment="center" numberOfLines="0" id="NMQ-Pm-tnN">
                                     <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                 </label>
                                 <label width="1" alignment="left" verticalAlignment="center" alpha="0.35999999999999999" text="Yesterday" textAlignment="center" numberOfLines="0" id="dKp-wk-PfM">
@@ -158,7 +158,7 @@
                                 <label width="1" alignment="left" verticalAlignment="center" text="0" textAlignment="center" id="JCv-3F-sGV">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
-                                <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="4A1-8m-eEZ">
+                                <label width="1" alignment="left" verticalAlignment="center" text="Things" textAlignment="center" numberOfLines="0" id="4A1-8m-eEZ">
                                     <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                 </label>
                                 <label width="1" alignment="left" verticalAlignment="center" alpha="0.35999999999999999" text="lundi 4 mars" textAlignment="center" numberOfLines="0" id="WbQ-qZ-JUd">
@@ -188,7 +188,7 @@
                                 <label width="1" alignment="left" verticalAlignment="center" text="0" textAlignment="center" id="HvE-5R-Mmp">
                                     <fontDescription key="font" type="system" pointSize="50"/>
                                 </label>
-                                <label width="1" alignment="left" verticalAlignment="center" text="Cigarettes" textAlignment="center" numberOfLines="0" id="LF6-zg-YGK">
+                                <label width="1" alignment="left" verticalAlignment="center" text="Things" textAlignment="center" numberOfLines="0" id="LF6-zg-YGK">
                                     <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                 </label>
                                 <label width="1" alignment="left" verticalAlignment="center" alpha="0.35999999999999999" text="dimanche 3 mars" textAlignment="center" numberOfLines="0" minimumScaleFactor="0.80000000000000004" id="N1Z-FJ-eAj">
