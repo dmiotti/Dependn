@@ -24,9 +24,7 @@ final class TodayInterfaceController: DayInterfaceController {
         addictionLbl.setText(data.addiction)
         dayLbl.setText(value.date)
         
-        if let sinceLast = data.sinceLast {
-            setTitle("Last " + sinceLast)
-        }
+        setTitle(data.formattedSinceLast)
     }
     
 }

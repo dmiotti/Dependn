@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		15FB7F6E4E0BE28215AB023F /* StatsPanelScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FB76A5C4926643FAD8141E /* StatsPanelScroller.swift */; };
 		5803C8691CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */; };
+		581803441CDB513A0026305B /* TimeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581803431CDB513A0026305B /* TimeUtils.swift */; };
 		581CCC351C8F76B3006A8FAD /* IntensityGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CCC341C8F76B3006A8FAD /* IntensityGradientView.swift */; };
 		581CCC371C8F7FE0006A8FAD /* StatsPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CCC361C8F7FE0006A8FAD /* StatsPanelView.swift */; };
 		581DC5D21C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5CF1C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift */; };
@@ -159,6 +160,7 @@
 		15FB76A5C4926643FAD8141E /* StatsPanelScroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsPanelScroller.swift; sourceTree = "<group>"; };
 		1B3495A2BA0FC80954921D93 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntensityChooserInterfaceController.swift; sourceTree = "<group>"; };
+		581803431CDB513A0026305B /* TimeUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeUtils.swift; sourceTree = "<group>"; };
 		581CCC341C8F76B3006A8FAD /* IntensityGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntensityGradientView.swift; sourceTree = "<group>"; };
 		581CCC361C8F7FE0006A8FAD /* StatsPanelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsPanelView.swift; sourceTree = "<group>"; };
 		581DC5CF1C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Addiction+CoreDataProperties.swift"; path = "../Addiction+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -546,6 +548,7 @@
 				587CB0F61CD178FC00FCDB48 /* Time scale */,
 				587CB0F71CD1790D00FCDB48 /* AddRecord */,
 				58669AA01CD10376002BDED3 /* SHDateFormatterProximity.swift */,
+				581803431CDB513A0026305B /* TimeUtils.swift */,
 				58F092D01C9615AB00DF4ADC /* Assets.xcassets */,
 				58F092D21C9615AB00DF4ADC /* Info.plist */,
 				58669A9D1CD0FEB0002BDED3 /* Localizable.strings */,
@@ -870,6 +873,7 @@
 				587CB0F11CD1577B00FCDB48 /* WatchSessionManager.swift in Sources */,
 				5803C8691CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift in Sources */,
 				587CB0F51CD170AE00FCDB48 /* PlaceListInterfaceController.swift in Sources */,
+				581803441CDB513A0026305B /* TimeUtils.swift in Sources */,
 				583C9C761CCEEC5700E6FD9D /* AddictionListInterfaceController.swift in Sources */,
 				583C9C6C1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift in Sources */,
 				5841B3381CD2495A0024AC99 /* GlanceInterfaceController.swift in Sources */,

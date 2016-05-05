@@ -19,7 +19,7 @@ class DayInterfaceController: WKInterfaceController {
     func loadData(data: WatchStatsAddiction) { }
     
     override init() {
-        dateFormatter.dateFormat = "dd MMMM"
+        dateFormatter.dateFormat = "d MMMM"
     }
     
     override func awakeWithContext(context: AnyObject?) {

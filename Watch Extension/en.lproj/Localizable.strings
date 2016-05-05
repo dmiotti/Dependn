@@ -22,6 +22,6 @@
 
 "intensity.select" = "Select";
 
-"watch.sinceLast" = "Last since %@";
+"watch.sinceLast" = "Last %@ ago";
 
 "add.conso" = "Add";

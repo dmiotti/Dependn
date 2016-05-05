@@ -18,7 +18,7 @@ typealias WatchStatsValueTime = (value: String, date: String)
 final class WatchStatsAddiction {
     var addiction = ""
     var values = [WatchStatsValueTime]()
-    var sinceLast = ""
+    var sinceLast: NSTimeInterval = 0
 }
 
 private let kWatchStatsOperationErrorDomain = "WatchStatsOperation"
@@ -64,7 +64,7 @@ final class WatchStatsOperation: CoreDataOperation {
                             self.error = err
                         } else {
                             let dateFormatter = NSDateFormatter()
-                            dateFormatter.dateFormat = "EE dd MMM"
+                            dateFormatter.dateFormat = "EE d MMM"
                             
                             let dateFormatted: String
                             
@@ -129,8 +129,8 @@ final class WatchStatsOperation: CoreDataOperation {
         return promise.future
     }
     
-    private func getSinceLast(addiction: Addiction) -> Future<String, NSError> {
-        let promise = Promise<String, NSError>()
+    private func getSinceLast(addiction: Addiction) -> Future<NSTimeInterval, NSError> {
+        let promise = Promise<NSTimeInterval, NSError>()
         let queue = NSOperationQueue()
         
         let op = TimeSinceLastRecord(addiction: addiction)
@@ -138,61 +138,20 @@ final class WatchStatsOperation: CoreDataOperation {
         
         op.completionBlock = {
             if let interval = op.interval {
-                promise.success(self.stringFromTimeInterval(interval))
+                promise.success(interval)
             } else {
                 promise.failure(op.error!)
             }
         }
+        
         return promise.future
-    }
-    
-    private func stringFromTimeInterval(interval: NSTimeInterval) -> String {
-        let time = hoursMinutesSecondsFromInterval(interval)
-        
-        var str = ""
-        if time.hours > 0 {
-            str += "\(time.hours)h"
-        } else if time.minutes > 0 {
-            str += "\(time.minutes)m"
-        } else {
-            str += "\(time.seconds)s"
-        }
-        
-        if let fraction = fractionFromInterval(interval) {
-            str += fraction
-        }
-        
-        return str
-    }
-    
-    private func fractionFromInterval(interval: NSTimeInterval) -> String? {
-        let time = hoursMinutesSecondsFromInterval(interval)
-        if time.hours <= 0 || time.minutes < 15 {
-            return nil
-        }
-        
-        if time.minutes < 30 {
-            return String(numerator: 1, denominator: 4)
-        } else if time.minutes < 45 {
-            return String(numerator: 1, denominator: 2)
-        }
-        
-        return String(numerator: 3, denominator: 4)
-    }
-    
-    private func hoursMinutesSecondsFromInterval(interval: NSTimeInterval) -> (hours: Int, minutes: Int, seconds: Int) {
-        let ti = Int(interval)
-        let seconds = ti % 60
-        let minutes = (ti / 60) % 60
-        let hours = (ti / 3600)
-        return (hours, minutes, seconds)
     }
     
     static func formatStatsResultsForAppleWatch(result: WatchStatsAddiction) -> WatchDictionary {
         var dict = WatchDictionary()
         dict["name"] = result.addiction
         dict["value"] = result.values.map { [$0.value, $0.date] }
-        if !result.sinceLast.isEmpty {
+        if result.sinceLast > 0 {
             dict["sinceLast"] = result.sinceLast
         }
         return dict

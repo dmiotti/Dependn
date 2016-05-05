@@ -51,11 +51,7 @@ final class GlanceInterfaceController: WKInterfaceController {
             }
             
             addictionLbl.setText(stats.addiction)
-            
-            if let sinceLast = stats.sinceLast {
-                let str = String(format: NSLocalizedString("watch.sinceLast", comment: ""), sinceLast)
-                sinceLastLbl.setText(str)
-            }
+            sinceLastLbl.setText(stats.formattedSinceLast)
         }
     }
 
