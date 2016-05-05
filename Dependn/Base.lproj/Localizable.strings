@@ -463,6 +463,6 @@
 
 "settings.iap.not_available.message" = "Veuillez configurer votre compte dans les paramètre de votre appareil";
 
-"settings.action.restore_iap" = "Restorer mes In-App Purchases";
+"settings.action.restore_iap" = "Restaurer mes achats intégrés";
 
 "settings.section.iap" = "In-App Purchases";
