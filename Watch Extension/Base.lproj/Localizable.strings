@@ -20,7 +20,7 @@
 
 "new_record.add" = "Ajouter";
 
-"intensity.select" = "Séléctionner";
+"intensity.select" = "Valider";
 
 "watch.sinceLast" = "Il y a %@";
 
