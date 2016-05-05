@@ -71,8 +71,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         WatchSessionManager.sharedManager.startSession()
         WatchSessionManager.sharedManager.updateApplicationContext()
         
-        showPasscodeIfNeeded()
-        
         var shouldPerformAdditionalDelegateHandling = true
         
         // If a shortcut was launched, display its information and take the appropriate action
@@ -110,7 +108,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(application: UIApplication) {
         showPasscodeIfNeeded()
-        
         Amplitude.instance().logEvent("AppLaunch")
     }
     
@@ -119,6 +116,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
+        showPasscodeIfNeeded()
         guard let shortcutItem = launchedShortcutItem else {
             return
         }
