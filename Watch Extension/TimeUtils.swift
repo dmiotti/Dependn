@@ -16,8 +16,6 @@ func stringFromTimeInterval(interval: NSTimeInterval) -> String {
         str += "\(time.hours)h"
     } else if time.minutes > 0 {
         str += "\(time.minutes)m"
-    } else if time.seconds < 60 {
-        str += NSLocalizedString("less.than_minute", comment: "")
     } else {
         str += "\(time.seconds)s"
     }
