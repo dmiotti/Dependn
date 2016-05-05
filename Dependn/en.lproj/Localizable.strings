@@ -466,3 +466,7 @@
 "settings.action.restore_iap" = "Restore In-App Purchases";
 
 "settings.section.iap" = "In-App Purchases";
+
+"settings.restoreiap.success.title" = "Restore succeed";
+
+"settings.restoreiap.success.description" = "Restoration done with success.";

@@ -508,9 +508,9 @@
 				581DC5D51C8B2EE2006DE551 /* CoreData */,
 				58DF62BB1C83BDEE0035F608 /* Repositories */,
 				58DF62B41C83BDEE0035F608 /* Operations */,
-				581DC5E61C8B73D3006DE551 /* UserDefaults.swift */,
-				587CB0F21CD157A000FCDB48 /* WatchSessionManager.swift */,
 				5818034E1CDB69580026305B /* IAP */,
+				587CB0F21CD157A000FCDB48 /* WatchSessionManager.swift */,
+				581DC5E61C8B73D3006DE551 /* UserDefaults.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

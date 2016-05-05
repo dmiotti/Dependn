@@ -466,3 +466,7 @@
 "settings.action.restore_iap" = "Restaurer mes achats intégrés";
 
 "settings.section.iap" = "In-App Purchases";
+
+"settings.restoreiap.success.title" = "Restauration de vos achats intégrés";
+
+"settings.restoreiap.success.description" = "La restauration de vos achats intégrés s’est effectuée avec succès.";

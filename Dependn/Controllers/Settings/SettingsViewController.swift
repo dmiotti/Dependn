@@ -242,7 +242,22 @@ final class SettingsViewController: UIViewController {
     }
     
     private func restorePurchases() {
-        DependnProducts.store.restorePurchases()
+        HUD.show(.Progress)
+        DependnProducts.store.restorePurchases { succeed, error in
+            HUD.hide { finished in
+                if succeed {
+                    let alert = UIAlertController(title: L("settings.restoreiap.success.title"), message: L("settings.restoreiap.success.description"), preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: L("ok"), style: .Default, handler: nil)
+                    alert.addAction(okAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                } else {
+                    let alert = UIAlertController(title: error?.localizedDescription, message: error?.localizedRecoverySuggestion, preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: L("ok"), style: .Default, handler: nil)
+                    alert.addAction(okAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
 }

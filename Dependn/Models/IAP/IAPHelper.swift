@@ -24,6 +24,7 @@ public class IAPHelper: NSObject {
     private var productsRequestCompletionHandler: ProductsRequestCompletionHandler?
     
     private var purchaseCompletionHandler: ProductsPurchaseCompletionHandler?
+    private var restoreCompletionHandler: ProductsPurchaseCompletionHandler?
     
     init(productIds: Set<ProductIdentifier>) {
         self.productIdentifiers = productIds
@@ -72,7 +73,8 @@ extension IAPHelper {
         return SKPaymentQueue.canMakePayments()
     }
     
-    public func restorePurchases() {
+    public func restorePurchases(completion: ProductsPurchaseCompletionHandler) {
+        restoreCompletionHandler = completion
         SKPaymentQueue.defaultQueue().restoreCompletedTransactions()
     }
 }
@@ -143,6 +145,9 @@ extension IAPHelper: SKPaymentTransactionObserver {
         print("restoreTransaction... \(productIdentifier)")
         deliverPurchaseNotificatioForIdentifier(productIdentifier)
         SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+        
+        restoreCompletionHandler?(true, transaction.error)
+        restoreCompletionHandler = nil
     }
     
     private func failedTransaction(transaction: SKPaymentTransaction) {
@@ -155,6 +160,8 @@ extension IAPHelper: SKPaymentTransactionObserver {
         
         purchaseCompletionHandler?(false, transaction.error)
         purchaseCompletionHandler = nil
+        
+        restoreCompletionHandler = nil
     }
     
     private func deliverPurchaseNotificatioForIdentifier(identifier: String?) {
