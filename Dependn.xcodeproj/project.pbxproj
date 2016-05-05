@@ -10,6 +10,9 @@
 		15FB7F6E4E0BE28215AB023F /* StatsPanelScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FB76A5C4926643FAD8141E /* StatsPanelScroller.swift */; };
 		5803C8691CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */; };
 		581803441CDB513A0026305B /* TimeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581803431CDB513A0026305B /* TimeUtils.swift */; };
+		5818034A1CDB675C0026305B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 581803491CDB675C0026305B /* StoreKit.framework */; };
+		581803511CDB69580026305B /* DependnProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818034F1CDB69580026305B /* DependnProducts.swift */; };
+		581803521CDB69580026305B /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581803501CDB69580026305B /* IAPHelper.swift */; };
 		581CCC351C8F76B3006A8FAD /* IntensityGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CCC341C8F76B3006A8FAD /* IntensityGradientView.swift */; };
 		581CCC371C8F7FE0006A8FAD /* StatsPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CCC361C8F7FE0006A8FAD /* StatsPanelView.swift */; };
 		581DC5D21C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5CF1C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift */; };
@@ -161,6 +164,9 @@
 		1B3495A2BA0FC80954921D93 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntensityChooserInterfaceController.swift; sourceTree = "<group>"; };
 		581803431CDB513A0026305B /* TimeUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeUtils.swift; sourceTree = "<group>"; };
+		581803491CDB675C0026305B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		5818034F1CDB69580026305B /* DependnProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependnProducts.swift; sourceTree = "<group>"; };
+		581803501CDB69580026305B /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		581CCC341C8F76B3006A8FAD /* IntensityGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntensityGradientView.swift; sourceTree = "<group>"; };
 		581CCC361C8F7FE0006A8FAD /* StatsPanelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsPanelView.swift; sourceTree = "<group>"; };
 		581DC5CF1C8B2ED0006DE551 /* Addiction+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Addiction+CoreDataProperties.swift"; path = "../Addiction+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -270,6 +276,7 @@
 				58E429B81C9243B80095F92D /* CloudKit.framework in Frameworks */,
 				58548BBD1C8BA33800C7C940 /* LocalAuthentication.framework in Frameworks */,
 				FE13DF52A68AA47D8184F97D /* Pods_Dependn.framework in Frameworks */,
+				5818034A1CDB675C0026305B /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +297,15 @@
 				C09CD8CFDAFA6B00C5114286 /* Pods-Dependn.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		5818034E1CDB69580026305B /* IAP */ = {
+			isa = PBXGroup;
+			children = (
+				5818034F1CDB69580026305B /* DependnProducts.swift */,
+				581803501CDB69580026305B /* IAPHelper.swift */,
+			);
+			path = IAP;
 			sourceTree = "<group>";
 		};
 		581DC5D51C8B2EE2006DE551 /* CoreData */ = {
@@ -494,6 +510,7 @@
 				58DF62B41C83BDEE0035F608 /* Operations */,
 				581DC5E61C8B73D3006DE551 /* UserDefaults.swift */,
 				587CB0F21CD157A000FCDB48 /* WatchSessionManager.swift */,
+				5818034E1CDB69580026305B /* IAP */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -559,6 +576,7 @@
 		66DCDB919917457AB34E771F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				581803491CDB675C0026305B /* StoreKit.framework */,
 				58E429B71C9243B80095F92D /* CloudKit.framework */,
 				58548BBC1C8BA33800C7C940 /* LocalAuthentication.framework */,
 				1B3495A2BA0FC80954921D93 /* Pods.framework */,
@@ -648,6 +666,9 @@
 								enabled = 1;
 							};
 							com.apple.DataProtection = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
 							com.apple.iCloud = {
@@ -840,6 +861,7 @@
 				58DF62CF1C83BDEE0035F608 /* AverageIntensityOperation.swift in Sources */,
 				58CF71821CA815090092458F /* ShortStatsOperation.swift in Sources */,
 				58548BE31C8BE18100C7C940 /* NewTextTableViewCell.swift in Sources */,
+				581803511CDB69580026305B /* DependnProducts.swift in Sources */,
 				58DF62D01C83BDEE0035F608 /* AveragePerDayOperation.swift in Sources */,
 				58683B341CB7089B000FE358 /* XLSExportOperation.swift in Sources */,
 				581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */,
@@ -851,6 +873,7 @@
 				58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */,
 				58BB15921CA20D0D00E3E06A /* PlacesViewController.swift in Sources */,
 				583C9C701CCECA9500E6FD9D /* WatchStatsOperation.swift in Sources */,
+				581803521CDB69580026305B /* IAPHelper.swift in Sources */,
 				58416A7A1CB4818D00DB1A4B /* DependencyChooserCell.swift in Sources */,
 				58DF62D41C83BDEE0035F608 /* NearestPlaceOperation.swift in Sources */,
 				581DC5DC1C8B38AD006DE551 /* SettingsTableViewCell.swift in Sources */,

@@ -17,7 +17,8 @@ import WatchConnectivity
 enum SettingsSectionType: Int {
     case General
     case ImportExport
-
+    case IAP
+    
     static let count: Int = {
         var max: Int = 0
         while let _ = SettingsSectionType(rawValue: max) { max += 1 }
@@ -32,7 +33,7 @@ enum GeneralRowType: Int {
     case WatchAddiction
     case Version
     case ShowTour
-
+    
     static let count: Int = {
         var max: Int = 0
         while let _ = GeneralRowType(rawValue: max) { max += 1 }
@@ -42,10 +43,20 @@ enum GeneralRowType: Int {
 
 enum ImportExportRowType: Int {
     case Export
-
+    
     static let count: Int = {
         var max: Int = 0
         while let _ = ImportExportRowType(rawValue: max) { max += 1 }
+        return max
+    }()
+}
+
+enum IAPRowType: Int {
+    case Restore
+    
+    static let count: Int = {
+        var max: Int = 0
+        while let _ = IAPRowType(rawValue: max) { max += 1 }
         return max
     }()
 }
@@ -59,7 +70,7 @@ final class SettingsViewController: UIViewController {
     private var pinNavigationController: UINavigationController?
     
     private let authContext = LAContext()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,7 +79,7 @@ final class SettingsViewController: UIViewController {
         view.backgroundColor = UIColor.lightBackgroundColor()
         
         updateTitle(L("settings.title"))
-
+        
         tableView = UITableView(frame: .zero, style: .Grouped)
         tableView.registerClass(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.reuseIdentifier)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
@@ -97,7 +108,7 @@ final class SettingsViewController: UIViewController {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
-
+    
     // MARK: - Passcode
     
     func passcodeSwitchValueChanged(sender: UISwitch) {
@@ -126,7 +137,7 @@ final class SettingsViewController: UIViewController {
         DDLogError("\(error)")
         return supportedAuthentications
     }
-
+    
     // MARK: - Layout
     
     private func configureLayoutConstraints() {
@@ -134,29 +145,66 @@ final class SettingsViewController: UIViewController {
             $0.edges.equalTo(view)
         }
     }
-
+    
     // MARK: - Import/Export
-
+    
+    private func ensureExportXLSIsPurchased(completion: Bool -> Void) {
+        let isPurchased = DependnProducts.store.isProductPurchased(DependnProducts.ExportXLS)
+        if isPurchased {
+            completion(isPurchased)
+        } else {
+            DependnProducts.store.requestProducts{ success, products in
+                if let products = products {
+                    let exportProducts = products.filter {
+                        $0.productIdentifier == DependnProducts.ExportXLS
+                    }
+                    if let product = exportProducts.first {
+                        DependnProducts.store.buyProduct(product) { succeed, error in
+                            completion(succeed)
+                        }
+                        return
+                    }
+                }
+                completion(false)
+            }
+        }
+    }
+    
     private let queue = NSOperationQueue()
     private func launchExport() {
         HUD.show(.Progress)
-        let path = self.exportPath()
-        let exportOp = XLSExportOperation(path: path)
-        exportOp.completionBlock = {
-            dispatch_async(dispatch_get_main_queue()) {
-                HUD.hide(animated: true) { finished in
-                    if let err = exportOp.error {
-                        HUD.flash(HUDContentType.Label(err.localizedDescription))
-                    } else {
-                        let URL = NSURL(fileURLWithPath: path)
-                        let controller = UIDocumentInteractionController(URL: URL)
-                        controller.delegate = self
-                        controller.presentPreviewAnimated(true)
+        ensureExportXLSIsPurchased { purchased in
+            if purchased {
+                let path = self.exportPath()
+                let exportOp = XLSExportOperation(path: path)
+                exportOp.completionBlock = {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        HUD.hide(animated: true) { finished in
+                            if let err = exportOp.error {
+                                HUD.flash(HUDContentType.Label(err.localizedDescription))
+                            } else {
+                                let URL = NSURL(fileURLWithPath: path)
+                                let controller = UIDocumentInteractionController(URL: URL)
+                                controller.delegate = self
+                                controller.presentPreviewAnimated(true)
+                            }
+                        }
                     }
+                }
+                self.queue.addOperation(exportOp)
+            } else {
+                HUD.hide { finished in
+                    /// IAP is not available
+                    let alert = UIAlertController(
+                        title: L("settings.iap.not_available.title"),
+                        message: L("settings.iap.not_available.message"),
+                        preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: L("OK"), style: .Default, handler: nil)
+                    alert.addAction(okAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
                 }
             }
         }
-        queue.addOperation(exportOp)
     }
     
     private func exportPath() -> String {
@@ -172,7 +220,7 @@ final class SettingsViewController: UIViewController {
             .URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
         return urls[urls.count-1]
     }()
-
+    
     private func launchImport() {
         let importOp = ImportOperation(controller: self)
         importOp.completionBlock = {
@@ -192,7 +240,11 @@ final class SettingsViewController: UIViewController {
     private func showTour() {
         OnBoardingViewController.showInController(self)
     }
-
+    
+    private func restorePurchases() {
+        DependnProducts.store.restorePurchases()
+    }
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -205,6 +257,7 @@ extension SettingsViewController: UITableViewDataSource {
         switch type {
         case .General:       return GeneralRowType.count
         case .ImportExport:  return ImportExportRowType.count
+        case .IAP:           return IAPRowType.count
         }
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -214,7 +267,7 @@ extension SettingsViewController: UITableViewDataSource {
         cell.textLabel?.text = nil
         cell.textLabel?.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
         cell.textLabel?.textColor = UIColor.appBlackColor()
-
+        
         let type = SettingsSectionType(rawValue: indexPath.section)!
         switch type {
         case .General:
@@ -253,8 +306,15 @@ extension SettingsViewController: UITableViewDataSource {
                 cell.textLabel?.textAlignment = .Center
                 cell.textLabel?.text = L("settings.action.export")
             }
+        case .IAP:
+            let rowType = IAPRowType(rawValue: indexPath.row)!
+            switch rowType {
+            case .Restore:
+                cell.textLabel?.textAlignment = .Center
+                cell.textLabel?.text = L("settings.action.restore_iap")
+            }
         }
-
+        
         return cell
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -276,6 +336,8 @@ extension SettingsViewController: UITableViewDataSource {
             titleLbl.text = L("settings.section.general").uppercaseString
         case .ImportExport:
             titleLbl.text = L("settings.section.informations").uppercaseString
+        case .IAP:
+            titleLbl.text = L("settings.section.iap").uppercaseString
         }
         
         return header
@@ -286,6 +348,8 @@ extension SettingsViewController: UITableViewDataSource {
         case .General:
             return 40
         case .ImportExport:
+            return 40
+        case .IAP:
             return 40
         }
     }
@@ -304,32 +368,39 @@ extension SettingsViewController: UITableViewDataSource {
 extension SettingsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-
+        
         let sectionType = SettingsSectionType(rawValue: indexPath.section)!
         switch sectionType {
-            case .General:
-                let rowType = GeneralRowType(rawValue: indexPath.row)!
-                switch rowType {
-                case .ManageAddictions:
-                    showManageAddictions()
-                case .UsePasscode:
-                    break
-                case .MemorisePlaces:
-                    break
-                case .Version:
-                    break
-                case .WatchAddiction:
-                    showSelectAppleWatchAddiction()
-                case .ShowTour:
-                    showTour()
-                    break
-                }
-            case .ImportExport:
-                let rowType = ImportExportRowType(rawValue: indexPath.row)!
-                switch rowType {
-                case .Export:
-                    launchExport()
-                }
+        case .General:
+            let rowType = GeneralRowType(rawValue: indexPath.row)!
+            switch rowType {
+            case .ManageAddictions:
+                showManageAddictions()
+            case .UsePasscode:
+                break
+            case .MemorisePlaces:
+                break
+            case .Version:
+                break
+            case .WatchAddiction:
+                showSelectAppleWatchAddiction()
+            case .ShowTour:
+                showTour()
+                break
+            }
+        case .ImportExport:
+            let rowType = ImportExportRowType(rawValue: indexPath.row)!
+            switch rowType {
+            case .Export:
+                launchExport()
+            }
+        case .IAP:
+            let rowType = IAPRowType(rawValue: indexPath.row)!
+            switch rowType {
+            case .Restore:
+                restorePurchases()
+            }
+            break
         }
     }
     

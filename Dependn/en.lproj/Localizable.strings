@@ -458,3 +458,11 @@
 "history.today" = "Today";
 
 "history.yesterday" = "Yesterday";
+
+"settings.iap.not_available.title" = "In-App purchase unavailable";
+
+"settings.iap.not_available.message" = "Please configure your account in your Apple device Settings";
+
+"settings.action.restore_iap" = "Restore In-App Purchases";
+
+"settings.section.iap" = "In-App Purchases";

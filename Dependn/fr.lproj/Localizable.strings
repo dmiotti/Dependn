@@ -458,3 +458,11 @@
 "history.today" = "Aujourd'hui";
 
 "history.yesterday" = "Hier";
+
+"settings.iap.not_available.title" = "In-App purchase indisponible";
+
+"settings.iap.not_available.message" = "Veuillez configurer votre compte dans les paramètre de votre appareil";
+
+"settings.action.restore_iap" = "Restorer mes In-App Purchases";
+
+"settings.section.iap" = "In-App Purchases";
