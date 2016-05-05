@@ -51,3 +51,59 @@ private func hoursMinutesSecondsFromInterval(interval: NSTimeInterval) -> (hours
     let hours = (ti / 3600)
     return (hours, minutes, seconds)
 }
+
+public extension String {
+    
+    public init(numerator: Int, denominator: Int) {
+        var result = ""
+        
+        // build numerator
+        let one = "\(numerator)"
+        for char in one.characters {
+            if let num = Int(String(char)), val = superscriptFromInt(num) {
+                result.appendContentsOf(val)
+            }
+        }
+        
+        // build denominator
+        let two = "\(denominator)"
+        result.appendContentsOf("/")
+        for char in two.characters {
+            if let num = Int(String(char)), val = subscriptFromInt(num) {
+                result.appendContentsOf(val)
+            }
+        }
+        
+        self.init(result)
+    }
+}
+
+private func superscriptFromInt(num: Int) -> String? {
+    let superscriptDigits: [Int: String] = [
+        0: "\u{2070}",
+        1: "\u{00B9}",
+        2: "\u{00B2}",
+        3: "\u{00B3}",
+        4: "\u{2074}",
+        5: "\u{2075}",
+        6: "\u{2076}",
+        7: "\u{2077}",
+        8: "\u{2078}",
+        9: "\u{2079}" ]
+    return superscriptDigits[num]
+}
+
+private func subscriptFromInt(num: Int) -> String? {
+    let subscriptDigits: [Int: String] = [
+        0: "\u{2080}",
+        1: "\u{2081}",
+        2: "\u{2082}",
+        3: "\u{2083}",
+        4: "\u{2084}",
+        5: "\u{2085}",
+        6: "\u{2086}",
+        7: "\u{2087}",
+        8: "\u{2088}",
+        9: "\u{2089}" ]
+    return subscriptDigits[num]
+}
