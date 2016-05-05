@@ -433,7 +433,7 @@
 
 "error.no_addiction" = "Aucune addiction n'a été trouvée";
 
-"error.no_addiction.suggestion" = "Lancez l'application Dependn' et ajouter vos premières consomations";
+"error.no_addiction.suggestion" = "Lancez l'application Dependn' et ajoutez vos premières consomations";
 
 "settings.apple_watch.addiction" = "Dépendance sur Apple Watch";
 
