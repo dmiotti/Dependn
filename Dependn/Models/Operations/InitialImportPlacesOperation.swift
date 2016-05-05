@@ -24,8 +24,7 @@ final class InitialImportPlacesOperation: CoreDataOperation {
         L("suggested.places.waiting"),
         L("suggested.places.inthecar"),
         L("suggested.places.watchingmovie"),
-        L("suggested.places.withfriends"),
-        L("suggested.places.watchingmovie")
+        L("suggested.places.withfriends")
     ]
     
     override func execute() {
