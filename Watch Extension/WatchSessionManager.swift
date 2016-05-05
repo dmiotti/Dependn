@@ -120,7 +120,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     
     private func parseApplicationContext(appContext: [String: AnyObject]) {
         
-        print("appContext: \(appContext)")
+//        print("appContext: \(appContext)")
         
         /// Parse stats context
         let statsContext = appContext["stats"] as? WatchDictionary
