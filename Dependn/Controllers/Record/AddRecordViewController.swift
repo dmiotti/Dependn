@@ -86,7 +86,7 @@ final class AddRecordViewController: UIViewController {
         cancelBtn = UIBarButtonItem(title: L("new_record.cancel"), style: .Plain, target: self, action: #selector(AddRecordViewController.cancelBtnClicked(_:)))
         cancelBtn.setTitleTextAttributes(StyleSheet.cancelBtnAttrs, forState: .Normal)
         navigationItem.leftBarButtonItem = cancelBtn
-
+        
         let doneText = record != nil ? L("new_record.modify") : L("new_record.add_btn")
         doneBtn = UIBarButtonItem(title: doneText, style: .Done, target: self, action: #selector(AddRecordViewController.addBtnClicked(_:)))
         doneBtn.setTitleTextAttributes(StyleSheet.doneBtnAttrs, forState: .Normal)
@@ -187,16 +187,24 @@ final class AddRecordViewController: UIViewController {
             record.place     = chosenPlace
             record.desire    = segmentedControl.selectedSegmentIndex == 1
         } else {
+            let isDesire = segmentedControl.selectedSegmentIndex == 1
             Record.insertNewRecord(chosenAddiction,
+                                   intensity: chosenIntensity,
+                                   feeling: chosenFeeling,
+                                   comment: chosenComment,
+                                   place: chosenPlace,
+                                   latitude: userLocation?.coordinate.latitude,
+                                   longitude: userLocation?.coordinate.longitude,
+                                   desire: isDesire,
+                                   date: chosenDate,
+                                   inContext: CoreDataStack.shared.managedObjectContext)
+            
+            Analytics.instance.trackAddNewRecord(
+                chosenAddiction.name,
+                place: chosenPlace?.name,
                 intensity: chosenIntensity,
-                feeling: chosenFeeling,
-                comment: chosenComment,
-                place: chosenPlace,
-                latitude: userLocation?.coordinate.latitude,
-                longitude: userLocation?.coordinate.longitude,
-                desire: segmentedControl.selectedSegmentIndex == 1,
-                date: chosenDate,
-                inContext: CoreDataStack.shared.managedObjectContext)
+                conso: !isDesire,
+                fromAppleWatch: false)
         }
         dismissViewControllerAnimated(true, completion: { finished in
             WatchSessionManager.sharedManager.updateApplicationContext()
@@ -422,29 +430,29 @@ extension AddRecordViewController: CLLocationManagerDelegate {
         if record != nil || !Defaults[.useLocation] {
             return
         }
-
+        
         userLocation = newLocation
         
         DDLogInfo("Location found \(newLocation)")
         
         if let location = userLocation
             where (chosenPlace == nil || chosenPlace?.name.characters.count == 0) {
-                let op = NearestPlaceOperation(location: location, distance: 80)
-                op.completionBlock = {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        if let placeId = op.place?.objectID {
-                            let moc = CoreDataStack.shared.managedObjectContext
-                            let place = moc.objectWithID(placeId) as! Place
-                            self.chosenPlace = place
-                            self.tableView.reloadRowsAtIndexPaths([
-                                NSIndexPath(forRow: DateAndPlaceRowType.Place.rawValue,
-                                    inSection: AddRecordSectionType.DateAndPlace.rawValue)
-                                ], withRowAnimation: .Automatic)
-                        }
+            let op = NearestPlaceOperation(location: location, distance: 80)
+            op.completionBlock = {
+                dispatch_async(dispatch_get_main_queue()) {
+                    if let placeId = op.place?.objectID {
+                        let moc = CoreDataStack.shared.managedObjectContext
+                        let place = moc.objectWithID(placeId) as! Place
+                        self.chosenPlace = place
+                        self.tableView.reloadRowsAtIndexPaths([
+                            NSIndexPath(forRow: DateAndPlaceRowType.Place.rawValue,
+                                inSection: AddRecordSectionType.DateAndPlace.rawValue)
+                            ], withRowAnimation: .Automatic)
                     }
                 }
-                let queue = NSOperationQueue()
-                queue.addOperation(op)
+            }
+            let queue = NSOperationQueue()
+            queue.addOperation(op)
         }
     }
 }
@@ -464,7 +472,7 @@ extension AddRecordViewController: NewDateTableViewCellDelegate {
             NSIndexPath(
                 forRow: DateAndPlaceRowType.Date.rawValue,
                 inSection: AddRecordSectionType.DateAndPlace.rawValue)],
-            withRowAnimation: .Automatic)
+                                         withRowAnimation: .Automatic)
     }
 }
 

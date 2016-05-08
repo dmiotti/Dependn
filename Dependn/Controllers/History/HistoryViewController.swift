@@ -259,7 +259,7 @@ final class HistoryViewController: UIViewController {
                             $0.productIdentifier == DependnProducts.ExportXLS
                         }
                         if let product = exportProducts.first {
-                            let alert = UIAlertController(title: L("export.title"), message: nil, preferredStyle: .Alert)
+                            let alert = UIAlertController(title: L("export.title"), message: L("export.message"), preferredStyle: .Alert)
                             let okAction = UIAlertAction(title: L("yes"), style: .Default) { action in
                                 DependnProducts.store.buyProduct(product) { succeed, error in
                                     completion(succeed)

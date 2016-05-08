@@ -126,6 +126,9 @@ final class PlacesViewController: UIViewController {
     
     private func addPlace(name: String) {
         let place = Place.insertPlace(name, inContext: CoreDataStack.shared.managedObjectContext)
+        
+        Analytics.instance.trackAddPlace(name)
+        
         self.delegate?.placeController(self, didChoosePlace: place)
     }
     

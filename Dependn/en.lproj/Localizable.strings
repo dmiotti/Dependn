@@ -471,7 +471,9 @@
 
 "settings.restoreiap.success.description" = "Restoration done with success.";
 
-"export.title" = "Would you like to generate an export of your data?";
+"export.title" = "Would you like to export your data?";
+
+"export.message" = "We will generate a document your MD can easily analyze.";
 
 "yes" = "Yes";
 

@@ -54,5 +54,22 @@ final class Analytics {
         Amplitude.instance().logEvent("AddAddiction", withEventProperties: ["addiction": addiction.name])
         trackUserAddictions()
     }
+    
+    func trackAddNewRecord(addiction: String, place: String?, intensity: Float, conso: Bool, fromAppleWatch appleWatch: Bool) {
+        var props: [String: NSObject] = [
+            "addiction": addiction,
+            "intensity": intensity,
+            "type": conso ? "conso" : "craving",
+            "source": appleWatch ? "watch" : "phone"
+        ]
+        if let place = place {
+            props["place"] = place
+        }
+        Amplitude.instance().logEvent("AddRecord", withEventProperties: props)
+    }
+    
+    func trackAddPlace(place: String) {
+        Amplitude.instance().logEvent("AddPlace", withEventProperties: ["place": place])
+    }
 
 }

@@ -471,7 +471,9 @@
 
 "settings.restoreiap.success.description" = "La restauration de vos achats intégrés s’est effectuée avec succès.";
 
-"export.title" = "Souhaitez-vous générer un export de vos données ?";
+"export.title" = "Souhaitez-vous un export de vos données ?";
+
+"export.message" = "Nous allons générer un export .xlsx que votre spécialiste peut facilement analyser";
 
 "yes" = "Oui";
 

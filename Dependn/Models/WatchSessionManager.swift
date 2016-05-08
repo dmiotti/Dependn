@@ -157,6 +157,13 @@ extension WatchSessionManager {
                                 longitude: nil, desire:
                                 isCraving,
                                 inContext: ctx)
+                            
+                            Analytics.instance.trackAddNewRecord(
+                                add.name,
+                                place: place.name,
+                                intensity: intensity,
+                                conso: !isCraving,
+                                fromAppleWatch: true)
                         }
                         
                         
