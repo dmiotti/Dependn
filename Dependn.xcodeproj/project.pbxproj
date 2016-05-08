@@ -54,6 +54,7 @@
 		5864FD7F1CDFC3B000656664 /* ExportOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5864FD7E1CDFC3B000656664 /* ExportOperation.swift */; };
 		5864FD831CDFC53100656664 /* DependnProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5864FD811CDFC53100656664 /* DependnProducts.swift */; };
 		5864FD841CDFC53100656664 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5864FD821CDFC53100656664 /* IAPHelper.swift */; };
+		5864FD861CDFCEE500656664 /* PortraitNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5864FD851CDFCEE500656664 /* PortraitNavigationController.swift */; };
 		58669A9B1CD0FEB0002BDED3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58669A9D1CD0FEB0002BDED3 /* Localizable.strings */; };
 		58669AA11CD10376002BDED3 /* SHDateFormatterProximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58669AA01CD10376002BDED3 /* SHDateFormatterProximity.swift */; };
 		58669AA51CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58669AA41CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift */; };
@@ -211,6 +212,7 @@
 		5864FD7E1CDFC3B000656664 /* ExportOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportOperation.swift; sourceTree = "<group>"; };
 		5864FD811CDFC53100656664 /* DependnProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependnProducts.swift; sourceTree = "<group>"; };
 		5864FD821CDFC53100656664 /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
+		5864FD851CDFCEE500656664 /* PortraitNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PortraitNavigationController.swift; sourceTree = "<group>"; };
 		58669A9C1CD0FEB0002BDED3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		58669A9E1CD0FEB3002BDED3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		58669A9F1CD0FEB4002BDED3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 		584897841CAC60C800CA18CE /* OnBoarding */ = {
 			isa = PBXGroup;
 			children = (
+				5864FD851CDFCEE500656664 /* PortraitNavigationController.swift */,
 				584897851CAC641E00CA18CE /* OnBoardingViewController.swift */,
 				582820C81CAF1288002DC9AF /* OkButton.swift */,
 				58D7887C1CB16BE500ED3413 /* DependencyChooserViewController.swift */,
@@ -886,6 +889,7 @@
 				58548BE31C8BE18100C7C940 /* NewTextTableViewCell.swift in Sources */,
 				58DF62D01C83BDEE0035F608 /* AveragePerDayOperation.swift in Sources */,
 				581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */,
+				5864FD861CDFCEE500656664 /* PortraitNavigationController.swift in Sources */,
 				58548BDE1C8BE18100C7C940 /* AddRecordViewController.swift in Sources */,
 				583C01501CBA565700E0D41C /* InitialImportPlacesOperation.swift in Sources */,
 				58669AA51CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift in Sources */,

@@ -264,7 +264,7 @@ final class OnBoardingViewController: UIViewController {
     
     static func showInController(controller: UIViewController, animated: Bool = true) {
         let onBoarding = OnBoardingViewController()
-        let nav = SHStatusBarNavigationController(rootViewController: onBoarding)
+        let nav = PortraitNavigationController(rootViewController: onBoarding)
         nav.statusBarStyle = .Default
         nav.modalPresentationStyle = .FormSheet
         controller.presentViewController(nav, animated: animated, completion: nil)
