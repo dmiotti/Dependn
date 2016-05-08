@@ -16,9 +16,9 @@
 
 "appname" = "Dependn'";
 
-"new_record.addiction" = "Dépendance";
+"new_record.addiction" = "Quoi";
 
-"new_record.place" = "Lieux-clés";
+"new_record.place" = "Quand";
 
 "new_record.intensity" = "Intensité";
 

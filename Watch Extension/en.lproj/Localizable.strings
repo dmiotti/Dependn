@@ -12,9 +12,9 @@
 
 "appname" = "Dependn'";
 
-"new_record.addiction" = "Addiction";
+"new_record.addiction" = "What";
 
-"new_record.place" = "Place";
+"new_record.place" = "When";
 
 "new_record.intensity" = "Intensity";
 
@@ -22,6 +22,6 @@
 
 "intensity.select" = "Select";
 
-"watch.sinceLast" = "Last %@ ago";
+"watch.sinceLast" = "%@ ago";
 
 "add.conso" = "Add";

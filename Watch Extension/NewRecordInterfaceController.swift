@@ -56,33 +56,32 @@ final class NewRecordInterfaceController: WKInterfaceController {
         let selectedPlace = newRecordModel.place
         let selectedIntensity = newRecordModel.intensity
         
-        table.setNumberOfRows(NewRecordRowType.count, withRowType: "DefaultTableRowController")
+        table.setNumberOfRows(NewRecordRowType.count, withRowType: "TitleValueTableRowController")
         
         for idx in 0..<NewRecordRowType.count {
-            let rowCtrl = table.rowControllerAtIndex(idx) as! DefaultTableRowController
+            let rowCtrl = table.rowControllerAtIndex(idx) as! TitleValueTableRowController
             
             let row = NewRecordRowType(rawValue: idx)!
+            
+            rowCtrl.titleLbl.setText(nil)
+            
             switch row {
             case .Addiction:
                 if let selectedAddiction = selectedAddiction {
-                    rowCtrl.titleLbl.setText(selectedAddiction.name)
-                    rowCtrl.titleLbl.setTextColor(UIColor.whiteColor())
+                    rowCtrl.valueLbl.setText(selectedAddiction.name)
                 } else {
-                    rowCtrl.titleLbl.setText(NSLocalizedString("new_record.addiction", comment: ""))
-                    rowCtrl.titleLbl.setTextColor(UIColor.lightGrayColor())
+                    rowCtrl.valueLbl.setText(nil)
                 }
             case .Place:
                 if let selectedPlace = selectedPlace {
-                    rowCtrl.titleLbl.setText(selectedPlace.name)
-                    rowCtrl.titleLbl.setTextColor(UIColor.whiteColor())
+                    rowCtrl.valueLbl.setText(selectedPlace.name)
                 } else {
-                    rowCtrl.titleLbl.setText(NSLocalizedString("new_record.place", comment: ""))
-                    rowCtrl.titleLbl.setTextColor(UIColor.lightGrayColor())
+                    rowCtrl.valueLbl.setText(nil)
                 }
             case .Intensity:
                 let roundedIntensity = Int(round(selectedIntensity))
-                rowCtrl.titleLbl.setText("\(roundedIntensity)")
-                rowCtrl.titleLbl.setTextColor(UIColor.whiteColor())
+                rowCtrl.valueLbl.setText("\(roundedIntensity)")
+                rowCtrl.valueLbl.setTextColor(UIColor.whiteColor())
             }
         }
     }

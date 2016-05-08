@@ -10,6 +10,7 @@
 		15FB7F6E4E0BE28215AB023F /* StatsPanelScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FB76A5C4926643FAD8141E /* StatsPanelScroller.swift */; };
 		5803C8691CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */; };
 		580BB9D31CDF8BC10068D413 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580BB9D21CDF8BC10068D413 /* Analytics.swift */; };
+		580BB9D51CDFA5B70068D413 /* TitleValueTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580BB9D41CDFA5B70068D413 /* TitleValueTableRowController.swift */; };
 		581803441CDB513A0026305B /* TimeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581803431CDB513A0026305B /* TimeUtils.swift */; };
 		5818034A1CDB675C0026305B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 581803491CDB675C0026305B /* StoreKit.framework */; };
 		581803511CDB69580026305B /* DependnProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818034F1CDB69580026305B /* DependnProducts.swift */; };
@@ -165,6 +166,7 @@
 		1B3495A2BA0FC80954921D93 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntensityChooserInterfaceController.swift; sourceTree = "<group>"; };
 		580BB9D21CDF8BC10068D413 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
+		580BB9D41CDFA5B70068D413 /* TitleValueTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleValueTableRowController.swift; sourceTree = "<group>"; };
 		581803431CDB513A0026305B /* TimeUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeUtils.swift; sourceTree = "<group>"; };
 		581803491CDB675C0026305B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		5818034F1CDB69580026305B /* DependnProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependnProducts.swift; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 				587CB0F41CD170AE00FCDB48 /* PlaceListInterfaceController.swift */,
 				583C9C731CCEEC3400E6FD9D /* DefaultTableRowController.swift */,
 				5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */,
+				580BB9D41CDFA5B70068D413 /* TitleValueTableRowController.swift */,
 			);
 			name = AddRecord;
 			sourceTree = "<group>";
@@ -901,6 +904,7 @@
 				5803C8691CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift in Sources */,
 				587CB0F51CD170AE00FCDB48 /* PlaceListInterfaceController.swift in Sources */,
 				581803441CDB513A0026305B /* TimeUtils.swift in Sources */,
+				580BB9D51CDFA5B70068D413 /* TitleValueTableRowController.swift in Sources */,
 				583C9C761CCEEC5700E6FD9D /* AddictionListInterfaceController.swift in Sources */,
 				583C9C6C1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift in Sources */,
 				5841B3381CD2495A0024AC99 /* GlanceInterfaceController.swift in Sources */,
