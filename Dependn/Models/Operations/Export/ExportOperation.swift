@@ -33,19 +33,12 @@ final class ExportOperation: SHOperation {
                         } else if let err = r.error {
                             HUD.flash(HUDContentType.Label(err.localizedDescription))
                         }
+                        Analytics.instance.trackExport(true)
                         self.finish()
                     }
                 } else {
-                    /// IAP is not available
-                    let alert = UIAlertController(
-                        title: L("settings.iap.not_available.title"),
-                        message: L("settings.iap.not_available.message"),
-                        preferredStyle: .Alert)
-                    let okAction = UIAlertAction(title: L("OK"), style: .Default, handler: nil)
-                    alert.addAction(okAction)
-                    self.controller.presentViewController(alert, animated: true) {
-                        self.finish()
-                    }
+                    Analytics.instance.trackExport(false)
+                    self.finish()
                 }
             }
         }
