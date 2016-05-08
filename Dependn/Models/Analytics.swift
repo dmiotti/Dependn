@@ -62,6 +62,12 @@ final class Analytics {
         Amplitude.instance().setUserProperties(props)
     }
     
+    func trackSelectAddictions(addictions: [Addiction]) {
+        let props = [ "addictions": addictions.map({ $0.name }).joinWithSeparator(";") ]
+        Amplitude.instance().logEvent("SelectAddictions", withEventProperties: props)
+        Analytics.instance.trackUserAddictions()
+    }
+    
     func trackUserAddictions() {
         if let addictions = try? Addiction.getAllAddictions(inContext: context) {
             let props = [ "addictions": addictions.map({ $0.name }).joinWithSeparator(";") ]

@@ -100,13 +100,15 @@ final class DependencyChooserViewController: UIViewController {
         let context = CoreDataStack.shared.managedObjectContext
         
         do {
+            var newAddictions = [Addiction]()
             for add in selectedAddictions {
                 let addiction = try Addiction.findOrInsertNewAddiction(add.name, inContext: context)
                 addiction.color = add.color
+                newAddictions.append(addiction)
             }
             
             /// Track selected addictions
-            Analytics.instance.trackUserAddictions()
+            Analytics.instance.trackSelectAddictions(newAddictions)
         } catch let err as NSError {
             print("Error while inserting new addiction: \(err)")
         }
