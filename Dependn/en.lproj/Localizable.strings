@@ -38,7 +38,7 @@
 "new_record.place_placeholder" = "Example: at home";
 
 /*  */
-"settings.action.export" = "Export for analysis";
+"settings.action.export" = "Export data for analysis";
 
 /*  */
 "import.no_data" = "There is no data to import";
