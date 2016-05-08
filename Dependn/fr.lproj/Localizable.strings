@@ -38,7 +38,7 @@
 "new_record.place_placeholder" = "Exemple : à la maison";
 
 /*  */
-"settings.action.export" = "Exporter";
+"settings.action.export" = "Export pour analyse";
 
 /*  */
 "import.no_data" = "Il n'y a aucune donnée à importer";
@@ -152,7 +152,7 @@
 "export.date" = "Date";
 
 /*  */
-"addiction_list.new.title" = "Ajouter une dépendance";
+"addiction_list.new.title" = "Ajouter";
 
 /*  */
 "statspanel.this_week" = "Cette semaine";
@@ -173,7 +173,7 @@
 "addiction_list.new.error.ok" = "OK";
 
 /*  */
-"search.add_addiction" = "Ajouter une dépendance";
+"search.add_addiction" = "+";
 
 /*  */
 "new_record.add_btn" = "Ajouter";
@@ -257,7 +257,7 @@
 "export.desire" = "Envie";
 
 /*  */
-"onboarding.addiction.title" = "Mes dépendances";
+"onboarding.addiction.title" = "Dépendances";
 
 /*  */
 "onboarding.select_dependencies" = "Sélectionnez la ou les dépendances que vous souhaitez contrôler.";
@@ -459,13 +459,13 @@
 
 "history.yesterday" = "Hier";
 
-"settings.iap.not_available.title" = "In-App purchase indisponible";
+"settings.iap.not_available.title" = "Achats intégrés indisponible";
 
 "settings.iap.not_available.message" = "Veuillez configurer votre compte dans les paramètre de votre appareil";
 
-"settings.action.restore_iap" = "Restaurer mes achats intégrés";
+"settings.action.restore_iap" = "Restaurer";
 
-"settings.section.iap" = "In-App Purchases";
+"settings.section.iap" = "Achats intégrés";
 
 "settings.restoreiap.success.title" = "Restauration de vos achats intégrés";
 

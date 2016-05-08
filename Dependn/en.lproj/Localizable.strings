@@ -38,7 +38,7 @@
 "new_record.place_placeholder" = "Example: at home";
 
 /*  */
-"settings.action.export" = "Export";
+"settings.action.export" = "Export for analysis";
 
 /*  */
 "import.no_data" = "There is no data to import";
@@ -173,7 +173,7 @@
 "addiction_list.new.error.ok" = "OK";
 
 /*  */
-"search.add_addiction" = "Add an addiction";
+"search.add_addiction" = "+";
 
 /*  */
 "new_record.add_btn" = "Add";
@@ -257,7 +257,7 @@
 "export.desire" = "Craving";
 
 /*  */
-"onboarding.addiction.title" = "My addictions";
+"onboarding.addiction.title" = "List";
 
 /*  */
 "onboarding.select_dependencies" = "Please select the addiction(s) you wish to monitor";
@@ -380,7 +380,7 @@
 "suggested.addictions.antidepressant" = "Antidepressants";
 
 /*  */
-"settings.show_tour" = "Show tour";
+"settings.show_tour" = "Show introduction";
 
 /*  */
 "suggested.places.wakeup" = "Waking-up";
@@ -463,7 +463,7 @@
 
 "settings.iap.not_available.message" = "Please configure your account in your Apple device Settings";
 
-"settings.action.restore_iap" = "Restore In-App Purchases";
+"settings.action.restore_iap" = "Restore";
 
 "settings.section.iap" = "In-App Purchases";
 

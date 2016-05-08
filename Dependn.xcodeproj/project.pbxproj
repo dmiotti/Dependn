@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		15FB7F6E4E0BE28215AB023F /* StatsPanelScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FB76A5C4926643FAD8141E /* StatsPanelScroller.swift */; };
 		5803C8691CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */; };
+		580BB9D31CDF8BC10068D413 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580BB9D21CDF8BC10068D413 /* Analytics.swift */; };
 		581803441CDB513A0026305B /* TimeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581803431CDB513A0026305B /* TimeUtils.swift */; };
 		5818034A1CDB675C0026305B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 581803491CDB675C0026305B /* StoreKit.framework */; };
 		581803511CDB69580026305B /* DependnProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818034F1CDB69580026305B /* DependnProducts.swift */; };
@@ -163,6 +164,7 @@
 		15FB76A5C4926643FAD8141E /* StatsPanelScroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsPanelScroller.swift; sourceTree = "<group>"; };
 		1B3495A2BA0FC80954921D93 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntensityChooserInterfaceController.swift; sourceTree = "<group>"; };
+		580BB9D21CDF8BC10068D413 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		581803431CDB513A0026305B /* TimeUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeUtils.swift; sourceTree = "<group>"; };
 		581803491CDB675C0026305B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		5818034F1CDB69580026305B /* DependnProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependnProducts.swift; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 				5818034E1CDB69580026305B /* IAP */,
 				587CB0F21CD157A000FCDB48 /* WatchSessionManager.swift */,
 				581DC5E61C8B73D3006DE551 /* UserDefaults.swift */,
+				580BB9D21CDF8BC10068D413 /* Analytics.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -872,6 +875,7 @@
 				58BB15881CA1F91A00E3E06A /* Place+CoreDataProperties.swift in Sources */,
 				58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */,
 				58BB15921CA20D0D00E3E06A /* PlacesViewController.swift in Sources */,
+				580BB9D31CDF8BC10068D413 /* Analytics.swift in Sources */,
 				583C9C701CCECA9500E6FD9D /* WatchStatsOperation.swift in Sources */,
 				581803521CDB69580026305B /* IAPHelper.swift in Sources */,
 				58416A7A1CB4818D00DB1A4B /* DependencyChooserCell.swift in Sources */,
