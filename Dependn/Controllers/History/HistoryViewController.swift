@@ -202,7 +202,7 @@ final class HistoryViewController: UIViewController {
     }
     
     func exportBtnClicked(sender: UIBarButtonItem) {
-        launchExport()
+        NSOperationQueue().addOperation(ExportOperation(controller: self))
     }
     
     func addBtnClicked(sender: UIButton) {
@@ -210,41 +210,6 @@ final class HistoryViewController: UIViewController {
     }
     
     // MARK: - Export
-    
-    private let queue = NSOperationQueue()
-    private func launchExport() {
-        ensureExportXLSIsPurchased { purchased in
-            if purchased {
-                HUD.show(.Progress)
-                let path = self.exportPath()
-                let exportOp = XLSExportOperation(path: path)
-                exportOp.completionBlock = {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        HUD.hide(animated: true) { finished in
-                            if let err = exportOp.error {
-                                HUD.flash(HUDContentType.Label(err.localizedDescription))
-                            } else {
-                                let URL = NSURL(fileURLWithPath: path)
-                                let controller = UIDocumentInteractionController(URL: URL)
-                                controller.delegate = self
-                                controller.presentPreviewAnimated(true)
-                            }
-                        }
-                    }
-                }
-                self.queue.addOperation(exportOp)
-            } else {
-                /// IAP is not available
-                let alert = UIAlertController(
-                    title: L("settings.iap.not_available.title"),
-                    message: L("settings.iap.not_available.message"),
-                    preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: L("OK"), style: .Default, handler: nil)
-                alert.addAction(okAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-        }
-    }
     
     private func ensureExportXLSIsPurchased(completion: Bool -> Void) {
         let isPurchased = DependnProducts.store.isProductPurchased(DependnProducts.ExportXLS)
@@ -471,12 +436,5 @@ extension HistoryViewController: NSFetchedResultsControllerDelegate {
         }
         tableView.endUpdates()
         configureStatsView()
-    }
-}
-
-// MARK: - UIDocumentInteractionControllerDelegate
-extension HistoryViewController: UIDocumentInteractionControllerDelegate {
-    func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
-        return tabBarController ?? self
     }
 }

@@ -1,12 +1,11 @@
 //
-//  ExportOperation.swift
+//  CSVImportOperation.swift
 //  Dependn
 //
-//  Created by David Miotti on 23/02/16.
+//  Created by David Miotti on 08/05/16.
 //  Copyright © 2016 David Miotti. All rights reserved.
 //
 
-import UIKit
 import SwiftHelpers
 import CoreData
 import CoreLocation
@@ -14,114 +13,13 @@ import BrightFutures
 import PKHUD
 import CocoaLumberjack
 
-private let kExportOperationSeparator = ";"
-private let kExportOperationNewLine = "\n"
-private let kExportOperationDayFormatter = NSDateFormatter(dateFormat: "dd/MM/yyyy")
-private let kExportOperationHourFormatter = NSDateFormatter(dateFormat: "HH:mm")
-private let kImportOperationDateFormatter = NSDateFormatter(dateFormat: "dd/MM/yyyy HH:mm")
-
-final class ExportOperation: SHOperation {
-    
-    var exportedPath: String?
-    var error: NSError?
-    
-    private let context: NSManagedObjectContext
-    
-    override init() {
-        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        context.parentContext = CoreDataStack.shared.managedObjectContext
-        super.init()
-    }
-    
-    override func execute() {
-        
-        context.performBlockAndWait {
-            do {
-                
-                let addictions = try Addiction.getAllAddictionsOrderedByCount(inContext: self.context)
-                
-                let path = self.exportPath()
-
-                var csv: String = [
-                    L("export.type"),
-                    L("export.date"),
-                    L("export.time"),
-                    L("export.intensity"),
-                    L("export.place"),
-                    L("export.feeling"),
-                    L("export.comment"),
-                    L("export.lat"),
-                    L("export.lon"),
-                    L("export.desire"),
-                    L("export.conso")
-                ].joinWithSeparator(kExportOperationSeparator)
-
-                csv.appendContentsOf(kExportOperationNewLine)
-                
-                for addiction in addictions {
-                    let req = NSFetchRequest(entityName: Record.entityName)
-                    req.predicate = NSPredicate(format: "addiction == %@", addiction)
-                    req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
-                    let records = try self.context.executeFetchRequest(req) as! [Record]
-                    let recordsCsv = records.map({ self.recordToCSV($0) })
-                        .joinWithSeparator(kExportOperationNewLine)
-                    csv.appendContentsOf(recordsCsv)
-                    csv.appendContentsOf(kExportOperationNewLine)
-                    csv.appendContentsOf(kExportOperationNewLine)
-                }
-                
-                try csv.writeToFile(path,
-                    atomically: true,
-                    encoding: NSUTF8StringEncoding)
-                
-                self.exportedPath = path
-            } catch let err as NSError {
-                self.error = err
-            }
-        }
-        
-        finish()
-    }
-    
-    private func recordToCSV(record: Record) -> String {
-        let date = record.date
-        let values = [
-            record.addiction.name.firstLetterCapitalization,
-            kExportOperationDayFormatter.stringFromDate(date),
-            kExportOperationHourFormatter.stringFromDate(date),
-            String(format: "%.1f", arguments: [ record.intensity.floatValue ]),
-            record.place?.name.firstLetterCapitalization ?? "",
-            record.feeling ?? "",
-            record.comment ?? "",
-            record.lat?.stringValue ?? "",
-            record.lon?.stringValue ?? "",
-            record.desire.boolValue ? L("export.choosen") : "",
-            record.desire.boolValue ? "" : L("export.choosen")
-        ]
-        return values.joinWithSeparator(kExportOperationSeparator)
-    }
-    
-    private func exportPath() -> String {
-        let dateFormatter = NSDateFormatter(dateFormat: "dd'_'MM'_'yyyy'_'HH'_'mm")
-        let filename = "export_\(dateFormatter.stringFromDate(NSDate()))"
-        return applicationCachesDirectory
-            .URLByAppendingPathComponent(filename)
-            .URLByAppendingPathExtension("csv").path!
-    }
-    
-    private lazy var applicationCachesDirectory: NSURL = {
-        let urls = NSFileManager.defaultManager()
-            .URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1]
-    }()
-    
-}
-
 let kImportOperationErrorDomain = "ImportOperation"
 let kImportOperationNothingToImportCode = 1
 let kImportOperationUserCancelledCode = 2
 
-final class ImportOperation: SHOperation {
+private let kImportOperationDateFormatter = NSDateFormatter(dateFormat: "dd/MM/yyyy HH:mm")
+
+final class CSVImportOperation: SHOperation {
     
     private(set) var error: NSError?
     
@@ -186,7 +84,7 @@ final class ImportOperation: SHOperation {
             
             /// List all possible import to the user
             let enumerator = fileManager.enumeratorAtURL(directoryURL,
-                includingPropertiesForKeys: nil, options: .SkipsHiddenFiles, errorHandler: nil)
+                                                         includingPropertiesForKeys: nil, options: .SkipsHiddenFiles, errorHandler: nil)
             
             while let element = enumerator?.nextObject() as? NSURL {
                 if element.pathExtension == "csv" {
@@ -214,9 +112,9 @@ final class ImportOperation: SHOperation {
             
             let cancelAction = UIAlertAction(title: L("cancel"), style: .Cancel) { action in
                 let err = NSError(domain: kImportOperationErrorDomain,
-                    code: kImportOperationUserCancelledCode,
-                    userInfo: [NSLocalizedDescriptionKey: L("import.cancelled_by_user"),
-                        NSLocalizedRecoverySuggestionErrorKey: L("import.cancelled_by_user_recovery")])
+                                  code: kImportOperationUserCancelledCode,
+                                  userInfo: [NSLocalizedDescriptionKey: L("import.cancelled_by_user"),
+                                    NSLocalizedRecoverySuggestionErrorKey: L("import.cancelled_by_user_recovery")])
                 promise.failure(err)
             }
             alert.addAction(cancelAction)
@@ -288,7 +186,7 @@ final class ImportOperation: SHOperation {
         
         do {
             let addiction = try Addiction.findOrInsertNewAddiction(values[0],
-                inContext: context)
+                                                                   inContext: context)
             
             let daystr = values[1]
             let hourstr = values[2]
@@ -314,15 +212,15 @@ final class ImportOperation: SHOperation {
             }
             
             Record.insertNewRecord(addiction,
-                intensity: intensity,
-                feeling: feeling,
-                comment: comment,
-                place: place,
-                latitude: doubleOrNil(lat),
-                longitude: doubleOrNil(lon),
-                desire: isDesire,
-                date: date,
-                inContext: context)
+                                   intensity: intensity,
+                                   feeling: feeling,
+                                   comment: comment,
+                                   place: place,
+                                   latitude: doubleOrNil(lat),
+                                   longitude: doubleOrNil(lon),
+                                   desire: isDesire,
+                                   date: date,
+                                   inContext: context)
         } catch let err as NSError {
             DDLogError("Error while adding new record: \(err)")
         }

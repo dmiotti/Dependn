@@ -27,7 +27,7 @@ public class IAPHelper: NSObject {
     private var restoreCompletionHandler: ProductsPurchaseCompletionHandler?
     
     init(productIds: Set<ProductIdentifier>) {
-        productIdentifiers = productIds
+        self.productIdentifiers = productIds
         
         for productIdentifier in productIds {
             let purchased = NSUserDefaults.standardUserDefaults().boolForKey(productIdentifier)
@@ -56,6 +56,7 @@ extension IAPHelper {
     }
     
     public func buyProduct(product: SKProduct, completion: ProductsPurchaseCompletionHandler) {
+        print("Buying \(product.productIdentifier)...")
         purchaseCompletionHandler = completion
         let payment = SKPayment(product: product)
         SKPaymentQueue.defaultQueue().addPayment(payment)
@@ -85,6 +86,8 @@ extension IAPHelper: SKProductsRequestDelegate {
     }
     
     public func request(request: SKRequest, didFailWithError error: NSError) {
+        print("Failed to load list of products.")
+        print("Error: \(error.localizedDescription)")
         productsRequestCompletionHandler?(success: false, products: nil)
         clearRequestAndHandler()
     }

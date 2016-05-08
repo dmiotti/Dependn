@@ -14,54 +14,54 @@ import CocoaLumberjack
 import PKHUD
 import WatchConnectivity
 
-enum SettingsSectionType: Int {
-    case General
-    case ImportExport
-    case IAP
-    
-    static let count: Int = {
-        var max: Int = 0
-        while let _ = SettingsSectionType(rawValue: max) { max += 1 }
-        return max
-    }()
-}
-
-enum GeneralRowType: Int {
-    case ManageAddictions
-    case UsePasscode
-    case MemorisePlaces
-    case WatchAddiction
-    case Version
-    case ShowTour
-    
-    static let count: Int = {
-        var max: Int = 0
-        while let _ = GeneralRowType(rawValue: max) { max += 1 }
-        return max
-    }()
-}
-
-enum ImportExportRowType: Int {
-    case Export
-    
-    static let count: Int = {
-        var max: Int = 0
-        while let _ = ImportExportRowType(rawValue: max) { max += 1 }
-        return max
-    }()
-}
-
-enum IAPRowType: Int {
-    case Restore
-    
-    static let count: Int = {
-        var max: Int = 0
-        while let _ = IAPRowType(rawValue: max) { max += 1 }
-        return max
-    }()
-}
-
 final class SettingsViewController: UIViewController {
+    
+    enum SettingsSectionType: Int {
+        case General
+        case ImportExport
+        case IAP
+        
+        static let count: Int = {
+            var max: Int = 0
+            while let _ = SettingsSectionType(rawValue: max) { max += 1 }
+            return max
+        }()
+    }
+    
+    enum GeneralRowType: Int {
+        case ManageAddictions
+        case UsePasscode
+        case MemorisePlaces
+        case WatchAddiction
+        case Version
+        case ShowTour
+        
+        static let count: Int = {
+            var max: Int = 0
+            while let _ = GeneralRowType(rawValue: max) { max += 1 }
+            return max
+        }()
+    }
+    
+    enum ImportExportRowType: Int {
+        case Export
+        
+        static let count: Int = {
+            var max: Int = 0
+            while let _ = ImportExportRowType(rawValue: max) { max += 1 }
+            return max
+        }()
+    }
+    
+    enum IAPRowType: Int {
+        case Restore
+        
+        static let count: Int = {
+            var max: Int = 0
+            while let _ = IAPRowType(rawValue: max) { max += 1 }
+            return max
+        }()
+    }
     
     private var tableView: UITableView!
     private var passcodeSwitch: UISwitch!
@@ -145,90 +145,6 @@ final class SettingsViewController: UIViewController {
             $0.edges.equalTo(view)
         }
     }
-    
-    // MARK: - Export
-    
-    private let queue = NSOperationQueue()
-    private func launchExport() {
-        ensureExportXLSIsPurchased { purchased in
-            if purchased {
-                HUD.show(.Progress)
-                let path = self.exportPath()
-                let exportOp = XLSExportOperation(path: path)
-                exportOp.completionBlock = {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        HUD.hide(animated: true) { finished in
-                            if let err = exportOp.error {
-                                HUD.flash(HUDContentType.Label(err.localizedDescription))
-                            } else {
-                                let URL = NSURL(fileURLWithPath: path)
-                                let controller = UIDocumentInteractionController(URL: URL)
-                                controller.delegate = self
-                                controller.presentPreviewAnimated(true)
-                            }
-                        }
-                    }
-                }
-                self.queue.addOperation(exportOp)
-            } else {
-                /// IAP is not available
-                let alert = UIAlertController(
-                    title: L("settings.iap.not_available.title"),
-                    message: L("settings.iap.not_available.message"),
-                    preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: L("OK"), style: .Default, handler: nil)
-                alert.addAction(okAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    private func ensureExportXLSIsPurchased(completion: Bool -> Void) {
-        let isPurchased = DependnProducts.store.isProductPurchased(DependnProducts.ExportXLS)
-        if isPurchased {
-            completion(isPurchased)
-        } else {
-            HUD.show(.Progress)
-            DependnProducts.store.requestProducts{ success, products in
-                HUD.hide { finished in
-                    if let products = products {
-                        let exportProducts = products.filter {
-                            $0.productIdentifier == DependnProducts.ExportXLS
-                        }
-                        if let product = exportProducts.first {
-                            let alert = UIAlertController(title: L("export.title"), message: L("export.message"), preferredStyle: .Alert)
-                            let okAction = UIAlertAction(title: L("yes"), style: .Default) { action in
-                                DependnProducts.store.buyProduct(product) { succeed, error in
-                                    completion(succeed)
-                                }
-                            }
-                            let cancelAction = UIAlertAction(title: L("no"), style: .Cancel, handler: nil)
-                            alert.addAction(cancelAction)
-                            alert.addAction(okAction)
-                            self.presentViewController(alert, animated: true, completion: nil)
-                            
-                            return
-                        }
-                    }
-                    completion(false)
-                }
-            }
-        }
-    }
-    
-    private func exportPath() -> String {
-        let dateFormatter = NSDateFormatter(dateFormat: "dd'_'MM'_'yyyy'_'HH'_'mm")
-        let filename = "export_\(dateFormatter.stringFromDate(NSDate()))"
-        return applicationCachesDirectory
-            .URLByAppendingPathComponent(filename)
-            .URLByAppendingPathExtension("xlsx").path!
-    }
-    
-    private lazy var applicationCachesDirectory: NSURL = {
-        let urls = NSFileManager.defaultManager()
-            .URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1]
-    }()
     
     private func showTour() {
         OnBoardingViewController.showInController(self)
@@ -400,7 +316,7 @@ extension SettingsViewController: UITableViewDelegate {
             let rowType = ImportExportRowType(rawValue: indexPath.row)!
             switch rowType {
             case .Export:
-                launchExport()
+                NSOperationQueue().addOperation(ExportOperation(controller: self))
             }
         case .IAP:
             let rowType = IAPRowType(rawValue: indexPath.row)!
@@ -441,17 +357,10 @@ extension SettingsViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - UIDocumentInteractionControllerDelegate
-extension SettingsViewController: UIDocumentInteractionControllerDelegate {
-    func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
-        return tabBarController ?? self
-    }
-}
-
+// MARK: - SearchAdditionViewControllerDelegate
 extension SettingsViewController: SearchAdditionViewControllerDelegate {
     func searchController(searchController: SearchAdditionViewController, didSelectAddiction addiction: Addiction) {
         Defaults[.watchAddiction] = addiction.name
-        
         WatchSessionManager.sharedManager.updateApplicationContext()
     }
 }

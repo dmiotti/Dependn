@@ -71,5 +71,9 @@ final class Analytics {
     func trackAddPlace(place: String) {
         Amplitude.instance().logEvent("AddPlace", withEventProperties: ["place": place])
     }
+    
+    func trackExport(succeed: Bool, destination: String?) {
+        Amplitude.instance().logEvent("Export", withEventProperties: ["result": succeed])
+    }
 
 }
