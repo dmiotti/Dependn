@@ -218,7 +218,7 @@
 "app_name" = "DEPENDN’";
 
 /*  */
-"suggested.addictions.tobacco" = "Cigarette";
+"suggested.addictions.tobacco" = "Cigarettes";
 
 /*  */
 "suggested.addictions.cocaine" = "Cocaïne";
@@ -230,7 +230,7 @@
 "suggested.addictions.lsd" = "LSD";
 
 /*  */
-"suggested.addictions.ecigarette" = "E-cigarette";
+"suggested.addictions.ecigarette" = "E-cigarettes";
 
 /*  */
 "suggested.addictions.alcohol" = "Alcool";
@@ -248,7 +248,7 @@
 "suggested.addictions.sex" = "Sexe";
 
 /*  */
-"suggested.addictions.gambling" = "Jeux d'argent";
+"suggested.addictions.gambling" = "Jeux d'argents";
 
 /*  */
 "suggested.addictions.videogames" = "Jeux vidéos";
