@@ -5,12 +5,12 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
-  - CocoaLumberjack/Core (2.2.0)
-  - CocoaLumberjack/Default (2.2.0):
+  - CocoaLumberjack/Core (2.3.0)
+  - CocoaLumberjack/Default (2.3.0):
     - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (2.2.0):
+  - CocoaLumberjack/Extensions (2.3.0):
     - CocoaLumberjack/Default
-  - CocoaLumberjack/Swift (2.2.0):
+  - CocoaLumberjack/Swift (2.3.0):
     - CocoaLumberjack/Extensions
   - Crashlytics (3.7.0):
     - Fabric (~> 1.6.3)
@@ -19,7 +19,7 @@ PODS:
   - PKHUD (3.1.0)
   - Result (2.0.0)
   - SnapKit (0.20.0)
-  - SwiftHelpers (1.0.4)
+  - SwiftHelpers (1.0.5)
   - SwiftyUserDefaults (2.2.0)
 
 DEPENDENCIES:
@@ -46,21 +46,21 @@ CHECKOUT OPTIONS:
     :commit: 07734b1af418dd9be25262cd74cbbc17a6bbb1c9
     :git: git@github.com:dmiotti/libxlsxwriter.git
   SwiftHelpers:
-    :commit: 7c468c79c02ff00802af31ee597a496b10057389
+    :commit: bbf3cd904b7f8742356ed89f094fb79226187da9
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:
   Amplitude-iOS: 8bc8b9dc9c1898dbe5da541e21e8941ec085644f
   BrightFutures: 786ff7d16e620eb777cf802e545ef7d6237d77f6
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
-  CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
+  CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   libxlsxwriter: 40d5a1e4f9006e08c3f44399a10135694589710c
   PKHUD: 4167eccdb1b3a892fd80ce2b51cb6ba412a889ab
   Result: 9e75e1111c774c6ac594e14907b15057053a7959
   SnapKit: 5fce3c1bbbf1fbd31de9aa92f33eb9fa03f15650
-  SwiftHelpers: dbbd107af3ab804cefe96283f1cf49b6c50f0a1d
+  SwiftHelpers: fea8277010f64092b5aef5c78f14495650c756fe
   SwiftyUserDefaults: e7c8197a9d4068702e7f2406a968cae413b8de27
 
 COCOAPODS: 0.39.0
