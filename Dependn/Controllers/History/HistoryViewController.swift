@@ -17,6 +17,7 @@ import SwiftyUserDefaults
 final class HistoryViewController: UIViewController {
     
     private var actionBtn: UIBarButtonItem!
+    private var exportBtn: UIBarButtonItem!
     private var tableView: UITableView!
     private var addBtn: UIButton!
     private var statsView: StatsPanelScroller!
@@ -51,6 +52,8 @@ final class HistoryViewController: UIViewController {
         
         actionBtn = UIBarButtonItem(image: UIImage(named: "settings_icon"), style: .Plain, target: self, action: #selector(HistoryViewController.actionBtnClicked(_:)))
         navigationItem.leftBarButtonItem = actionBtn
+        
+        exportBtn = UIBarButtonItem(image: UIImage(named: "export"), style: .Plain, target: self, action: #selector(HistoryViewController.exportBtnClicked(_:)))
         
         statsView = StatsPanelScroller()
         
@@ -89,6 +92,21 @@ final class HistoryViewController: UIViewController {
         if !Defaults[.alreadyLaunched] {
             Defaults[.alreadyLaunched] = true
             OnBoardingViewController.showInController(self, animated: false)
+            return
+        }
+        
+        configureExportBtn()
+    }
+    
+    private func configureExportBtn() {
+        if Record.hasAtLeastOneRecord(inContext: managedObjectContext) {
+            if navigationItem.rightBarButtonItem == nil {
+                navigationItem.setRightBarButtonItem(exportBtn, animated: true)
+            }
+        } else {
+            if navigationItem.rightBarButtonItem != nil {
+                navigationItem.setRightBarButtonItem(nil, animated: true)
+            }
         }
     }
     
@@ -183,9 +201,97 @@ final class HistoryViewController: UIViewController {
         self.navigationController?.pushViewController(settings, animated: true)
     }
     
+    func exportBtnClicked(sender: UIBarButtonItem) {
+        launchExport()
+    }
+    
     func addBtnClicked(sender: UIButton) {
         DeeplinkManager.invokeAddEntry(inContext: self)
     }
+    
+    // MARK: - Export
+    
+    private let queue = NSOperationQueue()
+    private func launchExport() {
+        ensureExportXLSIsPurchased { purchased in
+            if purchased {
+                HUD.show(.Progress)
+                let path = self.exportPath()
+                let exportOp = XLSExportOperation(path: path)
+                exportOp.completionBlock = {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        HUD.hide(animated: true) { finished in
+                            if let err = exportOp.error {
+                                HUD.flash(HUDContentType.Label(err.localizedDescription))
+                            } else {
+                                let URL = NSURL(fileURLWithPath: path)
+                                let controller = UIDocumentInteractionController(URL: URL)
+                                controller.delegate = self
+                                controller.presentPreviewAnimated(true)
+                            }
+                        }
+                    }
+                }
+                self.queue.addOperation(exportOp)
+            } else {
+                /// IAP is not available
+                let alert = UIAlertController(
+                    title: L("settings.iap.not_available.title"),
+                    message: L("settings.iap.not_available.message"),
+                    preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: L("OK"), style: .Default, handler: nil)
+                alert.addAction(okAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    private func ensureExportXLSIsPurchased(completion: Bool -> Void) {
+        let isPurchased = DependnProducts.store.isProductPurchased(DependnProducts.ExportXLS)
+        if isPurchased {
+            completion(isPurchased)
+        } else {
+            HUD.show(.Progress)
+            DependnProducts.store.requestProducts{ success, products in
+                HUD.hide { finished in
+                    if let products = products {
+                        let exportProducts = products.filter {
+                            $0.productIdentifier == DependnProducts.ExportXLS
+                        }
+                        if let product = exportProducts.first {
+                            let alert = UIAlertController(title: L("export.title"), message: nil, preferredStyle: .Alert)
+                            let okAction = UIAlertAction(title: L("yes"), style: .Default) { action in
+                                DependnProducts.store.buyProduct(product) { succeed, error in
+                                    completion(succeed)
+                                }
+                            }
+                            let cancelAction = UIAlertAction(title: L("no"), style: .Cancel, handler: nil)
+                            alert.addAction(cancelAction)
+                            alert.addAction(okAction)
+                            self.presentViewController(alert, animated: true, completion: nil)
+                            
+                            return
+                        }
+                    }
+                    completion(false)
+                }
+            }
+        }
+    }
+    
+    private func exportPath() -> String {
+        let dateFormatter = NSDateFormatter(dateFormat: "dd'_'MM'_'yyyy'_'HH'_'mm")
+        let filename = "export_\(dateFormatter.stringFromDate(NSDate()))"
+        return applicationCachesDirectory
+            .URLByAppendingPathComponent(filename)
+            .URLByAppendingPathExtension("xlsx").path!
+    }
+    
+    private lazy var applicationCachesDirectory: NSURL = {
+        let urls = NSFileManager.defaultManager()
+            .URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
+        return urls[urls.count-1]
+    }()
     
 }
 
@@ -218,6 +324,7 @@ extension HistoryViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView()
         header.backgroundColor = "F5FAFF".UIColor
+        header.alpha = 0.93
         
         let dateLbl = UILabel()
         dateLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
@@ -364,5 +471,12 @@ extension HistoryViewController: NSFetchedResultsControllerDelegate {
         }
         tableView.endUpdates()
         configureStatsView()
+    }
+}
+
+// MARK: - UIDocumentInteractionControllerDelegate
+extension HistoryViewController: UIDocumentInteractionControllerDelegate {
+    func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
+        return tabBarController ?? self
     }
 }

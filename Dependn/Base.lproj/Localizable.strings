@@ -435,7 +435,7 @@
 
 "error.no_addiction.suggestion" = "Lancez l'application Dependn' et ajoutez vos premières consomations";
 
-"settings.apple_watch.addiction" = "Dépendance sur Apple Watch";
+"settings.apple_watch.addiction" = "Affiché sur Apple Watch";
 
 "settings.no_addiction" = "Aucune";
 
@@ -470,3 +470,9 @@
 "settings.restoreiap.success.title" = "Restauration de vos achats intégrés";
 
 "settings.restoreiap.success.description" = "La restauration de vos achats intégrés s’est effectuée avec succès.";
+
+"export.title" = "Souhaitez-vous générer un export de vos données ?";
+
+"yes" = "Oui";
+
+"no" = "Non";

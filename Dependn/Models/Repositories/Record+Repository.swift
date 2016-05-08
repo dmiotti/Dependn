@@ -80,4 +80,17 @@ extension Record {
         return []
     }
     
+    class func hasAtLeastOneRecord(inContext context: NSManagedObjectContext) -> Bool {
+        let req = entityFetchRequest()
+        req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
+        
+        var error: NSError?
+        let count = context.countForFetchRequest(req, error: &error)
+        if let err = error {
+            DDLogError("Error while counting records: \(err)")
+        }
+        
+        return count > 0
+    }
+    
 }

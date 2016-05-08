@@ -160,7 +160,11 @@ extension IAPHelper: SKPaymentTransactionObserver {
         
         purchaseCompletionHandler?(false, transaction.error)
         purchaseCompletionHandler = nil
-        
+    }
+    
+    public func paymentQueue(queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: NSError) {
+        print("restore failed with error...")
+        restoreCompletionHandler?(false, error)
         restoreCompletionHandler = nil
     }
     

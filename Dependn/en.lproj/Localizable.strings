@@ -341,7 +341,7 @@
 "places.new.error.ok" = "OK";
 
 /*  */
-"history.help" = "Note your first craving or consumption by pressing the “+” button";
+"history.help" = "Note your first craving or consumption by pressing “+” button";
 
 /*  */
 "places.new.cancel" = "Cancel";
@@ -435,7 +435,7 @@
 
 "error.no_addiction.suggestion" = "Launch Dependn' app and start adding your first consomations";
 
-"settings.apple_watch.addiction" = "Addiction shown on Apple Watch";
+"settings.apple_watch.addiction" = "Displayed on Apple Watch";
 
 "settings.no_addiction" = "None";
 
@@ -470,3 +470,9 @@
 "settings.restoreiap.success.title" = "Restore succeed";
 
 "settings.restoreiap.success.description" = "Restoration done with success.";
+
+"export.title" = "Would you like to generate an export of your data?";
+
+"yes" = "Yes";
+
+"no" = "No";

@@ -146,35 +146,13 @@ final class SettingsViewController: UIViewController {
         }
     }
     
-    // MARK: - Import/Export
-    
-    private func ensureExportXLSIsPurchased(completion: Bool -> Void) {
-        let isPurchased = DependnProducts.store.isProductPurchased(DependnProducts.ExportXLS)
-        if isPurchased {
-            completion(isPurchased)
-        } else {
-            DependnProducts.store.requestProducts{ success, products in
-                if let products = products {
-                    let exportProducts = products.filter {
-                        $0.productIdentifier == DependnProducts.ExportXLS
-                    }
-                    if let product = exportProducts.first {
-                        DependnProducts.store.buyProduct(product) { succeed, error in
-                            completion(succeed)
-                        }
-                        return
-                    }
-                }
-                completion(false)
-            }
-        }
-    }
+    // MARK: - Export
     
     private let queue = NSOperationQueue()
     private func launchExport() {
-        HUD.show(.Progress)
         ensureExportXLSIsPurchased { purchased in
             if purchased {
+                HUD.show(.Progress)
                 let path = self.exportPath()
                 let exportOp = XLSExportOperation(path: path)
                 exportOp.completionBlock = {
@@ -193,15 +171,46 @@ final class SettingsViewController: UIViewController {
                 }
                 self.queue.addOperation(exportOp)
             } else {
+                /// IAP is not available
+                let alert = UIAlertController(
+                    title: L("settings.iap.not_available.title"),
+                    message: L("settings.iap.not_available.message"),
+                    preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: L("OK"), style: .Default, handler: nil)
+                alert.addAction(okAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    private func ensureExportXLSIsPurchased(completion: Bool -> Void) {
+        let isPurchased = DependnProducts.store.isProductPurchased(DependnProducts.ExportXLS)
+        if isPurchased {
+            completion(isPurchased)
+        } else {
+            HUD.show(.Progress)
+            DependnProducts.store.requestProducts{ success, products in
                 HUD.hide { finished in
-                    /// IAP is not available
-                    let alert = UIAlertController(
-                        title: L("settings.iap.not_available.title"),
-                        message: L("settings.iap.not_available.message"),
-                        preferredStyle: .Alert)
-                    let okAction = UIAlertAction(title: L("OK"), style: .Default, handler: nil)
-                    alert.addAction(okAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    if let products = products {
+                        let exportProducts = products.filter {
+                            $0.productIdentifier == DependnProducts.ExportXLS
+                        }
+                        if let product = exportProducts.first {
+                            let alert = UIAlertController(title: L("export.title"), message: nil, preferredStyle: .Alert)
+                            let okAction = UIAlertAction(title: L("yes"), style: .Default) { action in
+                                DependnProducts.store.buyProduct(product) { succeed, error in
+                                    completion(succeed)
+                                }
+                            }
+                            let cancelAction = UIAlertAction(title: L("no"), style: .Cancel, handler: nil)
+                            alert.addAction(cancelAction)
+                            alert.addAction(okAction)
+                            self.presentViewController(alert, animated: true, completion: nil)
+                            
+                            return
+                        }
+                    }
+                    completion(false)
                 }
             }
         }
@@ -220,22 +229,6 @@ final class SettingsViewController: UIViewController {
             .URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
         return urls[urls.count-1]
     }()
-    
-    private func launchImport() {
-        let importOp = ImportOperation(controller: self)
-        importOp.completionBlock = {
-            dispatch_async(dispatch_get_main_queue()) {
-                if let err = importOp.error {
-                    if err.code != kImportOperationUserCancelledCode {
-                        UIAlertController.presentAlertWithTitle(nil, message: err.localizedRecoverySuggestion, inController: self)
-                    }
-                } else {
-                    HUD.flash(.Success)
-                }
-            }
-        }
-        queue.addOperation(importOp)
-    }
     
     private func showTour() {
         OnBoardingViewController.showInController(self)
