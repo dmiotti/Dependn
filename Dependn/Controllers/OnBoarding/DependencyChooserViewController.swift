@@ -99,17 +99,17 @@ final class DependencyChooserViewController: UIViewController {
     func doneBtnClicked(sender: UIBarButtonItem) {
         let context = CoreDataStack.shared.managedObjectContext
         
-        for add in selectedAddictions {
-            do {
+        do {
+            for add in selectedAddictions {
                 let addiction = try Addiction.findOrInsertNewAddiction(add.name, inContext: context)
                 addiction.color = add.color
-            } catch let err as NSError {
-                print("Error while inserting new addiction: \(err)")
             }
+            
+            /// Track selected addictions
+            Analytics.instance.trackUserAddictions()
+        } catch let err as NSError {
+            print("Error while inserting new addiction: \(err)")
         }
-        
-        /// Track selected addictions
-        
         
         dismissViewControllerAnimated(true, completion: nil)
     }

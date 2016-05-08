@@ -8,10 +8,13 @@
 
 import UIKit
 import Amplitude_iOS
+import CoreData
 
 final class Analytics {
     
     static let instance = Analytics()
+    
+    private let context: NSManagedObjectContext
     
     private init() {
         #if DEBUG
@@ -31,10 +34,25 @@ final class Analytics {
         }
         
         Amplitude.instance().trackingSessionEvents = true
+        
+        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        context.parentContext = CoreDataStack.shared.managedObjectContext
     }
     
     func appLaunch() {
         Amplitude.instance().logEvent("AppLaunch")
+    }
+    
+    func trackUserAddictions() {
+        if let addictions = try? Addiction.getAllAddictions(inContext: context) {
+            let props = [ "addictions": addictions.map({ $0.name }).joinWithSeparator(";") ]
+            Amplitude.instance().setUserProperties(props)
+        }
+    }
+    
+    func trackAddAddiction(addiction: Addiction) {
+        Amplitude.instance().logEvent("AddAddiction", withEventProperties: ["addiction": addiction.name])
+        trackUserAddictions()
     }
 
 }

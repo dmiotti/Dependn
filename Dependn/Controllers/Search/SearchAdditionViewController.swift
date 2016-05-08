@@ -195,6 +195,8 @@ extension SearchAdditionViewController: UITableViewDelegate {
                     self.searchBar.text = nil
                     self.selectedAddiction = addiction
                     
+                    Analytics.instance.trackAddAddiction(addiction)
+                    
                 } catch let err as NSError {
                     UIAlertController.presentAlertWithTitle(err.localizedDescription,
                         message: err.localizedRecoverySuggestion, inController: self)

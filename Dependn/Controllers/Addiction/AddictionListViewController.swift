@@ -116,8 +116,11 @@ final class AddictionListViewController: UIViewController {
     
     private func addAddictionWithName(name: String) {
         do {
-            try Addiction.findOrInsertNewAddiction(name,
+            let addiction = try Addiction.findOrInsertNewAddiction(name,
                 inContext: managedObjectContext)
+            
+            /// Track selected addictions
+            Analytics.instance.trackAddAddiction(addiction)
         } catch let err as NSError {
             UIAlertController.presentAlertWithTitle(err.localizedDescription,
                 message: err.localizedRecoverySuggestion, inController: self)
