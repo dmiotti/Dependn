@@ -33,9 +33,6 @@ public class IAPHelper: NSObject {
             let purchased = NSUserDefaults.standardUserDefaults().boolForKey(productIdentifier)
             if purchased {
                 purchasedProductIdentifiers.insert(productIdentifier)
-                print("Previously purchased: \(productIdentifier)")
-            } else {
-                print("Not purchased: \(productIdentifier)")
             }
         }
         
@@ -83,14 +80,9 @@ extension IAPHelper {
 
 extension IAPHelper: SKProductsRequestDelegate {
     public func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
-        print("Loaded list of products...")
         let products = response.products
         productsRequestCompletionHandler?(success: true, products: products)
         clearRequestAndHandler()
-        
-        for p in products {
-            print("Found product: \(p.productIdentifier) \(p.localizedTitle) \(p.price.floatValue)")
-        }
     }
     
     public func request(request: SKRequest, didFailWithError error: NSError) {
@@ -131,7 +123,6 @@ extension IAPHelper: SKPaymentTransactionObserver {
     }
     
     private func completeTransaction(transaction: SKPaymentTransaction) {
-        print("completeTransaction...")
         deliverPurchaseNotificatioForIdentifier(transaction.payment.productIdentifier)
         SKPaymentQueue.defaultQueue().finishTransaction(transaction)
         
@@ -142,7 +133,6 @@ extension IAPHelper: SKPaymentTransactionObserver {
     private func restoreTransaction(transaction: SKPaymentTransaction) {
         guard let productIdentifier = transaction.originalTransaction?.payment.productIdentifier else { return }
         
-        print("restoreTransaction... \(productIdentifier)")
         deliverPurchaseNotificatioForIdentifier(productIdentifier)
         SKPaymentQueue.defaultQueue().finishTransaction(transaction)
         
@@ -151,7 +141,6 @@ extension IAPHelper: SKPaymentTransactionObserver {
     }
     
     private func failedTransaction(transaction: SKPaymentTransaction) {
-        print("failedTransaction...")
         if transaction.error!.code != SKErrorCode.PaymentCancelled.rawValue {
             print("Transaction Error: \(transaction.error?.localizedDescription)")
         }
@@ -163,7 +152,6 @@ extension IAPHelper: SKPaymentTransactionObserver {
     }
     
     public func paymentQueue(queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: NSError) {
-        print("restore failed with error...")
         restoreCompletionHandler?(false, error)
         restoreCompletionHandler = nil
     }
