@@ -9,6 +9,7 @@
 import UIKit
 import Amplitude_iOS
 import CoreData
+import WatchConnectivity
 
 final class Analytics {
     
@@ -41,6 +42,24 @@ final class Analytics {
     
     func appLaunch() {
         Amplitude.instance().logEvent("AppLaunch")
+    }
+    
+    func updateUserProperties() {
+        var props = [String: AnyObject]()
+        
+        let addictions = try! Addiction.getAllAddictions(inContext: context)
+        props["addictions"] = addictions.map({ $0.name }).joinWithSeparator(";")
+        
+        let records = Record.recordCount(inContext: context)
+        props["records"] = records
+        
+        if WCSession.isSupported() {
+            let session = WCSession.defaultSession()
+            session.activateSession()
+            props["watch"] = session.paired
+        }
+        
+        Amplitude.instance().setUserProperties(props)
     }
     
     func trackUserAddictions() {

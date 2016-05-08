@@ -103,6 +103,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         CoreDataStack.shared.saveContext()
         WatchSessionManager.sharedManager.updateApplicationContext()
+        Analytics.instance.updateUserProperties()
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
