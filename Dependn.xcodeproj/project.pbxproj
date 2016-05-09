@@ -543,7 +543,6 @@
 		58DF62B41C83BDEE0035F608 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
-				5864FD771CDFC2DE00656664 /* Export */,
 				58669AA41CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift */,
 				583C9C6F1CCECA9500E6FD9D /* WatchStatsOperation.swift */,
 				58CF71811CA815090092458F /* ShortStatsOperation.swift */,
@@ -555,6 +554,7 @@
 				586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */,
 				583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */,
 				58AED4851CD121330037BFB1 /* CoreDataOperation.swift */,
+				5864FD771CDFC2DE00656664 /* Export */,
 			);
 			path = Operations;
 			sourceTree = "<group>";

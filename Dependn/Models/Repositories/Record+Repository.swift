@@ -63,20 +63,11 @@ extension Record {
     class func recordWithPlace(place: Place, inContext context: NSManagedObjectContext) -> [Record] {
         let req = entityFetchRequest()
         req.predicate = NSPredicate(format: "place == %@", place)
-        req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-        let controller = NSFetchedResultsController(fetchRequest: req,
-                                                    managedObjectContext: context,
-                                                    sectionNameKeyPath: nil,
-                                                    cacheName: nil)
         do {
-            try controller.performFetch()
-            if let records = controller.fetchedObjects as? [Record] {
-                return records
-            }
+            return try context.executeFetchRequest(req) as! [Record]
         } catch let err as NSError {
             DDLogError("Error while fetching record with place: \(place): \(err)")
         }
-        
         return []
     }
     
