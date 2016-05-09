@@ -473,7 +473,7 @@
 
 "export.title" = "Would you like to export your data?";
 
-"export.message" = "We will generate a document your MD can easily analyze.";
+"export.message" = "Dependn’ will generate a document your healthcare specialist can easily analyze.";
 
 "yes" = "Yes";
 
