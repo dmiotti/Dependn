@@ -15,12 +15,15 @@ import PKHUD
 import WatchConnectivity
 import MessageUI
 
+private let kSettingsAppStoreURL = "https://itunes.apple.com/fr/app/dependn-control-your-addictions/id1093903062?l=en&mt=8"
+
 final class SettingsViewController: UIViewController {
     
     enum SettingsSectionType: Int {
         case General
-        case ImportExport
+        case Data
         case IAP
+        case Others
         
         static let count: Int = {
             var max: Int = 0
@@ -30,13 +33,10 @@ final class SettingsViewController: UIViewController {
     }
     
     enum GeneralRowType: Int {
-        case ManageAddictions
-        case UsePasscode
-        case MemorisePlaces
-        case WatchAddiction
-        case Version
-        case ShowTour
+        case Rate
         case ContactUs
+        case Passcode
+        case Watch
         
         static let count: Int = {
             var max: Int = 0
@@ -45,12 +45,14 @@ final class SettingsViewController: UIViewController {
         }()
     }
     
-    enum ImportExportRowType: Int {
+    enum DataRowType: Int {
         case Export
+        case ManageAddictions
+        case MemorisePlaces
         
         static let count: Int = {
             var max: Int = 0
-            while let _ = ImportExportRowType(rawValue: max) { max += 1 }
+            while let _ = DataRowType(rawValue: max) { max += 1 }
             return max
         }()
     }
@@ -61,6 +63,18 @@ final class SettingsViewController: UIViewController {
         static let count: Int = {
             var max: Int = 0
             while let _ = IAPRowType(rawValue: max) { max += 1 }
+            return max
+        }()
+    }
+    
+    enum OthersRowType: Int {
+        case Share
+        case Tour
+        case Version
+        
+        static let count: Int = {
+            var max: Int = 0
+            while let _ = OthersRowType(rawValue: max) { max += 1 }
             return max
         }()
     }
@@ -182,12 +196,14 @@ extension SettingsViewController: UITableViewDataSource {
         let type = SettingsSectionType(rawValue: section)!
         switch type {
         case .General:       return GeneralRowType.count
-        case .ImportExport:  return ImportExportRowType.count
+        case .Data:          return DataRowType.count
         case .IAP:           return IAPRowType.count
+        case .Others:        return OthersRowType.count
         }
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(SettingsTableViewCell.reuseIdentifier, forIndexPath: indexPath)
+        
         cell.accessoryView = nil
         cell.accessoryType = .None
         cell.textLabel?.text = nil
@@ -196,50 +212,58 @@ extension SettingsViewController: UITableViewDataSource {
         
         let type = SettingsSectionType(rawValue: indexPath.section)!
         switch type {
+            
         case .General:
             let rowType = GeneralRowType(rawValue: indexPath.row)!
             switch rowType {
-            case .ManageAddictions:
-                cell.textLabel?.text = L("settings.manage_addictions")
-                cell.accessoryType = .DisclosureIndicator
-            case .UsePasscode:
+            case .Rate:
+                cell.textLabel?.text = L("settings.rate_app")
+            case .ContactUs:
+                cell.textLabel?.text = L("settings.contact_us")
+            case .Passcode:
                 cell.textLabel?.text = L("settings.use_passcode")
                 passcodeSwitch.setOn(Defaults[.usePasscode], animated: true)
                 passcodeSwitch.enabled = supportedOwnerAuthentications().count > 0
                 cell.accessoryView = passcodeSwitch
-            case .MemorisePlaces:
-                cell.textLabel?.text = L("settings.memorise_places")
-                memorizePlacesSwitch.setOn(Defaults[.useLocation], animated: true)
-                cell.accessoryView = memorizePlacesSwitch
-            case .WatchAddiction:
+            case .Watch:
                 cell.textLabel?.text = L("settings.apple_watch.addiction")
                 if let addiction = Defaults[.watchAddiction] {
                     cell.accessoryView = buildAccessoryLabel(addiction)
                 } else {
                     cell.accessoryView = buildAccessoryLabel(L("settings.no_addiction"))
                 }
-            case .Version:
-                cell.textLabel?.text = L("settings.version")
-                cell.accessoryView = buildAccessoryLabel(appVersion())
-            case .ShowTour:
-                cell.textLabel?.text = L("settings.show_tour")
-                cell.accessoryType = .DisclosureIndicator
-            case .ContactUs:
-                cell.textLabel?.text = L("settings.contact_us")
             }
-        case .ImportExport:
-            let rowType = ImportExportRowType(rawValue: indexPath.row)!
+        case .Data:
+            let rowType = DataRowType(rawValue: indexPath.row)!
             switch rowType {
+                
             case .Export:
-                cell.textLabel?.textAlignment = .Center
                 cell.textLabel?.text = L("settings.action.export")
+            case .ManageAddictions:
+                cell.textLabel?.text = L("settings.manage_addictions")
+                cell.accessoryType = .DisclosureIndicator
+            case .MemorisePlaces:
+                cell.textLabel?.text = L("settings.memorise_places")
+                memorizePlacesSwitch.setOn(Defaults[.useLocation], animated: true)
+                cell.accessoryView = memorizePlacesSwitch
             }
         case .IAP:
             let rowType = IAPRowType(rawValue: indexPath.row)!
             switch rowType {
             case .Restore:
-                cell.textLabel?.textAlignment = .Center
                 cell.textLabel?.text = L("settings.action.restore_iap")
+            }
+        case .Others:
+            let rowType = OthersRowType(rawValue: indexPath.row)!
+            switch rowType {
+            case .Share:
+                cell.textLabel?.text = L("settings.share")
+            case .Tour:
+                cell.textLabel?.text = L("settings.show_tour")
+                cell.accessoryType = .DisclosureIndicator
+            case .Version:
+                cell.textLabel?.text = L("settings.version")
+                cell.accessoryView = buildAccessoryLabel(appVersion())
             }
         }
         
@@ -262,24 +286,18 @@ extension SettingsViewController: UITableViewDataSource {
         switch type {
         case .General:
             titleLbl.text = L("settings.section.general").uppercaseString
-        case .ImportExport:
-            titleLbl.text = L("settings.section.informations").uppercaseString
+        case .Data:
+            titleLbl.text = L("settings.section.data").uppercaseString
         case .IAP:
             titleLbl.text = L("settings.section.iap").uppercaseString
+        case .Others:
+            titleLbl.text = L("settings.section.others").uppercaseString
         }
         
         return header
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let type = SettingsSectionType(rawValue: section)!
-        switch type {
-        case .General:
-            return 40
-        case .ImportExport:
-            return 40
-        case .IAP:
-            return 40
-        }
+        return 40
     }
     
     private func buildAccessoryLabel(text: String) -> UILabel {
@@ -302,26 +320,25 @@ extension SettingsViewController: UITableViewDelegate {
         case .General:
             let rowType = GeneralRowType(rawValue: indexPath.row)!
             switch rowType {
-            case .ManageAddictions:
-                showManageAddictions()
-            case .UsePasscode:
-                break
-            case .MemorisePlaces:
-                break
-            case .Version:
-                break
-            case .WatchAddiction:
-                showSelectAppleWatchAddiction()
-            case .ShowTour:
-                showTour()
+            case .Rate:
+                let URL = NSURL(string: kSettingsAppStoreURL)!
+                UIApplication.sharedApplication().openURL(URL)
             case .ContactUs:
                 contactUs()
+            case .Passcode:
+                break
+            case .Watch:
+                showSelectAppleWatchAddiction()
             }
-        case .ImportExport:
-            let rowType = ImportExportRowType(rawValue: indexPath.row)!
+        case .Data:
+            let rowType = DataRowType(rawValue: indexPath.row)!
             switch rowType {
             case .Export:
                 NSOperationQueue().addOperation(ExportOperation(controller: self))
+            case .ManageAddictions:
+                showManageAddictions()
+            case .MemorisePlaces:
+                break
             }
         case .IAP:
             let rowType = IAPRowType(rawValue: indexPath.row)!
@@ -329,7 +346,16 @@ extension SettingsViewController: UITableViewDelegate {
             case .Restore:
                 restorePurchases()
             }
-            break
+        case .Others:
+            let rowType = OthersRowType(rawValue: indexPath.row)!
+            switch rowType {
+            case .Share:
+                break // Show share
+            case .Tour:
+                showTour()
+            case .Version:
+                break
+            }
         }
     }
     

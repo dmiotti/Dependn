@@ -161,9 +161,6 @@
 "settings.section.general" = "Général";
 
 /*  */
-"settings.section.informations" = "Mes données";
-
-/*  */
 "addiction_list.delete.confirm" = "Continuer";
 
 /*  */
@@ -471,12 +468,20 @@
 
 "settings.restoreiap.success.description" = "La restauration de vos achats intégrés s’est effectuée avec succès.";
 
-"export.title" = "Souhaitez-vous un export de vos données ?";
+"export.title" = "Souhaitez-vous exporter vos données ?";
 
-"export.message" = "Nous allons générer un export .xlsx que votre spécialiste peut facilement analyser";
+"export.message" = "Nous allons générer un document que votre médecin peut facilement analyser.";
 
 "yes" = "Oui";
 
 "no" = "Non";
 
 "settings.contact_us" = "Nous contacter";
+
+"settings.rate_app" = "Noter l'application";
+
+"settings.share" = "Partager l'application";
+
+"settings.section.data" = "Mes données";
+
+"settings.section.others" = "Autre";

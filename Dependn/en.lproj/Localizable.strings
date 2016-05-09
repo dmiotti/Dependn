@@ -480,3 +480,11 @@
 "no" = "No";
 
 "settings.contact_us" = "Contact us";
+
+"settings.rate_app" = "Rate app";
+
+"settings.share" = "Share app";
+
+"settings.section.data" = "My data";
+
+"settings.section.others" = "Other";
