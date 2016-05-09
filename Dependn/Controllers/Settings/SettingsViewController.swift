@@ -13,6 +13,7 @@ import LocalAuthentication
 import CocoaLumberjack
 import PKHUD
 import WatchConnectivity
+import MessageUI
 
 final class SettingsViewController: UIViewController {
     
@@ -35,6 +36,7 @@ final class SettingsViewController: UIViewController {
         case WatchAddiction
         case Version
         case ShowTour
+        case ContactUs
         
         static let count: Int = {
             var max: Int = 0
@@ -222,6 +224,8 @@ extension SettingsViewController: UITableViewDataSource {
             case .ShowTour:
                 cell.textLabel?.text = L("settings.show_tour")
                 cell.accessoryType = .DisclosureIndicator
+            case .ContactUs:
+                cell.textLabel?.text = L("settings.contact_us")
             }
         case .ImportExport:
             let rowType = ImportExportRowType(rawValue: indexPath.row)!
@@ -310,7 +314,8 @@ extension SettingsViewController: UITableViewDelegate {
                 showSelectAppleWatchAddiction()
             case .ShowTour:
                 showTour()
-                break
+            case .ContactUs:
+                contactUs()
             }
         case .ImportExport:
             let rowType = ImportExportRowType(rawValue: indexPath.row)!
@@ -326,6 +331,13 @@ extension SettingsViewController: UITableViewDelegate {
             }
             break
         }
+    }
+    
+    private func contactUs() {
+        let mail = MFMailComposeViewController()
+        mail.mailComposeDelegate = self
+        mail.setToRecipients([ "contact@dependn.com "])
+        presentViewController(mail, animated: true, completion: nil)
     }
     
     private func showSelectAppleWatchAddiction() {
@@ -362,5 +374,20 @@ extension SettingsViewController: SearchAdditionViewControllerDelegate {
     func searchController(searchController: SearchAdditionViewController, didSelectAddiction addiction: Addiction) {
         Defaults[.watchAddiction] = addiction.name
         WatchSessionManager.sharedManager.updateApplicationContext()
+    }
+}
+
+extension SettingsViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
+extension MFMailComposeViewController {
+    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    public override func childViewControllerForStatusBarStyle() -> UIViewController? {
+        return nil
     }
 }
