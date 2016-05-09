@@ -12,15 +12,28 @@ import CocoaLumberjack
 
 extension Place {
     
-    class func placesFetchedResultsController(inContext context: NSManagedObjectContext) -> NSFetchedResultsController {
+    class func suggestedPlacesFRC(inContext context: NSManagedObjectContext) -> NSFetchedResultsController {
         let req = entityFetchRequest()
+        let pred = NSPredicate(format: "records.@count == 0")
+        req.predicate = pred
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-        let controller = NSFetchedResultsController(
+        return NSFetchedResultsController(
             fetchRequest: req,
             managedObjectContext: context,
             sectionNameKeyPath: nil,
             cacheName: nil)
-        return controller
+    }
+    
+    static func recentPlacesFRC(inContext context: NSManagedObjectContext) -> NSFetchedResultsController {
+        let req = entityFetchRequest()
+        let pred = NSPredicate(format: "records.@count > 0")
+        req.predicate = pred
+        req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: false) ]
+        return NSFetchedResultsController(
+            fetchRequest: req,
+            managedObjectContext: context,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
     }
     
     class func allPlaces(inContext context: NSManagedObjectContext, usingPredicate predicate: NSPredicate? = nil) throws -> [Place] {
@@ -33,7 +46,7 @@ extension Place {
     class func getAllPlacesOrderedByCount(inContext context: NSManagedObjectContext) throws -> [Place] {
         let req = entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-        var places = try context.executeFetchRequest(req) as? [Place] ?? [Place]()
+        var places = try context.executeFetchRequest(req) as! [Place]
         places.sortInPlace { $0.records?.count > $1.records?.count }
         return places
     }

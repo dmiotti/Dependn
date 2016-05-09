@@ -13,30 +13,29 @@ import CoreLocation
 import SwiftyUserDefaults
 import CocoaLumberjack
 
-enum AddRecordSectionType: Int {
-    case Addiction, DateAndPlace, Intensity, Optionals
-    
-    static let count: Int = {
-        var max: Int = 0
-        while let _ = AddRecordSectionType(rawValue: max) { max += 1 }
-        return max
-    }()
-}
-
-enum DateAndPlaceRowType: Int {
-    case Date, Place
-}
-
-enum OptionalsRowType: Int {
-    case Feeling, Comment
-}
-
-enum AddRecordTextEditionType: Int {
-    case Feeling, Comment, None
-}
-
 // MARK: - UIViewController
 final class AddRecordViewController: UIViewController {
+    
+    private enum SectionType {
+        case Addiction
+        case DateAndPlace
+        case Intensity
+        case Optionals
+    }
+    
+    private enum RowType {
+        case Addiction
+        case Date
+        case Place
+        case Intensity
+        case Feelings
+        case Comments
+    }
+    
+    private struct Section {
+        var type: SectionType
+        var items: [RowType]
+    }
     
     /// Title segmented control
     private var segmentedControl: UISegmentedControl!
@@ -50,9 +49,11 @@ final class AddRecordViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private var userLocation: CLLocation?
     
-    private var editingStep = AddRecordTextEditionType.None
+    private var editingStep: RowType?
     
     var record: Record?
+    
+    private var sections = [Section]()
     
     // MARK: - Editing Record properties
     
@@ -67,6 +68,13 @@ final class AddRecordViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        sections = [
+            Section(type: .Addiction, items: [ .Addiction ]),
+            Section(type: .DateAndPlace, items: [ .Date, .Place ]),
+            Section(type: .Intensity, items: [ .Intensity ]),
+            Section(type: .Optionals, items: [ .Feelings, .Comments ])
+        ]
         
         edgesForExtendedLayout = .None
         
@@ -219,60 +227,51 @@ final class AddRecordViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension AddRecordViewController: UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return AddRecordSectionType.count
+        return sections.count
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let type = AddRecordSectionType(rawValue: section)!
-        switch type {
-        case .Addiction:    return 1
-        case .DateAndPlace: return 2
-        case .Intensity:    return 1
-        case .Optionals: 	return 2
-        }
+        return sections[section].items.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let section = AddRecordSectionType(rawValue: indexPath.section)!
-        switch section {
+
+        let row = sections[indexPath.section].items[indexPath.row]
+        switch row {
         case .Addiction:
             let cell = tableView.dequeueReusableCellWithIdentifier(
                 AddictionTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! AddictionTableViewCell
             cell.addiction = chosenAddiction
             cell.accessoryType = .DisclosureIndicator
             return cell
-        case .DateAndPlace:
-            let row = DateAndPlaceRowType(rawValue: indexPath.row)!
-            switch row {
-            case .Date:
-                let cell = tableView.dequeueReusableCellWithIdentifier(NewDateTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewDateTableViewCell
-                cell.date = chosenDate
-                cell.delegate = self
-                return cell
-            case .Place:
-                let cell = tableView.dequeueReusableCellWithIdentifier(NewPlaceTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewPlaceTableViewCell
-                cell.chosenPlaceLbl.text = chosenPlace?.name.firstLetterCapitalization
-                return cell
-            }
+        case .Date:
+            let cell = tableView.dequeueReusableCellWithIdentifier(NewDateTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewDateTableViewCell
+            cell.date = chosenDate
+            cell.delegate = self
+            return cell
+        case .Place:
+            let cell = tableView.dequeueReusableCellWithIdentifier(NewPlaceTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewPlaceTableViewCell
+            cell.chosenPlaceLbl.text = chosenPlace?.name.firstLetterCapitalization
+            return cell
         case .Intensity:
             let cell = tableView.dequeueReusableCellWithIdentifier(NewIntensityTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewIntensityTableViewCell
             cell.delegate = self
             cell.updateIntensityWithProgress(chosenIntensity / 10.0)
             return cell
-        case .Optionals:
-            let cell = tableView.dequeueReusableCellWithIdentifier(NewTextTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewTextTableViewCell
-            let row = OptionalsRowType(rawValue: indexPath.row)!
-            switch row {
-            case .Feeling:
-                cell.descLbl.text = L("new_record.feeling")
-                cell.contentLbl.text = chosenFeeling
-            case .Comment:
-                cell.descLbl.text = L("new_record.comment")
-                cell.contentLbl.text = chosenComment
-            }
+        case .Feelings:
+            let cell = tableView.dequeueReusableCellWithIdentifier(NewTextTableViewCell.reuseIdentifier, forIndexPath:
+                indexPath) as! NewTextTableViewCell
+            cell.descLbl.text = L("new_record.feeling")
+            cell.contentLbl.text = chosenFeeling
+            return cell
+        case .Comments:
+            let cell = tableView.dequeueReusableCellWithIdentifier(NewTextTableViewCell.reuseIdentifier, forIndexPath:
+                indexPath) as! NewTextTableViewCell
+            cell.descLbl.text = L("new_record.comment")
+            cell.contentLbl.text = chosenComment
             return cell
         }
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let type = AddRecordSectionType(rawValue: section)!
+        let type = sections[section].type
         switch type {
         case .Addiction:
             return 20
@@ -297,7 +296,7 @@ extension AddRecordViewController: UITableViewDataSource {
             $0.bottom.equalTo(header).offset(-5)
         }
         
-        let type = AddRecordSectionType(rawValue: section)!
+        let type = sections[section].type
         switch type {
         case .Intensity:
             titleLbl.text = L("new_record.intensity").uppercaseString
@@ -314,7 +313,7 @@ extension AddRecordViewController: UITableViewDataSource {
         return header
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let row = AddRecordSectionType(rawValue: indexPath.section)!
+        let row = sections[indexPath.section].type
         if row == .Intensity {
             return 105.0
         }
@@ -327,32 +326,25 @@ extension AddRecordViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let section = AddRecordSectionType(rawValue: indexPath.section)!
-        switch section {
+        let row = sections[indexPath.section].items[indexPath.row]
+        switch row {
         case .Addiction:
             let controller = SearchAdditionViewController()
             controller.selectedAddiction = chosenAddiction
             controller.delegate = self
             navigationController?.pushViewController(controller, animated: true)
-        case .Intensity: break
-        case .Optionals:
-            switch OptionalsRowType(rawValue: indexPath.row)! {
-            case .Feeling:
-                editingStep = .Feeling
-                showTextRecord()
-            case .Comment:
-                editingStep = .Comment
-                showTextRecord()
-            }
-        case .DateAndPlace:
-            switch DateAndPlaceRowType(rawValue: indexPath.row)! {
-            case .Date:
-                break
-            case .Place:
-                showPlaces()
-                break
-            }
+        case .Date:
             break
+        case .Place:
+            showPlaces()
+        case .Intensity:
+            break
+        case .Feelings:
+            editingStep = .Feelings
+            showTextRecord()
+        case .Comments:
+            editingStep = .Comments
+            showTextRecord()
         }
     }
     private func showPlaces() {
@@ -364,19 +356,20 @@ extension AddRecordViewController: UITableViewDelegate {
     private func showTextRecord() {
         let controller = AddRecordTextViewController()
         controller.delegate = self
-        switch editingStep {
-        case .Feeling:
+        switch editingStep! {
+        case .Feelings:
             controller.updateTitle(L("new_record.feeling_subtitle"), blueBackground: false)
             controller.originalText = chosenFeeling
             if !Defaults[.hasSeenEmotionPlaceholder] {
                 controller.placeholder = L("new_record.feeling_placeholder")
                 Defaults[.hasSeenEmotionPlaceholder] = true
             }
-        case .Comment:
+        case .Comments:
             controller.updateTitle(L("new_record.comment_subtitle"), blueBackground: false)
             controller.originalText = chosenComment
             controller.placeholder = L("new_record.comment_placeholder")
-        case .None: break
+        default:
+            break
         }
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -393,14 +386,15 @@ extension AddRecordViewController: SearchAdditionViewControllerDelegate {
 // MARK - AddRecordTextViewControllerDelegate
 extension AddRecordViewController: AddRecordTextViewControllerDelegate {
     func addRecordTextViewController(controller: AddRecordTextViewController, didEnterText text: String?) {
-        switch editingStep {
-        case .Feeling:
+        switch editingStep! {
+        case .Feelings:
             chosenFeeling = text
-        case .Comment:
+        case .Comments:
             chosenComment = text
-        case .None: break
+        default:
+            break
         }
-        editingStep = .None
+        editingStep = nil
         
         tableView.reloadData()
     }
@@ -444,16 +438,34 @@ extension AddRecordViewController: CLLocationManagerDelegate {
                         let moc = CoreDataStack.shared.managedObjectContext
                         let place = moc.objectWithID(placeId) as! Place
                         self.chosenPlace = place
-                        self.tableView.reloadRowsAtIndexPaths([
-                            NSIndexPath(forRow: DateAndPlaceRowType.Place.rawValue,
-                                inSection: AddRecordSectionType.DateAndPlace.rawValue)
-                            ], withRowAnimation: .Automatic)
+                        self.reloadRows([.Place])
                     }
                 }
             }
             let queue = NSOperationQueue()
             queue.addOperation(op)
         }
+    }
+    
+    private func indexPathForRowType(rowType: RowType) -> NSIndexPath? {
+        for (sectionIndex, section) in sections.enumerate() {
+            for (itemIndex, row) in section.items.enumerate() {
+                if row == rowType {
+                    return NSIndexPath(forRow: itemIndex, inSection: sectionIndex)
+                }
+            }
+        }
+        return nil
+    }
+    
+    private func reloadRows(rows: [RowType]) {
+        var indexPaths = [NSIndexPath]()
+        for rowType in rows {
+            if let indexPath = self.indexPathForRowType(rowType) {
+                indexPaths.append(indexPath)
+            }
+        }
+        tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
     }
 }
 
@@ -468,11 +480,7 @@ extension AddRecordViewController: NewIntensityTableViewCellDelegate {
 extension AddRecordViewController: NewDateTableViewCellDelegate {
     func dateTableViewCell(cell: NewDateTableViewCell, didSelectDate date: NSDate) {
         chosenDate = date
-        tableView.reloadRowsAtIndexPaths([
-            NSIndexPath(
-                forRow: DateAndPlaceRowType.Date.rawValue,
-                inSection: AddRecordSectionType.DateAndPlace.rawValue)],
-                                         withRowAnimation: .Automatic)
+        reloadRows([.Date])
     }
 }
 
@@ -481,12 +489,7 @@ extension AddRecordViewController: PlacesViewControllerDelegate {
     func placeController(controller: PlacesViewController, didChoosePlace place: Place?) {
         if let place = place {
             chosenPlace = place
-            let indexPath = NSIndexPath(
-                forRow: DateAndPlaceRowType.Place.rawValue,
-                inSection: AddRecordSectionType.DateAndPlace.rawValue)
-            tableView.beginUpdates()
-            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            tableView.endUpdates()
+            reloadRows([.Place])
             navigationController?.popViewControllerAnimated(true)
         }
     }

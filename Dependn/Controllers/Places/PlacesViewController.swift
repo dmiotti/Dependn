@@ -15,6 +15,11 @@ protocol PlacesViewControllerDelegate {
     func placeController(controller: PlacesViewController, didChoosePlace place: Place?)
 }
 
+enum PlacesSectionType: Int {
+    case RecentPlaces
+    case Places
+}
+
 final class PlacesViewController: UIViewController {
     
     var delegate: PlacesViewControllerDelegate?
@@ -24,7 +29,11 @@ final class PlacesViewController: UIViewController {
     
     private var searchBar: UISearchBar!
     
-    private var fetchedResultsController: NSFetchedResultsController?
+    private var suggestedFRC: NSFetchedResultsController?
+    private var recentFRC: NSFetchedResultsController?
+    
+    private var sections = [PlacesSectionType]()
+    
     private let managedObjectContext = CoreDataStack.shared.managedObjectContext
     
     var selectedPlace: Place?
@@ -108,14 +117,17 @@ final class PlacesViewController: UIViewController {
     
     private func performSearch(searchText: String?) {
         do {
-            let req = Place.entityFetchRequest()
-            req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-            if let searchText = searchText {
-                req.predicate = NSPredicate(format: "name contains[cd] %@", searchText)
-            }
-            fetchedResultsController = NSFetchedResultsController(fetchRequest: req, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-            fetchedResultsController!.delegate = self
-            try fetchedResultsController!.performFetch()
+            recentFRC = Place.recentPlacesFRC(inContext: managedObjectContext)
+            recentFRC?.delegate = self
+            
+            suggestedFRC = Place.suggestedPlacesFRC(inContext: managedObjectContext)
+            suggestedFRC?.delegate = self
+            
+            try recentFRC?.performFetch()
+            try suggestedFRC?.performFetch()
+            
+            sections = [.RecentPlaces, .Places]
+            
             tableView.reloadData()
         } catch let err as NSError {
             print("Error while search place with \(searchText): \(err)")
@@ -182,25 +194,40 @@ extension PlacesViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let place = fetchedResultsController?.objectAtIndexPath(indexPath) as? Place
-        delegate?.placeController(self, didChoosePlace: place)
+        delegate?.placeController(self, didChoosePlace: placeAtIndexPath(indexPath))
     }
 }
 
 // MARK: - UITableViewDataSource
 extension PlacesViewController: UITableViewDataSource {
+    private func placeAtIndexPath(indexPath: NSIndexPath) -> Place {
+        let place: Place
+        let section = sections[indexPath.section]
+        switch section {
+        case .RecentPlaces:
+            place = recentFRC?.fetchedObjects?[indexPath.row] as! Place
+        case .Places:
+            place = suggestedFRC?.fetchedObjects?[indexPath.row] as! Place
+        }
+        return place
+    }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return fetchedResultsController?.sections?.count ?? 0
+        return sections.count
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
+        let section = sections[section]
+        switch section {
+        case .RecentPlaces:
+            return recentFRC?.fetchedObjects?.count ?? 0
+        case .Places:
+            return suggestedFRC?.fetchedObjects?.count ?? 0
+        }
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(PlaceCell.reuseIdentifier, forIndexPath: indexPath) as! PlaceCell
-        if let place = fetchedResultsController?.objectAtIndexPath(indexPath) as? Place {
-            cell.placeLbl.text = place.name.firstLetterCapitalization
-            cell.accessoryType = selectedPlace == place ? .Checkmark : .None
-        }
+        let place = placeAtIndexPath(indexPath)
+        cell.placeLbl.text = place.name.firstLetterCapitalization
+        cell.accessoryType = selectedPlace == place ? .Checkmark : .None
         return cell
     }
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -208,9 +235,7 @@ extension PlacesViewController: UITableViewDataSource {
     }
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            if let place = fetchedResultsController?.objectAtIndexPath(indexPath) as? Place {
-                self.deletePlace(place)
-            }
+            deletePlace(placeAtIndexPath(indexPath))
         }
     }
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
