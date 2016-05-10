@@ -45,17 +45,26 @@ final class PlacesViewController: UIViewController {
         
         updateTitle(L("places.title"), blueBackground: false)
         
+        let containerSearchBar = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 54))
         searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
+        containerSearchBar.addSubview(searchBar)
+        searchBar.snp_makeConstraints {
+            $0.bottom.equalTo(containerSearchBar)
+            $0.left.equalTo(containerSearchBar)
+            $0.right.equalTo(containerSearchBar)
+            $0.height.equalTo(44)
+        }
         configureSearchBar()
 
         tableView = UITableView(frame: .zero, style: .Plain)
+        tableView.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.separatorColor = UIColor.appSeparatorColor()
         tableView.rowHeight = 55
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(PlaceCell.self, forCellReuseIdentifier: PlaceCell.reuseIdentifier)
-        tableView.tableHeaderView = searchBar
+        tableView.tableHeaderView = containerSearchBar
         view.addSubview(tableView)
         tableView.snp_makeConstraints {
             $0.edges.equalTo(view)
@@ -117,16 +126,24 @@ final class PlacesViewController: UIViewController {
     
     private func performSearch(searchText: String?) {
         do {
-            recentFRC = Place.recentPlacesFRC(inContext: managedObjectContext)
+            recentFRC = Place.recentPlacesFRC(inContext: managedObjectContext, forSearch: searchText)
             recentFRC?.delegate = self
             
-            suggestedFRC = Place.suggestedPlacesFRC(inContext: managedObjectContext)
+            suggestedFRC = Place.suggestedPlacesFRC(inContext: managedObjectContext, forSearch: searchText)
             suggestedFRC?.delegate = self
             
             try recentFRC?.performFetch()
             try suggestedFRC?.performFetch()
             
-            sections = [.RecentPlaces, .Places]
+            sections.removeAll()
+            
+            if recentFRC?.fetchedObjects?.count > 0 {
+                sections.append(.RecentPlaces)
+            }
+            
+            if suggestedFRC?.fetchedObjects?.count > 0 {
+                sections.append(.Places)
+            }
             
             tableView.reloadData()
         } catch let err as NSError {
@@ -238,6 +255,29 @@ extension PlacesViewController: UITableViewDataSource {
             deletePlace(placeAtIndexPath(indexPath))
         }
     }
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard sections.count > 1 else {
+            return nil
+        }
+        
+        let header = TableHeaderView()
+        
+        let type = sections[section]
+        switch type {
+        case .RecentPlaces:
+            header.title = L("places.recent_places").uppercaseString
+        case .Places:
+            header.title = L("places.suggested_places").uppercaseString
+        }
+        
+        return header
+    }
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard sections.count > 1 else {
+            return 0
+        }
+        return 40
+    }
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.01
     }
@@ -251,41 +291,45 @@ extension PlacesViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         tableView.beginUpdates()
     }
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-        switch type {
-        case .Insert:
-            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-        case .Delete:
-            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-        case .Update:
-            tableView.reloadSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-        case .Move:
-            break
-        }
-    }
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        guard let section = sectionForFRC(controller) else {
+            return
+        }
         switch type {
         case .Insert:
             if let newIndexPath = newIndexPath {
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+                let translated = NSIndexPath(forRow: newIndexPath.row, inSection: section)
+                tableView.insertRowsAtIndexPaths([translated], withRowAnimation: .Automatic)
             }
         case .Delete:
             if let indexPath = indexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                let translated = NSIndexPath(forRow: indexPath.row, inSection: section)
+                tableView.deleteRowsAtIndexPaths([translated], withRowAnimation: .Automatic)
             }
         case .Move:
             if let indexPath = indexPath, newIndexPath = newIndexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+                let translatedDelete = NSIndexPath(forRow: indexPath.row, inSection: section)
+                let translatedNew = NSIndexPath(forRow: newIndexPath.row, inSection: section)
+                
+                tableView.deleteRowsAtIndexPaths([translatedDelete], withRowAnimation: .Automatic)
+                tableView.insertRowsAtIndexPaths([translatedNew], withRowAnimation: .Automatic)
             }
         case .Update:
             if let indexPath = indexPath {
-                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                let translated = NSIndexPath(forRow: indexPath.row, inSection: section)
+                tableView.reloadRowsAtIndexPaths([translated], withRowAnimation: .Automatic)
             }
         }
     }
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         tableView.endUpdates()
+    }
+    
+    private func sectionForFRC(controller: NSFetchedResultsController) -> Int? {
+        if controller == recentFRC {
+            return sections.indexOf(.RecentPlaces)
+        }
+        return sections.indexOf(.Places)
     }
 }
 

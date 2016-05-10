@@ -12,10 +12,15 @@ import CocoaLumberjack
 
 extension Place {
     
-    class func suggestedPlacesFRC(inContext context: NSManagedObjectContext) -> NSFetchedResultsController {
+    class func suggestedPlacesFRC(inContext context: NSManagedObjectContext, forSearch search: String? = nil) -> NSFetchedResultsController {
         let req = entityFetchRequest()
         let pred = NSPredicate(format: "records.@count == 0")
-        req.predicate = pred
+        if let search = search {
+            let filter = NSPredicate(format: "name contains[cd] %@", search)
+            req.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred, filter])
+        } else {
+            req.predicate = pred
+        }
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
         return NSFetchedResultsController(
             fetchRequest: req,
@@ -24,10 +29,15 @@ extension Place {
             cacheName: nil)
     }
     
-    static func recentPlacesFRC(inContext context: NSManagedObjectContext) -> NSFetchedResultsController {
+    static func recentPlacesFRC(inContext context: NSManagedObjectContext, forSearch search: String? = nil) -> NSFetchedResultsController {
         let req = entityFetchRequest()
         let pred = NSPredicate(format: "records.@count > 0")
-        req.predicate = pred
+        if let search = search {
+            let filter = NSPredicate(format: "name contains[cd] %@", search)
+            req.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred, filter])
+        } else {
+            req.predicate = pred
+        }
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: false) ]
         return NSFetchedResultsController(
             fetchRequest: req,

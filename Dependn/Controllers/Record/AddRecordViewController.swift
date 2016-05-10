@@ -284,26 +284,14 @@ extension AddRecordViewController: UITableViewDataSource {
         }
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 40))
-        
-        let titleLbl = UILabel()
-        titleLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
-        titleLbl.textColor = UIColor.appDarkBlueColor()
-        header.addSubview(titleLbl)
-        
-        titleLbl.snp_makeConstraints {
-            $0.left.equalTo(header).offset(15)
-            $0.bottom.equalTo(header).offset(-5)
-        }
+        let header = TableHeaderView()
         
         let type = sections[section].type
         switch type {
         case .Intensity:
-            titleLbl.text = L("new_record.intensity").uppercaseString
-            break
+            header.title = L("new_record.intensity").uppercaseString
         case .Optionals:
-            titleLbl.text = L("new_record.optional").uppercaseString
-            break
+            header.title = L("new_record.optional").uppercaseString
         case .Addiction:
             break
         case .DateAndPlace:

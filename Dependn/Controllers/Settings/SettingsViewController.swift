@@ -227,28 +227,18 @@ extension SettingsViewController: UITableViewDataSource {
         return cell
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 40))
-        
-        let titleLbl = UILabel()
-        titleLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
-        titleLbl.textColor = UIColor.appDarkBlueColor()
-        header.addSubview(titleLbl)
-        
-        titleLbl.snp_makeConstraints {
-            $0.left.equalTo(header).offset(15)
-            $0.bottom.equalTo(header).offset(-5)
-        }
+        let header = TableHeaderView()
         
         let type = sections[section].type
         switch type {
         case .General:
-            titleLbl.text = L("settings.section.general").uppercaseString
+            header.title = L("settings.section.general").uppercaseString
         case .Data:
-            titleLbl.text = L("settings.section.data").uppercaseString
+            header.title = L("settings.section.data").uppercaseString
         case .IAP:
-            titleLbl.text = L("settings.section.iap").uppercaseString
+            header.title = L("settings.section.iap").uppercaseString
         case .Others:
-            titleLbl.text = L("settings.section.others").uppercaseString
+            header.title = L("settings.section.others").uppercaseString
         }
         
         return header

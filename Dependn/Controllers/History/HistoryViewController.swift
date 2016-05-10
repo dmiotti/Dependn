@@ -287,56 +287,24 @@ extension HistoryViewController: UITableViewDataSource {
         return 40
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = UIView()
-        header.backgroundColor = "F5FAFF".UIColor
-        header.alpha = 0.93
-        
-        let dateLbl = UILabel()
-        dateLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
-        dateLbl.textColor = "7D9BB8".UIColor
-        header.addSubview(dateLbl)
-        
-        dateLbl.snp_makeConstraints {
-            $0.left.equalTo(header).offset(15)
-            $0.bottom.equalTo(header).offset(-6)
-        }
-        
-        let sepTop = UIView()
-        sepTop.backgroundColor = UIColor.appSeparatorColor()
-        header.addSubview(sepTop)
-        sepTop.snp_makeConstraints {
-            $0.top.equalTo(header)
-            $0.left.equalTo(header)
-            $0.right.equalTo(header)
-            $0.height.equalTo(0.5)
-        }
-        
-        let sepBtm = UIView()
-        sepBtm.backgroundColor = UIColor.appSeparatorColor()
-        header.addSubview(sepBtm)
-        sepBtm.snp_makeConstraints {
-            $0.bottom.equalTo(header)
-            $0.left.equalTo(header)
-            $0.right.equalTo(header)
-            $0.height.equalTo(0.5)
-        }
-        
+        let header = TableHeaderView()
+
         let dateString = fetchedResultsController.sections?[section].name
         
         if let dateString = dateString, date = readDateFormatter.dateFromString(dateString) {
             let proximity = SHDateProximityToDate(date)
             switch proximity {
             case .Today:
-                dateLbl.text = L("history.today").uppercaseString
+                header.title = L("history.today").uppercaseString
                 break
             case .Yesterday:
-                dateLbl.text = L("history.yesterday").uppercaseString
+                header.title = L("history.yesterday").uppercaseString
                 break
             default:
-                dateLbl.text = dateString.uppercaseString
+                header.title = dateString.uppercaseString
             }
         } else {
-            dateLbl.text = dateString?.uppercaseString
+            header.title = dateString?.uppercaseString
         }
         
         return header

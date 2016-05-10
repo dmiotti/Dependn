@@ -485,3 +485,7 @@
 "settings.section.data" = "Mes données";
 
 "settings.section.others" = "Autre";
+
+"places.recent_places" = "Mes lieux récents";
+
+"places.suggested_places" = "Lieux suggérés";

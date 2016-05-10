@@ -488,3 +488,7 @@
 "settings.section.data" = "My data";
 
 "settings.section.others" = "Other";
+
+"places.recent_places" = "Recent places";
+
+"places.suggested_places" = "Suggested places";
