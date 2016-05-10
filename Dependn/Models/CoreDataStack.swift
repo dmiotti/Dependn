@@ -65,6 +65,8 @@ final class CoreDataStack: NSObject {
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
             var opts = [String: AnyObject]()
+            opts[NSMigratePersistentStoresAutomaticallyOption] = true
+            opts[NSInferMappingModelAutomaticallyOption] = true
             opts[NSPersistentStoreUbiquitousContentNameKey] = "Dependn"
             opts[NSPersistentStoreFileProtectionKey] = NSFileProtectionCompleteUntilFirstUserAuthentication
             try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: opts)
