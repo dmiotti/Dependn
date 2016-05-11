@@ -35,13 +35,17 @@ final class Analytics {
         }
         
         Amplitude.instance().trackingSessionEvents = true
+        Amplitude.instance().enableLocationListening()
         
         context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         context.parentContext = CoreDataStack.shared.managedObjectContext
+        
+        updateTrackingEnabledFromDefaults()
     }
     
     func appLaunch() {
         updateTrackingEnabledFromDefaults()
+        Amplitude.instance().updateLocation()
         Amplitude.instance().logEvent("AppLaunch")
     }
     
