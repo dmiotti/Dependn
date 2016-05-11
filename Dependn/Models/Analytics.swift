@@ -41,7 +41,13 @@ final class Analytics {
     }
     
     func appLaunch() {
+        updateTrackingEnabledFromDefaults()
         Amplitude.instance().logEvent("AppLaunch")
+    }
+    
+    func updateTrackingEnabledFromDefaults() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        Amplitude.instance().optOut = !defaults.boolForKey("trackingEnabled")
     }
     
     func updateUserProperties() {

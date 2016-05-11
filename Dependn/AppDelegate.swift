@@ -55,8 +55,13 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        // Override point for customization after application launch.
+        // Register defaults properties in Settings app
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let appDefaults = [ "trackingEnabled": true ]
+        defaults.registerDefaults(appDefaults)
+        defaults.synchronize()
         
+        // Setup Fabric
         Fabric.with([Crashlytics.self])
         
         StyleSheet.customizeAppearance(window)

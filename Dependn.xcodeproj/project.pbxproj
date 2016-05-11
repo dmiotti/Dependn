@@ -61,6 +61,7 @@
 		58669AA51CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58669AA41CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift */; };
 		586EDA361CA3567D00DAE496 /* TimeSinceLastRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */; };
 		587046BA1CD0C93D00C2F23B /* MainInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587046B91CD0C93D00C2F23B /* MainInterfaceController.swift */; };
+		58754E111CE382A000961ED6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 58754E101CE382A000961ED6 /* Settings.bundle */; };
 		587CB0F11CD1577B00FCDB48 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587CB0F01CD1577B00FCDB48 /* WatchSessionManager.swift */; };
 		587CB0F31CD157A000FCDB48 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587CB0F21CD157A000FCDB48 /* WatchSessionManager.swift */; };
 		587CB0F51CD170AE00FCDB48 /* PlaceListInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587CB0F41CD170AE00FCDB48 /* PlaceListInterfaceController.swift */; };
@@ -222,6 +223,7 @@
 		58669AA41CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchNewEntryInfoOperation.swift; sourceTree = "<group>"; };
 		586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSinceLastRecord.swift; sourceTree = "<group>"; };
 		587046B91CD0C93D00C2F23B /* MainInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainInterfaceController.swift; sourceTree = "<group>"; };
+		58754E101CE382A000961ED6 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		587CB0F01CD1577B00FCDB48 /* WatchSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
 		587CB0F21CD157A000FCDB48 /* WatchSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
 		587CB0F41CD170AE00FCDB48 /* PlaceListInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListInterfaceController.swift; sourceTree = "<group>"; };
@@ -493,6 +495,7 @@
 				58DF62AF1C83BDEE0035F608 /* Localizable.strings */,
 				58DF62B11C83BDEE0035F608 /* Info.plist */,
 				58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */,
+				58754E101CE382A000961ED6 /* Settings.bundle */,
 			);
 			path = Dependn;
 			sourceTree = "<group>";
@@ -742,6 +745,7 @@
 				58DF62C51C83BDEE0035F608 /* Main.storyboard in Resources */,
 				58DF62CB1C83BDEE0035F608 /* InfoPlist.strings in Resources */,
 				58DF62C31C83BDEE0035F608 /* Assets.xcassets in Resources */,
+				58754E111CE382A000961ED6 /* Settings.bundle in Resources */,
 				58DF62C41C83BDEE0035F608 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
