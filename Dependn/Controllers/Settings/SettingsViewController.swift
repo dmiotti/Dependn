@@ -62,10 +62,10 @@ final class SettingsViewController: UIViewController {
         super.viewDidLoad()
         
         sections = [
-            Section(type: .General, items: [ .Rate, .ContactUs, .Passcode, .Watch ]),
+            Section(type: .General, items: [ .ContactUs, .Passcode, .Watch, .Version ]),
             Section(type: .Data, items: [ .Export, .ManageAddictions, .MemorisePlaces ]),
             Section(type: .IAP, items: [ .Restore ]),
-            Section(type: .Others, items: [ .Share, .Tour, .Version ])
+            Section(type: .Others, items: [ .Rate, .Share, .Tour ])
         ]
         
         edgesForExtendedLayout = .None
