@@ -187,6 +187,7 @@ final class AddRecordViewController: UIViewController {
     
     func addBtnClicked(sender: UIBarButtonItem) {
         if let record = record {
+            
             record.addiction = chosenAddiction
             record.intensity = chosenIntensity
             record.feeling   = chosenFeeling
@@ -194,8 +195,11 @@ final class AddRecordViewController: UIViewController {
             record.date      = chosenDate
             record.place     = chosenPlace
             record.desire    = segmentedControl.selectedSegmentIndex == 1
+            
         } else {
+            
             let isDesire = segmentedControl.selectedSegmentIndex == 1
+            
             Record.insertNewRecord(chosenAddiction,
                                    intensity: chosenIntensity,
                                    feeling: chosenFeeling,
@@ -213,7 +217,11 @@ final class AddRecordViewController: UIViewController {
                 intensity: chosenIntensity,
                 conso: !isDesire,
                 fromAppleWatch: false)
+            
+            tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+            
         }
+        
         dismissViewControllerAnimated(true, completion: { finished in
             WatchSessionManager.sharedManager.updateApplicationContext()
         })

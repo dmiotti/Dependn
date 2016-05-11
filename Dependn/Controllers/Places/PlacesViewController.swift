@@ -154,11 +154,15 @@ final class PlacesViewController: UIViewController {
     // MARK: - Add/Delete from CoreData
     
     private func addPlace(name: String) {
+        selectedPlace = nil
+        
+        tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+        
         let place = Place.insertPlace(name, inContext: CoreDataStack.shared.managedObjectContext)
         
         Analytics.instance.trackAddPlace(name)
         
-        self.delegate?.placeController(self, didChoosePlace: place)
+        delegate?.placeController(self, didChoosePlace: place)
     }
     
     private func deletePlace(place: Place) {

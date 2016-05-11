@@ -172,7 +172,6 @@ extension SearchAdditionViewController: UITableViewDelegate {
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
         if indexPath.section < fetchedResultsController?.sections?.count {
             if let addiction = fetchedResultsController?.objectAtIndexPath(indexPath) as? Addiction {
                 selectedAddiction = addiction
@@ -190,12 +189,16 @@ extension SearchAdditionViewController: UITableViewDelegate {
         let addAction = UIAlertAction(title: L("addiction_list.new.add"), style: .Default) { action in
             if let name = alert.textFields?.first?.text {
                 do {
+                    self.selectedAddiction = nil
+                    
                     let addiction = try Addiction.findOrInsertNewAddiction(name,
                         inContext: self.managedObjectContext)
-                    self.searchBar.text = nil
+                    
                     self.selectedAddiction = addiction
                     
                     Analytics.instance.trackAddAddiction(addiction)
+                    
+                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
                     
                 } catch let err as NSError {
                     UIAlertController.presentAlertWithTitle(err.localizedDescription,
