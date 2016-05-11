@@ -66,12 +66,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         
         StyleSheet.customizeAppearance(window)
         
-        if InitialImportPlacesOperation.shouldImportPlaces() {
-            let queue = NSOperationQueue()
-            let op = InitialImportPlacesOperation()
-            queue.addOperation(op)
-        }
-        
         WatchSessionManager.sharedManager.startSession()
         WatchSessionManager.sharedManager.updateApplicationContext()
         
@@ -121,6 +115,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
+        importInitialPlacesIfNeeded()
         showPasscodeIfNeeded()
         guard let shortcutItem = launchedShortcutItem else {
             return
@@ -132,6 +127,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
         launchedShortcutItem = shortcutItem
         completionHandler(true)
+    }
+    
+    private func importInitialPlacesIfNeeded() {
+        if InitialImportPlacesOperation.shouldImportPlaces() {
+            NSOperationQueue().addOperation(InitialImportPlacesOperation())
+        }
     }
     
     // MARK: - Handle shortcut items
