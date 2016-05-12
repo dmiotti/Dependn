@@ -40,6 +40,10 @@ public class IAPHelper: NSObject {
         
         SKPaymentQueue.defaultQueue().addTransactionObserver(self)
     }
+    
+    deinit {
+        SKPaymentQueue.defaultQueue().removeTransactionObserver(self)
+    }
 }
 
 // MARK: - StoreKit API
