@@ -285,12 +285,25 @@ extension SettingsViewController: UITableViewDelegate {
             restorePurchases()
             
         case .Share:
-            break
+            shareApp()
         case .Tour:
             showTour()
         case .Version:
             break
         }
+    }
+    
+    private func shareApp() {
+        let shareText = L("settings.share_text")
+        let shareURL = NSURL(string: kSettingsAppStoreURL)!
+        let activityController = UIActivityViewController(activityItems: [shareText, shareURL], applicationActivities: nil)
+        activityController.setValue(L("settings.share.object"), forKey: "subject")
+        activityController.completionWithItemsHandler = { activityType, completed, items, error in
+            if let type = activityType where completed {
+                Analytics.instance.shareApp(type)
+            }
+        }
+        presentViewController(activityController, animated: true, completion: nil)
     }
     
     private func contactUs() {
@@ -344,6 +357,15 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate {
 }
 
 extension MFMailComposeViewController {
+    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    public override func childViewControllerForStatusBarStyle() -> UIViewController? {
+        return nil
+    }
+}
+
+extension MFMessageComposeViewController {
     public override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }

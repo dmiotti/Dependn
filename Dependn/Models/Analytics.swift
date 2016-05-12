@@ -110,5 +110,9 @@ final class Analytics {
     func trackExport(succeed: Bool) {
         Amplitude.instance().logEvent("Export", withEventProperties: ["result": succeed])
     }
+    
+    func shareApp(source: String) {
+        
+    }
 
 }

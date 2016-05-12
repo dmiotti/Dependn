@@ -10,6 +10,10 @@
 	<string>Dependn</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>01B9882C5B12575B3E01D6CCBCC27532266EAC01</key>
+		<string>https://github.com/JanX2/xlslib.git</string>
+		<key>9BA86B0453CA6143DB722D76272D0FB64506B9A5</key>
+		<string>github.com:dmiotti/JXLS.git</string>
 		<key>A70403463E8C1FCF4001B8F69C1BA9512E30A3C9</key>
 		<string>github.com:muxumuxu/dependn.git</string>
 	</dict>
@@ -17,6 +21,10 @@
 	<string>Dependn.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>01B9882C5B12575B3E01D6CCBCC27532266EAC01</key>
+		<string>../../../../misc/JXLS/External/xlslib</string>
+		<key>9BA86B0453CA6143DB722D76272D0FB64506B9A5</key>
+		<string>../../../../misc/JXLS</string>
 		<key>A70403463E8C1FCF4001B8F69C1BA9512E30A3C9</key>
 		<string>..</string>
 	</dict>
@@ -35,6 +43,22 @@
 			<string>A70403463E8C1FCF4001B8F69C1BA9512E30A3C9</string>
 			<key>IDESourceControlWCCName</key>
 			<string>dependn</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9BA86B0453CA6143DB722D76272D0FB64506B9A5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>JXLS</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>01B9882C5B12575B3E01D6CCBCC27532266EAC01</string>
+			<key>IDESourceControlWCCName</key>
+			<string>xlslib</string>
 		</dict>
 	</array>
 </dict>

@@ -489,3 +489,7 @@
 "places.recent_places" = "Mes lieux récents";
 
 "places.suggested_places" = "Lieux suggérés";
+
+"settings.share.object" = "Cette application peut t'intéresser : Dependn'";
+
+"settings.share_text" = "Regarde cette application, elle est disponible sur iPhone et Apple Watch et te permet de suivre une ou plusieurs dépendances au quotidien.";
