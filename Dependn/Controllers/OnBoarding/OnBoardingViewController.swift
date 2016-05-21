@@ -228,6 +228,7 @@ final class OnBoardingViewController: UIViewController {
     
     func okBtnClicked(sender: UIButton) {
         let controller = DependencyChooserViewController()
+        controller.style = .Onboarding
         navigationController?.pushViewController(controller, animated: true)
     }
 

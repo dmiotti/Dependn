@@ -14,7 +14,7 @@ protocol SearchAdditionViewControllerDelegate {
     func searchController(searchController: SearchAdditionViewController, didSelectAddiction addiction: Addiction)
 }
 
-final class SearchAdditionViewController: UIViewController {
+final class SearchAdditionViewController: SHNoBackButtonTitleViewController {
     
     private var searchResults = [Addiction]()
     
@@ -184,38 +184,9 @@ extension SearchAdditionViewController: UITableViewDelegate {
         }
     }
     private func addNewAddiction() {
-        let alert = UIAlertController(title: L("addiction_list.new.title"), message: L("addiction_list.new.message"), preferredStyle: .Alert)
-        let cancelAction = UIAlertAction(title: L("addiction_list.new.cancel"), style: .Cancel, handler: nil)
-        let addAction = UIAlertAction(title: L("addiction_list.new.add"), style: .Default) { action in
-            if let name = alert.textFields?.first?.text {
-                do {
-                    self.selectedAddiction = nil
-                    
-                    let addiction = try Addiction.findOrInsertNewAddiction(name,
-                        inContext: self.managedObjectContext)
-                    
-                    self.selectedAddiction = addiction
-                    
-                    Analytics.instance.trackAddAddiction(addiction)
-                    
-                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
-                    
-                } catch let err as NSError {
-                    UIAlertController.presentAlertWithTitle(err.localizedDescription,
-                        message: err.localizedRecoverySuggestion, inController: self)
-                }
-            } else {
-                UIAlertController.presentAlertWithTitle(L("addiction_list.new.error"),
-                    message: L("addiction_list.new.name_missing"), inController: self)
-            }
-        }
-        alert.addTextFieldWithConfigurationHandler { textField in
-            textField.placeholder = L("addiction_list.new.placeholder")
-            textField.autocapitalizationType = .Words
-        }
-        alert.addAction(cancelAction)
-        alert.addAction(addAction)
-        presentViewController(alert, animated: true, completion: nil)
+        let chooser = DependencyChooserViewController()
+        chooser.style = .FromAddRecord
+        navigationController?.pushViewController(chooser, animated: true)
     }
 }
 

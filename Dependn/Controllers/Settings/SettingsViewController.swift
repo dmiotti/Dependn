@@ -17,7 +17,7 @@ import MessageUI
 
 private let kSettingsAppStoreURL = "https://itunes.apple.com/fr/app/dependn-control-your-addictions/id1093903062?l=en&mt=8"
 
-final class SettingsViewController: UIViewController {
+final class SettingsViewController: SHNoBackButtonTitleViewController {
     
     private enum SectionType {
         case General

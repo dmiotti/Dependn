@@ -11,13 +11,13 @@ import Amplitude_iOS
 import CoreData
 import WatchConnectivity
 
-final class Analytics {
+final class Analytics: NSObject {
     
     static let instance = Analytics()
     
     private let context: NSManagedObjectContext
     
-    private init() {
+    private override init() {
         #if DEBUG
             Amplitude.instance().initializeApiKey("e0aaa26848db06fa3c1d0ccd7cf283db")
         #else
@@ -40,18 +40,15 @@ final class Analytics {
         context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         context.parentContext = CoreDataStack.shared.managedObjectContext
         
+        super.init()
+        
         updateTrackingEnabledFromDefaults()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Analytics.applicationDidBecomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
     
-    func appLaunch() {
-        updateTrackingEnabledFromDefaults()
-        Amplitude.instance().updateLocation()
-        Amplitude.instance().logEvent("AppLaunch")
-    }
-    
-    func updateTrackingEnabledFromDefaults() {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        Amplitude.instance().optOut = !defaults.boolForKey("trackingEnabled")
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     func updateUserProperties() {
@@ -119,4 +116,13 @@ final class Analytics {
         Amplitude.instance().logEvent("Share", withEventProperties: [ "target": target ])
     }
 
+    func applicationDidBecomeActive(notification: NSNotification) {
+        updateTrackingEnabledFromDefaults()
+        Amplitude.instance().updateLocation()
+    }
+    
+    private func updateTrackingEnabledFromDefaults() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        Amplitude.instance().optOut = !defaults.boolForKey("trackingEnabled")
+    }
 }

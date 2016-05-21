@@ -24,7 +24,21 @@ func <(lhs: SuggestedAddiction, rhs: SuggestedAddiction) -> Bool {
     return lhs.name < rhs.name
 }
 
-final class DependencyChooserViewController: UIViewController {
+enum DependencyChooserStyle {
+    case Onboarding
+    case FromSettings
+    case FromAddRecord
+}
+
+final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
+    
+    var style: DependencyChooserStyle = .Onboarding {
+        didSet {
+            if isViewLoaded() {
+                configureInterfaceBasedOnStyle()
+            }
+        }
+    }
     
     private var cancelBtn: UIBarButtonItem!
     private var doneBtn: UIBarButtonItem!
@@ -44,14 +58,6 @@ final class DependencyChooserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
-        navigationController?.navigationBar.tintColor = UIColor.appBlueColor()
-        
-        updateTitle(L("onboarding.addiction.title"), blueBackground: false)
-
-        configureBarButtons()
-        
         headerView = UIView()
         view.addSubview(headerView)
         tableView = UITableView(frame: .zero, style: .Grouped)
@@ -67,6 +73,11 @@ final class DependencyChooserViewController: UIViewController {
         registerNotificationObservers()
         
         fillWithData()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        configureInterfaceBasedOnStyle()
     }
     
     deinit {
@@ -92,6 +103,11 @@ final class DependencyChooserViewController: UIViewController {
             SuggestedAddiction(name: L("suggested.addictions.ecigarette"),  color: "#e74c3c"),
             SuggestedAddiction(name: L("suggested.addictions.sport"),       color: "#2c3e50")
         ])
+        
+        if let currentAddictions = try? Addiction.getAllAddictions(inContext: CoreDataStack.shared.managedObjectContext) {
+            let names = currentAddictions.map({ $0.name })
+            proposedAddictions = proposedAddictions.filter({ !names.contains($0.name) })
+        }
     }
     
     // MARK: - Button Events
@@ -113,7 +129,12 @@ final class DependencyChooserViewController: UIViewController {
             print("Error while inserting new addiction: \(err)")
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        switch style {
+        case .Onboarding:
+            dismissViewControllerAnimated(true, completion: nil)
+        default:
+            navigationController?.popViewControllerAnimated(true)
+        }
     }
     
     func cancelBtnClicked(sender: UIBarButtonItem) {
@@ -122,14 +143,51 @@ final class DependencyChooserViewController: UIViewController {
     
     // MARK: - Configure UI Elements
     
-    private func configureBarButtons() {
-        cancelBtn = UIBarButtonItem(title: L("onboarding.addiction.cancel"), style: .Plain, target: self, action: #selector(DependencyChooserViewController.cancelBtnClicked(_:)))
-        cancelBtn.setTitleTextAttributes(StyleSheet.cancelBtnAttrs, forState: .Normal)
-        navigationItem.leftBarButtonItem = cancelBtn
-        
-        doneBtn = UIBarButtonItem(title: L("onboarding.addiction.done"), style: .Done, target: self, action: #selector(DependencyChooserViewController.doneBtnClicked(_:)))
-        doneBtn.setTitleTextAttributes(StyleSheet.doneBtnAttrs, forState: .Normal)
-        navigationItem.rightBarButtonItem = doneBtn
+    private func configureInterfaceBasedOnStyle() {
+        switch style {
+        case .Onboarding:
+            navigationController?.setNavigationBarHidden(false, animated: true)
+            navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+            navigationController?.navigationBar.tintColor = UIColor.appBlueColor()
+            
+            updateTitle(L("onboarding.addiction.title"), blueBackground: false)
+            
+            cancelBtn = UIBarButtonItem(title: L("onboarding.addiction.cancel"),
+                                        style: .Plain,
+                                        target: self,
+                                        action: #selector(DependencyChooserViewController.cancelBtnClicked(_:)))
+            cancelBtn.setTitleTextAttributes(StyleSheet.cancelBtnAttrs, forState: .Normal)
+            navigationItem.leftBarButtonItem = cancelBtn
+            
+            doneBtn = UIBarButtonItem(title: L("onboarding.addiction.done"),
+                                      style: .Done,
+                                      target: self,
+                                      action: #selector(DependencyChooserViewController.doneBtnClicked(_:)))
+            doneBtn.setTitleTextAttributes(StyleSheet.doneBtnAttrs, forState: .Normal)
+            navigationItem.rightBarButtonItem = doneBtn
+        case .FromSettings:
+            updateTitle(L("onboarding.addiction.title"), blueBackground: true)
+            
+            doneBtn = UIBarButtonItem(title: L("onboarding.addiction.done"),
+                                      style: .Done,
+                                      target: self,
+                                      action: #selector(DependencyChooserViewController.doneBtnClicked(_:)))
+            doneBtn.setTitleTextAttributes([
+                NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold),
+                NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSKernAttributeName: -0.36
+                ], forState: .Normal)
+            navigationItem.rightBarButtonItem = doneBtn
+        case .FromAddRecord:
+            updateTitle(L("onboarding.addiction.title"), blueBackground: false)
+            
+            doneBtn = UIBarButtonItem(title: L("onboarding.addiction.done"),
+                                      style: .Done,
+                                      target: self,
+                                      action: #selector(DependencyChooserViewController.doneBtnClicked(_:)))
+            doneBtn.setTitleTextAttributes(StyleSheet.doneBtnAttrs, forState: .Normal)
+            navigationItem.rightBarButtonItem = doneBtn
+        }
     }
     
     private func configureSearchBar() {
@@ -228,11 +286,7 @@ final class DependencyChooserViewController: UIViewController {
         let cancelAction = UIAlertAction(title: L("addiction_list.new.cancel"), style: .Cancel, handler: nil)
         let addAction = UIAlertAction(title: L("addiction_list.new.add"), style: .Default) { action in
             if let name = alert.textFields?.first?.text {
-                let addiction = SuggestedAddiction(name: name, color: UIColor.randomFlatColor().hexValue())
-                self.proposedAddictions.append(addiction)
-                self.selectedAddictions.append(addiction)
-                let idxPath = NSIndexPath(forRow: self.proposedAddictions.count - 1, inSection: 0)
-                self.tableView.insertRowsAtIndexPaths([idxPath], withRowAnimation: .Automatic)
+                self.addAddictionWithName(name)
             } else {
                 UIAlertController.presentAlertWithTitle(L("addiction_list.new.error"),
                                                         message: L("addiction_list.new.name_missing"), inController: self)
@@ -245,6 +299,22 @@ final class DependencyChooserViewController: UIViewController {
         alert.addAction(cancelAction)
         alert.addAction(addAction)
         presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    private func addAddictionWithName(name: String) {
+        do {
+            let addiction = try Addiction.findOrInsertNewAddiction(name, inContext: CoreDataStack.shared.managedObjectContext)
+            
+            /// Track selected addictions
+            Analytics.instance.trackAddAddiction(addiction)
+        } catch let err as NSError {
+            UIAlertController.presentAlertWithTitle(err.localizedDescription,
+                                                    message: err.localizedRecoverySuggestion, inController: self)
+        }
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .Default
     }
 
 }

@@ -94,8 +94,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             application.shortcutItems = [ addShortcut ]
         }
         
-        Analytics.instance.appLaunch()
-        
         return shouldPerformAdditionalDelegateHandling
     }
     
@@ -107,7 +105,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(application: UIApplication) {
         showPasscodeIfNeeded()
-        Analytics.instance.appLaunch()
     }
     
     func applicationWillTerminate(application: UIApplication) {

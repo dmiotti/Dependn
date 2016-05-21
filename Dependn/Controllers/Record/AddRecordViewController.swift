@@ -14,7 +14,7 @@ import SwiftyUserDefaults
 import CocoaLumberjack
 
 // MARK: - UIViewController
-final class AddRecordViewController: UIViewController {
+final class AddRecordViewController: SHNoBackButtonTitleViewController {
     
     private enum SectionType {
         case Addiction

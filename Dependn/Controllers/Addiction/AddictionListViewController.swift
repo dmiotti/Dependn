@@ -11,7 +11,7 @@ import SwiftHelpers
 import CoreData
 import CocoaLumberjack
 
-final class AddictionListViewController: UIViewController {
+final class AddictionListViewController: SHNoBackButtonTitleViewController {
     
     private var tableView: UITableView!
     private var addBtn: UIBarButtonItem!
@@ -76,23 +76,9 @@ final class AddictionListViewController: UIViewController {
     }
     
     func addBtnClicked(sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: L("addiction_list.new.title"), message: L("addiction_list.new.message"), preferredStyle: .Alert)
-        let cancelAction = UIAlertAction(title: L("addiction_list.new.cancel"), style: .Cancel, handler: nil)
-        let addAction = UIAlertAction(title: L("addiction_list.new.add"), style: .Default) { action in
-            if let name = alert.textFields?.first?.text {
-                self.addAddictionWithName(name)
-            } else {
-                UIAlertController.presentAlertWithTitle(L("addiction_list.new.error"),
-                    message: L("addiction_list.new.name_missing"), inController: self)
-            }
-        }
-        alert.addTextFieldWithConfigurationHandler { textField in
-            textField.placeholder = L("addiction_list.new.placeholder")
-            textField.autocapitalizationType = .Words
-        }
-        alert.addAction(cancelAction)
-        alert.addAction(addAction)
-        presentViewController(alert, animated: true, completion: nil)
+        let chooser = DependencyChooserViewController()
+        chooser.style = .FromSettings
+        navigationController?.pushViewController(chooser, animated: true)
     }
     
     // MARK: - Add/Delete from CoreData
@@ -112,19 +98,6 @@ final class AddictionListViewController: UIViewController {
         alert.addAction(cancelAction)
         alert.addAction(okAction)
         presentViewController(alert, animated: true, completion: nil)
-    }
-    
-    private func addAddictionWithName(name: String) {
-        do {
-            let addiction = try Addiction.findOrInsertNewAddiction(name,
-                inContext: managedObjectContext)
-            
-            /// Track selected addictions
-            Analytics.instance.trackAddAddiction(addiction)
-        } catch let err as NSError {
-            UIAlertController.presentAlertWithTitle(err.localizedDescription,
-                message: err.localizedRecoverySuggestion, inController: self)
-        }
     }
     
     // MARK: - Keyboard Notifications

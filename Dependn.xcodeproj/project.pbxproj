@@ -25,6 +25,8 @@
 		581DC5DF1C8B3C5D006DE551 /* AddictionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5DE1C8B3C5D006DE551 /* AddictionListViewController.swift */; };
 		581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */; };
 		581DC5E71C8B73D3006DE551 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E61C8B73D3006DE551 /* UserDefaults.swift */; };
+		5826034C1CF0B47900EA9F57 /* DependencyChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5826034A1CF0B47900EA9F57 /* DependencyChooserCell.swift */; };
+		5826034D1CF0B47900EA9F57 /* DependencyChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5826034B1CF0B47900EA9F57 /* DependencyChooserViewController.swift */; };
 		582820C91CAF1288002DC9AF /* OkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820C81CAF1288002DC9AF /* OkButton.swift */; };
 		582820CB1CAF1DD7002DC9AF /* HistoryEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */; };
 		583C01501CBA565700E0D41C /* InitialImportPlacesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */; };
@@ -36,7 +38,6 @@
 		583C9C721CCEE28500E6FD9D /* DayInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C711CCEE28500E6FD9D /* DayInterfaceController.swift */; };
 		583C9C741CCEEC3400E6FD9D /* DefaultTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C731CCEEC3400E6FD9D /* DefaultTableRowController.swift */; };
 		583C9C761CCEEC5700E6FD9D /* AddictionListInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */; };
-		58416A7A1CB4818D00DB1A4B /* DependencyChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */; };
 		5841B3341CD228910024AC99 /* NewRecordInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5841B3331CD228910024AC99 /* NewRecordInterfaceController.swift */; };
 		5841B3381CD2495A0024AC99 /* GlanceInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5841B3371CD2495A0024AC99 /* GlanceInterfaceController.swift */; };
 		584897861CAC641E00CA18CE /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584897851CAC641E00CA18CE /* OnBoardingViewController.swift */; };
@@ -74,7 +75,6 @@
 		58BB15921CA20D0D00E3E06A /* PlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB15911CA20D0D00E3E06A /* PlacesViewController.swift */; };
 		58BB15941CA20D3400E3E06A /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB15931CA20D3400E3E06A /* PlaceCell.swift */; };
 		58CF71821CA815090092458F /* ShortStatsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CF71811CA815090092458F /* ShortStatsOperation.swift */; };
-		58D7887D1CB16BE500ED3413 /* DependencyChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D7887C1CB16BE500ED3413 /* DependencyChooserViewController.swift */; };
 		58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */; };
 		58DC7A0D1C8CD873007F9F5D /* NewAddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */; };
 		58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF629E1C83BDEE0035F608 /* AppDelegate.swift */; };
@@ -186,6 +186,8 @@
 		581DC5DE1C8B3C5D006DE551 /* AddictionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionListViewController.swift; sourceTree = "<group>"; };
 		581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionTableViewCell.swift; sourceTree = "<group>"; };
 		581DC5E61C8B73D3006DE551 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		5826034A1CF0B47900EA9F57 /* DependencyChooserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserCell.swift; sourceTree = "<group>"; };
+		5826034B1CF0B47900EA9F57 /* DependencyChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserViewController.swift; sourceTree = "<group>"; };
 		582820C81CAF1288002DC9AF /* OkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OkButton.swift; sourceTree = "<group>"; };
 		582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryEmptyView.swift; sourceTree = "<group>"; };
 		583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportPlacesOperation.swift; sourceTree = "<group>"; };
@@ -196,7 +198,6 @@
 		583C9C711CCEE28500E6FD9D /* DayInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayInterfaceController.swift; sourceTree = "<group>"; };
 		583C9C731CCEEC3400E6FD9D /* DefaultTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTableRowController.swift; sourceTree = "<group>"; };
 		583C9C751CCEEC5700E6FD9D /* AddictionListInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionListInterfaceController.swift; sourceTree = "<group>"; };
-		58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserCell.swift; sourceTree = "<group>"; };
 		5841B3331CD228910024AC99 /* NewRecordInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRecordInterfaceController.swift; sourceTree = "<group>"; };
 		5841B3371CD2495A0024AC99 /* GlanceInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlanceInterfaceController.swift; sourceTree = "<group>"; };
 		584897851CAC641E00CA18CE /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -239,7 +240,6 @@
 		58BB15911CA20D0D00E3E06A /* PlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesViewController.swift; sourceTree = "<group>"; };
 		58BB15931CA20D3400E3E06A /* PlaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
 		58CF71811CA815090092458F /* ShortStatsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortStatsOperation.swift; sourceTree = "<group>"; };
-		58D7887C1CB16BE500ED3413 /* DependencyChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserViewController.swift; sourceTree = "<group>"; };
 		58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecordTextViewController.swift; sourceTree = "<group>"; };
 		58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAddictionTableViewCell.swift; sourceTree = "<group>"; };
 		58DF629E1C83BDEE0035F608 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -342,14 +342,21 @@
 			path = Addiction;
 			sourceTree = "<group>";
 		};
+		582603491CF0B47900EA9F57 /* DependencyChooser */ = {
+			isa = PBXGroup;
+			children = (
+				5826034B1CF0B47900EA9F57 /* DependencyChooserViewController.swift */,
+				5826034A1CF0B47900EA9F57 /* DependencyChooserCell.swift */,
+			);
+			path = DependencyChooser;
+			sourceTree = "<group>";
+		};
 		584897841CAC60C800CA18CE /* OnBoarding */ = {
 			isa = PBXGroup;
 			children = (
 				5864FD851CDFCEE500656664 /* PortraitNavigationController.swift */,
 				584897851CAC641E00CA18CE /* OnBoardingViewController.swift */,
 				582820C81CAF1288002DC9AF /* OkButton.swift */,
-				58D7887C1CB16BE500ED3413 /* DependencyChooserViewController.swift */,
-				58416A791CB4818D00DB1A4B /* DependencyChooserCell.swift */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -505,6 +512,7 @@
 			children = (
 				58548BC71C8BBBB300C7C940 /* Common */,
 				584897841CAC60C800CA18CE /* OnBoarding */,
+				582603491CF0B47900EA9F57 /* DependencyChooser */,
 				58DF62A51C83BDEE0035F608 /* History */,
 				58548BD41C8BE18100C7C940 /* Record */,
 				58BB15901CA20D0D00E3E06A /* Places */,
@@ -838,13 +846,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				581DC5D41C8B2ED0006DE551 /* Record+CoreDataProperties.swift in Sources */,
-				58D7887D1CB16BE500ED3413 /* DependencyChooserViewController.swift in Sources */,
 				58548BC91C8BBBCF00C7C940 /* RecordCircleTypeView.swift in Sources */,
 				581DC5D31C8B2ED0006DE551 /* Addiction.swift in Sources */,
 				582820C91CAF1288002DC9AF /* OkButton.swift in Sources */,
 				58548BE01C8BE18100C7C940 /* NewDateTableViewCell.swift in Sources */,
 				58858ADD1C84520100E8A794 /* Dependn.xcdatamodeld in Sources */,
 				5864FD7A1CDFC2F900656664 /* CSVExportOperation.swift in Sources */,
+				5826034C1CF0B47900EA9F57 /* DependencyChooserCell.swift in Sources */,
 				581DC5E71C8B73D3006DE551 /* UserDefaults.swift in Sources */,
 				58DF62CE1C83BDEE0035F608 /* CoreDataStack.swift in Sources */,
 				58548BE21C8BE18100C7C940 /* NewPlaceTableViewCell.swift in Sources */,
@@ -855,6 +863,7 @@
 				586EDA361CA3567D00DAE496 /* TimeSinceLastRecord.swift in Sources */,
 				58DF62C61C83BDEE0035F608 /* HistoryTableViewCell.swift in Sources */,
 				58548BBF1C8BA8D900C7C940 /* PasscodeViewController.swift in Sources */,
+				5826034D1CF0B47900EA9F57 /* DependencyChooserViewController.swift in Sources */,
 				582820CB1CAF1DD7002DC9AF /* HistoryEmptyView.swift in Sources */,
 				581DC5DF1C8B3C5D006DE551 /* AddictionListViewController.swift in Sources */,
 				587CB0F31CD157A000FCDB48 /* WatchSessionManager.swift in Sources */,
@@ -893,7 +902,6 @@
 				580BB9D31CDF8BC10068D413 /* Analytics.swift in Sources */,
 				581AFC2D1CE15BC700F02663 /* TableHeaderView.swift in Sources */,
 				583C9C701CCECA9500E6FD9D /* WatchStatsOperation.swift in Sources */,
-				58416A7A1CB4818D00DB1A4B /* DependencyChooserCell.swift in Sources */,
 				58DF62D41C83BDEE0035F608 /* NearestPlaceOperation.swift in Sources */,
 				581DC5DC1C8B38AD006DE551 /* SettingsTableViewCell.swift in Sources */,
 				15FB7F6E4E0BE28215AB023F /* StatsPanelScroller.swift in Sources */,
