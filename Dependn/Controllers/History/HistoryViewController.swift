@@ -209,55 +209,6 @@ final class HistoryViewController: UIViewController {
         DeeplinkManager.invokeAddEntry(inContext: self)
     }
     
-    // MARK: - Export
-    
-    private func ensureExportXLSIsPurchased(completion: Bool -> Void) {
-        let isPurchased = DependnProducts.store.isProductPurchased(DependnProducts.ExportXLS)
-        if isPurchased {
-            completion(isPurchased)
-        } else {
-            HUD.show(.Progress)
-            DependnProducts.store.requestProducts{ success, products in
-                HUD.hide { finished in
-                    if let products = products {
-                        let exportProducts = products.filter {
-                            $0.productIdentifier == DependnProducts.ExportXLS
-                        }
-                        if let product = exportProducts.first {
-                            let alert = UIAlertController(title: L("export.title"), message: L("export.message"), preferredStyle: .Alert)
-                            let okAction = UIAlertAction(title: L("yes"), style: .Default) { action in
-                                DependnProducts.store.buyProduct(product) { succeed, error in
-                                    completion(succeed)
-                                }
-                            }
-                            let cancelAction = UIAlertAction(title: L("no"), style: .Cancel, handler: nil)
-                            alert.addAction(cancelAction)
-                            alert.addAction(okAction)
-                            self.presentViewController(alert, animated: true, completion: nil)
-                            
-                            return
-                        }
-                    }
-                    completion(false)
-                }
-            }
-        }
-    }
-    
-    private func exportPath() -> String {
-        let dateFormatter = NSDateFormatter(dateFormat: "dd'_'MM'_'yyyy'_'HH'_'mm")
-        let filename = "export_\(dateFormatter.stringFromDate(NSDate()))"
-        return applicationCachesDirectory
-            .URLByAppendingPathComponent(filename)
-            .URLByAppendingPathExtension("xlsx").path!
-    }
-    
-    private lazy var applicationCachesDirectory: NSURL = {
-        let urls = NSFileManager.defaultManager()
-            .URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1]
-    }()
-    
 }
 
 // MARK: - UITableViewDataSource
