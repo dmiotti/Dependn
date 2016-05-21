@@ -29,11 +29,12 @@ final class InitialImportPlacesOperation: CoreDataOperation {
     
     override func execute() {
         context.performBlockAndWait {
-            for name in self.placeNames {
-                Place.insertPlace(name, inContext: self.context)
-            }
-            
             do {
+                for name in self.placeNames {
+                    if try Place.findByName(name, inContext: self.context) == nil {
+                        Place.insertPlace(name, inContext: self.context)
+                    }
+                }
                 try self.context.cascadeSave()
                 Defaults[.initialPlacesImported] = true
             } catch let err as NSError {
