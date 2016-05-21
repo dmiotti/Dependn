@@ -115,8 +115,8 @@ final class Analytics {
         Amplitude.instance().logRevenue(productIdentifier, quantity: 1, price: price)
     }
     
-    func shareApp(source: String) {
-        
+    func shareApp(target: String) {
+        Amplitude.instance().logEvent("Share", withEventProperties: [ "target": target ])
     }
 
 }
