@@ -19,6 +19,7 @@ final class InitialImportPlacesOperation: CoreDataOperation {
         L("suggested.places.ontheway"),
         L("suggested.places.beforelunch"),
         L("suggested.places.afterlunch"),
+        L("suggested.places.infront_computer"),
         L("suggested.places.workbreak"),
         L("suggested.places.phone"),
         L("suggested.places.waiting"),

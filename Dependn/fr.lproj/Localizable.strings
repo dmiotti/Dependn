@@ -493,3 +493,5 @@
 "settings.share.object" = "Cette application peut t'intéresser : Dependn'";
 
 "settings.share_text" = "Regarde cette application, elle est disponible sur iPhone et Apple Watch et te permet de suivre une ou plusieurs dépendances au quotidien.";
+
+"suggested.places.infront_computer" = "Devant l'ordinateur";
