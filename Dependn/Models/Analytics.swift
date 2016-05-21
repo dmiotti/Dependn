@@ -111,6 +111,10 @@ final class Analytics {
         Amplitude.instance().logEvent("Export", withEventProperties: ["result": succeed])
     }
     
+    func trackRevenue(productIdentifier: String, price: Double, receipt: NSData? = nil) {
+        Amplitude.instance().logRevenue(productIdentifier, quantity: 1, price: price)
+    }
+    
     func shareApp(source: String) {
         
     }

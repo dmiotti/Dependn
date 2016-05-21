@@ -26,6 +26,8 @@ public class IAPHelper: NSObject {
     private var purchaseCompletionHandler: ProductsPurchaseCompletionHandler?
     private var restoreCompletionHandler: ProductsPurchaseCompletionHandler?
     
+    private var allProducts: [SKProduct]?
+    
     init(productIds: Set<ProductIdentifier>) {
         productIdentifiers = productIds
         
@@ -84,6 +86,7 @@ extension IAPHelper {
 extension IAPHelper: SKProductsRequestDelegate {
     public func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
         let products = response.products
+        allProducts = products
         productsRequestCompletionHandler?(success: true, products: products)
         clearRequestAndHandler()
     }
@@ -124,8 +127,17 @@ extension IAPHelper: SKPaymentTransactionObserver {
     }
     
     private func completeTransaction(transaction: SKPaymentTransaction) {
-        deliverPurchaseNotificatioForIdentifier(transaction.payment.productIdentifier)
+        let productIdentifier = transaction.payment.productIdentifier
+        deliverPurchaseNotificatioForIdentifier(productIdentifier)
         SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+        
+        if let product = allProducts?.filter({ $0.productIdentifier == productIdentifier }).first {
+            if let URL = NSBundle.mainBundle().appStoreReceiptURL, receipt = NSData(contentsOfURL: URL) {
+                Analytics.instance.trackRevenue(productIdentifier, price: product.price.doubleValue, receipt: receipt)
+            } else {
+                Analytics.instance.trackRevenue(productIdentifier, price: product.price.doubleValue)
+            }
+        }
         
         purchaseCompletionHandler?(true, transaction.error)
         purchaseCompletionHandler = nil
