@@ -156,8 +156,6 @@ final class PlacesViewController: UIViewController {
     private func addPlace(name: String) {
         selectedPlace = nil
         
-        tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
-        
         let place = Place.insertPlace(name, inContext: CoreDataStack.shared.managedObjectContext)
         
         Analytics.instance.trackAddPlace(name)
