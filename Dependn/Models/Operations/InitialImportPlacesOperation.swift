@@ -36,15 +36,32 @@ final class InitialImportPlacesOperation: CoreDataOperation {
                         Place.insertPlace(name, inContext: self.context)
                     }
                 }
-                try self.context.cascadeSave()
                 Defaults[.initialPlacesImported] = true
             } catch let err as NSError {
-                print("Error while saving context: \(err)")
+                print("Error while adding place: \(err)")
                 self.error = err
             }
         }
         
+        saveContext()
+        
         finish()
+    }
+    
+    private func saveContext() {
+        var contextToSave: NSManagedObjectContext? = context
+        while let ctx = contextToSave {
+            ctx.performBlockAndWait {
+                do {
+                    if ctx.hasChanges {
+                        try ctx.save()
+                    }
+                    contextToSave = contextToSave?.parentContext
+                } catch let err as NSError {
+                    print("Error while saving context: \(err)")
+                }
+            }
+        }
     }
     
     static func shouldImportPlaces() -> Bool {

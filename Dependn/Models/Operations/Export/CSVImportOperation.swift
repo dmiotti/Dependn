@@ -49,11 +49,11 @@ final class CSVImportOperation: SHOperation {
                             try self.deleteAllAddictions()
                             try self.deleteAllPlaces()
                             try self.importFileAtURL(file)
-                            try self.context.cascadeSave()
                         } catch let err as NSError {
                             self.error = err
                         }
                     }
+                    self.saveContext()
                     dispatch_async(dispatch_get_main_queue()) {
                         HUD.hide(animated: true, completion: { finished in
                             self.finish()
@@ -231,6 +231,22 @@ final class CSVImportOperation: SHOperation {
             return Double(value.floatValue)
         }
         return nil
+    }
+    
+    private func saveContext() {
+        var contextToSave: NSManagedObjectContext? = context
+        while let ctx = contextToSave {
+            ctx.performBlockAndWait {
+                do {
+                    if ctx.hasChanges {
+                        try ctx.save()
+                    }
+                    contextToSave = contextToSave?.parentContext
+                } catch let err as NSError {
+                    print("Error while saving context: \(err)")
+                }
+            }
+        }
     }
     
 }

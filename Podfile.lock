@@ -18,7 +18,7 @@ PODS:
   - libxlsxwriter (0.3.2)
   - PKHUD (3.1.0)
   - Result (2.0.0)
-  - SnapKit (0.20.0)
+  - SnapKit (0.21.0)
   - SwiftHelpers (1.0.5)
   - SwiftyUserDefaults (2.2.0)
 
@@ -46,7 +46,7 @@ CHECKOUT OPTIONS:
     :commit: 07734b1af418dd9be25262cd74cbbc17a6bbb1c9
     :git: git@github.com:dmiotti/libxlsxwriter.git
   SwiftHelpers:
-    :commit: 45f5faa54ec0236c04887e8b202b1c722a4ca10f
+    :commit: d1dd7a1dced3de97e60cfcf3c7d014fdc8ad12fa
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:
@@ -59,7 +59,7 @@ SPEC CHECKSUMS:
   libxlsxwriter: 40d5a1e4f9006e08c3f44399a10135694589710c
   PKHUD: 4167eccdb1b3a892fd80ce2b51cb6ba412a889ab
   Result: 9e75e1111c774c6ac594e14907b15057053a7959
-  SnapKit: 5fce3c1bbbf1fbd31de9aa92f33eb9fa03f15650
+  SnapKit: 2756fe24b706367af224c9c508d2f9166d03354c
   SwiftHelpers: fea8277010f64092b5aef5c78f14495650c756fe
   SwiftyUserDefaults: e7c8197a9d4068702e7f2406a968cae413b8de27
 
