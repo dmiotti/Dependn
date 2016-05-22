@@ -29,7 +29,11 @@ extension Record {
             .insertNewObjectForEntityForName(Record.entityName,
                                              inManagedObjectContext: context) as! Record
         record.intensity = intensity
-        record.addiction = addiction
+        if let addiction = context.objectWithID(addiction.objectID) as? Addiction {
+            record.addiction = addiction
+        } else {
+            record.addiction = addiction
+        }
         record.feeling = feeling
         record.comment = comment
         record.place = place
