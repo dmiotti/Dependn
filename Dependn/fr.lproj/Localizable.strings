@@ -495,3 +495,9 @@
 "settings.share_text" = "Regarde cette application, elle est disponible sur iPhone et Apple Watch et te permet de suivre une ou plusieurs dépendances au quotidien.";
 
 "suggested.places.infront_computer" = "Devant l'ordinateur";
+
+"push.daily.yesterday" = "Hier : %@";
+
+"settings.use_pushes" = "Recevoir un résumé quotidien";
+
+"daily.push.title" = "Résumé";

@@ -124,58 +124,64 @@ func +=<K, V> (inout left: [K : V], right: [K : V]) {
 
 extension WatchSessionManager {
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
-        
-        if let action = message["action"] as? String {
-            switch action {
-            case "add":
-                let data = message["data"] as? WatchDictionary
-                let rawAddiction = data?["addiction"] as? String
-                let rawPlace = data?["place"] as? String
-                let rawIntensity = data?["intensity"] as? String
-                let isCraving = data?["type"] as? String == "craving"
-                
-                if let
-                    rawAddiction = rawAddiction,
-                    rawPlace = rawPlace,
-                    rawIntensity = rawIntensity,
-                    intensity = Float(rawIntensity) {
-                    
-                    let ctx = CoreDataStack.shared.managedObjectContext
-                    do {
-                        
-                        let addiction = try Addiction.findByName(rawAddiction, inContext: ctx)
-                        let place = try Place.findByName(rawPlace, inContext: ctx)
-                        
-                        if let add = addiction, place = place {
-                            Record.insertNewRecord(
-                                add,
-                                intensity: intensity,
-                                feeling: nil,
-                                comment: nil,
-                                place: place,
-                                latitude: nil,
-                                longitude: nil, desire:
-                                isCraving,
-                                inContext: ctx)
-                            
-                            Analytics.instance.trackAddNewRecord(
-                                add.name,
-                                place: place.name,
-                                intensity: intensity,
-                                conso: !isCraving,
-                                fromAppleWatch: true)
-                        }
-                        
-                        
-                    } catch let err as NSError {
-                        print("Error while replying to Apple Watch: \(err)")
-                    }
-                }
-                break
-            default:
-                break
-            }
+        guard let action = message["action"] as? String else {
+            buildApplicationContext { replyHandler($0) }
+            return
+        }
+
+        switch action {
+        case "add":
+            let data = message["data"] as? WatchDictionary
+            let rawAddiction = data?["addiction"] as? String
+            let rawPlace = data?["place"] as? String
+            let rawIntensity = data?["intensity"] as? String
+            let isCraving = data?["type"] as? String == "craving"
             
+            if let
+                rawAddiction = rawAddiction,
+                rawPlace = rawPlace,
+                rawIntensity = rawIntensity,
+                intensity = Float(rawIntensity) {
+                
+                let ctx = CoreDataStack.shared.managedObjectContext
+                do {
+                    
+                    let addiction = try Addiction.findByName(rawAddiction, inContext: ctx)
+                    let place = try Place.findByName(rawPlace, inContext: ctx)
+                    
+                    if let add = addiction, place = place {
+                        Record.insertNewRecord(
+                            add,
+                            intensity: intensity,
+                            feeling: nil,
+                            comment: nil,
+                            place: place,
+                            latitude: nil,
+                            longitude: nil, desire:
+                            isCraving,
+                            inContext: ctx)
+                        
+                        Analytics.instance.trackAddNewRecord(
+                            add.name,
+                            place: place.name,
+                            intensity: intensity,
+                            conso: !isCraving,
+                            fromAppleWatch: true)
+
+                        PushSchedulerOperation.schedule {
+                            self.buildApplicationContext {
+                                replyHandler($0)
+                            }
+                        }
+                    }
+                    
+                    
+                } catch let err as NSError {
+                    print("Error while replying to Apple Watch: \(err)")
+                }
+            }
+
+        default:
             buildApplicationContext { replyHandler($0) }
         }
     }

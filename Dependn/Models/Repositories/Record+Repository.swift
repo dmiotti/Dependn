@@ -91,5 +91,18 @@ extension Record {
         
         return count
     }
+
+    class func countInRange(addiction: Addiction, start: NSDate, end: NSDate, isDesire: Bool, inContext context: NSManagedObjectContext) -> Int {
+        let req = entityFetchRequest()
+        req.predicate = NSPredicate(format: "addiction == %@ AND date >= %@ AND date <= %@ AND desire == %@", addiction, start, end, isDesire)
+
+        var error: NSError?
+        let count = context.countForFetchRequest(req, error: &error)
+        if let err = error {
+            DDLogError("Error while counting records in range (\(start), \(end)): \(err)")
+        }
+        
+        return count
+    }
     
 }

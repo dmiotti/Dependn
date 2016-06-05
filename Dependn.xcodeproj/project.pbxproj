@@ -74,6 +74,7 @@
 		58BB158F1CA1F98500E3E06A /* Place+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB158E1CA1F98500E3E06A /* Place+Repository.swift */; };
 		58BB15921CA20D0D00E3E06A /* PlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB15911CA20D0D00E3E06A /* PlacesViewController.swift */; };
 		58BB15941CA20D3400E3E06A /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB15931CA20D3400E3E06A /* PlaceCell.swift */; };
+		58CC47BD1D04C0A400F292F4 /* PushSchedulerOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CC47BC1D04C0A400F292F4 /* PushSchedulerOperation.swift */; };
 		58CF71821CA815090092458F /* ShortStatsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CF71811CA815090092458F /* ShortStatsOperation.swift */; };
 		58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */; };
 		58DC7A0D1C8CD873007F9F5D /* NewAddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */; };
@@ -239,6 +240,7 @@
 		58BB158E1CA1F98500E3E06A /* Place+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Place+Repository.swift"; sourceTree = "<group>"; };
 		58BB15911CA20D0D00E3E06A /* PlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesViewController.swift; sourceTree = "<group>"; };
 		58BB15931CA20D3400E3E06A /* PlaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
+		58CC47BC1D04C0A400F292F4 /* PushSchedulerOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushSchedulerOperation.swift; sourceTree = "<group>"; };
 		58CF71811CA815090092458F /* ShortStatsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortStatsOperation.swift; sourceTree = "<group>"; };
 		58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecordTextViewController.swift; sourceTree = "<group>"; };
 		58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAddictionTableViewCell.swift; sourceTree = "<group>"; };
@@ -569,6 +571,7 @@
 				583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */,
 				58AED4851CD121330037BFB1 /* CoreDataOperation.swift */,
 				5864FD771CDFC2DE00656664 /* Export */,
+				58CC47BC1D04C0A400F292F4 /* PushSchedulerOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -706,6 +709,9 @@
 								enabled = 1;
 							};
 							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 							com.apple.iCloud = {
@@ -884,6 +890,7 @@
 				58548BE91C8BE1E400C7C940 /* SearchAdditionViewController.swift in Sources */,
 				5864FD7D1CDFC31D00656664 /* CSVImportOperation.swift in Sources */,
 				58DF62D91C83BDEE0035F608 /* StyleSheet.swift in Sources */,
+				58CC47BD1D04C0A400F292F4 /* PushSchedulerOperation.swift in Sources */,
 				58BB158F1CA1F98500E3E06A /* Place+Repository.swift in Sources */,
 				58DF62CF1C83BDEE0035F608 /* AverageIntensityOperation.swift in Sources */,
 				58CF71821CA815090092458F /* ShortStatsOperation.swift in Sources */,
@@ -1109,7 +1116,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.dependn;
 				PRODUCT_NAME = Dependn;
-				PROVISIONING_PROFILE = "da44c5f8-6b01-4277-bfd4-24dc6bd7914c";
+				PROVISIONING_PROFILE = "2bf13b9f-d711-497b-a98f-16c4ed327bef";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1131,7 +1138,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.dependn;
 				PRODUCT_NAME = Dependn;
-				PROVISIONING_PROFILE = "8901f76c-0e14-46ac-a282-287181f43c76";
+				PROVISIONING_PROFILE = "877bc0ae-ad54-4c69-8871-f79d5a28331e";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -131,6 +131,21 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             NSOperationQueue().addOperation(InitialImportPlacesOperation())
         }
     }
+
+    // MARK: - Pushes
+
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        PushSchedulerOperation.schedule()
+        application.registerForRemoteNotifications()
+    }
+
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        
+    }
+
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+
+    }
     
     // MARK: - Handle shortcut items
     

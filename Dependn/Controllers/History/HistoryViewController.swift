@@ -116,7 +116,6 @@ final class HistoryViewController: UIViewController {
     
     private func configureNotificationObservers() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.coreDataStackDidChange(_:)), name: kCoreDataStackStoreDidChange, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.applicationWillEnterForground(_:)), name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
     private func configureStatsView() {
@@ -134,8 +133,11 @@ final class HistoryViewController: UIViewController {
     // MARK: - Data Fetch
     
     private func reloadInterface() {
+        fetchExecuted = false
         launchFetchIfNeeded()
+
         tableView.reloadData()
+
         configureStatsView()
         
         if fetchedResultsController.fetchedObjects?.count == 0 {
@@ -154,13 +156,8 @@ final class HistoryViewController: UIViewController {
     
     // MARK: - Notifications
     
-    func applicationWillEnterForground(notification: NSNotification) {
-        reloadInterface()
-    }
-    
     func coreDataStackDidChange(notification: NSNotification) {
         dispatch_async(dispatch_get_main_queue()) {
-            self.fetchExecuted = false
             self.reloadInterface()
         }
     }
