@@ -9,7 +9,8 @@
 import UIKit
 import SwiftHelpers
 
-private var kNewDateTableViewCellFormatter = NSDateFormatter(dateFormat: "EEEE d MMMM, yyyy | HH:mm")
+private var kNewDateTableViewCellHourDateFormatter: NSDateFormatter!
+private var kNewDateTableViewCellDayDateFormatter: NSDateFormatter!
 
 protocol NewDateTableViewCellDelegate {
     func dateTableViewCell(cell: NewDateTableViewCell, didSelectDate date: NSDate)
@@ -18,13 +19,41 @@ protocol NewDateTableViewCellDelegate {
 final class NewDateTableViewCell: SHCommonInitTableViewCell {
     
     static let reuseIdentifier = "NewDateTableViewCell"
+
+    static var hourDateFormatter: NSDateFormatter {
+        if kNewDateTableViewCellHourDateFormatter == nil {
+            kNewDateTableViewCellHourDateFormatter = NSDateFormatter(dateFormat: "HH:mm")
+            kNewDateTableViewCellHourDateFormatter.timeStyle = .ShortStyle
+        }
+        return kNewDateTableViewCellHourDateFormatter
+    }
+
+    static var dayDateFormatter: NSDateFormatter {
+        if kNewDateTableViewCellDayDateFormatter == nil {
+            kNewDateTableViewCellDayDateFormatter = NSDateFormatter(dateFormat: "EE d, yyyy")
+        }
+        return kNewDateTableViewCellDayDateFormatter
+    }
     
     var delegate: NewDateTableViewCellDelegate?
     
     var date: NSDate? {
         didSet {
             if let date = date {
-                chosenDateLbl.text = kNewDateTableViewCellFormatter.stringFromDate(date).capitalizedString
+                let day: String
+                let proximity = SHDateProximityToDate(date)
+                switch proximity {
+                case .Today:
+                    day = L("history.today")
+                    break
+                case .Yesterday:
+                    day = L("history.yesterday")
+                    break
+                default:
+                    day = NewDateTableViewCell.dayDateFormatter.stringFromDate(date).capitalizedString
+                }
+                let hour = NewDateTableViewCell.hourDateFormatter.stringFromDate(date).capitalizedString
+                chosenDateLbl.text = "\(day) | \(hour)"
                 datePicker.date = date
             } else {
                 chosenDateLbl.text = nil

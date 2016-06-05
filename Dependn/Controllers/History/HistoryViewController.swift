@@ -48,7 +48,9 @@ final class HistoryViewController: UIViewController {
             nav.statusBarStyle = .LightContent
         }
         
-        dateFormatter = NSDateFormatter(dateFormat: "HH'h'mm")
+        dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .NoStyle
+        dateFormatter.timeStyle = .ShortStyle
         
         actionBtn = UIBarButtonItem(image: UIImage(named: "settings_icon"), style: .Plain, target: self, action: #selector(HistoryViewController.actionBtnClicked(_:)))
         navigationItem.leftBarButtonItem = actionBtn
