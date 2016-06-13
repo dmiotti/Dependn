@@ -93,7 +93,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             
             application.shortcutItems = [ addShortcut ]
         }
-        
+
         return shouldPerformAdditionalDelegateHandling
     }
     
@@ -101,6 +101,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         CoreDataStack.shared.saveContext()
         WatchSessionManager.sharedManager.updateApplicationContext()
         Analytics.instance.updateUserProperties()
+
+        let schedulePush = PushSchedulerOperation(context: CoreDataStack.shared.managedObjectContext)
+        NSOperationQueue().addOperation(schedulePush)
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
@@ -135,8 +138,14 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Pushes
 
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        PushSchedulerOperation.schedule()
-        application.registerForRemoteNotifications()
+        if notificationSettings.types.contains(.Alert) {
+            NSNotificationCenter.defaultCenter().postNotificationName(kUserAcceptPushPermissions, object: nil, userInfo: nil)
+
+            PushSchedulerOperation.schedule()
+            application.registerForRemoteNotifications()
+        } else {
+            NSNotificationCenter.defaultCenter().postNotificationName(kUserRejectPushPermissions, object: nil, userInfo: nil)
+        }
     }
 
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {

@@ -31,7 +31,7 @@ final class SettingsViewController: SHNoBackButtonTitleViewController {
         case ContactUs
         case Passcode
         case Watch
-        case Push
+        case Notifications
         
         case Export
         case ManageAddictions
@@ -51,7 +51,6 @@ final class SettingsViewController: SHNoBackButtonTitleViewController {
     
     private var tableView: UITableView!
     private var passcodeSwitch: UISwitch!
-    private var pushSwitch: UISwitch!
     private var memorizePlacesSwitch: UISwitch!
     
     private var sections = [Section]()
@@ -64,7 +63,7 @@ final class SettingsViewController: SHNoBackButtonTitleViewController {
         super.viewDidLoad()
         
         sections = [
-            Section(type: .General, items: [ .ContactUs, .Passcode, .Watch, .Push, .Version ]),
+            Section(type: .General, items: [ .ContactUs, .Passcode, .Watch, .Notifications, .Version ]),
             Section(type: .Data, items: [ .Export, .ManageAddictions, .MemorisePlaces ]),
             Section(type: .IAP, items: [ .Restore ]),
             Section(type: .Others, items: [ .Rate, .Share, .Tour ])
@@ -91,10 +90,6 @@ final class SettingsViewController: SHNoBackButtonTitleViewController {
         passcodeSwitch.on = Defaults[.usePasscode]
         passcodeSwitch.addTarget(self, action: #selector(SettingsViewController.passcodeSwitchValueChanged(_:)), forControlEvents: .ValueChanged)
 
-        pushSwitch = UISwitch()
-        pushSwitch.on = Defaults[.usePushes]
-        pushSwitch.addTarget(self, action: #selector(SettingsViewController.pushesSwitchValueChanged(_:)), forControlEvents: .ValueChanged)
-        
         memorizePlacesSwitch = UISwitch()
         memorizePlacesSwitch.on = Defaults[.useLocation]
         memorizePlacesSwitch.addTarget(self, action: #selector(SettingsViewController.memorizePlacesSwitchValueChanged(_:)), forControlEvents: .ValueChanged)
@@ -107,18 +102,6 @@ final class SettingsViewController: SHNoBackButtonTitleViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
-    }
-
-    // MARK: - Pushes
-
-    func pushesSwitchValueChanged(sender: UISwitch) {
-        Defaults[.usePushes] = sender.on
-        if sender.on {
-            let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-        } else {
-            UIApplication.sharedApplication().cancelAllLocalNotifications()
-        }
     }
     
     // MARK: - Passcode
@@ -218,11 +201,10 @@ extension SettingsViewController: UITableViewDataSource {
             } else {
                 cell.accessoryView = buildAccessoryLabel(L("settings.no_addiction"))
             }
-        case .Push:
-            cell.textLabel?.text = L("settings.use_pushes")
-            pushSwitch.setOn(Defaults[.usePushes], animated: true)
-            cell.accessoryView = pushSwitch
-            
+        case .Notifications:
+            cell.textLabel?.text = L("settings.notifications")
+            cell.accessoryType = .DisclosureIndicator
+
         case .Export:
             cell.textLabel?.text = L("settings.action.export")
         case .ManageAddictions:
@@ -295,8 +277,8 @@ extension SettingsViewController: UITableViewDelegate {
             break
         case .Watch:
             showSelectAppleWatchAddiction()
-        case .Push:
-            break
+        case .Notifications:
+            manageNotifications()
             
         case .Export:
             NSOperationQueue().addOperation(ExportOperation(controller: self))
@@ -328,6 +310,11 @@ extension SettingsViewController: UITableViewDelegate {
             }
         }
         presentViewController(activityController, animated: true, completion: nil)
+    }
+
+    private func manageNotifications() {
+        let controller = NotificationsViewController()
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     private func contactUs() {

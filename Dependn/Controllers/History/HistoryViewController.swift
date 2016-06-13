@@ -90,14 +90,20 @@ final class HistoryViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         reloadInterface()
-        
+        configureExportBtn()
+    }
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+
         if !Defaults[.alreadyLaunched] {
             Defaults[.alreadyLaunched] = true
             OnBoardingViewController.showInController(self, animated: false)
-            return
+        } else if !Defaults[.pushAlreadyShown] && !PushPermissionViewController.isPermissionAccepted() {
+            Defaults[.pushAlreadyShown] = true
+            let perm = PushPermissionViewController()
+            presentViewController(perm, animated: true, completion: nil)
         }
-        
-        configureExportBtn()
     }
     
     private func configureExportBtn() {

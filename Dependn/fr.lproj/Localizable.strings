@@ -496,8 +496,18 @@
 
 "suggested.places.infront_computer" = "Devant l'ordinateur";
 
-"push.daily.yesterday" = "Hier : %@";
+"settings.notifications" = "Notifications";
 
-"settings.use_pushes" = "Recevoir un résumé quotidien";
+"daily.push.title" = "Hier";
 
-"daily.push.title" = "Résumé";
+"notifications.daily" = "Résumé quotidien";
+
+"notifications.weekly" = "Résumé hebdomadaire";
+
+"push.perm.title" = "Suivez votre évolution";
+
+"push.perm.subtitle" = "Recevez par notification un résumé quotidien et hebdomadaire de vos consommations.";
+
+"push.perm.accept" = "ACCEPTER LES NOTIFICATIONS";
+
+"push.perm.reject" = "NON MERCI";

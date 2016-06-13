@@ -9,6 +9,7 @@
 import UIKit
 import SwiftHelpers
 import CoreData
+import SwiftyUserDefaults
 
 /// Schedule the next push
 /// This push should be sent
@@ -48,6 +49,9 @@ final class PushSchedulerOperation: SHOperation {
             return
         }
 
+        // Cancel all others local notifications
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+
         // 2. Get count per addiction for the current day
         context.performBlockAndWait {
             do {
@@ -58,35 +62,64 @@ final class PushSchedulerOperation: SHOperation {
                     return
                 }
 
-                var pushStrings = [String]()
+                let rawValue = Defaults[.notificationTypes]
+                let types = NotificationTypes(rawValue: rawValue)
+                let now = NSDate()
 
-                for addiction in addictions {
-                    let now = NSDate()
-                    let countInRange = Record.countInRange(addiction,
-                        start:      now.beginningOfDay,
-                        end:        now.endOfDay,
-                        isDesire:   false,
-                        inContext:  self.context)
-                    let name = addiction.name
-                    let obsfuscated = name.substringToIndex(name.startIndex.advancedBy(3))
-                    pushStrings.append("\(obsfuscated). \(countInRange)")
+                if types.contains(.Daily) {
+                    var pushStrings = [String]()
+                    for addiction in addictions {
+                        let countInRange = Record.countInRange(addiction,
+                            start:      now.beginningOfDay,
+                            end:        now.endOfDay,
+                            isDesire:   false,
+                            inContext:  self.context)
+                        let name = addiction.name
+                        let obsfuscated = name.substringToIndex(name.startIndex.advancedBy(3))
+                        pushStrings.append("\(obsfuscated). \(countInRange)")
+                    }
+
+                    // 3. Prepare daily push
+                    let daily = UILocalNotification()
+                    daily.fireDate = now.beginningOfDay + 1.day + 8.hour
+                    daily.alertTitle = L("daily.push.title")
+                    daily.alertBody = pushStrings.joinWithSeparator(", ")
+                    daily.timeZone = NSTimeZone.localTimeZone()
+                    UIApplication.sharedApplication().scheduleLocalNotification(daily)
                 }
 
-                let push = String(format: L("push.daily.yesterday"),
-                    pushStrings.joinWithSeparator(", "))
+                if types.contains(.Weekly) {
+                    // 4. Schedule de weekly push
+                    let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+                    if let comps = calendar?.components([.Year, .Month, .WeekOfYear, .Weekday], fromDate: now) {
+                        let weekday = comps.weekday
+                        let daysToMonday = (9 - weekday) % 7
+                        var nextMonday = now.dateByAddingTimeInterval(60*60*24*daysToMonday)
+                        if nextMonday.timeIntervalSinceNow < 0 {
+                            nextMonday = now.dateByAddingTimeInterval(60*60*24*7)
+                        }
+                        let previousMonday = nextMonday - 7.days
+                        var pushStrings = [String]()
 
-                // Cancel all others local notifications
-                UIApplication.sharedApplication().cancelAllLocalNotifications()
+                        for addiction in addictions {
+                            let countInRange = Record.countInRange(addiction,
+                                start:      previousMonday,
+                                end:        nextMonday,
+                                isDesire:   false,
+                                inContext:  self.context)
+                            let name = addiction.name
+                            let obsfuscated = name.substringToIndex(name.startIndex.advancedBy(3))
+                            pushStrings.append("\(obsfuscated). \(countInRange)")
+                        }
 
-                let notif = UILocalNotification()
-                notif.fireDate = NSDate() + 1.minute//.beginningOfDay + 1.day + 8.hour
-                notif.alertTitle = L("daily.push.title")
-                notif.alertBody = push
-                notif.timeZone = NSTimeZone.localTimeZone()
-
-                // 3. Schedule a push
-                UIApplication.sharedApplication().scheduleLocalNotification(notif)
-
+                        let weekly = UILocalNotification()
+                        weekly.fireDate = nextMonday.beginningOfDay + 8.hour
+                        weekly.alertTitle = L("daily.push.title")
+                        weekly.alertBody = pushStrings.joinWithSeparator(", ")
+                        weekly.timeZone = NSTimeZone.localTimeZone()
+                        UIApplication.sharedApplication().scheduleLocalNotification(weekly)
+                    }
+                }
             } catch let err as NSError {
                 self.error = err
             }

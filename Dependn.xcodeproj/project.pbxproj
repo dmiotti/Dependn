@@ -29,6 +29,8 @@
 		5826034D1CF0B47900EA9F57 /* DependencyChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5826034B1CF0B47900EA9F57 /* DependencyChooserViewController.swift */; };
 		582820C91CAF1288002DC9AF /* OkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820C81CAF1288002DC9AF /* OkButton.swift */; };
 		582820CB1CAF1DD7002DC9AF /* HistoryEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */; };
+		5831254F1D0DDC06006EC991 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5831254E1D0DDC06006EC991 /* NotificationsViewController.swift */; };
+		583125511D0DDCF5006EC991 /* NotificationSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583125501D0DDCF5006EC991 /* NotificationSwitchCell.swift */; };
 		583C01501CBA565700E0D41C /* InitialImportPlacesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */; };
 		583C9C661CCEBAC600E6FD9D /* Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 58F092BB1C9615AA00DF4ADC /* Watch.app */; };
 		583C9C681CCEC62900E6FD9D /* YesterdayInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */; };
@@ -97,6 +99,9 @@
 		58DF62D91C83BDEE0035F608 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62C11C83BDEE0035F608 /* StyleSheet.swift */; };
 		58E429B81C9243B80095F92D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58E429B71C9243B80095F92D /* CloudKit.framework */; };
 		58E9C47E1CD6407400991DC8 /* DeeplinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E9C47D1CD6407400991DC8 /* DeeplinkManager.swift */; };
+		58E9F4611D0F4AE100837553 /* PushPermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E9F4601D0F4AE100837553 /* PushPermissionViewController.swift */; };
+		58E9F4631D0F675800837553 /* PushPermissionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E9F4621D0F675800837553 /* PushPermissionAnimator.swift */; };
+		58E9F4651D0F6DD300837553 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E9F4641D0F6DD300837553 /* Notifications.swift */; };
 		58F092BF1C9615AA00DF4ADC /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58F092BD1C9615AA00DF4ADC /* Interface.storyboard */; };
 		58F092C11C9615AA00DF4ADC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58F092C01C9615AA00DF4ADC /* Assets.xcassets */; };
 		58F092C81C9615AB00DF4ADC /* Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 58F092C71C9615AB00DF4ADC /* Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -191,6 +196,8 @@
 		5826034B1CF0B47900EA9F57 /* DependencyChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserViewController.swift; sourceTree = "<group>"; };
 		582820C81CAF1288002DC9AF /* OkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OkButton.swift; sourceTree = "<group>"; };
 		582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryEmptyView.swift; sourceTree = "<group>"; };
+		5831254E1D0DDC06006EC991 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		583125501D0DDCF5006EC991 /* NotificationSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSwitchCell.swift; sourceTree = "<group>"; };
 		583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportPlacesOperation.swift; sourceTree = "<group>"; };
 		583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YesterdayInterfaceController.swift; sourceTree = "<group>"; };
 		583C9C691CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoDaysAgoInterfaceController.swift; sourceTree = "<group>"; };
@@ -270,6 +277,9 @@
 		58E429B61C923DF20095F92D /* Dependn.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Dependn.entitlements; sourceTree = "<group>"; };
 		58E429B71C9243B80095F92D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		58E9C47D1CD6407400991DC8 /* DeeplinkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeeplinkManager.swift; sourceTree = "<group>"; };
+		58E9F4601D0F4AE100837553 /* PushPermissionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPermissionViewController.swift; sourceTree = "<group>"; };
+		58E9F4621D0F675800837553 /* PushPermissionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPermissionAnimator.swift; sourceTree = "<group>"; };
+		58E9F4641D0F6DD300837553 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		58F092BB1C9615AA00DF4ADC /* Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Watch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58F092BE1C9615AA00DF4ADC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		58F092C01C9615AA00DF4ADC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -330,6 +340,8 @@
 			children = (
 				581DC5D91C8B37F4006DE551 /* SettingsViewController.swift */,
 				581DC5DB1C8B38AD006DE551 /* SettingsTableViewCell.swift */,
+				5831254E1D0DDC06006EC991 /* NotificationsViewController.swift */,
+				583125501D0DDCF5006EC991 /* NotificationSwitchCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -513,6 +525,7 @@
 			isa = PBXGroup;
 			children = (
 				58548BC71C8BBBB300C7C940 /* Common */,
+				58E9F45F1D0F4ABA00837553 /* PushPermission */,
 				584897841CAC60C800CA18CE /* OnBoarding */,
 				582603491CF0B47900EA9F57 /* DependencyChooser */,
 				58DF62A51C83BDEE0035F608 /* History */,
@@ -552,6 +565,7 @@
 				587CB0F21CD157A000FCDB48 /* WatchSessionManager.swift */,
 				581DC5E61C8B73D3006DE551 /* UserDefaults.swift */,
 				580BB9D21CDF8BC10068D413 /* Analytics.swift */,
+				58E9F4641D0F6DD300837553 /* Notifications.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -584,6 +598,16 @@
 				58BB158E1CA1F98500E3E06A /* Place+Repository.swift */,
 			);
 			path = Repositories;
+			sourceTree = "<group>";
+		};
+		58E9F45F1D0F4ABA00837553 /* PushPermission */ = {
+			isa = PBXGroup;
+			children = (
+				58E9F4601D0F4AE100837553 /* PushPermissionViewController.swift */,
+				58E9F4621D0F675800837553 /* PushPermissionAnimator.swift */,
+			);
+			name = PushPermission;
+			path = Common/PushPermission;
 			sourceTree = "<group>";
 		};
 		58F092BC1C9615AA00DF4ADC /* Watch */ = {
@@ -864,6 +888,7 @@
 				58548BE21C8BE18100C7C940 /* NewPlaceTableViewCell.swift in Sources */,
 				581DC5D71C8B3172006DE551 /* Addiction+Repository.swift in Sources */,
 				58DF62C71C83BDEE0035F608 /* HistoryViewController.swift in Sources */,
+				58E9F4611D0F4AE100837553 /* PushPermissionViewController.swift in Sources */,
 				58DF62D21C83BDEE0035F608 /* CountOperation.swift in Sources */,
 				58DF62D11C83BDEE0035F608 /* AverageTimeInBetweenTwoTakesOperation.swift in Sources */,
 				586EDA361CA3567D00DAE496 /* TimeSinceLastRecord.swift in Sources */,
@@ -873,6 +898,7 @@
 				582820CB1CAF1DD7002DC9AF /* HistoryEmptyView.swift in Sources */,
 				581DC5DF1C8B3C5D006DE551 /* AddictionListViewController.swift in Sources */,
 				587CB0F31CD157A000FCDB48 /* WatchSessionManager.swift in Sources */,
+				583125511D0DDCF5006EC991 /* NotificationSwitchCell.swift in Sources */,
 				58DF62D71C83BDEE0035F608 /* Record.swift in Sources */,
 				58DF62C21C83BDEE0035F608 /* AppDelegate.swift in Sources */,
 				58DF62D51C83BDEE0035F608 /* Record+Repository.swift in Sources */,
@@ -898,6 +924,7 @@
 				58DF62D01C83BDEE0035F608 /* AveragePerDayOperation.swift in Sources */,
 				581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */,
 				5864FD861CDFCEE500656664 /* PortraitNavigationController.swift in Sources */,
+				58E9F4651D0F6DD300837553 /* Notifications.swift in Sources */,
 				58548BDE1C8BE18100C7C940 /* AddRecordViewController.swift in Sources */,
 				583C01501CBA565700E0D41C /* InitialImportPlacesOperation.swift in Sources */,
 				58669AA51CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift in Sources */,
@@ -905,7 +932,9 @@
 				58BB15881CA1F91A00E3E06A /* Place+CoreDataProperties.swift in Sources */,
 				58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */,
 				5864FD7B1CDFC2F900656664 /* XLSExportOperation.swift in Sources */,
+				58E9F4631D0F675800837553 /* PushPermissionAnimator.swift in Sources */,
 				58BB15921CA20D0D00E3E06A /* PlacesViewController.swift in Sources */,
+				5831254F1D0DDC06006EC991 /* NotificationsViewController.swift in Sources */,
 				580BB9D31CDF8BC10068D413 /* Analytics.swift in Sources */,
 				581AFC2D1CE15BC700F02663 /* TableHeaderView.swift in Sources */,
 				583C9C701CCECA9500E6FD9D /* WatchStatsOperation.swift in Sources */,
