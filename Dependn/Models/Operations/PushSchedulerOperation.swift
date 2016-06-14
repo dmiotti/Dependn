@@ -94,9 +94,9 @@ final class PushSchedulerOperation: SHOperation {
                     if let comps = calendar?.components([.Year, .Month, .WeekOfYear, .Weekday], fromDate: now) {
                         let weekday = comps.weekday
                         let daysToMonday = (9 - weekday) % 7
-                        var nextMonday = now.dateByAddingTimeInterval(60*60*24*daysToMonday)
+                        var nextMonday = now.dateByAddingTimeInterval(60*60*24*daysToMonday).beginningOfDay
                         if nextMonday.timeIntervalSinceNow < 0 {
-                            nextMonday = now.dateByAddingTimeInterval(60*60*24*7)
+                            nextMonday = nextMonday + 7.days
                         }
                         let previousMonday = nextMonday - 7.days
                         var pushStrings = [String]()
@@ -113,7 +113,7 @@ final class PushSchedulerOperation: SHOperation {
                         }
 
                         let weekly = UILocalNotification()
-                        weekly.fireDate = nextMonday.beginningOfDay + 8.hour
+                        weekly.fireDate = nextMonday + 8.hour
                         weekly.alertTitle = L("daily.push.title")
                         weekly.alertBody = pushStrings.joinWithSeparator(", ")
                         weekly.timeZone = NSTimeZone.localTimeZone()
