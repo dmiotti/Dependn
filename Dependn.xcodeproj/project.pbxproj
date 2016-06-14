@@ -1149,7 +1149,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.dependn;
 				PRODUCT_NAME = Dependn;
-				PROVISIONING_PROFILE = "2bf13b9f-d711-497b-a98f-16c4ed327bef";
+				PROVISIONING_PROFILE = "0e516a46-a5c4-439d-87a0-f9f27a24d1da";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
