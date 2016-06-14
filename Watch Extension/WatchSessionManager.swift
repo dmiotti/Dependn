@@ -7,6 +7,7 @@
 //
 
 import WatchConnectivity
+import ClockKit
 
 let kWatchExtensionContextUpdatedNotificationName = "kWatchExtensionContextUpdated"
 let kWatchExtensionContextErrorNotificationName = "kWatchExtensionContextError"
@@ -108,6 +109,13 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             session.sendMessage(message, replyHandler: { response in
                 
                 self.parseApplicationContext(response)
+
+                let complicationServer = CLKComplicationServer.sharedInstance()
+                if let actives = complicationServer.activeComplications {
+                    for complication in actives {
+                        complicationServer.reloadTimelineForComplication(complication)
+                    }
+                }
                 
                 }, errorHandler: { err in
                     

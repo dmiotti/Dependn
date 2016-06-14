@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		15FB7F6E4E0BE28215AB023F /* StatsPanelScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FB76A5C4926643FAD8141E /* StatsPanelScroller.swift */; };
 		5803C8691CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */; };
+		5807FB6A1D10504B00AF4F59 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5807FB691D10504B00AF4F59 /* ComplicationController.swift */; };
 		580BB9D31CDF8BC10068D413 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580BB9D21CDF8BC10068D413 /* Analytics.swift */; };
 		580BB9D51CDFA5B70068D413 /* TitleValueTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580BB9D41CDFA5B70068D413 /* TitleValueTableRowController.swift */; };
 		581803441CDB513A0026305B /* TimeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581803431CDB513A0026305B /* TimeUtils.swift */; };
@@ -176,6 +177,7 @@
 		15FB76A5C4926643FAD8141E /* StatsPanelScroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsPanelScroller.swift; sourceTree = "<group>"; };
 		1B3495A2BA0FC80954921D93 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5803C8681CD4F45A00CAE9E8 /* IntensityChooserInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntensityChooserInterfaceController.swift; sourceTree = "<group>"; };
+		5807FB691D10504B00AF4F59 /* ComplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		580BB9D21CDF8BC10068D413 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		580BB9D41CDFA5B70068D413 /* TitleValueTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleValueTableRowController.swift; sourceTree = "<group>"; };
 		581803431CDB513A0026305B /* TimeUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeUtils.swift; sourceTree = "<group>"; };
@@ -627,6 +629,7 @@
 				58F092CE1C9615AB00DF4ADC /* ExtensionDelegate.swift */,
 				5841B3371CD2495A0024AC99 /* GlanceInterfaceController.swift */,
 				587046B91CD0C93D00C2F23B /* MainInterfaceController.swift */,
+				5807FB691D10504B00AF4F59 /* ComplicationController.swift */,
 				587CB0F61CD178FC00FCDB48 /* Time scale */,
 				587CB0F71CD1790D00FCDB48 /* AddRecord */,
 				58669AA01CD10376002BDED3 /* SHDateFormatterProximity.swift */,
@@ -952,6 +955,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				587046BA1CD0C93D00C2F23B /* MainInterfaceController.swift in Sources */,
+				5807FB6A1D10504B00AF4F59 /* ComplicationController.swift in Sources */,
 				58F092CF1C9615AB00DF4ADC /* ExtensionDelegate.swift in Sources */,
 				583C9C741CCEEC3400E6FD9D /* DefaultTableRowController.swift in Sources */,
 				583C9C681CCEC62900E6FD9D /* YesterdayInterfaceController.swift in Sources */,
