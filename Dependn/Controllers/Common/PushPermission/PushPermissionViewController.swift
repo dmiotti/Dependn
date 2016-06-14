@@ -71,7 +71,7 @@ final class PushPermissionViewController: UIViewController {
         titleLbl.numberOfLines = 0
         contentView.addSubview(titleLbl)
         titleLbl.snp_makeConstraints {
-            $0.top.equalTo(imageView.snp_bottom).offset(8)
+            $0.top.equalTo(imageView.snp_bottom).offset(28)
             $0.centerX.equalTo(contentView)
             $0.left.greaterThanOrEqualTo(contentView)
             $0.right.lessThanOrEqualTo(contentView)
@@ -80,22 +80,20 @@ final class PushPermissionViewController: UIViewController {
         subTitleLbl = UILabel()
         subTitleLbl.text = L("push.perm.subtitle")
         subTitleLbl.font = UIFont.systemFontOfSize(13, weight: UIFontWeightRegular)
-        subTitleLbl.textColor = UIColor.appBlackColor()
+        subTitleLbl.textColor = UIColor.appBlackColor().colorWithAlphaComponent(0.5)
         subTitleLbl.textAlignment = .Center
         subTitleLbl.numberOfLines = 0
         contentView.addSubview(subTitleLbl)
         subTitleLbl.snp_makeConstraints {
-            $0.top.equalTo(titleLbl.snp_bottom).offset(2)
+            $0.top.equalTo(titleLbl.snp_bottom).offset(10)
             $0.centerX.equalTo(contentView)
             $0.left.greaterThanOrEqualTo(contentView)
             $0.right.lessThanOrEqualTo(contentView)
         }
 
         acceptBtn = UIButton(type: .System)
-        acceptBtn.setTitle(L("push.perm.accept"), forState: .Normal)
-        acceptBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        acceptBtn.setAttributedTitle(uppercaseAttributedString(L("push.perm.accept")), forState: .Normal)
         acceptBtn.addTarget(self, action: #selector(PushPermissionViewController.acceptBtnClicked(_:)), forControlEvents: .TouchUpInside)
-        acceptBtn.titleLabel?.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
         acceptBtn.backgroundColor = UIColor.appBlueColor()
         acceptBtn.layer.cornerRadius = 22
         acceptBtn.layer.masksToBounds = true
@@ -108,8 +106,7 @@ final class PushPermissionViewController: UIViewController {
         }
 
         rejectBtn = UIButton(type: .System)
-        rejectBtn.setTitle(L("push.perm.reject"), forState: .Normal)
-        rejectBtn.setTitleColor(UIColor.blackColor().colorWithAlphaComponent(0.20), forState: .Normal)
+        rejectBtn.setAttributedTitle(uppercaseAttributedString(L("push.perm.reject"), fgColor: UIColor.blackColor().colorWithAlphaComponent(0.20)), forState: .Normal)
         rejectBtn.addTarget(self, action: #selector(PushPermissionViewController.rejectBtnClicked(_:)), forControlEvents: .TouchUpInside)
         contentView.addSubview(rejectBtn)
         rejectBtn.snp_makeConstraints {
@@ -122,6 +119,18 @@ final class PushPermissionViewController: UIViewController {
         nc.addObserver(self, selector: #selector(PushPermissionViewController.userDidAcceptPushNotifications(_:)), name: kUserAcceptPushPermissions, object: nil)
         nc.addObserver(self, selector: #selector(PushPermissionViewController.userDidRejectPushNotifications(_:)), name: kUserRejectPushPermissions, object: nil)
         nc.addObserver(self, selector: #selector(PushPermissionViewController.applicationWillEnterForeground(_:)), name: UIApplicationWillEnterForegroundNotification, object: nil)
+    }
+
+    private func uppercaseAttributedString(str: String, fgColor: UIColor = UIColor.whiteColor()) -> NSAttributedString {
+        let attr = NSMutableAttributedString(string: str)
+        attr.addAttributes(
+            [
+                NSFontAttributeName: UIFont.systemFontOfSize(12, weight: UIFontWeightMedium),
+                NSForegroundColorAttributeName: fgColor,
+                NSKernAttributeName: 1.2
+            ],
+            range: NSRange(0..<str.characters.count))
+        return attr
     }
 
     // MARK: - Handle button events

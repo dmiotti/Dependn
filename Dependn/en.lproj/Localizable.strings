@@ -7,6 +7,14 @@
  * Exported at: Sun, 10 Apr 2016 15:10:08 +0100
  */
 
+"push.perm.title" = "Suivez votre évolution";
+
+"push.perm.subtitle" = "Recevez par notification un résumé quotidien et hebdomadaire de vos consommations.";
+
+"push.perm.accept" = "ACCEPTER LES NOTIFICATIONS";
+
+"push.perm.reject" = "NON MERCI";
+
 /*  */
 "addiction_list.new.cancel" = "Cancel";
 
@@ -506,11 +514,3 @@
 "notifications.daily" = "Daily summary";
 
 "notifications.weekly" = "Weekly summary";
-
-"push.perm.title" = "Suivez votre évolution";
-
-"push.perm.subtitle" = "Recevez par notification un résumé quotidien et hebdomadaire de vos consommations.";
-
-"push.perm.accept" = "ACCEPTER LES NOTIFICATIONS";
-
-"push.perm.reject" = "NON MERCI";
