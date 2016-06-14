@@ -10,6 +10,7 @@ import UIKit
 import SwiftHelpers
 import CoreData
 import SwiftyUserDefaults
+import JLToast
 
 /// Schedule the next push
 /// This push should be sent
@@ -36,10 +37,13 @@ final class PushSchedulerOperation: SHOperation {
     private(set) var error: NSError?
 
     private let context: NSManagedObjectContext
+    private let dateFormatter: NSDateFormatter
 
     init(context: NSManagedObjectContext) {
         self.context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         self.context.parentContext = context
+        self.dateFormatter = NSDateFormatter()
+        self.dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
     }
 
     override func execute() {
@@ -80,12 +84,18 @@ final class PushSchedulerOperation: SHOperation {
                     }
 
                     // 3. Prepare daily push
+                    let fireDate = now.beginningOfDay + 1.day + 8.hour + 1.minute
+                    let title = L("daily.push.title")
+                    let body = pushStrings.joinWithSeparator(", ")
+
                     let daily = UILocalNotification()
-                    daily.fireDate = now.beginningOfDay + 1.day + 8.hour
-                    daily.alertTitle = L("daily.push.title")
-                    daily.alertBody = pushStrings.joinWithSeparator(", ")
+                    daily.fireDate = fireDate
+                    daily.alertTitle = title
+                    daily.alertBody = body
                     daily.timeZone = NSTimeZone.localTimeZone()
                     UIApplication.sharedApplication().scheduleLocalNotification(daily)
+
+                    self.logPush(fireDate, text: "\(title): \(body)")
                 }
 
                 if types.contains(.Weekly) {
@@ -112,12 +122,18 @@ final class PushSchedulerOperation: SHOperation {
                             pushStrings.append("\(obsfuscated). \(countInRange)")
                         }
 
+                        let fireDate = nextMonday + 8.hour
+                        let title = L("weekly.push.title")
+                        let body = pushStrings.joinWithSeparator(", ")
+
                         let weekly = UILocalNotification()
-                        weekly.fireDate = nextMonday + 8.hour
-                        weekly.alertTitle = L("daily.push.title")
-                        weekly.alertBody = pushStrings.joinWithSeparator(", ")
+                        weekly.fireDate = fireDate
+                        weekly.alertTitle = title
+                        weekly.alertBody = body
                         weekly.timeZone = NSTimeZone.localTimeZone()
                         UIApplication.sharedApplication().scheduleLocalNotification(weekly)
+
+                        self.logPush(fireDate, text: "\(title): \(body)")
                     }
                 }
             } catch let err as NSError {
@@ -134,6 +150,21 @@ final class PushSchedulerOperation: SHOperation {
             return false
         }
         return true
+    }
+
+    private func logPush(date: NSDate, text: String) {
+        let datestring = self.dateFormatter.stringFromDate(date)
+        let msg = "[\(datestring)] \(text)"
+        if UIApplication.sharedApplication().applicationState == .Active {
+            dispatch_async(dispatch_get_main_queue()) {
+                let toast = JLToast.makeText(msg)
+                toast.duration = 5
+                toast.show()
+                print(msg)
+            }
+        } else {
+            print(msg)
+        }
     }
 
 }

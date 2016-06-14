@@ -15,6 +15,7 @@ PODS:
   - Crashlytics (3.7.0):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.7)
+  - JLToast (1.4.1)
   - libxlsxwriter (0.3.2)
   - PKHUD (3.1.0)
   - Result (2.0.0)
@@ -29,6 +30,7 @@ DEPENDENCIES:
   - CocoaLumberjack/Swift
   - Crashlytics
   - Fabric
+  - JLToast
   - libxlsxwriter (from `git@github.com:dmiotti/libxlsxwriter.git`)
   - PKHUD
   - SnapKit
@@ -56,6 +58,7 @@ SPEC CHECKSUMS:
   CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
+  JLToast: f2ccfdb8726e562e6c0154fa3658cd432021b1cc
   libxlsxwriter: 40d5a1e4f9006e08c3f44399a10135694589710c
   PKHUD: 4167eccdb1b3a892fd80ce2b51cb6ba412a889ab
   Result: 9e75e1111c774c6ac594e14907b15057053a7959

@@ -511,6 +511,8 @@
 
 "daily.push.title" = "Yesterday";
 
+"weekly.push.title" = "Last week";
+
 "notifications.daily" = "Daily summary";
 
 "notifications.weekly" = "Weekly summary";

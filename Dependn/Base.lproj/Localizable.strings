@@ -508,6 +508,8 @@
 
 "daily.push.title" = "Hier";
 
+"weekly.push.title" = "Semaine dernière";
+
 "notifications.daily" = "Résumé quotidien";
 
 "notifications.weekly" = "Résumé hebdomadaire";
