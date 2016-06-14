@@ -15,7 +15,6 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     func getPlaceholderTemplateForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTemplate?) -> Void) {
-        print("getPlaceholderTemplateForComplication")
         var template: CLKComplicationTemplate? = nil
         switch complication.family {
         case .ModularSmall:
@@ -29,7 +28,7 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
         case .CircularSmall:
             let modularTemplate = CLKComplicationTemplateCircularSmallRingText()
             modularTemplate.textProvider = CLKSimpleTextProvider(text: "--")
-            modularTemplate.fillFraction = 0.7
+            modularTemplate.fillFraction = 1
             modularTemplate.ringStyle = .Closed
             template = modularTemplate
         }
@@ -37,7 +36,7 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     func getPrivacyBehaviorForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationPrivacyBehavior) -> Void) {
-        handler(CLKComplicationPrivacyBehavior.ShowOnLockScreen)
+        handler(.ShowOnLockScreen)
     }
 
     func getCurrentTimelineEntryForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTimelineEntry?) -> Void) {
@@ -45,7 +44,7 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
             let template = CLKComplicationTemplateCircularSmallRingText()
             let value = 17
             template.textProvider = CLKSimpleTextProvider(text: "\(value)")
-            template.fillFraction = Float(value) / 10.0
+            template.fillFraction = 1
             template.ringStyle = CLKComplicationRingStyle.Closed
 
             let timelineEntry = CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: template)
@@ -60,7 +59,7 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     func getTimelineEntriesForComplication(complication: CLKComplication, afterDate date: NSDate, limit: Int, withHandler handler: ([CLKComplicationTimelineEntry]?) -> Void) {
-        handler([])
+        handler(nil)
     }
 
     func getSupportedTimeTravelDirectionsForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTimeTravelDirections) -> Void) {
