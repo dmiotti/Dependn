@@ -87,7 +87,13 @@ final class PushSchedulerOperation: SHOperation {
                     }
 
                     // 3. Prepare daily push
-                    let fireDate = now.beginningOfDay + 1.day + 8.hour + 1.minute
+                    let fireDate: NSDate
+                    if now.hour < 8 {
+                        fireDate = now.beginningOfDay + 8.hour + 1.minute
+                    } else {
+                        fireDate = now.beginningOfDay + 1.day + 8.hour + 1.minute
+                    }
+
                     let title = L("daily.push.title")
                     let body = pushStrings.joinWithSeparator(", ")
 
@@ -138,7 +144,7 @@ final class PushSchedulerOperation: SHOperation {
                             pushStrings.append("\(obsfuscated). \(countInRange)")
                         }
 
-                        let fireDate = nextMonday + 8.hour
+                        let fireDate = nextMonday + 8.hour + 2.minutes
                         let title = L("weekly.push.title")
                         let body = pushStrings.joinWithSeparator(", ")
 
