@@ -586,8 +586,8 @@
 				586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */,
 				583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */,
 				58AED4851CD121330037BFB1 /* CoreDataOperation.swift */,
-				5864FD771CDFC2DE00656664 /* Export */,
 				58CC47BC1D04C0A400F292F4 /* PushSchedulerOperation.swift */,
+				5864FD771CDFC2DE00656664 /* Export */,
 			);
 			path = Operations;
 			sourceTree = "<group>";

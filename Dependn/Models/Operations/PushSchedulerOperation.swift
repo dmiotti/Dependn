@@ -10,7 +10,6 @@ import UIKit
 import SwiftHelpers
 import CoreData
 import SwiftyUserDefaults
-import JLToast
 
 /// Schedule the next push
 /// This push should be sent
@@ -71,6 +70,8 @@ final class PushSchedulerOperation: SHOperation {
                 let now = NSDate()
 
                 if types.contains(.Daily) {
+                    var obfuscatedAddictions = [String]()
+
                     var pushStrings = [String]()
                     for addiction in addictions {
                         let countInRange = Record.countInRange(addiction,
@@ -81,6 +82,8 @@ final class PushSchedulerOperation: SHOperation {
                         let name = addiction.name
                         let obsfuscated = name.substringToIndex(name.startIndex.advancedBy(3))
                         pushStrings.append("\(obsfuscated). \(countInRange)")
+
+                        obfuscatedAddictions.append(obsfuscated)
                     }
 
                     // 3. Prepare daily push
@@ -95,7 +98,20 @@ final class PushSchedulerOperation: SHOperation {
                     daily.timeZone = NSTimeZone.localTimeZone()
                     UIApplication.sharedApplication().scheduleLocalNotification(daily)
 
-                    self.logPush(fireDate, text: "\(title): \(body)")
+                    /// schedule an empty push for next days
+                    for i in 1..<29 {
+                        let nextDate = (fireDate + i.days).beginningOfDay + 8.hour + 1.minute
+                        let textes = obfuscatedAddictions.map {
+                            return "\($0). 0"
+                        }
+                        let body = textes.joinWithSeparator(", ")
+                        let daily = UILocalNotification()
+                        daily.fireDate = nextDate
+                        daily.alertTitle = title
+                        daily.alertBody = body
+                        daily.timeZone = NSTimeZone.localTimeZone()
+                        UIApplication.sharedApplication().scheduleLocalNotification(daily)
+                    }
                 }
 
                 if types.contains(.Weekly) {
@@ -132,8 +148,6 @@ final class PushSchedulerOperation: SHOperation {
                         weekly.alertBody = body
                         weekly.timeZone = NSTimeZone.localTimeZone()
                         UIApplication.sharedApplication().scheduleLocalNotification(weekly)
-
-                        self.logPush(fireDate, text: "\(title): \(body)")
                     }
                 }
             } catch let err as NSError {
@@ -150,21 +164,6 @@ final class PushSchedulerOperation: SHOperation {
             return false
         }
         return true
-    }
-
-    private func logPush(date: NSDate, text: String) {
-        let datestring = self.dateFormatter.stringFromDate(date)
-        let msg = "[\(datestring)] \(text)"
-        if UIApplication.sharedApplication().applicationState == .Active {
-            dispatch_async(dispatch_get_main_queue()) {
-                let toast = JLToast.makeText(msg)
-                toast.duration = 5
-                toast.show()
-                print(msg)
-            }
-        } else {
-            print(msg)
-        }
     }
 
 }

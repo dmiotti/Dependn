@@ -17,6 +17,5 @@ target 'Dependn' do
   pod 'Amplitude-iOS'
   pod 'SwiftHelpers', :git => 'git@github.com:dmiotti/SwiftHelpers.git'
   pod 'libxlsxwriter', :git => 'git@github.com:dmiotti/libxlsxwriter.git'
-  pod 'JLToast'
 
 end
