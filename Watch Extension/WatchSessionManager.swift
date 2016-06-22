@@ -32,10 +32,11 @@ struct WatchSimpleModel {
 final class WatchStatsAddiction {
     var addiction = ""
     var values = [WatchStatsValueTime]()
-    var sinceLast: NSTimeInterval = 0
+    var sinceLast: NSDate!
     
     var formattedSinceLast: String {
-        return String(format: NSLocalizedString("watch.sinceLast", comment: ""), stringFromTimeInterval(sinceLast))
+        let interval = NSDate().timeIntervalSinceDate(sinceLast)
+        return String(format: NSLocalizedString("watch.sinceLast", comment: ""), stringFromTimeInterval(interval))
     }
 }
 
@@ -129,7 +130,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     private func parseApplicationContext(appContext: [String: AnyObject]) {
         
 //        print("appContext: \(appContext)")
-        
+
         /// Parse stats context
         let statsContext = appContext["stats"] as? WatchDictionary
         let statsContextValue = statsContext?["value"] as? WatchDictionary
@@ -138,7 +139,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             let stats = WatchStatsAddiction()
             stats.addiction = name
             
-            if let sinceLast = statsContextValue?["sinceLast"] as? NSTimeInterval {
+            if let sinceLast = statsContextValue?["sinceLast"] as? NSDate {
                 stats.sinceLast = sinceLast
             }
             

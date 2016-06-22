@@ -18,7 +18,7 @@ typealias WatchStatsValueTime = (value: String, date: String)
 final class WatchStatsAddiction {
     var addiction = ""
     var values = [WatchStatsValueTime]()
-    var sinceLast: NSTimeInterval = 0
+    var sinceLast: NSDate!
 }
 
 private let kWatchStatsOperationErrorDomain = "WatchStatsOperation"
@@ -66,21 +66,21 @@ final class WatchStatsOperation: CoreDataOperation {
                             let dateFormatter = NSDateFormatter()
                             dateFormatter.dateFormat = "EE d MMM"
                             
-                            let dateFormatted: String
+                            let day: String
                             
                             let proximity = SHDateProximityToDate(start)
                             switch proximity {
                             case .Today:
-                                dateFormatted = L("watch.today")
+                                day = L("watch.today")
                             case .Yesterday:
-                                dateFormatted = L("watch.yesterday")
+                                day = L("watch.yesterday")
                             case .TwoDaysAgo:
-                                dateFormatted = L("watch.twoDaysAgo")
+                                day = L("watch.twoDaysAgo")
                             default:
-                                dateFormatted = dateFormatter.stringFromDate(start).capitalizedString
+                                day = dateFormatter.stringFromDate(start).capitalizedString
                                 break
                             }
-                            statsAddiction.values.append((String(count), dateFormatted))
+                            statsAddiction.values.append((String(count), day))
                         }
                     }
                     
@@ -129,16 +129,16 @@ final class WatchStatsOperation: CoreDataOperation {
         return promise.future
     }
     
-    private func getSinceLast(addiction: Addiction) -> Future<NSTimeInterval, NSError> {
-        let promise = Promise<NSTimeInterval, NSError>()
+    private func getSinceLast(addiction: Addiction) -> Future<NSDate, NSError> {
+        let promise = Promise<NSDate, NSError>()
         let queue = NSOperationQueue()
         
         let op = TimeSinceLastRecord(addiction: addiction)
         queue.addOperation(op)
         
         op.completionBlock = {
-            if let interval = op.interval {
-                promise.success(interval)
+            if let sinceLast = op.sinceLast {
+                promise.success(sinceLast)
             } else {
                 promise.failure(op.error!)
             }
@@ -151,9 +151,7 @@ final class WatchStatsOperation: CoreDataOperation {
         var dict = WatchDictionary()
         dict["name"] = result.addiction
         dict["value"] = result.values.map { [$0.value, $0.date] }
-        if result.sinceLast > 0 {
-            dict["sinceLast"] = result.sinceLast
-        }
+        dict["sinceLast"] = result.sinceLast
         return dict
     }
 

@@ -34,6 +34,9 @@ class DayInterfaceController: WKInterfaceController {
     }
     
     override func willActivate() {
+        // This method is called when watch view controller is about to be visible to user
+        super.willActivate()
+
         NSNotificationCenter.defaultCenter().addObserver(
             self,
             selector: #selector(DayInterfaceController.contextDidUpdate(_:)),
@@ -48,16 +51,13 @@ class DayInterfaceController: WKInterfaceController {
             addictionLbl.setText(nil)
             dayLbl.setText(nil)
         }
-        
-        // This method is called when watch view controller is about to be visible to user
-        super.willActivate()
     }
     
     override func didDeactivate() {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     func contextDidUpdate(notification: NSNotification) {
