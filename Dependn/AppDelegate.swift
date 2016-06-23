@@ -65,7 +65,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         // Setup Fabric
         Fabric.with([Crashlytics.self])
 
-        UAConfig.defaultConfig().developmentLogLevel = .None
         UAirship.takeOff()
         UAirship.push().autobadgeEnabled = true
         

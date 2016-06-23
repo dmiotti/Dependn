@@ -226,7 +226,7 @@
 "app_name" = "DEPENDN'";
 
 /*  */
-"suggested.addictions.tobacco" = "Cigarettes";
+"suggested.addictions.tobacco" = "Cigarette";
 
 /*  */
 "suggested.addictions.cocaine" = "Cocaine";
@@ -238,7 +238,7 @@
 "suggested.addictions.lsd" = "LSD";
 
 /*  */
-"suggested.addictions.ecigarette" = "E-cigarettes";
+"suggested.addictions.ecigarette" = "E-cigarette";
 
 /*  */
 "suggested.addictions.alcohol" = "Alcohol";
