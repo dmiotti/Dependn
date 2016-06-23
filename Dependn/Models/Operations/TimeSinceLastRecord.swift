@@ -39,6 +39,7 @@ final class TimeSinceLastRecord: SHOperation {
                     self.sinceLast = last.date
                     self.interval = fabs(last.date.timeIntervalSinceDate(NSDate()))
                 } else {
+                    self.sinceLast = NSDate()
                     self.interval = 0
                 }
             } catch let err as NSError {

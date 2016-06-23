@@ -46,6 +46,7 @@ final class AppContext {
     var places = [WatchSimpleModel]()
     var mostUsedAddiction: WatchSimpleModel?
     var mostUsedPlace: WatchSimpleModel?
+    var updatedAt: NSDate?
 }
 
 enum NewRecordType {
@@ -58,6 +59,8 @@ final class NewRecordModel {
     var addiction: WatchSimpleModel?
     var intensity: Float = 7
 }
+
+typealias RequestContextBlock = AppContext -> Void
 
 final class WatchSessionManager: NSObject, WCSessionDelegate {
     
@@ -76,19 +79,46 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         session.delegate = self
         session.activateSession()
     }
-    
-    func requestContext() {
+
+    private var getContextCompletionQueue = [RequestContextBlock]()
+
+    func requestContext(block: RequestContextBlock? = nil) {
+        print("requestContext")
+
+        if let block = block {
+            getContextCompletionQueue.append(block)
+        } else {
+            getContextCompletionQueue.append({ ctx in })
+        }
+
+        if getContextCompletionQueue.count > 1 {
+            return
+        }
+
         let message = ["action": "context"]
         session.sendMessage(message, replyHandler: { response in
+
+            print("Got Context !")
             
             self.parseApplicationContext(response)
+            self.unqueueContextBlocks()
             
             }, errorHandler: { err in
+                print("Error :( \(err)")
+
+                self.unqueueContextBlocks()
                 
                 NSNotificationCenter.defaultCenter().postNotificationName(
                     kWatchExtensionContextErrorNotificationName,
                     object: nil, userInfo: [ "error": err ])
         })
+    }
+
+    private func unqueueContextBlocks() {
+        for block in getContextCompletionQueue {
+            block(context)
+        }
+        getContextCompletionQueue.removeAll()
     }
     
     func sendAdd() {
@@ -185,6 +215,8 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             model = WatchSimpleModel(dict: mostUsedPlace) {
             context.mostUsedPlace = model
         }
+
+        context.updatedAt = NSDate()
         
         if let statsError = statsContext?["error"] as? WatchDictionary, err = parseError(statsError) {
             NSNotificationCenter.defaultCenter().postNotificationName(

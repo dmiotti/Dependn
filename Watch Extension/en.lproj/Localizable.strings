@@ -25,3 +25,13 @@
 "watch.sinceLast" = "%@ ago";
 
 "add.conso" = "Add";
+
+"addiction.fakename" = "Video games";
+
+"addiction.last" = "Last time";
+
+"addiction.last_short" = "Last";
+
+"addiction.count" = "Today";
+
+"addiction.count_short" = "Today";
