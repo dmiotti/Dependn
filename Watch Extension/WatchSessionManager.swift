@@ -46,7 +46,6 @@ final class AppContext {
     var places = [WatchSimpleModel]()
     var mostUsedAddiction: WatchSimpleModel?
     var mostUsedPlace: WatchSimpleModel?
-    var updatedAt: NSDate?
 }
 
 enum NewRecordType {
@@ -83,7 +82,6 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     private var getContextCompletionQueue = [RequestContextBlock]()
 
     func requestContext(block: RequestContextBlock? = nil) {
-        print("requestContext")
 
         if let block = block {
             getContextCompletionQueue.append(block)
@@ -97,14 +95,12 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
 
         let message = ["action": "context"]
         session.sendMessage(message, replyHandler: { response in
-
-            print("Got Context !")
             
             self.parseApplicationContext(response)
+
             self.unqueueContextBlocks()
             
             }, errorHandler: { err in
-                print("Error :( \(err)")
 
                 self.unqueueContextBlocks()
                 
@@ -140,13 +136,6 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             session.sendMessage(message, replyHandler: { response in
                 
                 self.parseApplicationContext(response)
-
-                let complicationServer = CLKComplicationServer.sharedInstance()
-                if let actives = complicationServer.activeComplications {
-                    for complication in actives {
-                        complicationServer.reloadTimelineForComplication(complication)
-                    }
-                }
                 
                 }, errorHandler: { err in
                     
@@ -159,8 +148,6 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     
     private func parseApplicationContext(appContext: [String: AnyObject]) {
         
-//        print("appContext: \(appContext)")
-
         /// Parse stats context
         let statsContext = appContext["stats"] as? WatchDictionary
         let statsContextValue = statsContext?["value"] as? WatchDictionary
@@ -215,8 +202,6 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             model = WatchSimpleModel(dict: mostUsedPlace) {
             context.mostUsedPlace = model
         }
-
-        context.updatedAt = NSDate()
         
         if let statsError = statsContext?["error"] as? WatchDictionary, err = parseError(statsError) {
             NSNotificationCenter.defaultCenter().postNotificationName(

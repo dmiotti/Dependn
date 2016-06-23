@@ -78,17 +78,24 @@ final class PushPermissionViewController: UIViewController {
         }
 
         subTitleLbl = UILabel()
-        subTitleLbl.text = L("push.perm.subtitle")
-        subTitleLbl.font = UIFont.systemFontOfSize(13, weight: UIFontWeightRegular)
-        subTitleLbl.textColor = UIColor.appBlackColor().colorWithAlphaComponent(0.5)
-        subTitleLbl.textAlignment = .Center
+        let attr = NSMutableAttributedString(string: L("push.perm.subtitle"))
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .Center
+        paragraph.lineHeightMultiple = 1.35
+        attr.addAttributes(
+            [
+                NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightRegular),
+                NSForegroundColorAttributeName: UIColor.appBlackColor().colorWithAlphaComponent(0.5),
+                NSParagraphStyleAttributeName: paragraph
+            ], range: NSRange(0..<attr.length))
+        subTitleLbl.attributedText = attr
         subTitleLbl.numberOfLines = 0
         contentView.addSubview(subTitleLbl)
         subTitleLbl.snp_makeConstraints {
             $0.top.equalTo(titleLbl.snp_bottom).offset(10)
             $0.centerX.equalTo(contentView)
-            $0.left.greaterThanOrEqualTo(contentView)
-            $0.right.lessThanOrEqualTo(contentView)
+            $0.left.greaterThanOrEqualTo(contentView).offset(30)
+            $0.right.lessThanOrEqualTo(contentView).offset(-30)
         }
 
         acceptBtn = UIButton(type: .System)

@@ -24,20 +24,19 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
-    var stats: WatchStatsAddiction?
+    var stats: WatchStatsAddiction? {
+        return WatchSessionManager.sharedManager.context.stats
+    }
 
     func requestedUpdateDidBegin() {
-        print("requestedUpdateDidBegin")
         WatchSessionManager.sharedManager.requestContext()
     }
 
     func requestedUpdateBudgetExhausted() {
-        print("requestedUpdateBudgetExhausted")
         WatchSessionManager.sharedManager.requestContext()
     }
 
     private func reloadComplications() {
-        print("Reloading complication")
         if let actives = CLKComplicationServer.sharedInstance().activeComplications {
             actives.forEach { c in
                 CLKComplicationServer.sharedInstance().reloadTimelineForComplication(c)
@@ -53,12 +52,11 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     func getNextRequestedUpdateDateWithHandler(handler: (NSDate?) -> Void) {
-        print("getNextRequestedUpdateDateWithHandler")
-        handler(NSDate(timeIntervalSinceNow: 16 * 60))
+        let next = NSDate(timeIntervalSinceNow: 60 * 60)
+        handler(next)
     }
 
     func getPlaceholderTemplateForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTemplate?) -> Void) {
-        print("getPlaceholderTemplateForComplication")
 
         var template: CLKComplicationTemplate? = nil
 
@@ -110,12 +108,10 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     func getPrivacyBehaviorForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationPrivacyBehavior) -> Void) {
-        print("getPrivacyBehaviorForComplication")
         handler(.ShowOnLockScreen)
     }
 
     func getCurrentTimelineEntryForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTimelineEntry?) -> Void) {
-        print("getCurrentTimelineEntryForComplication")
         if let stats = stats {
             let template = self.buildComplication(complication, withStats: stats)
             let timelineEntry = CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: template)
@@ -126,7 +122,6 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     func getTimelineEntriesForComplication(complication: CLKComplication, beforeDate date: NSDate, limit: Int, withHandler handler: ([CLKComplicationTimelineEntry]?) -> Void) {
-        print("getTimelineEntriesForComplication: beforeDate: \(date), complication: \(complication)")
         if let stats = stats where stats.sinceLast.compare(date) == .OrderedAscending {
             let template = self.buildComplication(complication, withStats: stats)
             let timelineEntry = CLKComplicationTimelineEntry(date: stats.sinceLast, complicationTemplate: template)
@@ -137,7 +132,6 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     func getTimelineEntriesForComplication(complication: CLKComplication, afterDate date: NSDate, limit: Int, withHandler handler: ([CLKComplicationTimelineEntry]?) -> Void) {
-        print("getTimelineEntriesForComplication: afterDate: \(date), complication: \(complication)")
         if let stats = stats where stats.sinceLast.compare(date) == .OrderedDescending {
             let template = self.buildComplication(complication, withStats: stats)
             let timelineEntry = CLKComplicationTimelineEntry(date: stats.sinceLast, complicationTemplate: template)
@@ -148,25 +142,27 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     func getSupportedTimeTravelDirectionsForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTimeTravelDirections) -> Void) {
-        print("getSupportedTimeTravelDirectionsForComplication")
         handler([CLKComplicationTimeTravelDirections.Backward, CLKComplicationTimeTravelDirections.Forward])
     }
 
     func getTimelineStartDateForComplication(complication: CLKComplication, withHandler handler: (NSDate?) -> Void) {
-        print("getTimelineStartDateForComplication")
         handler(stats?.sinceLast)
     }
 
     func getTimelineEndDateForComplication(complication: CLKComplication, withHandler handler: (NSDate?) -> Void) {
-        print("getTimelineEndDateForComplication")
         handler(NSDate())
     }
 
     private func buildComplication(complication: CLKComplication, withStats stats: WatchStatsAddiction, date: NSDate = NSDate()) -> CLKComplicationTemplate {
-        print("buildComplication")
 
         let obfuscated = stats.addiction.substringToIndex(stats.addiction.startIndex.advancedBy(3))
-        let count = "\(stats.values.count)"
+
+        let count: String
+        if !stats.values.isEmpty {
+            count = "\(stats.values[0].value)"
+        } else {
+            count = "0"
+        }
 
         let interval = date.timeIntervalSinceDate(stats.sinceLast)
         let shortSinceLast = stringFromTimeInterval(interval)
@@ -225,13 +221,16 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
         return template
     }
 
+    private var cachedStats: WatchStatsAddiction?
     func contextDidUpdate(notification: NSNotification) {
         if let context = notification.userInfo?["context"] as? AppContext, contextStats = context.stats {
-            if let localStats = stats {
-                if contextStats.sinceLast.compare(localStats.sinceLast) == .OrderedDescending {
+            if let cached = cachedStats {
+                if contextStats.sinceLast.compare(cached.sinceLast) == .OrderedDescending {
+                    cachedStats = context.stats
                     reloadComplications()
                 }
             } else {
+                cachedStats = context.stats
                 reloadComplications()
             }
         }
