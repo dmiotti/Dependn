@@ -14,6 +14,7 @@ import CocoaLumberjack
 import SwiftHelpers
 import WatchConnectivity
 import BrightFutures
+import AirshipKit
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -63,6 +64,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Setup Fabric
         Fabric.with([Crashlytics.self])
+
+        UAConfig.defaultConfig().developmentLogLevel = .None
+        UAirship.takeOff()
+        UAirship.push().autobadgeEnabled = true
         
         StyleSheet.customizeAppearance(window)
         
@@ -115,6 +120,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
+        UAirship.push().resetBadge()
+        UAirship.push().updateRegistration()
+
         importInitialPlacesIfNeeded()
         showPasscodeIfNeeded()
         guard let shortcutItem = launchedShortcutItem else {
@@ -138,6 +146,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Pushes
 
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        UAirship.push().appRegisteredUserNotificationSettings()
+
         if notificationSettings.types.contains(.Alert) {
             NSNotificationCenter.defaultCenter().postNotificationName(kUserAcceptPushPermissions, object: nil, userInfo: nil)
 
@@ -149,11 +159,39 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        
+        UAirship.push().userPushNotificationsEnabled = true
+        UAirship.push().appRegisteredForRemoteNotificationsWithDeviceToken(deviceToken)
+        Analytics.instance.trackDeviceToken(deviceToken)
     }
 
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
 
+    }
+
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        UAirship.push().appReceivedRemoteNotification(userInfo, applicationState: application.applicationState)
+    }
+
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        UAirship.push().appReceivedRemoteNotification(userInfo,
+                                                      applicationState:application.applicationState,
+                                                      fetchCompletionHandler:completionHandler)
+    }
+
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
+        UAirship.push().appReceivedActionWithIdentifier(identifier!,
+                                                        notification: userInfo,
+                                                        applicationState: application.applicationState,
+                                                        completionHandler: completionHandler)
+    }
+
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
+        
+        UAirship.push().appReceivedActionWithIdentifier(identifier!,
+                                                        notification: userInfo,
+                                                        responseInfo: responseInfo,
+                                                        applicationState: application.applicationState,
+                                                        completionHandler: completionHandler)
     }
     
     // MARK: - Handle shortcut items

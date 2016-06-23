@@ -65,7 +65,13 @@ final class Analytics: NSObject {
             session.activateSession()
             props["watch"] = session.paired
         }
-        
+
+        props["push"] = UIApplication.sharedApplication().isRegisteredForRemoteNotifications()
+
+        if let settings = UIApplication.sharedApplication().currentUserNotificationSettings() {
+            props["localpush"] = settings.types.contains(.Alert)
+        }
+
         Amplitude.instance().setUserProperties(props)
     }
     
@@ -110,6 +116,11 @@ final class Analytics: NSObject {
     
     func trackRevenue(productIdentifier: String, price: Double, receipt: NSData? = nil) {
         Amplitude.instance().logRevenue(productIdentifier, quantity: 1, price: price)
+    }
+
+    func trackDeviceToken(deviceToken: NSData) {
+        let tokenString = deviceToken.parseDeviceToken()
+        Amplitude.instance().setUserProperties([ "deviceToken": tokenString ])
     }
     
     func shareApp(target: String) {

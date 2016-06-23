@@ -12,7 +12,7 @@ PODS:
     - CocoaLumberjack/Default
   - CocoaLumberjack/Swift (2.3.0):
     - CocoaLumberjack/Extensions
-  - Crashlytics (3.7.1):
+  - Crashlytics (3.7.2):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.7)
   - libxlsxwriter (0.3.2)
@@ -21,6 +21,7 @@ PODS:
   - SnapKit (0.21.1)
   - SwiftHelpers (1.0.6)
   - SwiftyUserDefaults (2.2.0)
+  - UrbanAirship-iOS-SDK (7.2.0)
 
 DEPENDENCIES:
   - Amplitude-iOS
@@ -34,6 +35,7 @@ DEPENDENCIES:
   - SnapKit
   - SwiftHelpers (from `git@github.com:dmiotti/SwiftHelpers.git`)
   - SwiftyUserDefaults
+  - UrbanAirship-iOS-SDK
 
 EXTERNAL SOURCES:
   libxlsxwriter:
@@ -46,7 +48,7 @@ CHECKOUT OPTIONS:
     :commit: 07734b1af418dd9be25262cd74cbbc17a6bbb1c9
     :git: git@github.com:dmiotti/libxlsxwriter.git
   SwiftHelpers:
-    :commit: e699a488c52cd64c5758d474c63abc3f03a1bee5
+    :commit: 1605da0985ac5bcbc931659cf66fcabb8dce59b1
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:
@@ -54,7 +56,7 @@ SPEC CHECKSUMS:
   BrightFutures: e18b83fd6fa8562ceb9902ee609f0de23b0ee110
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
-  Crashlytics: 3cdd4c9655be68032a0cf0379e0fb5ef6af22cad
+  Crashlytics: 130ab943f8c78cda7a814b434f270b2e2c8a3cba
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   libxlsxwriter: 40d5a1e4f9006e08c3f44399a10135694589710c
   PKHUD: 4167eccdb1b3a892fd80ce2b51cb6ba412a889ab
@@ -62,5 +64,6 @@ SPEC CHECKSUMS:
   SnapKit: bbad04cb016c7cead63965f16b00c09318d271ee
   SwiftHelpers: 43d9410288981d11d91086cea92c8d49bcdd8441
   SwiftyUserDefaults: e7c8197a9d4068702e7f2406a968cae413b8de27
+  UrbanAirship-iOS-SDK: ad55c5d44af1aa5d007b0e047d30b48858eff9b8
 
 COCOAPODS: 0.39.0

@@ -32,6 +32,7 @@
 		582820CB1CAF1DD7002DC9AF /* HistoryEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */; };
 		5831254F1D0DDC06006EC991 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5831254E1D0DDC06006EC991 /* NotificationsViewController.swift */; };
 		583125511D0DDCF5006EC991 /* NotificationSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583125501D0DDCF5006EC991 /* NotificationSwitchCell.swift */; };
+		583B13FC1D1C98BF00DFF974 /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 583B13FB1D1C98BF00DFF974 /* AirshipConfig.plist */; };
 		583C01501CBA565700E0D41C /* InitialImportPlacesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */; };
 		583C9C661CCEBAC600E6FD9D /* Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 58F092BB1C9615AA00DF4ADC /* Watch.app */; };
 		583C9C681CCEC62900E6FD9D /* YesterdayInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */; };
@@ -200,6 +201,7 @@
 		582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryEmptyView.swift; sourceTree = "<group>"; };
 		5831254E1D0DDC06006EC991 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		583125501D0DDCF5006EC991 /* NotificationSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSwitchCell.swift; sourceTree = "<group>"; };
+		583B13FB1D1C98BF00DFF974 /* AirshipConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AirshipConfig.plist; sourceTree = "<group>"; };
 		583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportPlacesOperation.swift; sourceTree = "<group>"; };
 		583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YesterdayInterfaceController.swift; sourceTree = "<group>"; };
 		583C9C691CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoDaysAgoInterfaceController.swift; sourceTree = "<group>"; };
@@ -518,6 +520,7 @@
 				58DF62AF1C83BDEE0035F608 /* Localizable.strings */,
 				58DF62B11C83BDEE0035F608 /* Info.plist */,
 				58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */,
+				583B13FB1D1C98BF00DFF974 /* AirshipConfig.plist */,
 				58754E101CE382A000961ED6 /* Settings.bundle */,
 			);
 			path = Dependn;
@@ -783,6 +786,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58DF62CC1C83BDEE0035F608 /* Localizable.strings in Resources */,
+				583B13FC1D1C98BF00DFF974 /* AirshipConfig.plist in Resources */,
 				58DF62C51C83BDEE0035F608 /* Main.storyboard in Resources */,
 				58DF62CB1C83BDEE0035F608 /* InfoPlist.strings in Resources */,
 				58DF62C31C83BDEE0035F608 /* Assets.xcassets in Resources */,
