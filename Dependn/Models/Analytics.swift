@@ -10,6 +10,7 @@ import UIKit
 import Amplitude_iOS
 import CoreData
 import WatchConnectivity
+import SwiftyUserDefaults
 
 final class Analytics: NSObject {
     
@@ -65,6 +66,10 @@ final class Analytics: NSObject {
             session.activateSession()
             props["watch"] = session.paired
         }
+
+        props["usePasscode"] = Defaults[.usePasscode]
+        
+        props["useLocation"] = Defaults[.useLocation]
 
         props["push"] = UIApplication.sharedApplication().isRegisteredForRemoteNotifications()
 
