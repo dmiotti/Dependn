@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import CocoaLumberjack
+import SwiftHelpers
 
 private let kCoreDataStackErrorDomain = "CoreDataStack"
 private let kCoreDataStackMomdFilename = "Dependn"
@@ -67,7 +68,9 @@ final class CoreDataStack: NSObject {
             var opts = [String: AnyObject]()
             opts[NSMigratePersistentStoresAutomaticallyOption] = true
             opts[NSInferMappingModelAutomaticallyOption] = true
-            opts[NSPersistentStoreUbiquitousContentNameKey] = "Dependn"
+            if !DeviceType.isSimulator {
+                opts[NSPersistentStoreUbiquitousContentNameKey] = "Dependn"
+            }
             opts[NSPersistentStoreFileProtectionKey] = NSFileProtectionCompleteUntilFirstUserAuthentication
             try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: opts)
         } catch {

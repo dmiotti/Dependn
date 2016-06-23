@@ -1,6 +1,6 @@
 PODS:
-  - Amplitude-iOS (3.7.0)
-  - BrightFutures (4.0.1):
+  - Amplitude-iOS (3.8.1)
+  - BrightFutures (4.1.0):
     - Result (~> 2.0)
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
@@ -12,14 +12,14 @@ PODS:
     - CocoaLumberjack/Default
   - CocoaLumberjack/Swift (2.3.0):
     - CocoaLumberjack/Extensions
-  - Crashlytics (3.7.0):
+  - Crashlytics (3.7.1):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.7)
   - libxlsxwriter (0.3.2)
   - PKHUD (3.1.0)
-  - Result (2.0.0)
-  - SnapKit (0.21.0)
-  - SwiftHelpers (1.0.5)
+  - Result (2.1.1)
+  - SnapKit (0.21.1)
+  - SwiftHelpers (1.0.6)
   - SwiftyUserDefaults (2.2.0)
 
 DEPENDENCIES:
@@ -46,21 +46,21 @@ CHECKOUT OPTIONS:
     :commit: 07734b1af418dd9be25262cd74cbbc17a6bbb1c9
     :git: git@github.com:dmiotti/libxlsxwriter.git
   SwiftHelpers:
-    :commit: d1dd7a1dced3de97e60cfcf3c7d014fdc8ad12fa
+    :commit: e699a488c52cd64c5758d474c63abc3f03a1bee5
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:
-  Amplitude-iOS: 8bc8b9dc9c1898dbe5da541e21e8941ec085644f
-  BrightFutures: 786ff7d16e620eb777cf802e545ef7d6237d77f6
+  Amplitude-iOS: 153d280ce87ab715af56ed6e91739b4d885afd43
+  BrightFutures: e18b83fd6fa8562ceb9902ee609f0de23b0ee110
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
-  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
+  Crashlytics: 3cdd4c9655be68032a0cf0379e0fb5ef6af22cad
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   libxlsxwriter: 40d5a1e4f9006e08c3f44399a10135694589710c
   PKHUD: 4167eccdb1b3a892fd80ce2b51cb6ba412a889ab
-  Result: 9e75e1111c774c6ac594e14907b15057053a7959
-  SnapKit: 2756fe24b706367af224c9c508d2f9166d03354c
-  SwiftHelpers: fea8277010f64092b5aef5c78f14495650c756fe
+  Result: 822c879f145943320cc80a9a8372378e3d699fe4
+  SnapKit: bbad04cb016c7cead63965f16b00c09318d271ee
+  SwiftHelpers: 43d9410288981d11d91086cea92c8d49bcdd8441
   SwiftyUserDefaults: e7c8197a9d4068702e7f2406a968cae413b8de27
 
 COCOAPODS: 0.39.0
