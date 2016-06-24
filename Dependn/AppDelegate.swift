@@ -46,6 +46,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     static let applicationShortcutUserInfoIconKey = "applicationShortcutUserInfoIconKey"
     
     // MARK: Properties
+
+    private(set) var checkForPasscode: Bool = true
     
     var window: UIWindow?
     
@@ -111,6 +113,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
+        checkForPasscode = true
         showPasscodeIfNeeded()
     }
     
@@ -123,10 +126,13 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         UAirship.push().updateRegistration()
 
         importInitialPlacesIfNeeded()
+
         showPasscodeIfNeeded()
+
         guard let shortcutItem = launchedShortcutItem else {
             return
         }
+
         handleShortcutItem(shortcutItem)
         launchedShortcutItem = nil
     }
@@ -227,12 +233,15 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func showPasscodeIfNeeded() {
         guard
+            checkForPasscode &&
             hidingNav == nil &&
                 PasscodeViewController.supportedOwnerAuthentications().count > 0 &&
                 Defaults[.usePasscode] == true else {
                     DDLogInfo("Passcode is already shown or is unsupported")
                     return
         }
+
+        checkForPasscode = false
         
         let now = NSDate()
         if let lastShown = lastPasscodeShown where lastShown.timeIntervalSinceDate(now) < 15 * 60 {
