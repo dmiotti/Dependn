@@ -33,6 +33,11 @@ platform :ios do
     scan
   end
 
+  desc "Bump the version number"
+  lane :bump_version do
+    bump_version
+  end
+
   def bump_version
     build_number = sh("git rev-list --count HEAD").delete("\n")
 
