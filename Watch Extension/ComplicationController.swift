@@ -180,7 +180,7 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
             let t = CLKComplicationTemplateModularLargeTable()
             t.tintColor = UIColor.purpleColor()
             t.column2Alignment = .Trailing
-            t.headerTextProvider = CLKSimpleTextProvider(text: obfuscated)
+            t.headerTextProvider = CLKSimpleTextProvider(text: stats.addiction)
             t.row1Column1TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("addiction.last", comment: ""), shortText: NSLocalizedString("addiction.last_short", comment: ""))
             t.row2Column1TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("addiction.count", comment: ""), shortText: todayString)
             t.row1Column2TextProvider = CLKRelativeDateTextProvider(date: stats.sinceLast, style: .Natural, units: [.Day, .Hour, .Minute, .Second])
