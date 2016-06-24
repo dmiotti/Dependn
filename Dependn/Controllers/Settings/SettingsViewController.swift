@@ -63,8 +63,8 @@ final class SettingsViewController: SHNoBackButtonTitleViewController {
         super.viewDidLoad()
         
         sections = [
-            Section(type: .General, items: [ .ContactUs, .Passcode, .Watch, .Notifications, .Version ]),
             Section(type: .Data, items: [ .Export, .ManageAddictions, .MemorisePlaces ]),
+            Section(type: .General, items: [ .ContactUs, .Passcode, .Watch, .Notifications, .Version ]),
             Section(type: .IAP, items: [ .Restore ]),
             Section(type: .Others, items: [ .Rate, .Share, .Tour ])
         ]
