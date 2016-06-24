@@ -33,18 +33,19 @@ final class IntensityGradientView: SHCommonInitView {
         
         clipsToBounds = true
         
-        backgroundColor = UIColor.appIntensityLowColor()
+        backgroundColor = "FDE16A".UIColor
         
         gradientLayer = CAGradientLayer()
+        gradientLayer.transform = CATransform3DMakeRotation(CGFloat(M_PI), 0, 0, 1)
         gradientLayer.colors = [
-            UIColor.appIntensityHighColor().CGColor,
+            "F76589".UIColor.colorWithAlphaComponent(0.7).CGColor,
             UIColor(white: 1, alpha: 0).CGColor
         ]
         layer.addSublayer(gradientLayer)
         
         intensityValueLbl = UILabel()
-        intensityValueLbl.textColor = UIColor.appBlackColor()
-        intensityValueLbl.font = UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold)
+        intensityValueLbl.textColor = UIColor.whiteColor()
+        intensityValueLbl.font = UIFont.systemFontOfSize(15, weight: UIFontWeightMedium)
         intensityValueLbl.textAlignment = .Center
         addSubview(intensityValueLbl)
 
@@ -68,13 +69,18 @@ final class IntensityGradientView: SHCommonInitView {
     }
     
     private func animateProgression(progress: Float) {
-        let endLocations = [ progress * 0.7, 1 ]
+        let endLocations = [ progress, 1 ]
 
         let anim = CABasicAnimation(keyPath: "locations")
         anim.fromValue = gradientLayer.locations
         anim.toValue = endLocations
         anim.duration = 0.35
         gradientLayer.locations = endLocations
+        gradientLayer.colors = [
+            "F76589".UIColor.colorWithAlphaComponent(CGFloat(progress)).CGColor,
+            UIColor(white: 1, alpha: 0).CGColor
+        ]
+
         gradientLayer.addAnimation(anim, forKey: anim.keyPath)
         
         layoutIfNeeded()
