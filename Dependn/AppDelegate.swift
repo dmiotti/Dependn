@@ -144,6 +144,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func importInitialPlacesIfNeeded() {
         if InitialImportPlacesOperation.shouldImportPlaces() {
+            Defaults[.initialPlacesImported] = true
             NSOperationQueue().addOperation(InitialImportPlacesOperation())
         }
     }
