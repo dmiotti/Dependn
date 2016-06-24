@@ -318,6 +318,9 @@ extension SettingsViewController: UITableViewDelegate {
     }
     
     private func contactUs() {
+        if !MFMailComposeViewController.canSendMail() {
+            return
+        }
         let mail = MFMailComposeViewController()
         mail.mailComposeDelegate = self
         mail.setToRecipients([ "contact@dependn.com "])
