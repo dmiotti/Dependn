@@ -8,6 +8,8 @@
 
 import ClockKit
 
+private let todayString = NSLocalizedString("addiction.count_short", comment: "")
+
 final class ComplicationController: NSObject, CLKComplicationDataSource {
 
     override init() {
@@ -58,16 +60,17 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
 
     func getPlaceholderTemplateForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTemplate?) -> Void) {
 
+        let fullLast = String(format: NSLocalizedString("watch.sinceLast", comment: ""), stringFromTimeInterval(1620))
+
+        let in27min = NSDate().dateByAddingTimeInterval(1620)
+
         var template: CLKComplicationTemplate? = nil
 
         switch complication.family {
 
         case .ModularSmall:
             let t = CLKComplicationTemplateModularSmallSimpleText()
-            t.textProvider = CLKRelativeDateTextProvider(
-                date: NSDate().dateByAddingTimeInterval(1620),
-                style: .Natural,
-                units: [.Day, .Hour, .Minute, .Second])
+            t.textProvider = CLKRelativeDateTextProvider(date: in27min, style: .Natural, units: [.Day, .Hour, .Minute, .Second])
             template = t
 
         case .ModularLarge:
@@ -77,29 +80,25 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
             t.headerTextProvider = CLKSimpleTextProvider(text: NSLocalizedString("addiction.fakename", comment: ""))
             t.row1Column1TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("addiction.last", comment: ""))
             t.row2Column1TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("addiction.count", comment: ""))
-            t.row1Column2TextProvider = CLKRelativeDateTextProvider(
-                date: NSDate().dateByAddingTimeInterval(1620),
-                style: .Natural,
-                units: [.Day, .Hour, .Minute, .Second])
+            t.row1Column2TextProvider = CLKRelativeDateTextProvider(date: in27min, style: .Natural, units: [.Day, .Hour, .Minute, .Second])
             t.row2Column2TextProvider = CLKSimpleTextProvider(text: "17")
             template = t
 
         case .UtilitarianSmall:
             let t = CLKComplicationTemplateUtilitarianSmallFlat()
-            t.textProvider = CLKSimpleTextProvider(text: "10, il y a 27m", shortText: "10, 27m")
+            t.textProvider = CLKSimpleTextProvider(text: "10 \(todayString), 27m", shortText: "10, 27m")
             template = t
 
         case .UtilitarianLarge:
             let t = CLKComplicationTemplateUtilitarianLargeFlat()
-            t.textProvider = CLKSimpleTextProvider(text: "Cig. 10, il y a 27m", shortText: "Cig 10, 27m")
+            t.textProvider = CLKSimpleTextProvider(
+                text: "Cig. 10 \(todayString), \(fullLast)",
+                shortText: "10, 27m")
             template = t
 
         case .CircularSmall:
             let t = CLKComplicationTemplateCircularSmallSimpleText()
-            t.textProvider = CLKRelativeDateTextProvider(
-                date: NSDate().dateByAddingTimeInterval(1620),
-                style: .Natural,
-                units: [.Day, .Hour, .Minute, .Second])
+            t.textProvider = CLKRelativeDateTextProvider(date: in27min, style: .Natural, units: [.Day, .Hour, .Minute, .Second])
             t.tintColor = UIColor.whiteColor()
             template = t
         }
@@ -158,8 +157,8 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
         let obfuscated = stats.addiction.substringToIndex(stats.addiction.startIndex.advancedBy(3))
 
         let count: String
-        if !stats.values.isEmpty {
-            count = "\(stats.values[0].value)"
+        if let first = stats.values.first {
+            count = "\(first.value)"
         } else {
             count = "0"
         }
@@ -174,10 +173,7 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
 
         case .ModularSmall:
             let t = CLKComplicationTemplateModularSmallSimpleText()
-            t.textProvider = CLKRelativeDateTextProvider(
-                date: NSDate().dateByAddingTimeInterval(1620),
-                style: .Natural,
-                units: [.Day, .Hour, .Minute, .Second])
+            t.textProvider = CLKRelativeDateTextProvider(date: stats.sinceLast, style: .Natural, units: [.Day, .Hour, .Minute, .Second])
             template = t
 
         case .ModularLarge:
@@ -185,35 +181,26 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
             t.tintColor = UIColor.purpleColor()
             t.column2Alignment = .Trailing
             t.headerTextProvider = CLKSimpleTextProvider(text: obfuscated)
-            t.row1Column1TextProvider = CLKSimpleTextProvider(
-                text:       NSLocalizedString("addiction.last", comment: ""),
-                shortText:  NSLocalizedString("addiction.last_short", comment: ""))
-            t.row2Column1TextProvider = CLKSimpleTextProvider(
-                text:       NSLocalizedString("addiction.count", comment: ""),
-                shortText: 	NSLocalizedString("count_short", comment: ""))
-            t.row1Column2TextProvider = CLKRelativeDateTextProvider(
-                date: stats.sinceLast,
-                style: .Natural,
-                units: [.Day, .Hour, .Minute, .Second])
+            t.row1Column1TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("addiction.last", comment: ""), shortText: NSLocalizedString("addiction.last_short", comment: ""))
+            t.row2Column1TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("addiction.count", comment: ""), shortText: todayString)
+            t.row1Column2TextProvider = CLKRelativeDateTextProvider(date: stats.sinceLast, style: .Natural, units: [.Day, .Hour, .Minute, .Second])
             t.row2Column2TextProvider = CLKSimpleTextProvider(text: count)
             template = t
 
         case .UtilitarianSmall:
             let t = CLKComplicationTemplateUtilitarianSmallFlat()
-            t.textProvider = CLKSimpleTextProvider(text: "\(count), \(fullSinceLast)", shortText: "\(shortSinceLast)")
+            t.textProvider = CLKSimpleTextProvider(text: "\(count), \(shortSinceLast)", shortText: "\(shortSinceLast)")
             template = t
 
         case .UtilitarianLarge:
             let t = CLKComplicationTemplateUtilitarianLargeFlat()
-            t.textProvider = CLKSimpleTextProvider(text: "\(obfuscated). \(count), \(fullSinceLast)", shortText: "\(count), \(shortSinceLast)")
+            let text = "\(obfuscated). \(count) \(todayString), \(fullSinceLast)"
+            t.textProvider = CLKSimpleTextProvider(text: text, shortText: "\(count), \(fullSinceLast)")
             template = t
 
         case .CircularSmall:
             let t = CLKComplicationTemplateCircularSmallSimpleText()
-            t.textProvider = CLKRelativeDateTextProvider(
-                date: stats.sinceLast,
-                style: .Natural,
-                units: [.Day, .Hour, .Minute, .Second])
+            t.textProvider = CLKRelativeDateTextProvider(date: stats.sinceLast, style: .Natural, units: [.Day, .Hour, .Minute, .Second])
             t.tintColor = UIColor.whiteColor()
             template = t
         }
