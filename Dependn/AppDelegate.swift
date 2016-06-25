@@ -125,8 +125,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         UAirship.push().resetBadge()
         UAirship.push().updateRegistration()
 
-        importInitialPlacesIfNeeded()
-
         showPasscodeIfNeeded()
 
         guard let shortcutItem = launchedShortcutItem else {
@@ -140,13 +138,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
         launchedShortcutItem = shortcutItem
         completionHandler(true)
-    }
-    
-    private func importInitialPlacesIfNeeded() {
-        if InitialImportPlacesOperation.shouldImportPlaces() {
-            Defaults[.initialPlacesImported] = true
-            NSOperationQueue().addOperation(InitialImportPlacesOperation())
-        }
     }
 
     // MARK: - Pushes

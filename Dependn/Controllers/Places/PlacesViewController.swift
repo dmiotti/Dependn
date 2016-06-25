@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import SwiftHelpers
 import CocoaLumberjack
+import PKHUD
 
 protocol PlacesViewControllerDelegate {
     func placeController(controller: PlacesViewController, didChoosePlace place: Place?)
@@ -74,13 +75,42 @@ final class PlacesViewController: UIViewController {
         addBbi.tintColor = UIColor.appBlueColor()
         navigationItem.rightBarButtonItem = addBbi
         
-        performSearch(nil)
-        
         registerNotificationObservers()
+    }
+
+    private var placesLoaded = false
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if !placesLoaded {
+            placesLoaded = true
+            preparePlaces()
+        }
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
+    private func preparePlaces() {
+        do {
+            let places = try Place.allPlaces(inContext: CoreDataStack.shared.managedObjectContext)
+            if places.count == 0 {
+                let queue = NSOperationQueue()
+                let op = InitialImportPlacesOperation { op in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.performSearch(nil)
+                    }
+                }
+                queue.addOperation(op)
+            } else {
+                performSearch(nil)
+            }
+        } catch let err as NSError {
+            print("Error while fetching places: \(err)")
+            performSearch(nil)
+        }
     }
     
     func addBtnClicked(sender: UIButton) {
