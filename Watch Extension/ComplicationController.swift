@@ -212,7 +212,7 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     func contextDidUpdate(notification: NSNotification) {
         if let context = notification.userInfo?["context"] as? AppContext, contextStats = context.stats {
             if let cached = cachedStats {
-                if contextStats.sinceLast.compare(cached.sinceLast) == .OrderedDescending {
+                if contextStats.sinceLast.compare(cached.sinceLast) != .OrderedSame {
                     cachedStats = context.stats
                     reloadComplications()
                 }
