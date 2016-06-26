@@ -79,6 +79,8 @@
 		58BB15921CA20D0D00E3E06A /* PlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB15911CA20D0D00E3E06A /* PlacesViewController.swift */; };
 		58BB15941CA20D3400E3E06A /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BB15931CA20D3400E3E06A /* PlaceCell.swift */; };
 		58CC47BD1D04C0A400F292F4 /* PushSchedulerOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CC47BC1D04C0A400F292F4 /* PushSchedulerOperation.swift */; };
+		58CD36B91D202E5600292B9E /* PushPermissionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD36B71D202E5600292B9E /* PushPermissionAnimator.swift */; };
+		58CD36BA1D202E5600292B9E /* PushPermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD36B81D202E5600292B9E /* PushPermissionViewController.swift */; };
 		58CF71821CA815090092458F /* ShortStatsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CF71811CA815090092458F /* ShortStatsOperation.swift */; };
 		58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */; };
 		58DC7A0D1C8CD873007F9F5D /* NewAddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */; };
@@ -101,8 +103,6 @@
 		58DF62D91C83BDEE0035F608 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62C11C83BDEE0035F608 /* StyleSheet.swift */; };
 		58E429B81C9243B80095F92D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58E429B71C9243B80095F92D /* CloudKit.framework */; };
 		58E9C47E1CD6407400991DC8 /* DeeplinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E9C47D1CD6407400991DC8 /* DeeplinkManager.swift */; };
-		58E9F4611D0F4AE100837553 /* PushPermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E9F4601D0F4AE100837553 /* PushPermissionViewController.swift */; };
-		58E9F4631D0F675800837553 /* PushPermissionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E9F4621D0F675800837553 /* PushPermissionAnimator.swift */; };
 		58E9F4651D0F6DD300837553 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E9F4641D0F6DD300837553 /* Notifications.swift */; };
 		58F092BF1C9615AA00DF4ADC /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58F092BD1C9615AA00DF4ADC /* Interface.storyboard */; };
 		58F092C11C9615AA00DF4ADC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58F092C01C9615AA00DF4ADC /* Assets.xcassets */; };
@@ -252,6 +252,8 @@
 		58BB15911CA20D0D00E3E06A /* PlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesViewController.swift; sourceTree = "<group>"; };
 		58BB15931CA20D3400E3E06A /* PlaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
 		58CC47BC1D04C0A400F292F4 /* PushSchedulerOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushSchedulerOperation.swift; sourceTree = "<group>"; };
+		58CD36B71D202E5600292B9E /* PushPermissionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPermissionAnimator.swift; sourceTree = "<group>"; };
+		58CD36B81D202E5600292B9E /* PushPermissionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPermissionViewController.swift; sourceTree = "<group>"; };
 		58CF71811CA815090092458F /* ShortStatsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortStatsOperation.swift; sourceTree = "<group>"; };
 		58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecordTextViewController.swift; sourceTree = "<group>"; };
 		58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAddictionTableViewCell.swift; sourceTree = "<group>"; };
@@ -281,8 +283,6 @@
 		58E429B61C923DF20095F92D /* Dependn.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Dependn.entitlements; sourceTree = "<group>"; };
 		58E429B71C9243B80095F92D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		58E9C47D1CD6407400991DC8 /* DeeplinkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeeplinkManager.swift; sourceTree = "<group>"; };
-		58E9F4601D0F4AE100837553 /* PushPermissionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPermissionViewController.swift; sourceTree = "<group>"; };
-		58E9F4621D0F675800837553 /* PushPermissionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPermissionAnimator.swift; sourceTree = "<group>"; };
 		58E9F4641D0F6DD300837553 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		58F092BB1C9615AA00DF4ADC /* Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Watch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58F092BE1C9615AA00DF4ADC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
@@ -505,6 +505,15 @@
 			path = Places;
 			sourceTree = "<group>";
 		};
+		58CD36B61D202E5600292B9E /* PushPermission */ = {
+			isa = PBXGroup;
+			children = (
+				58CD36B71D202E5600292B9E /* PushPermissionAnimator.swift */,
+				58CD36B81D202E5600292B9E /* PushPermissionViewController.swift */,
+			);
+			path = PushPermission;
+			sourceTree = "<group>";
+		};
 		58DF629D1C83BDEE0035F608 /* Dependn */ = {
 			isa = PBXGroup;
 			children = (
@@ -530,7 +539,6 @@
 			isa = PBXGroup;
 			children = (
 				58548BC71C8BBBB300C7C940 /* Common */,
-				58E9F45F1D0F4ABA00837553 /* PushPermission */,
 				584897841CAC60C800CA18CE /* OnBoarding */,
 				582603491CF0B47900EA9F57 /* DependencyChooser */,
 				58DF62A51C83BDEE0035F608 /* History */,
@@ -540,6 +548,7 @@
 				58548BE71C8BE1E400C7C940 /* Search */,
 				581DC5D81C8B37E5006DE551 /* Settings */,
 				58548BB91C8B9A6000C7C940 /* Passcode */,
+				58CD36B61D202E5600292B9E /* PushPermission */,
 				58E9C47D1CD6407400991DC8 /* DeeplinkManager.swift */,
 			);
 			path = Controllers;
@@ -603,16 +612,6 @@
 				58BB158E1CA1F98500E3E06A /* Place+Repository.swift */,
 			);
 			path = Repositories;
-			sourceTree = "<group>";
-		};
-		58E9F45F1D0F4ABA00837553 /* PushPermission */ = {
-			isa = PBXGroup;
-			children = (
-				58E9F4601D0F4AE100837553 /* PushPermissionViewController.swift */,
-				58E9F4621D0F675800837553 /* PushPermissionAnimator.swift */,
-			);
-			name = PushPermission;
-			path = Common/PushPermission;
 			sourceTree = "<group>";
 		};
 		58F092BC1C9615AA00DF4ADC /* Watch */ = {
@@ -895,7 +894,6 @@
 				58548BE21C8BE18100C7C940 /* NewPlaceTableViewCell.swift in Sources */,
 				581DC5D71C8B3172006DE551 /* Addiction+Repository.swift in Sources */,
 				58DF62C71C83BDEE0035F608 /* HistoryViewController.swift in Sources */,
-				58E9F4611D0F4AE100837553 /* PushPermissionViewController.swift in Sources */,
 				58DF62D21C83BDEE0035F608 /* CountOperation.swift in Sources */,
 				58DF62D11C83BDEE0035F608 /* AverageTimeInBetweenTwoTakesOperation.swift in Sources */,
 				586EDA361CA3567D00DAE496 /* TimeSinceLastRecord.swift in Sources */,
@@ -934,12 +932,12 @@
 				58E9F4651D0F6DD300837553 /* Notifications.swift in Sources */,
 				58548BDE1C8BE18100C7C940 /* AddRecordViewController.swift in Sources */,
 				583C01501CBA565700E0D41C /* InitialImportPlacesOperation.swift in Sources */,
+				58CD36BA1D202E5600292B9E /* PushPermissionViewController.swift in Sources */,
 				58669AA51CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift in Sources */,
 				58DC7A0D1C8CD873007F9F5D /* NewAddictionTableViewCell.swift in Sources */,
 				58BB15881CA1F91A00E3E06A /* Place+CoreDataProperties.swift in Sources */,
 				58DC7A0B1C8C57A5007F9F5D /* AddRecordTextViewController.swift in Sources */,
 				5864FD7B1CDFC2F900656664 /* XLSExportOperation.swift in Sources */,
-				58E9F4631D0F675800837553 /* PushPermissionAnimator.swift in Sources */,
 				58BB15921CA20D0D00E3E06A /* PlacesViewController.swift in Sources */,
 				5831254F1D0DDC06006EC991 /* NotificationsViewController.swift in Sources */,
 				580BB9D31CDF8BC10068D413 /* Analytics.swift in Sources */,
@@ -951,6 +949,7 @@
 				5864FD841CDFC53100656664 /* IAPHelper.swift in Sources */,
 				5864FD831CDFC53100656664 /* DependnProducts.swift in Sources */,
 				58E9C47E1CD6407400991DC8 /* DeeplinkManager.swift in Sources */,
+				58CD36B91D202E5600292B9E /* PushPermissionAnimator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
