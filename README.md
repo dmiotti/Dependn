@@ -5,13 +5,13 @@ Report every Cigarettes you smoke and make stats.
 ## Setup
 
 ```
-$ brew install cocoapods
-$ pod install
+$ bundle install
+$ bundle exec pod install
 $ open Dependn.xcworkspace
 ```
 
 ## Deployment
 
 ```
-fastlane beta
+bundle exec fastlane beta
 ```
