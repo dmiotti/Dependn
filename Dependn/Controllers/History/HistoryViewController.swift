@@ -124,6 +124,7 @@ final class HistoryViewController: UIViewController {
     
     private func configureNotificationObservers() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.coreDataStackDidChange(_:)), name: kCoreDataStackStoreDidChange, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.applicationWillEnterForeground(_:)), name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
     private func configureStatsView() {
@@ -168,6 +169,10 @@ final class HistoryViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue()) {
             self.reloadInterface()
         }
+    }
+
+    func applicationWillEnterForeground(notification: NSNotification) {
+        reloadInterface()
     }
     
     private var fetchExecuted = false
