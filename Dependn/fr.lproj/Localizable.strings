@@ -7,6 +7,8 @@
  * Exported at: Sun, 10 Apr 2016 15:10:10 +0100
  */
 
+"settings.debug_local_notifications" = "Notifications locales programmées";
+
 "push.perm.title" = "Suivez votre évolution";
 
 "push.perm.subtitle" = "Recevez par notification un résumé quotidien et hebdomadaire de vos consommations.";
@@ -513,5 +515,3 @@
 "notifications.daily" = "Résumé quotidien";
 
 "notifications.weekly" = "Résumé hebdomadaire";
-
-"settings.debug_local_notifications" = "Notifications locales programmées";

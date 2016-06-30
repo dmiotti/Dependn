@@ -20,7 +20,7 @@ final class LocalNotificationsViewController: UIViewController {
 
         updateTitle(L("settings.debug_local_notifications"))
 
-        dateFormatter.dateStyle = .FullStyle
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
         localNotifications = UIApplication.sharedApplication().scheduledLocalNotifications ?? []
         localNotifications.sortInPlace { a, b in
