@@ -97,12 +97,14 @@ final class PushSchedulerOperation: SHOperation {
                     let title = L("daily.push.title")
                     let body = pushStrings.joinWithSeparator(", ")
 
-                    let daily = UILocalNotification()
-                    daily.fireDate = fireDate
-                    daily.alertTitle = title
-                    daily.alertBody = body
-                    daily.timeZone = NSTimeZone.localTimeZone()
-                    UIApplication.sharedApplication().scheduleLocalNotification(daily)
+                    let n = UILocalNotification()
+                    n.fireDate = fireDate
+                    n.alertTitle = title
+                    n.alertBody = body
+                    n.timeZone = NSTimeZone.localTimeZone()
+                    UIApplication.sharedApplication().scheduleLocalNotification(n)
+
+                    PushSchedulerOperation.printLocalNotification(n)
 
                     /// schedule an empty push for next days
                     for i in 1..<29 {
@@ -111,12 +113,14 @@ final class PushSchedulerOperation: SHOperation {
                             return "\($0). 0"
                         }
                         let body = textes.joinWithSeparator(", ")
-                        let daily = UILocalNotification()
-                        daily.fireDate = nextDate
-                        daily.alertTitle = title
-                        daily.alertBody = body
-                        daily.timeZone = NSTimeZone.localTimeZone()
-                        UIApplication.sharedApplication().scheduleLocalNotification(daily)
+                        let n = UILocalNotification()
+                        n.fireDate = nextDate
+                        n.alertTitle = title
+                        n.alertBody = body
+                        n.timeZone = NSTimeZone.localTimeZone()
+                        UIApplication.sharedApplication().scheduleLocalNotification(n)
+
+                        PushSchedulerOperation.printLocalNotification(n)
                     }
                 }
 
@@ -148,12 +152,14 @@ final class PushSchedulerOperation: SHOperation {
                         let title = L("weekly.push.title")
                         let body = pushStrings.joinWithSeparator(", ")
 
-                        let weekly = UILocalNotification()
-                        weekly.fireDate = fireDate
-                        weekly.alertTitle = title
-                        weekly.alertBody = body
-                        weekly.timeZone = NSTimeZone.localTimeZone()
-                        UIApplication.sharedApplication().scheduleLocalNotification(weekly)
+                        let n = UILocalNotification()
+                        n.fireDate = fireDate
+                        n.alertTitle = title
+                        n.alertBody = body
+                        n.timeZone = NSTimeZone.localTimeZone()
+                        UIApplication.sharedApplication().scheduleLocalNotification(n)
+
+                        PushSchedulerOperation.printLocalNotification(n)
                     }
                 }
             } catch let err as NSError {
@@ -170,6 +176,20 @@ final class PushSchedulerOperation: SHOperation {
             return false
         }
         return true
+    }
+
+
+    private let debugDateFormatter = NSDateFormatter(dateFormat: "yyyy-MM-dd HH:mm")
+
+    static func printLocalNotification(notification: UILocalNotification) {
+        #if DEBUG
+        let formatter = NSDateFormatter(dateFormat: "yyyy-MM-dd HH:mm:ss")
+        let date = formatter.stringFromDate(notification.fireDate!)
+        let title = notification.alertTitle!
+        let body = notification.alertBody!
+
+        print("[Dependn'] Scheduling daily push: \n\t\(date)\n\t\(title)\n\t\(body)\n")
+        #endif
     }
 
 }

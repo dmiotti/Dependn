@@ -165,6 +165,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     }
 
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        print("Application did receive local notification: \(PushSchedulerOperation.printLocalNotification(notification))")
+    }
+
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         UAirship.push().appReceivedRemoteNotification(userInfo, applicationState: application.applicationState)
     }

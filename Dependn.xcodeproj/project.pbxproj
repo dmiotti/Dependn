@@ -26,6 +26,8 @@
 		581DC5DF1C8B3C5D006DE551 /* AddictionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5DE1C8B3C5D006DE551 /* AddictionListViewController.swift */; };
 		581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */; };
 		581DC5E71C8B73D3006DE551 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DC5E61C8B73D3006DE551 /* UserDefaults.swift */; };
+		581F8AA21D250E13003D0B26 /* LocalNotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581F8AA11D250E13003D0B26 /* LocalNotificationsViewController.swift */; };
+		581F8AA51D250E54003D0B26 /* LocalNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581F8AA41D250E54003D0B26 /* LocalNotificationCell.swift */; };
 		5826034C1CF0B47900EA9F57 /* DependencyChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5826034A1CF0B47900EA9F57 /* DependencyChooserCell.swift */; };
 		5826034D1CF0B47900EA9F57 /* DependencyChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5826034B1CF0B47900EA9F57 /* DependencyChooserViewController.swift */; };
 		582820C91CAF1288002DC9AF /* OkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820C81CAF1288002DC9AF /* OkButton.swift */; };
@@ -195,6 +197,8 @@
 		581DC5DE1C8B3C5D006DE551 /* AddictionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionListViewController.swift; sourceTree = "<group>"; };
 		581DC5E01C8B3CE1006DE551 /* AddictionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddictionTableViewCell.swift; sourceTree = "<group>"; };
 		581DC5E61C8B73D3006DE551 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		581F8AA11D250E13003D0B26 /* LocalNotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationsViewController.swift; sourceTree = "<group>"; };
+		581F8AA41D250E54003D0B26 /* LocalNotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationCell.swift; sourceTree = "<group>"; };
 		5826034A1CF0B47900EA9F57 /* DependencyChooserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserCell.swift; sourceTree = "<group>"; };
 		5826034B1CF0B47900EA9F57 /* DependencyChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyChooserViewController.swift; sourceTree = "<group>"; };
 		582820C81CAF1288002DC9AF /* OkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OkButton.swift; sourceTree = "<group>"; };
@@ -346,6 +350,7 @@
 				581DC5DB1C8B38AD006DE551 /* SettingsTableViewCell.swift */,
 				5831254E1D0DDC06006EC991 /* NotificationsViewController.swift */,
 				583125501D0DDCF5006EC991 /* NotificationSwitchCell.swift */,
+				581F8AA31D250E3D003D0B26 /* LocalNotifications */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -358,6 +363,15 @@
 				58DC7A0C1C8CD873007F9F5D /* NewAddictionTableViewCell.swift */,
 			);
 			path = Addiction;
+			sourceTree = "<group>";
+		};
+		581F8AA31D250E3D003D0B26 /* LocalNotifications */ = {
+			isa = PBXGroup;
+			children = (
+				581F8AA11D250E13003D0B26 /* LocalNotificationsViewController.swift */,
+				581F8AA41D250E54003D0B26 /* LocalNotificationCell.swift */,
+			);
+			name = LocalNotifications;
 			sourceTree = "<group>";
 		};
 		582603491CF0B47900EA9F57 /* DependencyChooser */ = {
@@ -897,6 +911,7 @@
 				58DF62D21C83BDEE0035F608 /* CountOperation.swift in Sources */,
 				58DF62D11C83BDEE0035F608 /* AverageTimeInBetweenTwoTakesOperation.swift in Sources */,
 				586EDA361CA3567D00DAE496 /* TimeSinceLastRecord.swift in Sources */,
+				581F8AA51D250E54003D0B26 /* LocalNotificationCell.swift in Sources */,
 				58DF62C61C83BDEE0035F608 /* HistoryTableViewCell.swift in Sources */,
 				58548BBF1C8BA8D900C7C940 /* PasscodeViewController.swift in Sources */,
 				5826034D1CF0B47900EA9F57 /* DependencyChooserViewController.swift in Sources */,
@@ -928,6 +943,7 @@
 				58548BE31C8BE18100C7C940 /* NewTextTableViewCell.swift in Sources */,
 				58DF62D01C83BDEE0035F608 /* AveragePerDayOperation.swift in Sources */,
 				581DC5E11C8B3CE1006DE551 /* AddictionTableViewCell.swift in Sources */,
+				581F8AA21D250E13003D0B26 /* LocalNotificationsViewController.swift in Sources */,
 				5864FD861CDFCEE500656664 /* PortraitNavigationController.swift in Sources */,
 				58E9F4651D0F6DD300837553 /* Notifications.swift in Sources */,
 				58548BDE1C8BE18100C7C940 /* AddRecordViewController.swift in Sources */,

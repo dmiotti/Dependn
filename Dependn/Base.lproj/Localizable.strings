@@ -513,3 +513,5 @@
 "notifications.daily" = "Résumé quotidien";
 
 "notifications.weekly" = "Résumé hebdomadaire";
+
+"settings.debug_local_notifications" = "Notifications locales programmées";

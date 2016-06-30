@@ -42,6 +42,7 @@ final class SettingsViewController: SHNoBackButtonTitleViewController {
         case Share
         case Tour
         case Version
+        case DebugNotifications
     }
     
     private struct Section {
@@ -61,14 +62,23 @@ final class SettingsViewController: SHNoBackButtonTitleViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+//        #if DEBUG
         sections = [
             Section(type: .Data, items: [ .Export, .ManageAddictions, .MemorisePlaces ]),
             Section(type: .General, items: [ .ContactUs, .Passcode, .Watch, .Notifications, .Version ]),
             Section(type: .IAP, items: [ .Restore ]),
-            Section(type: .Others, items: [ .Rate, .Share, .Tour ])
+            Section(type: .Others, items: [ .Rate, .Share, .Tour, .DebugNotifications ])
         ]
-        
+//        #else
+//        sections = [
+//            Section(type: .Data, items: [ .Export, .ManageAddictions, .MemorisePlaces ]),
+//            Section(type: .General, items: [ .ContactUs, .Passcode, .Watch, .Notifications, .Version ]),
+//            Section(type: .IAP, items: [ .Restore ]),
+//            Section(type: .Others, items: [ .Rate, .Share, .Tour ])
+//        ]
+//        #endif
+
         edgesForExtendedLayout = .None
         
         view.backgroundColor = UIColor.lightBackgroundColor()
@@ -226,6 +236,9 @@ extension SettingsViewController: UITableViewDataSource {
         case .Version:
             cell.textLabel?.text = L("settings.version")
             cell.accessoryView = buildAccessoryLabel(appVersion())
+        case .DebugNotifications:
+            cell.textLabel?.text = L("settings.debug_local_notifications")
+            cell.accessoryType = .DisclosureIndicator
         }
         
         return cell
@@ -296,7 +309,14 @@ extension SettingsViewController: UITableViewDelegate {
             showTour()
         case .Version:
             break
+        case .DebugNotifications:
+            showDebugNotifications()
         }
+    }
+
+    private func showDebugNotifications() {
+        let localNotifications = LocalNotificationsViewController()
+        navigationController?.pushViewController(localNotifications, animated: true)
     }
     
     private func shareApp() {

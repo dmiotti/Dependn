@@ -516,3 +516,5 @@
 "notifications.daily" = "Daily summary";
 
 "notifications.weekly" = "Weekly summary";
+
+"settings.debug_local_notifications" = "Scheduled local notifications";
