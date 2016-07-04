@@ -72,26 +72,27 @@ final class PushSchedulerOperation: SHOperation {
                 if types.contains(.Daily) {
                     var obfuscatedAddictions = [String]()
 
-                    var pushStrings = [String]()
-                    for addiction in addictions {
-                        let countInRange = Record.countInRange(addiction,
-                            start:      now.beginningOfDay,
-                            end:        now.endOfDay,
-                            isDesire:   false,
-                            inContext:  self.context)
-                        let name = addiction.name
-                        let obsfuscated = name.substringToIndex(name.startIndex.advancedBy(3))
-                        pushStrings.append("\(obsfuscated). \(countInRange)")
-
-                        obfuscatedAddictions.append(obsfuscated)
-                    }
-
                     // 3. Prepare daily push
                     let fireDate: NSDate
                     if now.hour < 8 {
                         fireDate = now.beginningOfDay + 8.hour + 1.minute
                     } else {
                         fireDate = now.beginningOfDay + 1.day + 8.hour + 1.minute
+                    }
+
+                    let dayBefore = fireDate - 1.day
+
+                    var pushStrings = [String]()
+                    for addiction in addictions {
+                        let countInRange = Record.countInRange(addiction,
+                            start:      dayBefore.beginningOfDay,
+                            end:        dayBefore.endOfDay,
+                            isDesire:   false,
+                            inContext:  self.context)
+                        let name = addiction.name
+                        let obsfuscated = name.substringToIndex(name.startIndex.advancedBy(3))
+                        pushStrings.append("\(obsfuscated). \(countInRange)")
+                        obfuscatedAddictions.append(obsfuscated)
                     }
 
                     let title = L("daily.push.title")
@@ -105,6 +106,18 @@ final class PushSchedulerOperation: SHOperation {
                     UIApplication.sharedApplication().scheduleLocalNotification(n)
 
                     PushSchedulerOperation.printLocalNotification(n)
+
+                    #if DEBUG
+                        let infoDate = NSDate() + 5.seconds
+                        let formatter = NSDateFormatter(dateFormat: "dd/MM HH:mm:ss")
+
+                        let infoNotif = UILocalNotification()
+                        infoNotif.fireDate = infoDate
+                        infoNotif.alertTitle = "Scheduled at \(formatter.stringFromDate(fireDate))"
+                        infoNotif.alertBody = "\(title): \(body)"
+                        infoNotif.timeZone = NSTimeZone.localTimeZone()
+                        UIApplication.sharedApplication().scheduleLocalNotification(infoNotif)
+                    #endif
 
                     /// schedule an empty push for next days
                     for i in 1..<29 {

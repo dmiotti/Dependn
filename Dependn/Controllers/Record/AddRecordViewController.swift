@@ -217,12 +217,11 @@ final class AddRecordViewController: SHNoBackButtonTitleViewController {
                 intensity: chosenIntensity,
                 conso: !isDesire,
                 fromAppleWatch: false)
-
-            PushSchedulerOperation.schedule()
             
             tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
-            
         }
+
+        PushSchedulerOperation.schedule()
         
         dismissViewControllerAnimated(true, completion: { finished in
             WatchSessionManager.sharedManager.updateApplicationContext()

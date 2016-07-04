@@ -104,11 +104,24 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(application: UIApplication) {
+
+        var bgTask: UIBackgroundTaskIdentifier!
+
+        bgTask = application.beginBackgroundTaskWithExpirationHandler {
+            application.endBackgroundTask(bgTask)
+            bgTask = UIBackgroundTaskInvalid
+        }
+
         CoreDataStack.shared.saveContext()
         WatchSessionManager.sharedManager.updateApplicationContext()
         Analytics.instance.updateUserProperties()
 
         let schedulePush = PushSchedulerOperation(context: CoreDataStack.shared.managedObjectContext)
+        schedulePush.completionBlock = {
+            application.endBackgroundTask(bgTask)
+            bgTask = UIBackgroundTaskInvalid
+        }
+
         NSOperationQueue().addOperation(schedulePush)
     }
     
@@ -171,12 +184,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         UAirship.push().appReceivedRemoteNotification(userInfo, applicationState: application.applicationState)
-    }
-
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        UAirship.push().appReceivedRemoteNotification(userInfo,
-                                                      applicationState:application.applicationState,
-                                                      fetchCompletionHandler:completionHandler)
     }
 
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
