@@ -96,7 +96,7 @@ final class PlacesViewController: UIViewController {
     private func preparePlaces() {
         do {
             let places = try Place.allPlaces(inContext: CoreDataStack.shared.managedObjectContext)
-            if places.count == 0 {
+            if places.count == 0 && InitialImportPlacesOperation.shouldImportPlaces() {
                 let queue = NSOperationQueue()
                 let op = InitialImportPlacesOperation { op in
                     dispatch_async(dispatch_get_main_queue()) {
