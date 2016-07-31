@@ -100,8 +100,8 @@ final class PushSchedulerOperation: SHOperation {
 
                     let n = UILocalNotification()
                     n.fireDate = fireDate
-                    n.alertTitle = title
-                    n.alertBody = body
+                    n.alertTitle = "Dependn'"
+                    n.alertBody = "\(title): \(body)"
                     n.timeZone = NSTimeZone.localTimeZone()
                     UIApplication.sharedApplication().scheduleLocalNotification(n)
 
@@ -128,8 +128,8 @@ final class PushSchedulerOperation: SHOperation {
                         let body = textes.joinWithSeparator(", ")
                         let n = UILocalNotification()
                         n.fireDate = nextDate
-                        n.alertTitle = title
-                        n.alertBody = body
+                        n.alertTitle = "Dependn'"
+                        n.alertBody = "\(title): \(body)"
                         n.timeZone = NSTimeZone.localTimeZone()
                         UIApplication.sharedApplication().scheduleLocalNotification(n)
 
