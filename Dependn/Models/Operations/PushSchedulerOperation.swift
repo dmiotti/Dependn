@@ -107,18 +107,6 @@ final class PushSchedulerOperation: SHOperation {
 
                     PushSchedulerOperation.printLocalNotification(n)
 
-                    #if DEBUG
-                        let infoDate = NSDate() + 5.seconds
-                        let formatter = NSDateFormatter(dateFormat: "dd/MM HH:mm:ss")
-
-                        let infoNotif = UILocalNotification()
-                        infoNotif.fireDate = infoDate
-                        infoNotif.alertTitle = "Scheduled at \(formatter.stringFromDate(fireDate))"
-                        infoNotif.alertBody = "\(title): \(body)"
-                        infoNotif.timeZone = NSTimeZone.localTimeZone()
-                        UIApplication.sharedApplication().scheduleLocalNotification(infoNotif)
-                    #endif
-
                     /// schedule an empty push for next days
                     for i in 1..<29 {
                         let nextDate = (fireDate + i.days).beginningOfDay + 8.hour + 1.minute
@@ -128,7 +116,6 @@ final class PushSchedulerOperation: SHOperation {
                         let body = textes.joinWithSeparator(", ")
                         let n = UILocalNotification()
                         n.fireDate = nextDate
-                        n.alertTitle = "Dependn'"
                         n.alertBody = "\(title): \(body)"
                         n.timeZone = NSTimeZone.localTimeZone()
                         UIApplication.sharedApplication().scheduleLocalNotification(n)
@@ -167,8 +154,7 @@ final class PushSchedulerOperation: SHOperation {
 
                         let n = UILocalNotification()
                         n.fireDate = fireDate
-                        n.alertTitle = title
-                        n.alertBody = body
+                        n.alertBody = "\(title): \(body)"
                         n.timeZone = NSTimeZone.localTimeZone()
                         UIApplication.sharedApplication().scheduleLocalNotification(n)
 
