@@ -13,8 +13,8 @@ final class AddictionListInterfaceController: WKInterfaceController {
 
     @IBOutlet var table: WKInterfaceTable!
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         // Configure interface objects here.
     }
@@ -25,8 +25,8 @@ final class AddictionListInterfaceController: WKInterfaceController {
         
         table.setNumberOfRows(addictions.count, withRowType: "DefaultTableRowController")
         
-        for (index, add) in addictions.enumerate() {
-            let row = table.rowControllerAtIndex(index) as! DefaultTableRowController
+        for (index, add) in addictions.enumerated() {
+            let row = table.rowController(at: index) as! DefaultTableRowController
             row.titleLbl.setText(add.name)
         }
         
@@ -39,11 +39,11 @@ final class AddictionListInterfaceController: WKInterfaceController {
         super.didDeactivate()
     }
     
-    override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
+    override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
         let manager = WatchSessionManager.sharedManager
         let addiction = manager.context.addictions[rowIndex]
         manager.newRecordModel.addiction = addiction
-        dismissController()
+        dismiss()
     }
 
 }

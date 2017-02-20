@@ -25,9 +25,9 @@ final class NewRecordInterfaceController: WKInterfaceController {
     
     @IBOutlet var table: WKInterfaceTable!
     @IBOutlet var addBtn: WKInterfaceButton!
-
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         // Configure interface objects here.
         addBtn.setTitle(NSLocalizedString("new_record.add", comment: ""))
@@ -59,7 +59,7 @@ final class NewRecordInterfaceController: WKInterfaceController {
         table.setNumberOfRows(NewRecordRowType.count, withRowType: "TitleValueTableRowController")
         
         for idx in 0..<NewRecordRowType.count {
-            let rowCtrl = table.rowControllerAtIndex(idx) as! TitleValueTableRowController
+            let rowCtrl = table.rowController(at: idx) as! TitleValueTableRowController
             
             let row = NewRecordRowType(rawValue: idx)!
             
@@ -81,7 +81,7 @@ final class NewRecordInterfaceController: WKInterfaceController {
             case .Intensity:
                 let roundedIntensity = Int(round(selectedIntensity))
                 rowCtrl.valueLbl.setText("\(roundedIntensity)")
-                rowCtrl.valueLbl.setTextColor(UIColor.whiteColor())
+                rowCtrl.valueLbl.setTextColor(.white)
             }
         }
     }
@@ -91,21 +91,21 @@ final class NewRecordInterfaceController: WKInterfaceController {
         super.didDeactivate()
     }
     
-    override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
+    override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
         if let row = NewRecordRowType(rawValue: rowIndex) {
             switch row {
             case .Addiction:
-                presentControllerWithName("AddictionList", context: nil)
+                presentController(withName: "AddictionList", context: nil)
             case .Place:
-                presentControllerWithName("PlaceList", context: nil)
+                presentController(withName: "PlaceList", context: nil)
             case .Intensity:
-                presentControllerWithName("IntensityChooser", context: nil)
+                presentController(withName: "IntensityChooser", context: nil)
             }
         }
     }
 
     @IBAction func addBtnClicked() {
         WatchSessionManager.sharedManager.sendAdd()
-        dismissController()
+        dismiss()
     }
 }

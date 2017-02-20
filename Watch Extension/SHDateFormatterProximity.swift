@@ -16,9 +16,9 @@ public enum SHDateProximity {
 
 public func SHDateProximityToDate(date: NSDate) -> SHDateProximity {
     
-    let calendar = NSCalendar.currentCalendar()
-    let now = NSDate()
-    let calendarUnits: NSCalendarUnit = [.Era, .Year, .WeekOfMonth, .Month, .Day]
+    let calendar = Calendar.current
+    let now = Date()
+    let calendarUnits: CalendarUnit = [.Era, .Year, .WeekOfMonth, .Month, .Day]
     let dateComponents = calendar.components(calendarUnits, fromDate: date)
     let todayComponents = calendar.components(calendarUnits, fromDate: now)
     if dateComponents.day == todayComponents.day &&
@@ -28,9 +28,9 @@ public func SHDateProximityToDate(date: NSDate) -> SHDateProximity {
             return .Today
     }
     
-    let componentsToYesterDay = NSDateComponents()
+    var componentsToYesterDay = DateComponents()
     componentsToYesterDay.day = -1
-    if let yesterday = calendar.dateByAddingComponents(componentsToYesterDay, toDate: now, options: []) {
+    if let yesterday = calendar.date(byAdding: componentsToYesterDay, to: now, wrappingComponents: false) {
         let yesterdayComponents = calendar.components(calendarUnits, fromDate: yesterday)
         if dateComponents.day == yesterdayComponents.day &&
             dateComponents.month == yesterdayComponents.month &&
@@ -55,10 +55,10 @@ public func SHDateProximityToDate(date: NSDate) -> SHDateProximity {
     return .Other;
 }
 
-public var SHShortTimeFormatter: NSDateFormatter {
+public var SHShortTimeFormatter: DateFormatter {
     struct Static {
         static var onceToken: dispatch_once_t = 0
-        static var instance: NSDateFormatter? = nil
+        static var instance: DateFormatter? = nil
     }
     dispatch_once(&Static.onceToken) {
         Static.instance = NSDateFormatter()
@@ -67,10 +67,10 @@ public var SHShortTimeFormatter: NSDateFormatter {
     return Static.instance!
 }
 
-public var SHDayOfWeekDateFormatter: NSDateFormatter {
+public var SHDayOfWeekDateFormatter: DateFormatter {
     struct Static {
         static var onceToken: dispatch_once_t = 0
-        static var instance: NSDateFormatter? = nil
+        static var instance: DateFormatter? = nil
     }
     dispatch_once(&Static.onceToken) {
         Static.instance = NSDateFormatter()
@@ -79,10 +79,10 @@ public var SHDayOfWeekDateFormatter: NSDateFormatter {
     return Static.instance!
 }
 
-public var SHRelativeDateFormatter: NSDateFormatter {
+public var SHRelativeDateFormatter: DateFormatter {
     struct Static {
         static var onceToken: dispatch_once_t = 0
-        static var instance: NSDateFormatter? = nil
+        static var instance: DateFormatter? = nil
     }
     dispatch_once(&Static.onceToken) {
         Static.instance = NSDateFormatter()
@@ -92,10 +92,10 @@ public var SHRelativeDateFormatter: NSDateFormatter {
     return Static.instance!
 }
 
-public var SHThisYearDateFormatter: NSDateFormatter {
+public var SHThisYearDateFormatter: DateFormatter {
     struct Static {
         static var onceToken: dispatch_once_t = 0
-        static var instance: NSDateFormatter? = nil
+        static var instance: DateFormatter? = nil
     }
     dispatch_once(&Static.onceToken) {
         Static.instance = NSDateFormatter()
@@ -104,10 +104,10 @@ public var SHThisYearDateFormatter: NSDateFormatter {
     return Static.instance!
 }
 
-public var SHDefaultDateFormatter: NSDateFormatter {
+public var SHDefaultDateFormatter: DateFormatter {
     struct Static {
         static var onceToken: dispatch_once_t = 0
-        static var instance: NSDateFormatter? = nil
+        static var instance: DateFormatter? = nil
     }
     dispatch_once(&Static.onceToken) {
         Static.instance = NSDateFormatter()

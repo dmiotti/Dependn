@@ -12,8 +12,7 @@ import Foundation
 final class TwoDaysAgoInterfaceController: DayInterfaceController {
     
     override func loadData(data: WatchStatsAddiction) {
-        super.loadData(data)
-        
+        super.loadData(data: data)
         let value = data.values[2]
         valueLbl.setText(value.value)
         addictionLbl.setText(data.addiction)

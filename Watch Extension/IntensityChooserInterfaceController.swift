@@ -21,7 +21,7 @@ final class IntensityChooserInterfaceController: WKInterfaceController {
     private var selectedIntensity = Int(WatchSessionManager.sharedManager.newRecordModel.intensity)
     
     override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+        super.awake(withContext: context)
         
         validateBtn.setTitle(NSLocalizedString("intensity.select", comment: ""))
         
@@ -39,7 +39,7 @@ final class IntensityChooserInterfaceController: WKInterfaceController {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         
-        if let idx = values.indexOf(selectedIntensity) {
+        if let idx = values.index(of: selectedIntensity) {
             intensityPicker.setSelectedItemIndex(idx)
         } else {
             intensityPicker.setSelectedItemIndex(7)
@@ -59,6 +59,6 @@ final class IntensityChooserInterfaceController: WKInterfaceController {
 
     @IBAction func validateBtnClicked() {
         WatchSessionManager.sharedManager.newRecordModel.intensity = Float(selectedIntensity)
-        dismissController()
+        dismiss()
     }
 }

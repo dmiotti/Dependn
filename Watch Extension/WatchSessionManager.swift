@@ -20,7 +20,7 @@ struct WatchSimpleModel {
     var uri: String
     
     init?(dict: WatchDictionary) {
-        if let name = dict["name"] as? String, uri = dict["uri"] as? String {
+        if let name = dict["name"] as? String, let uri = dict["uri"] as? String {
             self.name = name
             self.uri = uri
         } else {
@@ -32,11 +32,11 @@ struct WatchSimpleModel {
 final class WatchStatsAddiction {
     var addiction = ""
     var values = [WatchStatsValueTime]()
-    var sinceLast: NSDate!
+    var sinceLast: Date!
     
     var formattedSinceLast: String {
-        let interval = NSDate().timeIntervalSinceDate(sinceLast)
-        return String(format: NSLocalizedString("watch.sinceLast", comment: ""), stringFromTimeInterval(interval))
+        let interval = Date().timeIntervalSince(sinceLast)
+        return String(format: NSLocalizedString("watch.sinceLast", comment: ""), stringFromTimeInterval(interval: interval))
     }
 }
 
@@ -59,9 +59,15 @@ final class NewRecordModel {
     var intensity: Float = 7
 }
 
-typealias RequestContextBlock = AppContext -> Void
+typealias RequestContextBlock = (AppContext) -> Void
 
 final class WatchSessionManager: NSObject, WCSessionDelegate {
+    /** Called when the session has completed activation. If session state is WCSessionActivationStateNotActivated there will be an error with more details. */
+    @available(watchOS 2.2, *)
+    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+
     
     let context = AppContext()
     
@@ -70,13 +76,13 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         super.init()
     }
     
-    private let session: WCSession = WCSession.defaultSession()
+    private let session: WCSession = WCSession.default()
     
     let newRecordModel = NewRecordModel()
     
     func startSession() {
         session.delegate = self
-        session.activateSession()
+        session.activate()
     }
 
     private var getContextCompletionQueue = [RequestContextBlock]()
@@ -96,7 +102,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         let message = ["action": "context"]
         session.sendMessage(message, replyHandler: { response in
             
-            self.parseApplicationContext(response)
+            self.parseApplicationContext(appContext: response as [String : AnyObject])
 
             self.unqueueContextBlocks()
             
@@ -104,7 +110,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
 
                 self.unqueueContextBlocks()
                 
-                NSNotificationCenter.defaultCenter().postNotificationName(
+                NotificationCenter.default.postNotificationName(
                     kWatchExtensionContextErrorNotificationName,
                     object: nil, userInfo: [ "error": err ])
         })
@@ -121,10 +127,10 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         let record = WatchSessionManager.sharedManager.newRecordModel
         if let
             addiction = record.addiction?.name,
-            place = record.place?.name {
+            let place = record.place?.name {
             
             let message: [String: AnyObject] = [
-                "action": "add",
+                "action": "add" as AnyObject,
                 "data": [
                     "type": record.type == .Conso ? "conso" : "craving",
                     "addiction": addiction,
@@ -135,18 +141,18 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             
             session.sendMessage(message, replyHandler: { response in
                 
-                self.parseApplicationContext(response)
+                self.parseApplicationContext(appContext: response)
                 
                 }, errorHandler: { err in
                     
-                    NSNotificationCenter.defaultCenter().postNotificationName(
+                    NotificationCenter.default.postNotificationName(
                         kWatchExtensionContextErrorNotificationName,
                         object: nil, userInfo: [ "error": err ])
             })
         }
     }
     
-    private func parseApplicationContext(appContext: [String: AnyObject]) {
+    fileprivate func parseApplicationContext(appContext: [String: AnyObject]) {
         
         /// Parse stats context
         let statsContext = appContext["stats"] as? WatchDictionary
@@ -156,13 +162,13 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             let stats = WatchStatsAddiction()
             stats.addiction = name
             
-            if let sinceLast = statsContextValue?["sinceLast"] as? NSDate {
+            if let sinceLast = statsContextValue?["sinceLast"] as? Date {
                 stats.sinceLast = sinceLast
             }
             
             if let rawValues = statsContextValue?["value"] as? [Array<AnyObject>] {
                 for raw in rawValues {
-                    if let date = raw.last as? String, count = raw.first as? String {
+                    if let date = raw.last as? String, let count = raw.first as? String {
                         stats.values.append((count, date))
                     }
                 }
@@ -192,34 +198,34 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         /// Parse most used addiction
         if let
             mostUsedAddiction = addContextValue?["most_used_addiction"] as? WatchDictionary,
-            model = WatchSimpleModel(dict: mostUsedAddiction) {
+            let model = WatchSimpleModel(dict: mostUsedAddiction) {
             context.mostUsedAddiction = model
         }
         
         /// Parse most used place
         if let
             mostUsedPlace = addContextValue?["most_used_place"] as? WatchDictionary,
-            model = WatchSimpleModel(dict: mostUsedPlace) {
+            let model = WatchSimpleModel(dict: mostUsedPlace) {
             context.mostUsedPlace = model
         }
         
-        if let statsError = statsContext?["error"] as? WatchDictionary, err = parseError(statsError) {
-            NSNotificationCenter.defaultCenter().postNotificationName(
+        if let statsError = statsContext?["error"] as? WatchDictionary, let err = parseError(dict: statsError) {
+            NotificationCenter.default.postNotificationName(
                 kWatchExtensionContextErrorNotificationName,
                 object: nil, userInfo: [ "error": err ])
-        } else if let addError = addContext?["error"] as? WatchDictionary, err = parseError(addError) {
-            NSNotificationCenter.defaultCenter().postNotificationName(
+        } else if let addError = addContext?["error"] as? WatchDictionary, let err = parseError(dict: addError) {
+            NotificationCenter.default.postNotificationName(
                 kWatchExtensionContextErrorNotificationName,
                 object: nil, userInfo: [ "error": err ])
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName(
+        NotificationCenter.default.postNotificationName(
             kWatchExtensionContextUpdatedNotificationName,
             object: nil, userInfo: ["context": context])
     }
     
     private func parseError(dict: WatchDictionary) -> NSError? {
-        if let desc = dict["description"] as? String, sugg = dict["suggestion"] as? String {
+        if let desc = dict["description"] as? String, let sugg = dict["suggestion"] as? String {
             return NSError(domain: "WatchSessionManager", code: 0, userInfo: [
                 NSLocalizedDescriptionKey: desc,
                 NSLocalizedRecoverySuggestionErrorKey: sugg
@@ -233,7 +239,6 @@ extension WatchSessionManager {
     
     // Receiving data
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-        
-        parseApplicationContext(applicationContext)
+        parseApplicationContext(appContext: applicationContext)
     }
 }

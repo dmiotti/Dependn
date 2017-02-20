@@ -12,7 +12,7 @@ import Foundation
 final class YesterdayInterfaceController: DayInterfaceController {
     
     override func loadData(data: WatchStatsAddiction) {
-        super.loadData(data)
+        super.loadData(data: data)
         
         let value = data.values[1]
         valueLbl.setText(value.value)

@@ -14,7 +14,7 @@ class DayInterfaceController: WKInterfaceController {
     @IBOutlet var addictionLbl: WKInterfaceLabel!
     @IBOutlet var dayLbl: WKInterfaceLabel!
     
-    internal let dateFormatter = NSDateFormatter()
+    internal let dateFormatter = DateFormatter()
     
     func loadData(data: WatchStatsAddiction) { }
     
@@ -23,12 +23,12 @@ class DayInterfaceController: WKInterfaceController {
     }
     
     override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+        super.awake(withContext: context)
         
         setTitle(NSLocalizedString("appname", comment: ""))
         
-        addMenuItemWithImageNamed(
-            "addIcon",
+        addMenuItem(
+            withImageNamed: "addIcon",
             title: NSLocalizedString("add.conso", comment: ""),
             action: #selector(DayInterfaceController.doMenuAddConso))
     }
@@ -37,7 +37,7 @@ class DayInterfaceController: WKInterfaceController {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
 
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(DayInterfaceController.contextDidUpdate(_:)),
             name: kWatchExtensionContextUpdatedNotificationName,
@@ -45,7 +45,7 @@ class DayInterfaceController: WKInterfaceController {
         
         // Configure interface objects here.
         if let data = WatchSessionManager.sharedManager.context.stats {
-            loadData(data)
+            loadData(data: data)
         } else {
             valueLbl.setText(nil)
             addictionLbl.setText(nil)
@@ -54,15 +54,15 @@ class DayInterfaceController: WKInterfaceController {
     }
     
     override func didDeactivate() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
 
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
     
     func contextDidUpdate(notification: NSNotification) {
-        if let context = notification.userInfo?["context"] as? AppContext, stats = context.stats {
-            loadData(stats)
+        if let context = notification.userInfo?["context"] as? AppContext, let stats = context.stats {
+            loadData(data: stats)
         }
     }
     
@@ -70,11 +70,11 @@ class DayInterfaceController: WKInterfaceController {
     
     @IBAction func doMenuAddConso() {
         WatchSessionManager.sharedManager.newRecordModel.type = .Conso
-        presentControllerWithName("NewRecord", context: nil)
+        presentController(withName: "NewRecord", context: nil)
     }
     
     @IBAction func doMenuAddCraving() {
         WatchSessionManager.sharedManager.newRecordModel.type = .Craving
-        presentControllerWithName("NewRecord", context: nil)
+        presentController(withName: "NewRecord", context: nil)
     }
 }

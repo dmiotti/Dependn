@@ -87,7 +87,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // Install initial versions of our shortcuts.
-        if let shortcutItems = application.shortcutItems where shortcutItems.isEmpty {
+        if let shortcutItems = application.shortcutItems, shortcutItems.isEmpty {
             let addShortcut = UIMutableApplicationShortcutItem(
                 type: ShortcutIdentifier.Add.type,
                 localizedTitle: NSLocalizedString("shortcut.addentry.title", comment: ""),
@@ -247,7 +247,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         checkForPasscode = false
         
         let now = NSDate()
-        if let lastShown = lastPasscodeShown where lastShown.timeIntervalSinceDate(now) < 15 * 60 {
+        if let lastShown = lastPasscodeShown, lastShown.timeIntervalSinceDate(now) < 15 * 60 {
             return
         }
         
@@ -255,7 +255,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func presentPasscode() {
-        if let rootViewController = window?.rootViewController where rootViewController.isViewLoaded() {
+        if let rootViewController = window?.rootViewController, rootViewController.isViewLoaded() {
             var topController = rootViewController
             while let top = topController.presentedViewController {
                 topController = top

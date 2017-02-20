@@ -16,10 +16,10 @@ final class GlanceInterfaceController: WKInterfaceController {
     @IBOutlet var dayLbl: WKInterfaceLabel!
     @IBOutlet var sinceLastLbl: WKInterfaceLabel!
     
-    internal let dateFormatter = NSDateFormatter()
+    internal let dateFormatter = DateFormatter()
     
     override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+        super.awake(withContext: context)
         
         // Configure interface objects here.
         dateFormatter.dateFormat = "dd MMMM"
@@ -33,7 +33,7 @@ final class GlanceInterfaceController: WKInterfaceController {
         
         refreshInterface()
         
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(GlanceInterfaceController.contextDidUpdate(_:)),
             name: kWatchExtensionContextUpdatedNotificationName,
@@ -59,7 +59,7 @@ final class GlanceInterfaceController: WKInterfaceController {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
         
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     func contextDidUpdate(notification: NSNotification) {

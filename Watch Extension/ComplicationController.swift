@@ -15,15 +15,15 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     override init() {
         super.init()
 
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(ComplicationController.contextDidUpdate(_:)),
-            name: kWatchExtensionContextUpdatedNotificationName,
+            name: NSNotification.Name(rawValue: kWatchExtensionContextUpdatedNotificationName),
             object: nil)
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     var stats: WatchStatsAddiction? {
@@ -41,7 +41,7 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     private func reloadComplications() {
         if let actives = CLKComplicationServer.sharedInstance().activeComplications {
             actives.forEach { c in
-                CLKComplicationServer.sharedInstance().reloadTimelineForComplication(c)
+                CLKComplicationServer.sharedInstance().reloadTimeline(for: c)
             }
         }
     }
@@ -50,7 +50,7 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
         guard let stats = stats else {
             return false
         }
-        return stats.sinceLast.compare(otherSinceLast) != .OrderedSame
+        return stats.sinceLast.compare(otherSinceLast as Date) != .orderedSame
     }
 
     func getNextRequestedUpdateDateWithHandler(handler: (NSDate?) -> Void) {
@@ -60,46 +60,46 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
 
     func getPlaceholderTemplateForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTemplate?) -> Void) {
 
-        let fullLast = String(format: NSLocalizedString("watch.sinceLast", comment: ""), stringFromTimeInterval(1620))
+        let fullLast = String(format: NSLocalizedString("watch.sinceLast", comment: ""), stringFromTimeInterval(interval: 1620))
 
-        let in27min = NSDate().dateByAddingTimeInterval(1620)
+        let in27min = Date().addingTimeInterval(1620)
 
         var template: CLKComplicationTemplate? = nil
 
         switch complication.family {
 
-        case .ModularSmall:
+        case .modularSmall:
             let t = CLKComplicationTemplateModularSmallSimpleText()
-            t.textProvider = CLKRelativeDateTextProvider(date: in27min, style: .Natural, units: [.Day, .Hour, .Minute, .Second])
+            t.textProvider = CLKRelativeDateTextProvider(date: in27min, style: .natural, units: [.day, .hour, .minute, .second])
             template = t
 
-        case .ModularLarge:
+        case .modularLarge:
             let t = CLKComplicationTemplateModularLargeTable()
-            t.tintColor = UIColor.purpleColor()
-            t.column2Alignment = .Trailing
+            t.tintColor = .purple
+            t.column2Alignment = .trailing
             t.headerTextProvider = CLKSimpleTextProvider(text: NSLocalizedString("addiction.fakename", comment: ""))
             t.row1Column1TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("addiction.last", comment: ""))
             t.row2Column1TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("addiction.count", comment: ""))
-            t.row1Column2TextProvider = CLKRelativeDateTextProvider(date: in27min, style: .Natural, units: [.Day, .Hour, .Minute, .Second])
+            t.row1Column2TextProvider = CLKRelativeDateTextProvider(date: in27min as Date, style: .natural, units: [.day, .hour, .minute, .second])
             t.row2Column2TextProvider = CLKSimpleTextProvider(text: "17")
             template = t
 
-        case .UtilitarianSmall:
+        case .utilitarianSmall:
             let t = CLKComplicationTemplateUtilitarianSmallFlat()
             t.textProvider = CLKSimpleTextProvider(text: "10 \(todayString), 27m", shortText: "10, 27m")
             template = t
 
-        case .UtilitarianLarge:
+        case .utilitarianLarge:
             let t = CLKComplicationTemplateUtilitarianLargeFlat()
             t.textProvider = CLKSimpleTextProvider(
                 text: "Cig. 10 \(todayString), \(fullLast)",
                 shortText: "10, 27m")
             template = t
 
-        case .CircularSmall:
+        case .circularSmall:
             let t = CLKComplicationTemplateCircularSmallSimpleText()
-            t.textProvider = CLKRelativeDateTextProvider(date: in27min, style: .Natural, units: [.Day, .Hour, .Minute, .Second])
-            t.tintColor = UIColor.whiteColor()
+            t.textProvider = CLKRelativeDateTextProvider(date: in27min as Date, style: .natural, units: [.day, .hour, .minute, .second])
+            t.tintColor = .white
             template = t
         }
 
@@ -107,13 +107,13 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     func getPrivacyBehaviorForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationPrivacyBehavior) -> Void) {
-        handler(.ShowOnLockScreen)
+        handler(.showOnLockScreen)
     }
 
     func getCurrentTimelineEntryForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTimelineEntry?) -> Void) {
         if let stats = stats {
-            let template = self.buildComplication(complication, withStats: stats)
-            let timelineEntry = CLKComplicationTimelineEntry(date: NSDate(), complicationTemplate: template)
+            let template = self.buildComplication(complication: complication, withStats: stats)
+            let timelineEntry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
             handler(timelineEntry)
         } else {
             handler(nil)
@@ -121,8 +121,8 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     func getTimelineEntriesForComplication(complication: CLKComplication, beforeDate date: NSDate, limit: Int, withHandler handler: ([CLKComplicationTimelineEntry]?) -> Void) {
-        if let stats = stats where stats.sinceLast.compare(date) == .OrderedAscending {
-            let template = self.buildComplication(complication, withStats: stats)
+        if let stats = stats, stats.sinceLast.compare(date as Date) == .orderedAscending {
+            let template = self.buildComplication(complication: complication, withStats: stats)
             let timelineEntry = CLKComplicationTimelineEntry(date: stats.sinceLast, complicationTemplate: template)
             handler([timelineEntry])
         } else {
@@ -131,8 +131,8 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     func getTimelineEntriesForComplication(complication: CLKComplication, afterDate date: NSDate, limit: Int, withHandler handler: ([CLKComplicationTimelineEntry]?) -> Void) {
-        if let stats = stats where stats.sinceLast.compare(date) == .OrderedDescending {
-            let template = self.buildComplication(complication, withStats: stats)
+        if let stats = stats, stats.sinceLast.compare(date as Date) == .orderedDescending {
+            let template = self.buildComplication(complication: complication, withStats: stats)
             let timelineEntry = CLKComplicationTimelineEntry(date: stats.sinceLast, complicationTemplate: template)
             handler([timelineEntry])
         } else {
@@ -141,11 +141,11 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     func getSupportedTimeTravelDirectionsForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTimeTravelDirections) -> Void) {
-        handler([CLKComplicationTimeTravelDirections.Backward, CLKComplicationTimeTravelDirections.Forward])
+        handler([CLKComplicationTimeTravelDirections.backward, CLKComplicationTimeTravelDirections.forward])
     }
 
     func getTimelineStartDateForComplication(complication: CLKComplication, withHandler handler: (NSDate?) -> Void) {
-        handler(stats?.sinceLast)
+        handler(stats?.sinceLast as NSDate)
     }
 
     func getTimelineEndDateForComplication(complication: CLKComplication, withHandler handler: (NSDate?) -> Void) {
@@ -163,45 +163,45 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
             count = "0"
         }
 
-        let interval = date.timeIntervalSinceDate(stats.sinceLast)
-        let shortSinceLast = stringFromTimeInterval(interval)
+        let interval = date.timeIntervalSince(stats.sinceLast)
+        let shortSinceLast = stringFromTimeInterval(interval: interval)
         let fullSinceLast = stats.formattedSinceLast
 
         let template: CLKComplicationTemplate
 
         switch complication.family {
 
-        case .ModularSmall:
+        case .modularSmall:
             let t = CLKComplicationTemplateModularSmallSimpleText()
-            t.textProvider = CLKRelativeDateTextProvider(date: stats.sinceLast, style: .Natural, units: [.Day, .Hour, .Minute, .Second])
+            t.textProvider = CLKRelativeDateTextProvider(date: stats.sinceLast, style: .natural, units: [.day, .hour, .minute, .second])
             template = t
 
-        case .ModularLarge:
+        case .modularLarge:
             let t = CLKComplicationTemplateModularLargeTable()
-            t.tintColor = UIColor.purpleColor()
-            t.column2Alignment = .Trailing
+            t.tintColor = .purple
+            t.column2Alignment = .trailing
             t.headerTextProvider = CLKSimpleTextProvider(text: stats.addiction)
             t.row1Column1TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("addiction.last", comment: ""), shortText: NSLocalizedString("addiction.last_short", comment: ""))
             t.row2Column1TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("addiction.count", comment: ""), shortText: todayString)
-            t.row1Column2TextProvider = CLKRelativeDateTextProvider(date: stats.sinceLast, style: .Natural, units: [.Day, .Hour, .Minute, .Second])
+            t.row1Column2TextProvider = CLKRelativeDateTextProvider(date: stats.sinceLast, style: .natural, units: [.day, .hour, .minute, .second])
             t.row2Column2TextProvider = CLKSimpleTextProvider(text: count)
             template = t
 
-        case .UtilitarianSmall:
+        case .utilitarianSmall:
             let t = CLKComplicationTemplateUtilitarianSmallFlat()
             t.textProvider = CLKSimpleTextProvider(text: "\(count), \(shortSinceLast)", shortText: "\(shortSinceLast)")
             template = t
 
-        case .UtilitarianLarge:
+        case .utilitarianLarge:
             let t = CLKComplicationTemplateUtilitarianLargeFlat()
             let text = "\(obfuscated). \(count) \(todayString), \(fullSinceLast)"
             t.textProvider = CLKSimpleTextProvider(text: text, shortText: "\(count), \(fullSinceLast)")
             template = t
 
-        case .CircularSmall:
+        case .circularSmall:
             let t = CLKComplicationTemplateCircularSmallSimpleText()
-            t.textProvider = CLKRelativeDateTextProvider(date: stats.sinceLast, style: .Natural, units: [.Day, .Hour, .Minute, .Second])
-            t.tintColor = UIColor.whiteColor()
+            t.textProvider = CLKRelativeDateTextProvider(date: stats.sinceLast, style: .natural, units: [.day, .hour, .minute, .second])
+            t.tintColor = .white
             template = t
         }
 
@@ -209,10 +209,10 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     private var cachedStats: WatchStatsAddiction?
-    func contextDidUpdate(notification: NSNotification) {
-        if let context = notification.userInfo?["context"] as? AppContext, contextStats = context.stats {
+    func contextDidUpdate(_ notification: NSNotification) {
+        if let context = notification.userInfo?["context"] as? AppContext, let contextStats = context.stats {
             if let cached = cachedStats {
-                if contextStats.sinceLast.compare(cached.sinceLast) != .OrderedSame {
+                if contextStats.sinceLast.compare(cached.sinceLast) != .orderedSame {
                     cachedStats = context.stats
                     reloadComplications()
                 }

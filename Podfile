@@ -16,7 +16,7 @@ target 'Dependn' do
   pod 'SwiftyUserDefaults'
   pod 'Amplitude-iOS'
   pod 'SwiftHelpers', :git => 'git@github.com:dmiotti/SwiftHelpers.git'
-  pod 'libxlsxwriter', :git => 'git@github.com:dmiotti/libxlsxwriter.git'
+  pod 'libxlsxwriter'
   pod 'UrbanAirship-iOS-SDK'
 
 end

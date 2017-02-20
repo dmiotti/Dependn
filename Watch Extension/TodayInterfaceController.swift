@@ -10,14 +10,14 @@ import WatchKit
 
 final class TodayInterfaceController: DayInterfaceController {
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awakeWithContext(context: Any?) {
+        super.awake(withContext: context)
         
         becomeCurrentPage()
     }
     
     override func loadData(data: WatchStatsAddiction) {
-        super.loadData(data)
+        super.loadData(data: data)
         
         let value = data.values[0]
         valueLbl.setText(value.value)

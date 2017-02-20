@@ -10,7 +10,7 @@
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "4D614EE0-7D79-49D5-AE39-8BCB91F4E7DC",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "A70403463E8C1FCF4001B8F69C1BA9512E30A3C9" : "dependn",
+    "A70403463E8C1FCF4001B8F69C1BA9512E30A3C9" : "dependn\/",
     "9BA86B0453CA6143DB722D76272D0FB64506B9A5" : "..\/..\/misc\/JXLS",
     "01B9882C5B12575B3E01D6CCBCC27532266EAC01" : "..\/..\/misc\/JXLS\/External\/xlslib"
   },

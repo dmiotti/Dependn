@@ -15,15 +15,15 @@ final class PlaceListInterfaceController: WKInterfaceController {
     @IBOutlet var table: WKInterfaceTable!
     
     override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+        super.awake(withContext: context)
         
         // Configure interface objects here.
         let places = WatchSessionManager.sharedManager.context.places
         
         table.setNumberOfRows(places.count, withRowType: "DefaultTableRowController")
         
-        for (index, add) in places.enumerate() {
-            let row = table.rowControllerAtIndex(index) as! DefaultTableRowController
+        for (index, add) in places.enumerated() {
+            let row = table.rowController(at: index) as! DefaultTableRowController
             row.titleLbl.setText(add.name)
         }
     }
@@ -38,10 +38,10 @@ final class PlaceListInterfaceController: WKInterfaceController {
         super.didDeactivate()
     }
     
-    override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
+    override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
         let place = WatchSessionManager.sharedManager.context.places[rowIndex]
         WatchSessionManager.sharedManager.newRecordModel.place = place
-        dismissController()
+        dismiss()
     }
 
 }

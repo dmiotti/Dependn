@@ -8,8 +8,8 @@
 
 import UIKit
 
-func stringFromTimeInterval(interval: NSTimeInterval) -> String {
-    let time = hoursMinutesSecondsFromInterval(interval)
+func stringFromTimeInterval(interval: TimeInterval) -> String {
+    let time = hoursMinutesSecondsFromInterval(interval: interval)
     
     var str = ""
     if time.hours > 0 {
@@ -20,15 +20,15 @@ func stringFromTimeInterval(interval: NSTimeInterval) -> String {
         str += "\(time.seconds)s"
     }
     
-    if let fraction = fractionFromInterval(interval) {
+    if let fraction = fractionFromInterval(interval: interval) {
         str += fraction
     }
     
     return str
 }
 
-private func fractionFromInterval(interval: NSTimeInterval) -> String? {
-    let time = hoursMinutesSecondsFromInterval(interval)
+private func fractionFromInterval(interval: TimeInterval) -> String? {
+    let time = hoursMinutesSecondsFromInterval(interval: interval)
     if time.hours <= 0 || time.minutes < 15 {
         return nil
     }
@@ -42,7 +42,7 @@ private func fractionFromInterval(interval: NSTimeInterval) -> String? {
     return String(numerator: 3, denominator: 4)
 }
 
-private func hoursMinutesSecondsFromInterval(interval: NSTimeInterval) -> (hours: Int, minutes: Int, seconds: Int) {
+private func hoursMinutesSecondsFromInterval(interval: TimeInterval) -> (hours: Int, minutes: Int, seconds: Int) {
     let ti = Int(interval)
     let seconds = ti % 60
     let minutes = (ti / 60) % 60
@@ -52,23 +52,23 @@ private func hoursMinutesSecondsFromInterval(interval: NSTimeInterval) -> (hours
 
 public extension String {
     
-    public init(numerator: Int, denominator: Int) {
+    public init?(numerator: Int, denominator: Int) {
         var result = ""
         
         // build numerator
         let one = "\(numerator)"
         for char in one.characters {
-            if let num = Int(String(char)), val = superscriptFromInt(num) {
-                result.appendContentsOf(val)
+            if let num = Int(String(char)), let val = superscriptFromInt(num: num) {
+                result.append(val)
             }
         }
         
         // build denominator
         let two = "\(denominator)"
-        result.appendContentsOf("/")
+        result.append("/")
         for char in two.characters {
-            if let num = Int(String(char)), val = subscriptFromInt(num) {
-                result.appendContentsOf(val)
+            if let num = Int(String(char)), let val = subscriptFromInt(num: num) {
+                result.append(val)
             }
         }
         
