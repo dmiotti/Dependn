@@ -18,7 +18,7 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(ComplicationController.contextDidUpdate(_:)),
-            name: NSNotification.Name(rawValue: kWatchExtensionContextUpdatedNotificationName),
+            name: Notification.Name.WatchExtensionContextUpdatedNotificationName,
             object: nil)
     }
 
@@ -101,6 +101,9 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
             t.textProvider = CLKRelativeDateTextProvider(date: in27min as Date, style: .natural, units: [.day, .hour, .minute, .second])
             t.tintColor = .white
             template = t
+            
+        default:
+            break
         }
 
         handler(template)
@@ -110,7 +113,7 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
         handler(.showOnLockScreen)
     }
 
-    func getCurrentTimelineEntryForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTimelineEntry?) -> Void) {
+    func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
         if let stats = stats {
             let template = self.buildComplication(complication: complication, withStats: stats)
             let timelineEntry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
@@ -140,12 +143,12 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
         }
     }
 
-    func getSupportedTimeTravelDirectionsForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTimeTravelDirections) -> Void) {
+    func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
         handler([CLKComplicationTimeTravelDirections.backward, CLKComplicationTimeTravelDirections.forward])
     }
 
     func getTimelineStartDateForComplication(complication: CLKComplication, withHandler handler: (NSDate?) -> Void) {
-        handler(stats?.sinceLast as NSDate)
+        handler(stats?.sinceLast as NSDate?)
     }
 
     func getTimelineEndDateForComplication(complication: CLKComplication, withHandler handler: (NSDate?) -> Void) {
@@ -154,7 +157,9 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
 
     private func buildComplication(complication: CLKComplication, withStats stats: WatchStatsAddiction, date: NSDate = NSDate()) -> CLKComplicationTemplate {
 
-        let obfuscated = stats.addiction.substringToIndex(stats.addiction.startIndex.advancedBy(3))
+        let addictionName = stats.addiction
+        let index = addictionName.index(addictionName.startIndex, offsetBy: 3)
+        let obfuscated = addictionName.substring(to: index)
 
         let count: String
         if let first = stats.values.first {
@@ -187,7 +192,7 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
             t.row2Column2TextProvider = CLKSimpleTextProvider(text: count)
             template = t
 
-        case .utilitarianSmall:
+        case .utilitarianSmall, .utilitarianSmallFlat:
             let t = CLKComplicationTemplateUtilitarianSmallFlat()
             t.textProvider = CLKSimpleTextProvider(text: "\(count), \(shortSinceLast)", shortText: "\(shortSinceLast)")
             template = t
@@ -202,6 +207,11 @@ final class ComplicationController: NSObject, CLKComplicationDataSource {
             let t = CLKComplicationTemplateCircularSmallSimpleText()
             t.textProvider = CLKRelativeDateTextProvider(date: stats.sinceLast, style: .natural, units: [.day, .hour, .minute, .second])
             t.tintColor = .white
+            template = t
+            
+        case .extraLarge:
+            let t = CLKComplicationTemplateExtraLargeSimpleText()
+            t.textProvider = CLKRelativeDateTextProvider(date: stats.sinceLast, style: .natural, units: [.day, .hour, .minute, .second])
             template = t
         }
 

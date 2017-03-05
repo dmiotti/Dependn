@@ -14,7 +14,7 @@ final class MainInterfaceController: WKInterfaceController {
     @IBOutlet var infoLbl: WKInterfaceLabel!
     @IBOutlet var descriptionLbl: WKInterfaceLabel!
     
-    override func awakeWithContext(context: AnyObject?) {
+    override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
         infoLbl.setText(NSLocalizedString("watch.loading", comment: ""))
@@ -23,13 +23,13 @@ final class MainInterfaceController: WKInterfaceController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(MainInterfaceController.contextDidFail(_:)),
-            name: kWatchExtensionContextErrorNotificationName,
+            name: Notification.Name.WatchExtensionContextErrorNotificationName,
             object: nil)
         
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(MainInterfaceController.contextDidUpdate(_:)),
-            name: kWatchExtensionContextUpdatedNotificationName,
+            name: Notification.Name.WatchExtensionContextUpdatedNotificationName,
             object: nil)
     }
     
@@ -44,7 +44,7 @@ final class MainInterfaceController: WKInterfaceController {
         super.didDeactivate()
     }
     
-    func contextDidUpdate(notification: NSNotification) {
+    func contextDidUpdate(_ notification: NSNotification) {
         if let context = notification.userInfo?["context"] as? AppContext, context.stats != nil {
             WKInterfaceController.reloadRootControllers(withNames: [
                 "Today",
@@ -55,17 +55,17 @@ final class MainInterfaceController: WKInterfaceController {
             
             NotificationCenter.default.removeObserver(
                 self,
-                name: Notification.Name(rawValue: kWatchExtensionContextUpdatedNotificationName),
+                name: Notification.Name.WatchExtensionContextUpdatedNotificationName,
                 object: nil)
             
             NotificationCenter.default.removeObserver(
                 self,
-                name: NSNotification.Name(rawValue: kWatchExtensionContextErrorNotificationName),
+                name: Notification.Name.WatchExtensionContextErrorNotificationName,
                 object: nil)
         }
     }
     
-    func contextDidFail(notification: NSNotification) {
+    func contextDidFail(_ notification: NSNotification) {
         if let err = notification.userInfo?["error"] as? NSError {
             self.infoLbl.setText(err.localizedDescription)
             self.descriptionLbl.setText(err.localizedRecoverySuggestion)

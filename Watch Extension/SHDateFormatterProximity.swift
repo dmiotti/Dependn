@@ -11,32 +11,56 @@
 import Foundation
 
 public enum SHDateProximity {
-    case Today, Yesterday, Week, Year, Other
+    case tomorrow, today, yesterday, twoDaysAgo, week, year, other
 }
 
-public func SHDateProximityToDate(date: NSDate) -> SHDateProximity {
+public func SHDateProximityToDate(_ date: Date) -> SHDateProximity {
     
     let calendar = Calendar.current
     let now = Date()
-    let calendarUnits: CalendarUnit = [.Era, .Year, .WeekOfMonth, .Month, .Day]
-    let dateComponents = calendar.components(calendarUnits, fromDate: date)
-    let todayComponents = calendar.components(calendarUnits, fromDate: now)
+    let calendarUnits: NSCalendar.Unit = [.era, .year, .weekOfMonth, .month, .day]
+    let dateComponents = (calendar as NSCalendar).components(calendarUnits, from: date)
+    let todayComponents = (calendar as NSCalendar).components(calendarUnits, from: now)
     if dateComponents.day == todayComponents.day &&
         dateComponents.month == todayComponents.month &&
         dateComponents.year == todayComponents.year &&
         dateComponents.era == todayComponents.era {
-            return .Today
+        return .today
     }
     
     var componentsToYesterDay = DateComponents()
     componentsToYesterDay.day = -1
-    if let yesterday = calendar.date(byAdding: componentsToYesterDay, to: now, wrappingComponents: false) {
-        let yesterdayComponents = calendar.components(calendarUnits, fromDate: yesterday)
+    if let yesterday = (calendar as NSCalendar).date(byAdding: componentsToYesterDay, to: now, options: []) {
+        let yesterdayComponents = (calendar as NSCalendar).components(calendarUnits, from: yesterday)
         if dateComponents.day == yesterdayComponents.day &&
             dateComponents.month == yesterdayComponents.month &&
             dateComponents.year == yesterdayComponents.year &&
             dateComponents.era == yesterdayComponents.era {
-                return .Yesterday
+            return .yesterday
+        }
+    }
+    
+    var componentsToTomorrow = DateComponents()
+    componentsToTomorrow.day = 1
+    if let tomorrow = (calendar as NSCalendar).date(byAdding: componentsToTomorrow, to: now, options: []) {
+        let tomorrowComponents = (calendar as NSCalendar).components(calendarUnits, from: tomorrow)
+        if dateComponents.day == tomorrowComponents.day &&
+            dateComponents.month == tomorrowComponents.month &&
+            dateComponents.year == tomorrowComponents.year &&
+            dateComponents.era == tomorrowComponents.era {
+            return .tomorrow
+        }
+    }
+    
+    var componentsToTwoDaysAgo = DateComponents()
+    componentsToTwoDaysAgo.day = -2
+    if let yesterday = (calendar as NSCalendar).date(byAdding: componentsToTwoDaysAgo, to: now, options: []) {
+        let twoDaysAgoComponents = (calendar as NSCalendar).components(calendarUnits, from: yesterday)
+        if dateComponents.day == twoDaysAgoComponents.day &&
+            dateComponents.month == twoDaysAgoComponents.month &&
+            dateComponents.year == twoDaysAgoComponents.year &&
+            dateComponents.era == twoDaysAgoComponents.era {
+            return .twoDaysAgo
         }
     }
     
@@ -44,74 +68,43 @@ public func SHDateProximityToDate(date: NSDate) -> SHDateProximity {
         dateComponents.month == todayComponents.month &&
         dateComponents.year == todayComponents.year &&
         dateComponents.era == todayComponents.era {
-            return .Week
+        return .week
     }
     
     if dateComponents.year == todayComponents.year &&
         dateComponents.era == todayComponents.era {
-            return .Year
+        return .year
     }
     
-    return .Other;
+    return .other;
 }
 
 public var SHShortTimeFormatter: DateFormatter {
-    struct Static {
-        static var onceToken: dispatch_once_t = 0
-        static var instance: DateFormatter? = nil
-    }
-    dispatch_once(&Static.onceToken) {
-        Static.instance = NSDateFormatter()
-        Static.instance!.timeStyle = .ShortStyle
-    }
-    return Static.instance!
+    let df = DateFormatter()
+    df.timeStyle = .short
+    return df
 }
 
 public var SHDayOfWeekDateFormatter: DateFormatter {
-    struct Static {
-        static var onceToken: dispatch_once_t = 0
-        static var instance: DateFormatter? = nil
-    }
-    dispatch_once(&Static.onceToken) {
-        Static.instance = NSDateFormatter()
-        Static.instance!.dateFormat = "EEEE"
-    }
-    return Static.instance!
+    let df = DateFormatter()
+    df.dateFormat = "EEEE"
+    return df
 }
 
 public var SHRelativeDateFormatter: DateFormatter {
-    struct Static {
-        static var onceToken: dispatch_once_t = 0
-        static var instance: DateFormatter? = nil
-    }
-    dispatch_once(&Static.onceToken) {
-        Static.instance = NSDateFormatter()
-        Static.instance!.dateStyle = .MediumStyle
-        Static.instance!.doesRelativeDateFormatting = true
-    }
-    return Static.instance!
+    let df = DateFormatter()
+    df.timeStyle = .medium
+    return df
 }
 
 public var SHThisYearDateFormatter: DateFormatter {
-    struct Static {
-        static var onceToken: dispatch_once_t = 0
-        static var instance: DateFormatter? = nil
-    }
-    dispatch_once(&Static.onceToken) {
-        Static.instance = NSDateFormatter()
-        Static.instance!.dateFormat = "E, MMM dd,"
-    }
-    return Static.instance!
+    let df = DateFormatter()
+    df.dateFormat = "E, MMM dd,"
+    return df
 }
 
 public var SHDefaultDateFormatter: DateFormatter {
-    struct Static {
-        static var onceToken: dispatch_once_t = 0
-        static var instance: DateFormatter? = nil
-    }
-    dispatch_once(&Static.onceToken) {
-        Static.instance = NSDateFormatter()
-        Static.instance!.dateFormat = "MMM dd, yyyy,"
-    }
-    return Static.instance!
+    let df = DateFormatter()
+    df.dateFormat = "MMM dd, yyyy,"
+    return df
 }

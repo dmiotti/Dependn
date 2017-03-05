@@ -22,7 +22,7 @@ class DayInterfaceController: WKInterfaceController {
         dateFormatter.dateFormat = "d MMMM"
     }
     
-    override func awakeWithContext(context: AnyObject?) {
+    override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
         setTitle(NSLocalizedString("appname", comment: ""))
@@ -40,7 +40,7 @@ class DayInterfaceController: WKInterfaceController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(DayInterfaceController.contextDidUpdate(_:)),
-            name: kWatchExtensionContextUpdatedNotificationName,
+            name: Notification.Name.WatchExtensionContextUpdatedNotificationName,
             object: nil)
         
         // Configure interface objects here.
@@ -60,7 +60,7 @@ class DayInterfaceController: WKInterfaceController {
         super.didDeactivate()
     }
     
-    func contextDidUpdate(notification: NSNotification) {
+    func contextDidUpdate(_ notification: NSNotification) {
         if let context = notification.userInfo?["context"] as? AppContext, let stats = context.stats {
             loadData(data: stats)
         }

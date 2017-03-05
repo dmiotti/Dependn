@@ -18,7 +18,7 @@ final class GlanceInterfaceController: WKInterfaceController {
     
     internal let dateFormatter = DateFormatter()
     
-    override func awakeWithContext(context: AnyObject?) {
+    override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
         // Configure interface objects here.
@@ -36,7 +36,7 @@ final class GlanceInterfaceController: WKInterfaceController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(GlanceInterfaceController.contextDidUpdate(_:)),
-            name: kWatchExtensionContextUpdatedNotificationName,
+            name: Notification.Name.WatchExtensionContextUpdatedNotificationName,
             object: nil)
         
         WatchSessionManager.sharedManager.requestContext()
@@ -62,7 +62,7 @@ final class GlanceInterfaceController: WKInterfaceController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func contextDidUpdate(notification: NSNotification) {
+    func contextDidUpdate(_ notification: NSNotification) {
         refreshInterface()
     }
 

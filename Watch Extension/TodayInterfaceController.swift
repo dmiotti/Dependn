@@ -10,7 +10,7 @@ import WatchKit
 
 final class TodayInterfaceController: DayInterfaceController {
     
-    override func awakeWithContext(context: Any?) {
+    override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
         becomeCurrentPage()

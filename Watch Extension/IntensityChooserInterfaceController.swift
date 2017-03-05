@@ -20,7 +20,7 @@ final class IntensityChooserInterfaceController: WKInterfaceController {
     
     private var selectedIntensity = Int(WatchSessionManager.sharedManager.newRecordModel.intensity)
     
-    override func awakeWithContext(context: AnyObject?) {
+    override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
         validateBtn.setTitle(NSLocalizedString("intensity.select", comment: ""))

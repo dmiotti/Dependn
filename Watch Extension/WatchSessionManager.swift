@@ -9,8 +9,10 @@
 import WatchConnectivity
 import ClockKit
 
-let kWatchExtensionContextUpdatedNotificationName = "kWatchExtensionContextUpdated"
-let kWatchExtensionContextErrorNotificationName = "kWatchExtensionContextError"
+extension Notification.Name {
+    static let WatchExtensionContextUpdatedNotificationName = Notification.Name(rawValue: "kWatchExtensionContextUpdated")
+    static let WatchExtensionContextErrorNotificationName = Notification.Name(rawValue: "kWatchExtensionContextError")
+}
 
 typealias WatchDictionary = Dictionary<String, AnyObject>
 typealias WatchStatsValueTime = (value: String, date: String)
@@ -110,8 +112,8 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
 
                 self.unqueueContextBlocks()
                 
-                NotificationCenter.default.postNotificationName(
-                    kWatchExtensionContextErrorNotificationName,
+                NotificationCenter.default.post(
+                    name: Notification.Name.WatchExtensionContextUpdatedNotificationName,
                     object: nil, userInfo: [ "error": err ])
         })
     }
@@ -129,7 +131,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             addiction = record.addiction?.name,
             let place = record.place?.name {
             
-            let message: [String: AnyObject] = [
+            let message: [String: Any] = [
                 "action": "add" as AnyObject,
                 "data": [
                     "type": record.type == .Conso ? "conso" : "craving",
@@ -139,20 +141,17 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
                 ]
             ]
             
-            session.sendMessage(message, replyHandler: { response in
-                
-                self.parseApplicationContext(appContext: response)
-                
-                }, errorHandler: { err in
-                    
-                    NotificationCenter.default.postNotificationName(
-                        kWatchExtensionContextErrorNotificationName,
-                        object: nil, userInfo: [ "error": err ])
+            session.sendMessage(message, replyHandler: parseApplicationContext, errorHandler: { (error) in
+                NotificationCenter.default.post(name:
+                    Notification.Name.WatchExtensionContextErrorNotificationName,
+                                                object: nil,
+                                                userInfo: [ "error": error ]
+                )
             })
         }
     }
     
-    fileprivate func parseApplicationContext(appContext: [String: AnyObject]) {
+    fileprivate func parseApplicationContext(appContext: [String: Any]) {
         
         /// Parse stats context
         let statsContext = appContext["stats"] as? WatchDictionary
@@ -210,17 +209,17 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         }
         
         if let statsError = statsContext?["error"] as? WatchDictionary, let err = parseError(dict: statsError) {
-            NotificationCenter.default.postNotificationName(
-                kWatchExtensionContextErrorNotificationName,
+            NotificationCenter.default.post(
+                name: Notification.Name.WatchExtensionContextErrorNotificationName,
                 object: nil, userInfo: [ "error": err ])
         } else if let addError = addContext?["error"] as? WatchDictionary, let err = parseError(dict: addError) {
-            NotificationCenter.default.postNotificationName(
-                kWatchExtensionContextErrorNotificationName,
+            NotificationCenter.default.post(
+                name: Notification.Name.WatchExtensionContextErrorNotificationName,
                 object: nil, userInfo: [ "error": err ])
         }
         
-        NotificationCenter.default.postNotificationName(
-            kWatchExtensionContextUpdatedNotificationName,
+        NotificationCenter.default.post(
+            name: Notification.Name.WatchExtensionContextUpdatedNotificationName,
             object: nil, userInfo: ["context": context])
     }
     
