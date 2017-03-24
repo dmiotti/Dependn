@@ -13,49 +13,49 @@ final class NewPlaceTableViewCell: SHCommonInitTableViewCell {
     
     static let reuseIdentifier = "NewPlaceTableViewCell"
     
-    private var placeLbl: UILabel!
-    private var placeImgView: UIImageView!
+    fileprivate var placeLbl: UILabel!
+    fileprivate var placeImgView: UIImageView!
     var chosenPlaceLbl: UILabel!
     
     override func commonInit() {
         super.commonInit()
         
-        accessoryType = .DisclosureIndicator
+        accessoryType = .disclosureIndicator
         
         placeImgView = UIImageView(image: UIImage(named: "place_icon"))
-        placeImgView.contentMode = .Center
+        placeImgView.contentMode = .center
         contentView.addSubview(placeImgView)
         
         placeLbl = UILabel()
         placeLbl.text = L("new_record.place")
         placeLbl.textColor = "A2B8CC".UIColor
-        placeLbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+        placeLbl.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)
         contentView.addSubview(placeLbl)
         
         chosenPlaceLbl = UILabel()
-        chosenPlaceLbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+        chosenPlaceLbl.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)
         chosenPlaceLbl.textColor = UIColor.appBlackColor()
-        chosenPlaceLbl.textAlignment = .Right
+        chosenPlaceLbl.textAlignment = .right
         contentView.addSubview(chosenPlaceLbl)
         
         configureLayoutConstraints()
     }
     
-    private func configureLayoutConstraints() {
-        placeImgView.snp_makeConstraints {
+    fileprivate func configureLayoutConstraints() {
+        placeImgView.snp.makeConstraints {
             $0.centerY.equalTo(contentView)
             $0.left.equalTo(contentView).offset(20)
             $0.width.height.equalTo(30)
         }
-        placeLbl.snp_makeConstraints {
-            $0.left.equalTo(placeImgView.snp_right).offset(14)
+        placeLbl.snp.makeConstraints {
+            $0.left.equalTo(placeImgView.snp.right).offset(14)
             $0.top.equalTo(contentView)
             $0.bottom.equalTo(contentView)
         }
-        chosenPlaceLbl.snp_makeConstraints {
+        chosenPlaceLbl.snp.makeConstraints {
             $0.centerY.equalTo(placeLbl)
             $0.right.equalTo(contentView)
-            $0.left.equalTo(placeLbl.snp_right)
+            $0.left.equalTo(placeLbl.snp.right)
         }
     }
 

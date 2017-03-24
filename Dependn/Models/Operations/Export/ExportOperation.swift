@@ -12,8 +12,8 @@ import BrightFutures
 
 final class ExportOperation: SHOperation {
     
-    private let controller: UIViewController
-    private let internalQueue = NSOperationQueue()
+    fileprivate let controller: UIViewController
+    fileprivate let internalQueue = OperationQueue()
     
     init(controller: UIViewController) {
         self.controller = controller
@@ -21,17 +21,17 @@ final class ExportOperation: SHOperation {
     }
     
     override func execute() {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.ensureExportXLSIsPurchased { purchased in
                 if purchased {
                     self.launchXLSExport().onComplete { r in
                         if let path = r.value {
-                            let URL = NSURL(fileURLWithPath: path)
-                            let doc = UIDocumentInteractionController(URL: URL)
+                            let url = URL(fileURLWithPath: path)
+                            let doc = UIDocumentInteractionController(url: url)
                             doc.delegate = self
-                            doc.presentPreviewAnimated(true)
+                            doc.presentPreview(animated: true)
                         } else if let err = r.error {
-                            HUD.flash(HUDContentType.Label(err.localizedDescription))
+                            HUD.flash(.label(err.localizedDescription))
                         }
                         Analytics.instance.trackExport(true)
                         self.finish()
@@ -44,14 +44,14 @@ final class ExportOperation: SHOperation {
         }
     }
     
-    private func launchXLSExport() -> Future<String, NSError> {
+    fileprivate func launchXLSExport() -> Future<String, NSError> {
         let promise = Promise<String, NSError>()
-        
-        HUD.show(.Progress)
+
+        HUD.show(.progress)
         let path = exportPath()
         let exportOp = XLSExportOperation(path: path)
         exportOp.completionBlock = {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 HUD.hide(animated: true) { finished in
                     if let err = exportOp.error {
                         promise.failure(err)
@@ -62,17 +62,17 @@ final class ExportOperation: SHOperation {
             }
         }
         internalQueue.addOperation(exportOp)
-        
+
         return promise.future
         
     }
     
-    private func ensureExportXLSIsPurchased(completion: Bool -> Void) {
+    fileprivate func ensureExportXLSIsPurchased(_ completion: @escaping (Bool) -> Void) {
         let isPurchased = DependnProducts.store.isProductPurchased(DependnProducts.ExportXLS)
         if isPurchased {
             completion(isPurchased)
         } else {
-            HUD.show(.Progress)
+            HUD.show(.progress)
             DependnProducts.store.requestProducts{ success, products in
                 HUD.hide { finished in
                     if let products = products {
@@ -80,16 +80,16 @@ final class ExportOperation: SHOperation {
                             $0.productIdentifier == DependnProducts.ExportXLS
                         }
                         if let product = exportProducts.first {
-                            let alert = UIAlertController(title: L("export.title"), message: L("export.message"), preferredStyle: .Alert)
-                            let okAction = UIAlertAction(title: L("yes"), style: .Default) { action in
+                            let alert = UIAlertController(title: L("export.title"), message: L("export.message"), preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: L("yes"), style: .default) { action in
                                 DependnProducts.store.buyProduct(product) { succeed, error in
                                     completion(succeed)
                                 }
                             }
-                            let cancelAction = UIAlertAction(title: L("no"), style: .Cancel, handler: nil)
+                            let cancelAction = UIAlertAction(title: L("no"), style: .cancel, handler: nil)
                             alert.addAction(cancelAction)
                             alert.addAction(okAction)
-                            self.controller.presentViewController(alert, animated: true, completion: nil)
+                            self.controller.present(alert, animated: true, completion: nil)
                             
                             return
                         }
@@ -100,17 +100,14 @@ final class ExportOperation: SHOperation {
         }
     }
     
-    private func exportPath() -> String {
-        let dateFormatter = NSDateFormatter(dateFormat: "dd'_'MM'_'yyyy'_'HH'_'mm")
-        let filename = "export_\(dateFormatter.stringFromDate(NSDate()))"
-        return applicationCachesDirectory
-            .URLByAppendingPathComponent(filename)
-            .URLByAppendingPathExtension("xlsx").path!
+    fileprivate func exportPath() -> String {
+        let dateFormatter = DateFormatter(dateFormat: "dd'_'MM'_'yyyy'_'HH'_'mm")
+        let filename = "export_\(dateFormatter.string(from: NSDate() as Date))"
+        return applicationCachesDirectory.appendingPathComponent(filename).appendingPathComponent("xlsx").path
     }
     
-    private lazy var applicationCachesDirectory: NSURL = {
-        let urls = NSFileManager.defaultManager()
-            .URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
+    fileprivate lazy var applicationCachesDirectory: URL = {
+        let urls = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
         return urls[urls.count-1]
     }()
 
@@ -118,7 +115,7 @@ final class ExportOperation: SHOperation {
 
 // MARK: - UIDocumentInteractionControllerDelegate
 extension ExportOperation: UIDocumentInteractionControllerDelegate {
-    func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
+    func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
         return self.controller
     }
 }

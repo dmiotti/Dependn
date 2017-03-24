@@ -11,13 +11,13 @@ import UIKit
 import SwiftHelpers
 
 extension UIViewController {
-    func updateTitle(title: String, blueBackground: Bool = true) {
+    func updateTitle(_ title: String, blueBackground: Bool = true) {
         let titleLbl = UILabel()
         titleLbl.adjustsFontSizeToFitWidth = true
-        titleLbl.attributedText = NSAttributedString(string: title.uppercaseString,
+        titleLbl.attributedText = NSAttributedString(string: title.uppercased(),
             attributes: [
-                NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightSemibold),
-                NSForegroundColorAttributeName: blueBackground ? UIColor.whiteColor() : UIColor.appBlackColor(),
+                NSFontAttributeName: UIFont.systemFont(ofSize: 13, weight: UIFontWeightSemibold),
+                NSForegroundColorAttributeName: blueBackground ? UIColor.white : UIColor.appBlackColor(),
                 NSKernAttributeName: 1.53
             ])
         titleLbl.sizeToFit()
@@ -25,12 +25,12 @@ extension UIViewController {
     }
     
     func setupBackBarButtonItem() {
-        let bbi = UIBarButtonItem(title: L("navigation.back"), style: .Plain, target: nil, action: nil)
+        let bbi = UIBarButtonItem(title: L("navigation.back"), style: .plain, target: nil, action: nil)
         bbi.setTitleTextAttributes([
-            NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightRegular),
+            NSFontAttributeName: UIFont.systemFont(ofSize: 15, weight: UIFontWeightRegular),
             NSForegroundColorAttributeName: UIColor.appBlueColor(),
             NSKernAttributeName: -0.36
-            ], forState: .Normal)
+            ], for: .normal)
         navigationItem.backBarButtonItem = bbi
     }
 }

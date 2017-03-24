@@ -35,7 +35,6 @@
 		582820CB1CAF1DD7002DC9AF /* HistoryEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */; };
 		5831254F1D0DDC06006EC991 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5831254E1D0DDC06006EC991 /* NotificationsViewController.swift */; };
 		583125511D0DDCF5006EC991 /* NotificationSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583125501D0DDCF5006EC991 /* NotificationSwitchCell.swift */; };
-		583B13FC1D1C98BF00DFF974 /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 583B13FB1D1C98BF00DFF974 /* AirshipConfig.plist */; };
 		583C01501CBA565700E0D41C /* InitialImportPlacesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */; };
 		583C9C661CCEBAC600E6FD9D /* Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 58F092BB1C9615AA00DF4ADC /* Watch.app */; };
 		583C9C681CCEC62900E6FD9D /* YesterdayInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */; };
@@ -65,7 +64,6 @@
 		5864FD841CDFC53100656664 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5864FD821CDFC53100656664 /* IAPHelper.swift */; };
 		5864FD861CDFCEE500656664 /* PortraitNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5864FD851CDFCEE500656664 /* PortraitNavigationController.swift */; };
 		58669A9B1CD0FEB0002BDED3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58669A9D1CD0FEB0002BDED3 /* Localizable.strings */; };
-		58669AA11CD10376002BDED3 /* SHDateFormatterProximity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58669AA01CD10376002BDED3 /* SHDateFormatterProximity.swift */; };
 		58669AA51CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58669AA41CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift */; };
 		586EDA361CA3567D00DAE496 /* TimeSinceLastRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */; };
 		587046BA1CD0C93D00C2F23B /* MainInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587046B91CD0C93D00C2F23B /* MainInterfaceController.swift */; };
@@ -206,7 +204,6 @@
 		582820CA1CAF1DD7002DC9AF /* HistoryEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryEmptyView.swift; sourceTree = "<group>"; };
 		5831254E1D0DDC06006EC991 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		583125501D0DDCF5006EC991 /* NotificationSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSwitchCell.swift; sourceTree = "<group>"; };
-		583B13FB1D1C98BF00DFF974 /* AirshipConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AirshipConfig.plist; sourceTree = "<group>"; };
 		583C014F1CBA565700E0D41C /* InitialImportPlacesOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialImportPlacesOperation.swift; sourceTree = "<group>"; };
 		583C9C671CCEC62900E6FD9D /* YesterdayInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YesterdayInterfaceController.swift; sourceTree = "<group>"; };
 		583C9C691CCEC71000E6FD9D /* TwoDaysAgoInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoDaysAgoInterfaceController.swift; sourceTree = "<group>"; };
@@ -237,7 +234,6 @@
 		58669A9C1CD0FEB0002BDED3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		58669A9E1CD0FEB3002BDED3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		58669A9F1CD0FEB4002BDED3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		58669AA01CD10376002BDED3 /* SHDateFormatterProximity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHDateFormatterProximity.swift; sourceTree = "<group>"; };
 		58669AA41CD1159C002BDED3 /* WatchNewEntryInfoOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchNewEntryInfoOperation.swift; sourceTree = "<group>"; };
 		586EDA351CA3567D00DAE496 /* TimeSinceLastRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSinceLastRecord.swift; sourceTree = "<group>"; };
 		587046B91CD0C93D00C2F23B /* MainInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainInterfaceController.swift; sourceTree = "<group>"; };
@@ -541,7 +537,6 @@
 				58DF62AF1C83BDEE0035F608 /* Localizable.strings */,
 				58DF62B11C83BDEE0035F608 /* Info.plist */,
 				58DF62BF1C83BDEE0035F608 /* Dependn.xcdatamodeld */,
-				583B13FB1D1C98BF00DFF974 /* AirshipConfig.plist */,
 				58754E101CE382A000961ED6 /* Settings.bundle */,
 			);
 			path = Dependn;
@@ -646,7 +641,6 @@
 				5807FB691D10504B00AF4F59 /* ComplicationController.swift */,
 				587CB0F61CD178FC00FCDB48 /* Time scale */,
 				587CB0F71CD1790D00FCDB48 /* AddRecord */,
-				58669AA01CD10376002BDED3 /* SHDateFormatterProximity.swift */,
 				581803431CDB513A0026305B /* TimeUtils.swift */,
 				58F092D01C9615AB00DF4ADC /* Assets.xcassets */,
 				58F092D21C9615AB00DF4ADC /* Info.plist */,
@@ -752,6 +746,8 @@
 					589065CF1C7A3F2F00F7F6DC = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 659B2N7HE9;
+						LastSwiftMigration = 0820;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -773,10 +769,12 @@
 					58F092BA1C9615AA00DF4ADC = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 659B2N7HE9;
+						LastSwiftMigration = 0820;
 					};
 					58F092C61C9615AB00DF4ADC = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 659B2N7HE9;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -807,7 +805,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				58DF62CC1C83BDEE0035F608 /* Localizable.strings in Resources */,
-				583B13FC1D1C98BF00DFF974 /* AirshipConfig.plist in Resources */,
 				58DF62C51C83BDEE0035F608 /* Main.storyboard in Resources */,
 				58DF62CB1C83BDEE0035F608 /* InfoPlist.strings in Resources */,
 				58DF62C31C83BDEE0035F608 /* Assets.xcassets in Resources */,
@@ -998,7 +995,6 @@
 				583C9C6C1CCEC71C00E6FD9D /* ThreeDaysAgoInterfaceController.swift in Sources */,
 				5841B3381CD2495A0024AC99 /* GlanceInterfaceController.swift in Sources */,
 				58F092CD1C9615AB00DF4ADC /* TodayInterfaceController.swift in Sources */,
-				58669AA11CD10376002BDED3 /* SHDateFormatterProximity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1167,18 +1163,21 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dependn/Dependn.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: David Miotti (A999UM69TM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 659B2N7HE9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Dependn/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.dependn;
 				PRODUCT_NAME = Dependn;
-				PROVISIONING_PROFILE = "0e516a46-a5c4-439d-87a0-f9f27a24d1da";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1190,17 +1189,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dependn/Dependn.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: David Miotti (659B2N7HE9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 659B2N7HE9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Dependn/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidmiotti.dependn;
 				PRODUCT_NAME = Dependn;
-				PROVISIONING_PROFILE = "877bc0ae-ad54-4c69-8871-f79d5a28331e";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -1219,6 +1221,7 @@
 				PROVISIONING_PROFILE = "480315f0-cc66-4b17-825b-f863fb86b703";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.1;
 			};
@@ -1238,6 +1241,7 @@
 				PROVISIONING_PROFILE = "9e8e24d0-febe-457c-bff9-a6941d49a0ca";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.1;
 			};
@@ -1255,6 +1259,7 @@
 				PROVISIONING_PROFILE = "89a5297c-50f1-4fa6-9cc7-6e6ac0e1a811";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.1;
 			};
@@ -1272,6 +1277,7 @@
 				PROVISIONING_PROFILE = "509d27a9-374e-4381-8dd7-c43bc7ebd616";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.1;
 			};

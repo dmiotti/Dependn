@@ -19,74 +19,74 @@ private let kSettingsAppStoreURL = "https://itunes.apple.com/fr/app/dependn-cont
 
 final class SettingsViewController: SHNoBackButtonTitleViewController {
     
-    private enum SectionType {
-        case General
-        case Data
-        case IAP
-        case Others
+    fileprivate enum SectionType {
+        case general
+        case data
+        case iap
+        case others
     }
     
-    private enum RowType {
-        case Rate
-        case ContactUs
-        case Passcode
-        case Watch
-        case Notifications
+    fileprivate enum RowType {
+        case rate
+        case contactUs
+        case passcode
+        case watch
+        case notifications
         
-        case Export
-        case ManageAddictions
-        case MemorisePlaces
+        case export
+        case manageAddictions
+        case memorisePlaces
         
-        case Restore
+        case restore
         
-        case Share
-        case Tour
-        case Version
-        case DebugNotifications
+        case share
+        case tour
+        case version
+        case debugNotifications
     }
     
-    private struct Section {
+    fileprivate struct Section {
         var type: SectionType
         var items: [RowType]
     }
     
-    private var tableView: UITableView!
-    private var passcodeSwitch: UISwitch!
-    private var memorizePlacesSwitch: UISwitch!
+    fileprivate var tableView: UITableView!
+    fileprivate var passcodeSwitch: UISwitch!
+    fileprivate var memorizePlacesSwitch: UISwitch!
     
-    private var sections = [Section]()
+    fileprivate var sections = [Section]()
     
-    private var pinNavigationController: UINavigationController?
+    fileprivate var pinNavigationController: UINavigationController?
     
-    private let authContext = LAContext()
+    fileprivate let authContext = LAContext()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         #if DEBUG
         sections = [
-            Section(type: .Data, items: [ .Export, .ManageAddictions, .MemorisePlaces ]),
-            Section(type: .General, items: [ .ContactUs, .Passcode, .Watch, .Notifications, .Version ]),
-            Section(type: .IAP, items: [ .Restore ]),
-            Section(type: .Others, items: [ .Rate, .Share, .Tour, .DebugNotifications ])
+            Section(type: .data, items: [ .export, .manageAddictions, .memorisePlaces ]),
+            Section(type: .general, items: [ .contactUs, .passcode, .watch, .notifications, .version ]),
+            Section(type: .iap, items: [ .restore ]),
+            Section(type: .others, items: [ .rate, .share, .tour, .debugNotifications ])
         ]
         #else
         sections = [
-            Section(type: .Data, items: [ .Export, .ManageAddictions, .MemorisePlaces ]),
-            Section(type: .General, items: [ .ContactUs, .Passcode, .Watch, .Notifications, .Version ]),
-            Section(type: .IAP, items: [ .Restore ]),
-            Section(type: .Others, items: [ .Rate, .Share, .Tour ])
+            Section(type: .data, items: [ .export, .manageAddictions, .memorisePlaces ]),
+            Section(type: .general, items: [ .contactUs, .passcode, .watch, .notifications, .version ]),
+            Section(type: .iap, items: [ .restore ]),
+            Section(type: .others, items: [ .rate, .share, .tour ])
         ]
         #endif
 
-        edgesForExtendedLayout = .None
+        edgesForExtendedLayout = .all
         
         view.backgroundColor = UIColor.lightBackgroundColor()
         
         updateTitle(L("settings.title"))
         
-        tableView = UITableView(frame: .zero, style: .Grouped)
-        tableView.registerClass(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.reuseIdentifier)
+        tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.reuseIdentifier)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.separatorColor = UIColor.appSeparatorColor()
         tableView.delegate = self
@@ -97,27 +97,27 @@ final class SettingsViewController: SHNoBackButtonTitleViewController {
         view.addSubview(tableView)
         
         passcodeSwitch = UISwitch()
-        passcodeSwitch.on = Defaults[.usePasscode]
-        passcodeSwitch.addTarget(self, action: #selector(SettingsViewController.passcodeSwitchValueChanged(_:)), forControlEvents: .ValueChanged)
+        passcodeSwitch.isOn = Defaults[.usePasscode]
+        passcodeSwitch.addTarget(self, action: #selector(SettingsViewController.passcodeSwitchValueChanged(_:)), for: .valueChanged)
 
         memorizePlacesSwitch = UISwitch()
-        memorizePlacesSwitch.on = Defaults[.useLocation]
-        memorizePlacesSwitch.addTarget(self, action: #selector(SettingsViewController.memorizePlacesSwitchValueChanged(_:)), forControlEvents: .ValueChanged)
+        memorizePlacesSwitch.isOn = Defaults[.useLocation]
+        memorizePlacesSwitch.addTarget(self, action: #selector(SettingsViewController.memorizePlacesSwitchValueChanged(_:)), for: .valueChanged)
         
         configureLayoutConstraints()
         
         setupBackBarButtonItem()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
     
     // MARK: - Passcode
     
-    func passcodeSwitchValueChanged(sender: UISwitch) {
-        if sender.on {
+    func passcodeSwitchValueChanged(_ sender: UISwitch) {
+        if sender.isOn {
             if supportedOwnerAuthentications().count > 0 {
                 Defaults[.usePasscode] = true
             } else {
@@ -129,46 +129,46 @@ final class SettingsViewController: SHNoBackButtonTitleViewController {
         }
     }
     
-    func memorizePlacesSwitchValueChanged(sender: UISwitch) {
-        Defaults[.useLocation] = sender.on
+    func memorizePlacesSwitchValueChanged(_ sender: UISwitch) {
+        Defaults[.useLocation] = sender.isOn
     }
     
-    private func supportedOwnerAuthentications() -> [LAPolicy] {
+    fileprivate func supportedOwnerAuthentications() -> [LAPolicy] {
         var supportedAuthentications = [LAPolicy]()
         var error: NSError?
-        if authContext.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
-            supportedAuthentications.append(.DeviceOwnerAuthenticationWithBiometrics)
+        if authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            supportedAuthentications.append(.deviceOwnerAuthenticationWithBiometrics)
         }
-        DDLogError("\(error)")
+        DDLogError(error.debugDescription)
         return supportedAuthentications
     }
     
     // MARK: - Layout
     
-    private func configureLayoutConstraints() {
-        tableView.snp_makeConstraints {
+    fileprivate func configureLayoutConstraints() {
+        tableView.snp.makeConstraints {
             $0.edges.equalTo(view)
         }
     }
     
-    private func showTour() {
+    fileprivate func showTour() {
         OnBoardingViewController.showInController(self)
     }
     
-    private func restorePurchases() {
-        HUD.show(.Progress)
+    fileprivate func restorePurchases() {
+        HUD.show(.progress)
         DependnProducts.store.restorePurchases { succeed, error in
             HUD.hide { finished in
                 if succeed {
-                    let alert = UIAlertController(title: L("settings.restoreiap.success.title"), message: L("settings.restoreiap.success.description"), preferredStyle: .Alert)
-                    let okAction = UIAlertAction(title: L("ok"), style: .Default, handler: nil)
+                    let alert = UIAlertController(title: L("settings.restoreiap.success.title"), message: L("settings.restoreiap.success.description"), preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: L("ok"), style: .default, handler: nil)
                     alert.addAction(okAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 } else {
-                    let alert = UIAlertController(title: error?.localizedDescription, message: error?.localizedRecoverySuggestion, preferredStyle: .Alert)
-                    let okAction = UIAlertAction(title: L("ok"), style: .Default, handler: nil)
+                    let alert = UIAlertController(title: error?.localizedDescription, message: error?.localizedRecoverySuggestion, preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: L("ok"), style: .default, handler: nil)
                     alert.addAction(okAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
         }
@@ -178,96 +178,96 @@ final class SettingsViewController: SHNoBackButtonTitleViewController {
 
 // MARK: - UITableViewDataSource
 extension SettingsViewController: UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sections[section].items.count
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(SettingsTableViewCell.reuseIdentifier, forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.reuseIdentifier, for: indexPath)
         
         cell.accessoryView = nil
-        cell.accessoryType = .None
+        cell.accessoryType = .none
         cell.textLabel?.text = nil
-        cell.textLabel?.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)
         cell.textLabel?.textColor = UIColor.appBlackColor()
         
         let row = sections[indexPath.section].items[indexPath.row]
         switch row {
-        case .Rate:
+        case .rate:
             cell.textLabel?.text = L("settings.rate_app")
-        case .ContactUs:
+        case .contactUs:
             cell.textLabel?.text = L("settings.contact_us")
-        case .Passcode:
+        case .passcode:
             cell.textLabel?.text = L("settings.use_passcode")
             passcodeSwitch.setOn(Defaults[.usePasscode], animated: true)
-            passcodeSwitch.enabled = supportedOwnerAuthentications().count > 0
+            passcodeSwitch.isEnabled = supportedOwnerAuthentications().count > 0
             cell.accessoryView = passcodeSwitch
-        case .Watch:
+        case .watch:
             cell.textLabel?.text = L("settings.apple_watch.addiction")
             if let addiction = Defaults[.watchAddiction] {
                 cell.accessoryView = buildAccessoryLabel(addiction)
             } else {
                 cell.accessoryView = buildAccessoryLabel(L("settings.no_addiction"))
             }
-        case .Notifications:
+        case .notifications:
             cell.textLabel?.text = L("settings.notifications")
-            cell.accessoryType = .DisclosureIndicator
+            cell.accessoryType = .disclosureIndicator
 
-        case .Export:
+        case .export:
             cell.textLabel?.text = L("settings.action.export")
-        case .ManageAddictions:
+        case .manageAddictions:
             cell.textLabel?.text = L("settings.manage_addictions")
-            cell.accessoryType = .DisclosureIndicator
-        case .MemorisePlaces:
+            cell.accessoryType = .disclosureIndicator
+        case .memorisePlaces:
             cell.textLabel?.text = L("settings.memorise_places")
             memorizePlacesSwitch.setOn(Defaults[.useLocation], animated: true)
             cell.accessoryView = memorizePlacesSwitch
             
-        case .Restore:
+        case .restore:
             cell.textLabel?.text = L("settings.action.restore_iap")
             
-        case .Share:
+        case .share:
             cell.textLabel?.text = L("settings.share")
-        case .Tour:
+        case .tour:
             cell.textLabel?.text = L("settings.show_tour")
-            cell.accessoryType = .DisclosureIndicator
-        case .Version:
+            cell.accessoryType = .disclosureIndicator
+        case .version:
             cell.textLabel?.text = L("settings.version")
             cell.accessoryView = buildAccessoryLabel(appVersion())
-        case .DebugNotifications:
+        case .debugNotifications:
             cell.textLabel?.text = L("settings.debug_local_notifications")
-            cell.accessoryType = .DisclosureIndicator
+            cell.accessoryType = .disclosureIndicator
         }
         
         return cell
     }
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = TableHeaderView()
         
         let type = sections[section].type
         switch type {
-        case .General:
-            header.title = L("settings.section.general").uppercaseString
-        case .Data:
-            header.title = L("settings.section.data").uppercaseString
-        case .IAP:
-            header.title = L("settings.section.iap").uppercaseString
-        case .Others:
-            header.title = L("settings.section.others").uppercaseString
+        case .general:
+            header.title = L("settings.section.general").uppercased()
+        case .data:
+            header.title = L("settings.section.data").uppercased()
+        case .iap:
+            header.title = L("settings.section.iap").uppercased()
+        case .others:
+            header.title = L("settings.section.others").uppercased()
         }
         
         return header
     }
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
     
-    private func buildAccessoryLabel(text: String) -> UILabel {
+    fileprivate func buildAccessoryLabel(_ text: String) -> UILabel {
         let lbl = UILabel()
         lbl.textColor = UIColor.appLightTextColor()
-        lbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+        lbl.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)
         lbl.text = text
         lbl.sizeToFit()
         return lbl
@@ -276,85 +276,85 @@ extension SettingsViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension SettingsViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         let row = sections[indexPath.section].items[indexPath.row]
         switch row {
-        case .Rate:
-            let URL = NSURL(string: kSettingsAppStoreURL)!
-            UIApplication.sharedApplication().openURL(URL)
-        case .ContactUs:
+        case .rate:
+            let url = URL(string: kSettingsAppStoreURL)!
+            UIApplication.shared.open(url, options: [:])
+        case .contactUs:
             contactUs()
-        case .Passcode:
+        case .passcode:
             break
-        case .Watch:
+        case .watch:
             showSelectAppleWatchAddiction()
-        case .Notifications:
+        case .notifications:
             manageNotifications()
             
-        case .Export:
-            NSOperationQueue().addOperation(ExportOperation(controller: self))
-        case .ManageAddictions:
+        case .export:
+            OperationQueue().addOperation(ExportOperation(controller: self))
+        case .manageAddictions:
             showManageAddictions()
-        case .MemorisePlaces:
+        case .memorisePlaces:
             break
             
-        case .Restore:
+        case .restore:
             restorePurchases()
             
-        case .Share:
+        case .share:
             shareApp()
-        case .Tour:
+        case .tour:
             showTour()
-        case .Version:
+        case .version:
             break
-        case .DebugNotifications:
+        case .debugNotifications:
             showDebugNotifications()
         }
     }
 
-    private func showDebugNotifications() {
+    fileprivate func showDebugNotifications() {
         let localNotifications = LocalNotificationsViewController()
         navigationController?.pushViewController(localNotifications, animated: true)
     }
     
-    private func shareApp() {
+    fileprivate func shareApp() {
         let shareText = L("settings.share_text")
-        let shareURL = NSURL(string: kSettingsAppStoreURL)!
+        let shareURL = URL(string: kSettingsAppStoreURL)!
         let activityController = UIActivityViewController(activityItems: [shareText, shareURL], applicationActivities: nil)
         activityController.setValue(L("settings.share.object"), forKey: "subject")
         activityController.completionWithItemsHandler = { activityType, completed, items, error in
-            if let type = activityType where completed {
-                Analytics.instance.shareApp(type)
+            if let type = activityType, completed {
+                Analytics.instance.shareApp(type.rawValue)
             }
         }
-        presentViewController(activityController, animated: true, completion: nil)
+        present(activityController, animated: true, completion: nil)
     }
 
-    private func manageNotifications() {
+    fileprivate func manageNotifications() {
         let controller = NotificationsViewController()
         navigationController?.pushViewController(controller, animated: true)
     }
     
-    private func contactUs() {
+    fileprivate func contactUs() {
         if !MFMailComposeViewController.canSendMail() {
             return
         }
         let mail = MFMailComposeViewController()
         mail.mailComposeDelegate = self
         mail.setToRecipients([ "contact@dependn.com "])
-        presentViewController(mail, animated: true, completion: nil)
+        present(mail, animated: true, completion: nil)
     }
     
-    private func showSelectAppleWatchAddiction() {
+    fileprivate func showSelectAppleWatchAddiction() {
         if WCSession.isSupported() {
-            let session = WCSession.defaultSession()
-            if session.paired {
+            let session = WCSession.default()
+            if session.isPaired {
                 let search = SearchAdditionViewController()
                 if let
                     name = Defaults[.watchAddiction],
-                    addiction = try? Addiction.findByName(name, inContext: CoreDataStack.shared.managedObjectContext) {
+                    let addiction = try? Addiction.findByName(name, inContext: CoreDataStack.shared.managedObjectContext) {
                     
                     search.selectedAddiction = addiction
                 }
@@ -362,10 +362,10 @@ extension SettingsViewController: UITableViewDelegate {
                 search.useBlueNavigationBar = true
                 navigationController?.pushViewController(search, animated: true)
             } else {
-                let alert = UIAlertController(title: L("settings.no_applewatch"), message: L("settings.no_applewatch.message"), preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: L("ok"), style: .Default, handler: nil)
+                let alert = UIAlertController(title: L("settings.no_applewatch"), message: L("settings.no_applewatch.message"), preferredStyle: .alert)
+                let okAction = UIAlertAction(title: L("ok"), style: .default, handler: nil)
                 alert.addAction(okAction)
-                presentViewController(alert, animated: true, completion: nil)
+                present(alert, animated: true, completion: nil)
             }
         }
     }
@@ -378,32 +378,32 @@ extension SettingsViewController: UITableViewDelegate {
 
 // MARK: - SearchAdditionViewControllerDelegate
 extension SettingsViewController: SearchAdditionViewControllerDelegate {
-    func searchController(searchController: SearchAdditionViewController, didSelectAddiction addiction: Addiction) {
+    func searchController(_ searchController: SearchAdditionViewController, didSelectAddiction addiction: Addiction) {
         Defaults[.watchAddiction] = addiction.name
         WatchSessionManager.sharedManager.updateApplicationContext()
     }
 }
 
 extension SettingsViewController: MFMailComposeViewControllerDelegate {
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }
 
 extension MFMailComposeViewController {
-    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
-    public override func childViewControllerForStatusBarStyle() -> UIViewController? {
+    open override var childViewControllerForStatusBarStyle: UIViewController? {
         return nil
     }
 }
 
 extension MFMessageComposeViewController {
-    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
-    public override func childViewControllerForStatusBarStyle() -> UIViewController? {
+    open override var childViewControllerForStatusBarStyle: UIViewController? {
         return nil
     }
 }

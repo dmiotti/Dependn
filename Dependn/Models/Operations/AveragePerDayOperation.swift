@@ -13,9 +13,9 @@ import CocoaLumberjack
 
 final class AveragePerDayOperation: CoreDataOperation {
     
-    private(set) var average: Float?
+    fileprivate(set) var average: Float?
     
-    private(set) var fetchedResultsController: NSFetchedResultsController!
+    fileprivate(set) var fetchedResultsController: NSFetchedResultsController<Record>!
     
     override init() {
         super.init()
@@ -23,27 +23,23 @@ final class AveragePerDayOperation: CoreDataOperation {
     }
 
     override func execute() {
-        
-        context.performBlockAndWait {
-            do {
-                try self.fetchedResultsController.performFetch()
-                
-                var values = [Float]()
-                if let sections = self.fetchedResultsController.sections {
-                    for section in sections {
-                        values.append(Float(section.numberOfObjects))
-                    }
+        do {
+            try self.fetchedResultsController.performFetch()
+            
+            var values = [Float]()
+            if let sections = self.fetchedResultsController.sections {
+                for section in sections {
+                    values.append(Float(section.numberOfObjects))
                 }
-                
-                if values.count > 0 {
-                    self.average = values.reduce(Float(0), combine: +) / Float(values.count)
-                }
-            } catch let err as NSError {
-                DDLogError("Error while calculating average per day: \(err)")
-                self.error = err
             }
+            
+            if values.count > 0 {
+                self.average = values.reduce(Float(0), +) / Float(values.count)
+            }
+        } catch let err as NSError {
+            DDLogError("Error while calculating average per day: \(err)")
+            self.error = err
         }
-        
         finish()
     }
 }

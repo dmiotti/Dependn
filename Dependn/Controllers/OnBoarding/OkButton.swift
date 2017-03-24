@@ -11,29 +11,29 @@ import SwiftHelpers
 
 final class OkButton: SHCommonInitView {
 
-    private var circleView: UIView!
-    private(set) var textLbl: UILabel!
-    private(set) var button: UIButton!
+    fileprivate var circleView: UIView!
+    fileprivate(set) var textLbl: UILabel!
+    fileprivate(set) var button: UIButton!
     
     override func commonInit() {
         super.commonInit()
         
         circleView = UIView()
         circleView.backgroundColor = UIColor.appBlueColor()
-        circleView.layer.shadowColor = "31627D".UIColor.CGColor
+        circleView.layer.shadowColor = "31627D".UIColor.cgColor
         circleView.layer.shadowOffset = CGSize(width: 0, height: 3)
         circleView.layer.shadowOpacity = 0.20
         circleView.layer.shadowRadius = 9
         addSubview(circleView)
         
         textLbl = UILabel()
-        textLbl.textColor = UIColor.whiteColor()
-        textLbl.textAlignment = .Center
-        textLbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightBold)
+        textLbl.textColor = UIColor.white
+        textLbl.textAlignment = .center
+        textLbl.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightBold)
         textLbl.adjustsFontSizeToFitWidth = true
         addSubview(textLbl)
         
-        button = UIButton(type: .System)
+        button = UIButton(type: .system)
         addSubview(button)
         
         configureLayoutConstraints()
@@ -45,16 +45,16 @@ final class OkButton: SHCommonInitView {
         circleView.layer.cornerRadius = circleView.frame.size.height / 2
     }
     
-    private func configureLayoutConstraints() {
-        circleView.snp_makeConstraints {
+    fileprivate func configureLayoutConstraints() {
+        circleView.snp.makeConstraints {
             $0.edges.equalTo(self)
         }
         
-        textLbl.snp_makeConstraints {
+        textLbl.snp.makeConstraints {
             $0.edges.equalTo(self)
         }
         
-        button.snp_makeConstraints {
+        button.snp.makeConstraints {
             $0.edges.equalTo(self)
         }
     }

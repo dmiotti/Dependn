@@ -25,42 +25,42 @@ func <(lhs: SuggestedAddiction, rhs: SuggestedAddiction) -> Bool {
 }
 
 enum DependencyChooserStyle {
-    case Onboarding
-    case FromSettings
-    case FromAddRecord
+    case onboarding
+    case fromSettings
+    case fromAddRecord
 }
 
 final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
     
-    var style: DependencyChooserStyle = .Onboarding {
+    var style: DependencyChooserStyle = .onboarding {
         didSet {
-            if isViewLoaded() {
+            if isViewLoaded {
                 configureInterfaceBasedOnStyle()
             }
         }
     }
     
-    private var cancelBtn: UIBarButtonItem!
-    private var doneBtn: UIBarButtonItem!
+    fileprivate var cancelBtn: UIBarButtonItem!
+    fileprivate var doneBtn: UIBarButtonItem!
     
-    private var headerView: UIView!
-    private var searchBar: UISearchBar!
-    private var tableView: UITableView!
+    fileprivate var headerView: UIView!
+    fileprivate var searchBar: UISearchBar!
+    fileprivate var tableView: UITableView!
     
-    private var proposedAddictions = [SuggestedAddiction]()
-    private var selectedAddictions = [SuggestedAddiction]()
+    fileprivate var proposedAddictions = [SuggestedAddiction]()
+    fileprivate var selectedAddictions = [SuggestedAddiction]()
     
-    private var isSearching: Bool {
+    fileprivate var isSearching: Bool {
         return searchedResult.count > 0
     }
-    private var searchedResult = [SuggestedAddiction]()
+    fileprivate var searchedResult = [SuggestedAddiction]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         headerView = UIView()
         view.addSubview(headerView)
-        tableView = UITableView(frame: .zero, style: .Grouped)
+        tableView = UITableView(frame: .zero, style: .grouped)
         view.addSubview(tableView)
         searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 44))
         
@@ -75,19 +75,19 @@ final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
         fillWithData()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureInterfaceBasedOnStyle()
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Create suggested addictions
     
-    private func fillWithData() {
-        proposedAddictions.appendContentsOf([
+    fileprivate func fillWithData() {
+        proposedAddictions.append(contentsOf: [
             SuggestedAddiction(name: L("suggested.addictions.tobacco"),     color: "#27A9F1"),
             SuggestedAddiction(name: L("suggested.addictions.alcohol"),     color: "#BD10E0"),
             SuggestedAddiction(name: L("suggested.addictions.cannabis"),    color: "#2DD7AA"),
@@ -112,7 +112,7 @@ final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
     
     // MARK: - Button Events
     
-    func doneBtnClicked(sender: UIBarButtonItem) {
+    func doneBtnClicked(_ sender: UIBarButtonItem) {
         let context = CoreDataStack.shared.managedObjectContext
         
         do {
@@ -130,101 +130,99 @@ final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
         }
         
         switch style {
-        case .Onboarding:
-            dismissViewControllerAnimated(true, completion: nil)
+        case .onboarding:
+            dismiss(animated: true, completion: nil)
         default:
-            navigationController?.popViewControllerAnimated(true)
+            _ = navigationController?.popViewController(animated: true)
         }
     }
     
-    func cancelBtnClicked(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func cancelBtnClicked(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Configure UI Elements
     
-    private func configureInterfaceBasedOnStyle() {
+    fileprivate func configureInterfaceBasedOnStyle() {
         switch style {
-        case .Onboarding:
+        case .onboarding:
             navigationController?.setNavigationBarHidden(false, animated: true)
-            navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+            navigationController?.navigationBar.barTintColor = UIColor.white
             navigationController?.navigationBar.tintColor = UIColor.appBlueColor()
             
             updateTitle(L("onboarding.addiction.title"), blueBackground: false)
             
             cancelBtn = UIBarButtonItem(title: L("onboarding.addiction.cancel"),
-                                        style: .Plain,
+                                        style: .plain,
                                         target: self,
                                         action: #selector(DependencyChooserViewController.cancelBtnClicked(_:)))
-            cancelBtn.setTitleTextAttributes(StyleSheet.cancelBtnAttrs, forState: .Normal)
+            cancelBtn.setTitleTextAttributes(StyleSheet.cancelBtnAttrs, for: UIControlState())
             navigationItem.leftBarButtonItem = cancelBtn
             
             doneBtn = UIBarButtonItem(title: L("onboarding.addiction.done"),
-                                      style: .Done,
+                                      style: .done,
                                       target: self,
                                       action: #selector(DependencyChooserViewController.doneBtnClicked(_:)))
-            doneBtn.setTitleTextAttributes(StyleSheet.doneBtnAttrs, forState: .Normal)
+            doneBtn.setTitleTextAttributes(StyleSheet.doneBtnAttrs, for: UIControlState())
             navigationItem.rightBarButtonItem = doneBtn
-        case .FromSettings:
+        case .fromSettings:
             updateTitle(L("onboarding.addiction.title"), blueBackground: true)
             
             doneBtn = UIBarButtonItem(title: L("onboarding.addiction.done"),
-                                      style: .Done,
+                                      style: .done,
                                       target: self,
                                       action: #selector(DependencyChooserViewController.doneBtnClicked(_:)))
             doneBtn.setTitleTextAttributes([
-                NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold),
-                NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSFontAttributeName: UIFont.systemFont(ofSize: 15, weight: UIFontWeightSemibold),
+                NSForegroundColorAttributeName: UIColor.white,
                 NSKernAttributeName: -0.36
-                ], forState: .Normal)
+                ], for: UIControlState())
             navigationItem.rightBarButtonItem = doneBtn
-        case .FromAddRecord:
+        case .fromAddRecord:
             updateTitle(L("onboarding.addiction.title"), blueBackground: false)
             
             doneBtn = UIBarButtonItem(title: L("onboarding.addiction.done"),
-                                      style: .Done,
+                                      style: .done,
                                       target: self,
                                       action: #selector(DependencyChooserViewController.doneBtnClicked(_:)))
-            doneBtn.setTitleTextAttributes(StyleSheet.doneBtnAttrs, forState: .Normal)
+            doneBtn.setTitleTextAttributes(StyleSheet.doneBtnAttrs, for: UIControlState())
             navigationItem.rightBarButtonItem = doneBtn
         }
     }
     
-    private func configureSearchBar() {
+    fileprivate func configureSearchBar() {
         searchBar.placeholder = L("search.placeholder")
-        searchBar.autoresizingMask = .FlexibleWidth
+        searchBar.autoresizingMask = .flexibleWidth
         searchBar.delegate = self
         searchBar.tintColor = UIColor.appBlueColor()
-        searchBar.searchBarStyle = .Minimal
+        searchBar.searchBarStyle = .minimal
         
         let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
-        CGContextSetFillColorWithColor(context, UIColor.clearColor().CGColor)
-        CGContextFillRect(context, rect)
+        context?.setFillColor(UIColor.clear.cgColor)
+        context?.fill(rect)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         searchBar.backgroundImage = image
     }
     
-    private func configureHeaderView() {
+    fileprivate func configureHeaderView() {
         headerView.backgroundColor = UIColor.appBlueColor()
         
         let headerLbl = UILabel()
-        headerLbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+        headerLbl.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)
         headerLbl.text = L("onboarding.select_dependencies")
         headerLbl.numberOfLines = 0
         headerLbl.adjustsFontSizeToFitWidth = true
-        headerLbl.textColor = UIColor.whiteColor()
+        headerLbl.textColor = UIColor.white
         headerView.addSubview(headerLbl)
         
-        headerLbl.snp_makeConstraints {
-            $0.edges.equalTo(headerView).offset(
-                UIEdgeInsets(top: 20, left: 20,
-                    bottom: -20, right: -20))
+        headerLbl.snp.makeConstraints {
+            $0.edges.equalTo(headerView).inset(UIEdgeInsets(top: 20, left: 20, bottom: -20, right: -20))
         }
         
-        headerView.snp_makeConstraints {
+        headerView.snp.makeConstraints {
             $0.top.equalTo(view)
             $0.left.equalTo(view)
             $0.right.equalTo(view)
@@ -232,17 +230,17 @@ final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
         }
     }
     
-    private func configureTableView() {
+    fileprivate func configureTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.separatorColor = UIColor.appSeparatorColor()
-        tableView.registerClass(NewAddictionTableViewCell.self, forCellReuseIdentifier: NewAddictionTableViewCell.reuseIdentifier)
-        tableView.registerClass(DependencyChooserCell.self, forCellReuseIdentifier: DependencyChooserCell.reuseIdentifier)
+        tableView.register(NewAddictionTableViewCell.self, forCellReuseIdentifier: NewAddictionTableViewCell.reuseIdentifier)
+        tableView.register(DependencyChooserCell.self, forCellReuseIdentifier: DependencyChooserCell.reuseIdentifier)
         view.addSubview(tableView)
         
-        tableView.snp_makeConstraints {
-            $0.top.equalTo(headerView.snp_bottom)
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(headerView.snp.bottom)
             $0.left.equalTo(view)
             $0.right.equalTo(view)
             $0.bottom.equalTo(view)
@@ -251,19 +249,19 @@ final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
     
     // MARK: - Notifications
     
-    private func registerNotificationObservers() {
-        let ns = NSNotificationCenter.defaultCenter()
-        ns.addObserver(self, selector: #selector(DependencyChooserViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        ns.addObserver(self, selector: #selector(DependencyChooserViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    fileprivate func registerNotificationObservers() {
+        let ns = NotificationCenter.default
+        ns.addObserver(self, selector: #selector(DependencyChooserViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        ns.addObserver(self, selector: #selector(DependencyChooserViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        let scrollViewRect = view.convertRect(tableView.frame, fromView: tableView.superview)
+    func keyboardWillShow(_ notification: Notification) {
+        let scrollViewRect = view.convert(tableView.frame, from: tableView.superview)
         if let rectValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let kbRect = view.convertRect(rectValue.CGRectValue(), fromView: nil)
+            let kbRect = view.convert(rectValue.cgRectValue, from: nil)
             
-            let hiddenScrollViewRect = CGRectIntersection(scrollViewRect, kbRect)
-            if !CGRectIsNull(hiddenScrollViewRect) {
+            let hiddenScrollViewRect = scrollViewRect.intersection(kbRect)
+            if !hiddenScrollViewRect.isNull {
                 var contentInsets = tableView.contentInset
                 contentInsets.bottom = hiddenScrollViewRect.size.height
                 tableView.contentInset = contentInsets
@@ -272,7 +270,7 @@ final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         var contentInsets = tableView.contentInset
         contentInsets.bottom = 0
         tableView.contentInset = contentInsets
@@ -281,50 +279,46 @@ final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
     
     // MARK: - Add new Addiction
     
-    private func addNewAddiction() {
-        let alert = UIAlertController(title: L("addiction_list.new.title"), message: L("addiction_list.new.message"), preferredStyle: .Alert)
-        let cancelAction = UIAlertAction(title: L("addiction_list.new.cancel"), style: .Cancel, handler: nil)
-        let addAction = UIAlertAction(title: L("addiction_list.new.add"), style: .Default) { action in
+    fileprivate func addNewAddiction() {
+        let alert = UIAlertController(title: L("addiction_list.new.title"), message: L("addiction_list.new.message"), preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: L("addiction_list.new.cancel"), style: .cancel, handler: nil)
+        let addAction = UIAlertAction(title: L("addiction_list.new.add"), style: .default) { action in
             if let name = alert.textFields?.first?.text {
                 self.addAddictionWithName(name)
             } else {
-                UIAlertController.presentAlertWithTitle(L("addiction_list.new.error"),
-                                                        message: L("addiction_list.new.name_missing"), inController: self)
+                UIAlertController.presentAlert(title: L("addiction_list.new.error"), message: L("addiction_list.new.name_missing"), in: self)
             }
         }
-        alert.addTextFieldWithConfigurationHandler { textField in
+        alert.addTextField { textField in
             textField.placeholder = L("addiction_list.new.placeholder")
-            textField.autocapitalizationType = .Words
+            textField.autocapitalizationType = .words
         }
         alert.addAction(cancelAction)
         alert.addAction(addAction)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
-    private func addAddictionWithName(name: String) {
+    fileprivate func addAddictionWithName(_ name: String) {
         do {
-            let addiction = try Addiction.findOrInsertNewAddiction(name, inContext: CoreDataStack.shared.managedObjectContext)
-            
-            /// Track selected addictions
+            let ctx = CoreDataStack.shared.managedObjectContext
+            let addiction = try Addiction.findOrInsertNewAddiction(name, inContext: ctx)
             Analytics.instance.trackAddAddiction(addiction)
         } catch let err as NSError {
-            UIAlertController.presentAlertWithTitle(err.localizedDescription,
-                                                    message: err.localizedRecoverySuggestion, inController: self)
+            UIAlertController.present(error: err, in: self)
         }
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .Default
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
     }
-
 }
 
 // MARK: - UITableViewDataSource
 extension DependencyChooserViewController: UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             if isSearching {
                 return searchedResult.count
@@ -333,9 +327,9 @@ extension DependencyChooserViewController: UITableViewDataSource {
         }
         return 1
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(DependencyChooserCell.reuseIdentifier, forIndexPath: indexPath) as! DependencyChooserCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: DependencyChooserCell.reuseIdentifier, for: indexPath) as! DependencyChooserCell
             let addiction: SuggestedAddiction
             if isSearching {
                 addiction = searchedResult[indexPath.row]
@@ -346,28 +340,28 @@ extension DependencyChooserViewController: UITableViewDataSource {
             cell.choosen = selectedAddictions.contains(addiction)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(NewAddictionTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewAddictionTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: NewAddictionTableViewCell.reuseIdentifier, for: indexPath) as! NewAddictionTableViewCell
             return cell
         }
     }
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 55
     }
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 1 {
             return 50.0
         }
         return 0
     }
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
     }
 }
 
 // MARK: - UITableViewDelegate
 extension DependencyChooserViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
             let addiction: SuggestedAddiction
             if isSearching {
@@ -375,12 +369,12 @@ extension DependencyChooserViewController: UITableViewDelegate {
             } else {
                 addiction = proposedAddictions[indexPath.row]
             }
-            if let idx = selectedAddictions.indexOf(addiction) {
-                selectedAddictions.removeAtIndex(idx)
+            if let idx = selectedAddictions.index(of: addiction) {
+                selectedAddictions.remove(at: idx)
             } else {
                 selectedAddictions.append(addiction)
             }
-            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
         } else {
             addNewAddiction()
         }
@@ -389,16 +383,16 @@ extension DependencyChooserViewController: UITableViewDelegate {
 
 // MARK: - UISearchBarDelegate
 extension DependencyChooserViewController: UISearchBarDelegate {
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchedResult = proposedAddictions.filter {
-            $0.name.containsString(searchText)
+            $0.name.contains(searchText)
         }
         self.tableView.reloadData()
     }
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
     }
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
         searchedResult = []

@@ -8,12 +8,14 @@
 
 import UIKit
 import SwiftHelpers
+import UserNotifications
+import UserNotificationsUI
 
 final class LocalNotificationsViewController: UIViewController {
 
-    private var tableView: UITableView!
-    private var localNotifications = [UILocalNotification]()
-    private let dateFormatter = NSDateFormatter()
+    fileprivate var tableView: UITableView!
+    fileprivate var localNotifications = [UNNotificationRequest]()
+    fileprivate let dateFormatter = DateFormatter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,16 +24,8 @@ final class LocalNotificationsViewController: UIViewController {
 
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
-        localNotifications = UIApplication.sharedApplication().scheduledLocalNotifications ?? []
-        localNotifications.sortInPlace { a, b in
-            if let aDate = a.fireDate, bDate = b.fireDate {
-                return bDate > aDate
-            }
-            return false
-        }
-
-        tableView = UITableView(frame: .zero, style: .Grouped)
-        tableView.registerClass(LocalNotificationCell.self, forCellReuseIdentifier: LocalNotificationCell.reuseIdentifier)
+        tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.register(LocalNotificationCell.self, forCellReuseIdentifier: LocalNotificationCell.reuseIdentifier)
         tableView.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.separatorColor = UIColor.appSeparatorColor()
@@ -41,34 +35,51 @@ final class LocalNotificationsViewController: UIViewController {
         tableView.sectionHeaderHeight = 0
         tableView.sectionFooterHeight = 0
         view.addSubview(tableView)
-        tableView.snp_makeConstraints {
+        tableView.snp.makeConstraints {
             $0.edges.equalTo(view)
+        }
+        
+        UNUserNotificationCenter.current().getPendingNotificationRequests { [weak self] notifications in
+            self?.localNotifications = notifications
+            self?.tableView.reloadData()
         }
     }
 }
 
 extension LocalNotificationsViewController: UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return localNotifications.count
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(LocalNotificationCell.reuseIdentifier, forIndexPath: indexPath) as! LocalNotificationCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: LocalNotificationCell.reuseIdentifier, for: indexPath) as! LocalNotificationCell
         cell.prepareForReuse()
-        let n = localNotifications[indexPath.row]
-        cell.titleLbl.text = n.alertTitle
-        cell.bodyLbl.text = n.alertBody
-        if let date = n.fireDate {
-            cell.dateLbl.text = dateFormatter.stringFromDate(date)
-        }
+        configure(cell: cell, at: indexPath)
         return cell
+    }
+    private func configure(cell: LocalNotificationCell, at indexPath: IndexPath) {
+        let request = localNotifications[indexPath.row]
+        let content = request.content
+        cell.titleLbl.text = content.title
+        cell.bodyLbl.text = content.body
+        if
+            let calendarTrigger = request.trigger as? UNCalendarNotificationTrigger,
+            let next = calendarTrigger.nextTriggerDate() {
+            cell.dateLbl.text = dateFormatter.string(from: next)
+        } else if
+            let timeIntervalTrigger = request.trigger as? UNTimeIntervalNotificationTrigger,
+            let next = timeIntervalTrigger.nextTriggerDate() {
+            cell.dateLbl.text = dateFormatter.string(from: next)
+        } else {
+            cell.dateLbl.text = "Unknown"
+        }
     }
 }
 
 extension LocalNotificationsViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }
 }

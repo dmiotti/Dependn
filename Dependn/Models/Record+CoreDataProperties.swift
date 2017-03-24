@@ -16,7 +16,7 @@ extension Record {
 
     @NSManaged var feeling: String?
     @NSManaged var comment: String?
-    @NSManaged var date: NSDate
+    @NSManaged var date: Date
     @NSManaged var intensity: NSNumber
     @NSManaged var lat: NSNumber?
     @NSManaged var lon: NSNumber?

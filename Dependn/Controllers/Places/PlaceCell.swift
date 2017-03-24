@@ -13,18 +13,17 @@ final class PlaceCell: SHCommonInitTableViewCell {
     
     static let reuseIdentifier = "PlaceCell"
     
-    private(set) var placeLbl: UILabel!
+    fileprivate(set) var placeLbl: UILabel!
 
     override func commonInit() {
         super.commonInit()
         
         placeLbl = UILabel()
         placeLbl.textColor = UIColor.appBlackColor()
-        placeLbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+        placeLbl.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)
         contentView.addSubview(placeLbl)
-        placeLbl.snp_makeConstraints {
-            $0.edges.equalTo(contentView).offset(
-                UIEdgeInsets(top: 0, left: 30, bottom: 0, right: -30))
+        placeLbl.snp.makeConstraints {
+            $0.edges.equalTo(contentView).inset(UIEdgeInsets(top: 0, left: 30, bottom: 0, right: -30))
         }
     }
 

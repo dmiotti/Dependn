@@ -15,7 +15,7 @@ private let R: Double = 6371009000
 
 extension Record {
     
-    class func insertNewRecord(addiction: Addiction,
+    class func insertNewRecord(_ addiction: Addiction,
                                intensity: Float,
                                feeling: String?,
                                comment: String?,
@@ -23,13 +23,13 @@ extension Record {
                                latitude: Double?,
                                longitude: Double?,
                                desire: Bool,
-                               date: NSDate = NSDate(),
+                               date: Date = Date(),
                                inContext context: NSManagedObjectContext) -> Record {
         let record = NSEntityDescription
-            .insertNewObjectForEntityForName(Record.entityName,
-                                             inManagedObjectContext: context) as! Record
-        record.intensity = intensity
-        if let addiction = context.objectWithID(addiction.objectID) as? Addiction {
+            .insertNewObject(forEntityName: Record.entityName,
+                                             into: context) as! Record
+        record.intensity = NSNumber(value: intensity)
+        if let addiction = context.object(with: addiction.objectID) as? Addiction {
             record.addiction = addiction
         } else {
             record.addiction = addiction
@@ -37,72 +37,55 @@ extension Record {
         record.feeling = feeling
         record.comment = comment
         record.place = place
-        record.lat = latitude
-        record.lon = longitude
+        record.lat = latitude as NSNumber?
+        record.lon = longitude as NSNumber?
         record.date = date
-        record.desire = desire
+        record.desire = desire as NSNumber
         return record
     }
     
-    class func historyFetchedResultsController(inContext context: NSManagedObjectContext) -> NSFetchedResultsController {
-        let req = entityFetchRequest()
+    class func historyFetchedResultsController(inContext context: NSManagedObjectContext) -> NSFetchedResultsController<Record> {
+        let req = NSFetchRequest<Record>(entityName: Record.entityName)
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
-        let controller = NSFetchedResultsController(fetchRequest: req,
-                                                    managedObjectContext: context,
-                                                    sectionNameKeyPath: "sectionIdentifier",
-                                                    cacheName: nil)
+        let controller = NSFetchedResultsController<Record>(fetchRequest: req, managedObjectContext: context, sectionNameKeyPath: "sectionIdentifier", cacheName: nil)
         return controller
     }
     
-    class func deleteRecord(record: Record, inContext context: NSManagedObjectContext) {
-        context.deleteObject(record)
+    class func deleteRecord(_ record: Record, inContext context: NSManagedObjectContext) {
+        context.delete(record)
     }
     
-    class func recordForAddiction(addiction: Addiction, inContext context: NSManagedObjectContext) throws -> [Record] {
+    class func recordForAddiction(_ addiction: Addiction, inContext context: NSManagedObjectContext) throws -> [Record] {
         let req = Record.entityFetchRequest()
         req.predicate = NSPredicate(format: "addiction == %@", addiction)
-        return try context.executeFetchRequest(req) as? [Record] ?? []
+        return try context.fetch(req) as? [Record] ?? []
     }
     
-    class func recordWithPlace(place: Place, inContext context: NSManagedObjectContext) -> [Record] {
+    class func recordWithPlace(_ place: Place, inContext context: NSManagedObjectContext) -> [Record] {
         let req = entityFetchRequest()
         req.predicate = NSPredicate(format: "place == %@", place)
         do {
-            return try context.executeFetchRequest(req) as! [Record]
+            return try context.fetch(req) as! [Record]
         } catch let err as NSError {
             DDLogError("Error while fetching record with place: \(place): \(err)")
         }
         return []
     }
     
-    class func hasAtLeastOneRecord(inContext context: NSManagedObjectContext) -> Bool {
-        return recordCount(inContext: context) > 0
+    class func hasAtLeastOneRecord(inContext context: NSManagedObjectContext) throws -> Bool {
+        return try recordCount(inContext: context) > 0
     }
     
-    class func recordCount(inContext context: NSManagedObjectContext) -> Int {
+    class func recordCount(inContext context: NSManagedObjectContext) throws -> Int {
         let req = entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
-        
-        var error: NSError?
-        let count = context.countForFetchRequest(req, error: &error)
-        if let err = error {
-            DDLogError("Error while counting records: \(err)")
-        }
-        
-        return count
+        return try context.count(for: req)
     }
 
-    class func countInRange(addiction: Addiction, start: NSDate, end: NSDate, isDesire: Bool, inContext context: NSManagedObjectContext) -> Int {
+    class func countInRange(_ addiction: Addiction, start: Date, end: Date, isDesire: Bool, inContext context: NSManagedObjectContext) throws -> Int {
         let req = entityFetchRequest()
-        req.predicate = NSPredicate(format: "addiction == %@ AND date >= %@ AND date <= %@ AND desire == %@", addiction, start, end, isDesire)
-
-        var error: NSError?
-        let count = context.countForFetchRequest(req, error: &error)
-        if let err = error {
-            DDLogError("Error while counting records in range (\(start), \(end)): \(err)")
-        }
-        
-        return count
+        req.predicate = NSPredicate(format: "addiction == %@ AND date >= %@ AND date <= %@ AND desire == %@", addiction, start as NSDate, end as NSDate, NSNumber(value: isDesire))
+        return try context.count(for: req)
     }
     
 }

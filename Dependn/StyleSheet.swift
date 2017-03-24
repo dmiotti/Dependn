@@ -9,51 +9,49 @@
 import UIKit
 import SwiftHelpers
 
-class StyleSheet {
+final class StyleSheet {
     
     static var titleAttributes: [String: AnyObject] = [
-        NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightSemibold),
-        NSForegroundColorAttributeName: UIColor.whiteColor(),
-        NSKernAttributeName: 1.53
+        NSFontAttributeName: UIFont.systemFont(ofSize: 13, weight: UIFontWeightSemibold),
+        NSForegroundColorAttributeName: UIColor.white,
+        NSKernAttributeName: 1.53 as AnyObject
     ]
     
     static var doneBtnAttrs: [String: AnyObject] = [
-        NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold),
+        NSFontAttributeName: UIFont.systemFont(ofSize: 15, weight: UIFontWeightSemibold),
         NSForegroundColorAttributeName: UIColor.appBlueColor(),
-        NSKernAttributeName: -0.36
+        NSKernAttributeName: -0.36 as AnyObject
     ]
     
     static var cancelBtnAttrs: [String: AnyObject] = [
-        NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightRegular),
+        NSFontAttributeName: UIFont.systemFont(ofSize: 15, weight: UIFontWeightRegular),
         NSForegroundColorAttributeName: UIColor.appBlueColor(),
-        NSKernAttributeName: -0.36
+        NSKernAttributeName: -0.36 as AnyObject
     ]
     
-    class func customizeAppearance(window: UIWindow?) {
+    class func customizeAppearance(_ window: UIWindow?) {
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        UINavigationBar.appearance().shadowImage = UIImage(color: UIColor.black.withAlphaComponent(0.5))
         
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        let img = UIImage.imageWithColor(UIColor.blackColor().colorWithAlphaComponent(0.13))
-        UINavigationBar.appearance().shadowImage = img
-        
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = titleAttributes
         UINavigationBar.appearance().barTintColor = UIColor.appBlueColor()
-        UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().isTranslucent = false
         
-        UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
+        UIBarButtonItem.appearance().tintColor = UIColor.white
         UIBarButtonItem.appearance().setTitleTextAttributes([
-            NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightRegular),
-            NSForegroundColorAttributeName: UIColor.whiteColor(),
+            NSFontAttributeName: UIFont.systemFont(ofSize: 15, weight: UIFontWeightRegular),
+            NSForegroundColorAttributeName: UIColor.white,
             NSKernAttributeName: -0.36
-            ], forState: .Normal)
-        UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UIToolbar.self]).tintColor = UIColor.appBlueColor()
+            ], for: UIControlState())
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = UIColor.appBlueColor()
         
         /// The one inside the search bar
-        UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).setTitleTextAttributes([
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([
             NSForegroundColorAttributeName: UIColor.appBlueColor(),
-            NSFontAttributeName: UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
-            ], forState: .Normal)
-        UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).tintColor = UIColor.appBlueColor()
+            NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular)
+            ], for: UIControlState())
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = UIColor.appBlueColor()
         
         window?.tintColor = UIColor.appBlueColor()
     }
@@ -76,7 +74,7 @@ extension UIColor {
     class func highIntensityColor()     -> UIColor { return  UIColor.carrotColor()      }
     class func veryHighIntensityColor() -> UIColor { return  UIColor.pomegranateColor() }
     
-    static func colorForIntensity(intensity: Float) -> UIColor {
+    static func colorForIntensity(_ intensity: Float) -> UIColor {
         if intensity <= 4 {
             return lowIntensityColor()
         } else if intensity <= 6 {
@@ -117,7 +115,7 @@ extension UIColor {
     class func asbestosColor()     -> UIColor { return UIColor.colorWithHex(0x7f8c8d) }
     class func concerteColor()     -> UIColor { return UIColor.colorWithHex(0x95a5a6) }
     
-    class func colorWithHex(hex: Int, alpha: CGFloat = 1.0) -> UIColor {
+    class func colorWithHex(_ hex: Int, alpha: CGFloat = 1.0) -> UIColor {
         let r = CGFloat((hex & 0xff0000) >> 16) / 255.0
         let g = CGFloat((hex & 0x00ff00) >>  8) / 255.0
         let b = CGFloat((hex & 0x0000ff) >>  0) / 255.0

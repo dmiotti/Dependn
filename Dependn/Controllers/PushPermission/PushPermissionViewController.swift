@@ -12,15 +12,15 @@ import SwiftyUserDefaults
 
 final class PushPermissionViewController: UIViewController {
 
-    private var contentView: UIView!
-    private var imageView: UIImageView!
-    private var titleLbl: UILabel!
-    private var subTitleLbl: UILabel!
+    fileprivate var contentView: UIView!
+    fileprivate var imageView: UIImageView!
+    fileprivate var titleLbl: UILabel!
+    fileprivate var subTitleLbl: UILabel!
 
-    private var acceptBtn: UIButton!
-    private var rejectBtn: UIButton!
+    fileprivate var acceptBtn: UIButton!
+    fileprivate var rejectBtn: UIButton!
 
-    private var animator: PushPermissionAnimator!
+    fileprivate var animator: PushPermissionAnimator!
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -32,8 +32,8 @@ final class PushPermissionViewController: UIViewController {
         commonInit()
     }
 
-    private func commonInit() {
-        modalPresentationStyle = .Custom
+    fileprivate func commonInit() {
+        modalPresentationStyle = .custom
         transitioningDelegate = self
         animator = PushPermissionAnimator()
     }
@@ -42,10 +42,10 @@ final class PushPermissionViewController: UIViewController {
         super.viewDidLoad()
 
         contentView = UIView()
-        contentView.backgroundColor = UIColor.whiteColor()
+        contentView.backgroundColor = UIColor.white
         contentView.layer.cornerRadius = 4
         view.addSubview(contentView)
-        contentView.snp_makeConstraints {
+        contentView.snp.makeConstraints {
             $0.centerX.equalTo(view)
             $0.centerY.equalTo(view)
 
@@ -57,7 +57,7 @@ final class PushPermissionViewController: UIViewController {
 
         imageView = UIImageView(image: UIImage(named: "push_image"))
         contentView.addSubview(imageView)
-        imageView.snp_makeConstraints {
+        imageView.snp.makeConstraints {
             $0.top.equalTo(contentView).offset(22)
             $0.right.equalTo(contentView).offset(-6)
             $0.left.greaterThanOrEqualTo(contentView).offset(68)
@@ -65,13 +65,13 @@ final class PushPermissionViewController: UIViewController {
 
         titleLbl = UILabel()
         titleLbl.text = L("push.perm.title")
-        titleLbl.font = UIFont.systemFontOfSize(18, weight: UIFontWeightRegular)
+        titleLbl.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightRegular)
         titleLbl.textColor = UIColor.appBlackColor()
-        titleLbl.textAlignment = .Center
+        titleLbl.textAlignment = .center
         titleLbl.numberOfLines = 0
         contentView.addSubview(titleLbl)
-        titleLbl.snp_makeConstraints {
-            $0.top.equalTo(imageView.snp_bottom).offset(28)
+        titleLbl.snp.makeConstraints {
+            $0.top.equalTo(imageView.snp.bottom).offset(28)
             $0.centerX.equalTo(contentView)
             $0.left.greaterThanOrEqualTo(contentView)
             $0.right.lessThanOrEqualTo(contentView)
@@ -80,59 +80,59 @@ final class PushPermissionViewController: UIViewController {
         subTitleLbl = UILabel()
         let attr = NSMutableAttributedString(string: L("push.perm.subtitle"))
         let paragraph = NSMutableParagraphStyle()
-        paragraph.alignment = .Center
+        paragraph.alignment = .center
         paragraph.lineHeightMultiple = 1.35
         attr.addAttributes(
             [
-                NSFontAttributeName: UIFont.systemFontOfSize(13, weight: UIFontWeightRegular),
-                NSForegroundColorAttributeName: UIColor.appBlackColor().colorWithAlphaComponent(0.5),
+                NSFontAttributeName: UIFont.systemFont(ofSize: 13, weight: UIFontWeightRegular),
+                NSForegroundColorAttributeName: UIColor.appBlackColor().withAlphaComponent(0.5),
                 NSParagraphStyleAttributeName: paragraph
             ], range: NSRange(0..<attr.length))
         subTitleLbl.attributedText = attr
         subTitleLbl.numberOfLines = 0
         contentView.addSubview(subTitleLbl)
-        subTitleLbl.snp_makeConstraints {
-            $0.top.equalTo(titleLbl.snp_bottom).offset(10)
+        subTitleLbl.snp.makeConstraints {
+            $0.top.equalTo(titleLbl.snp.bottom).offset(10)
             $0.centerX.equalTo(contentView)
             $0.left.greaterThanOrEqualTo(contentView).offset(30)
             $0.right.lessThanOrEqualTo(contentView).offset(-30)
         }
 
-        acceptBtn = UIButton(type: .System)
-        acceptBtn.setAttributedTitle(uppercaseAttributedString(L("push.perm.accept")), forState: .Normal)
-        acceptBtn.addTarget(self, action: #selector(PushPermissionViewController.acceptBtnClicked(_:)), forControlEvents: .TouchUpInside)
+        acceptBtn = UIButton(type: .system)
+        acceptBtn.setAttributedTitle(uppercaseAttributedString(L("push.perm.accept")), for: .normal)
+        acceptBtn.addTarget(self, action: #selector(PushPermissionViewController.acceptBtnClicked(_:)), for: .touchUpInside)
         acceptBtn.backgroundColor = UIColor.appBlueColor()
         acceptBtn.layer.cornerRadius = 22
         acceptBtn.layer.masksToBounds = true
         acceptBtn.contentEdgeInsets = UIEdgeInsets(top: 14, left: 30, bottom: 14, right: 30)
         contentView.addSubview(acceptBtn)
-        acceptBtn.snp_makeConstraints {
-            $0.top.equalTo(subTitleLbl.snp_bottom).offset(16)
+        acceptBtn.snp.makeConstraints {
+            $0.top.equalTo(subTitleLbl.snp.bottom).offset(16)
             $0.centerX.equalTo(contentView)
             $0.height.equalTo(44)
         }
 
-        rejectBtn = UIButton(type: .System)
-        rejectBtn.setAttributedTitle(uppercaseAttributedString(L("push.perm.reject"), fgColor: UIColor.blackColor().colorWithAlphaComponent(0.20)), forState: .Normal)
-        rejectBtn.addTarget(self, action: #selector(PushPermissionViewController.rejectBtnClicked(_:)), forControlEvents: .TouchUpInside)
+        rejectBtn = UIButton(type: .system)
+        rejectBtn.setAttributedTitle(uppercaseAttributedString(L("push.perm.reject"), fgColor: UIColor.black.withAlphaComponent(0.20)), for: .normal)
+        rejectBtn.addTarget(self, action: #selector(PushPermissionViewController.rejectBtnClicked(_:)), for: .touchUpInside)
         contentView.addSubview(rejectBtn)
-        rejectBtn.snp_makeConstraints {
-            $0.top.equalTo(acceptBtn.snp_bottom).offset(10)
+        rejectBtn.snp.makeConstraints {
+            $0.top.equalTo(acceptBtn.snp.bottom).offset(10)
             $0.centerX.equalTo(contentView)
             $0.bottom.equalTo(contentView).offset(-21)
         }
 
-        let nc = NSNotificationCenter.defaultCenter()
-        nc.addObserver(self, selector: #selector(PushPermissionViewController.userDidAcceptPushNotifications(_:)), name: kUserAcceptPushPermissions, object: nil)
-        nc.addObserver(self, selector: #selector(PushPermissionViewController.userDidRejectPushNotifications(_:)), name: kUserRejectPushPermissions, object: nil)
-        nc.addObserver(self, selector: #selector(PushPermissionViewController.applicationWillEnterForeground(_:)), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(PushPermissionViewController.userDidAcceptPushNotifications(_:)), name: NSNotification.Name(rawValue: kUserAcceptPushPermissions), object: nil)
+        nc.addObserver(self, selector: #selector(PushPermissionViewController.userDidRejectPushNotifications(_:)), name: NSNotification.Name(rawValue: kUserRejectPushPermissions), object: nil)
+        nc.addObserver(self, selector: #selector(PushPermissionViewController.applicationWillEnterForeground(_:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
 
-    private func uppercaseAttributedString(str: String, fgColor: UIColor = UIColor.whiteColor()) -> NSAttributedString {
+    fileprivate func uppercaseAttributedString(_ str: String, fgColor: UIColor = UIColor.white) -> NSAttributedString {
         let attr = NSMutableAttributedString(string: str)
         attr.addAttributes(
             [
-                NSFontAttributeName: UIFont.systemFontOfSize(12, weight: UIFontWeightMedium),
+                NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightMedium),
                 NSForegroundColorAttributeName: fgColor,
                 NSKernAttributeName: 1.2
             ],
@@ -142,63 +142,63 @@ final class PushPermissionViewController: UIViewController {
 
     // MARK: - Handle button events
 
-    private var firstAttempt = true
+    fileprivate var firstAttempt = true
 
-    func acceptBtnClicked(sender: UIButton) {
-        let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+    func acceptBtnClicked(_ sender: UIButton) {
+        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        UIApplication.shared.registerUserNotificationSettings(settings)
     }
 
     static func isPermissionAccepted() -> Bool {
-        let app = UIApplication.sharedApplication()
-        if let settings = app.currentUserNotificationSettings() {
-            return settings.types.contains(.Alert)
+        let app = UIApplication.shared
+        if let settings = app.currentUserNotificationSettings {
+            return settings.types.contains(.alert)
         }
         return false
     }
 
-    func rejectBtnClicked(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func rejectBtnClicked(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
 
     // MARK: - Notifications
 
-    func applicationWillEnterForeground(notification: NSNotification) {
+    func applicationWillEnterForeground(_ notification: Notification) {
         // Does permissions has changed ?
         if PushPermissionViewController.isPermissionAccepted() {
-            updateNotifiTypesWithType(.Daily, added: true)
-            updateNotifiTypesWithType(.Weekly, added: true)
-            dismissViewControllerAnimated(true, completion: nil)
+            updateNotifiTypesWithType(.daily, added: true)
+            updateNotifiTypesWithType(.weekly, added: true)
+            dismiss(animated: true, completion: nil)
         }
     }
 
-    func userDidRejectPushNotifications(notification: NSNotification) {
-        if let URL = NSURL(string: UIApplicationOpenSettingsURLString) where firstAttempt {
-            UIApplication.sharedApplication().openURL(URL)
+    func userDidRejectPushNotifications(_ notification: Notification) {
+        if let url = URL(string: UIApplicationOpenSettingsURLString), firstAttempt {
+            UIApplication.shared.open(url, options: [:])
             firstAttempt = false
         } else {
-            updateNotifiTypesWithType(.Daily, added: false)
-            updateNotifiTypesWithType(.Weekly, added: false)
-            dismissViewControllerAnimated(true, completion: nil)
+            updateNotifiTypesWithType(.daily, added: false)
+            updateNotifiTypesWithType(.weekly, added: false)
+            dismiss(animated: true, completion: nil)
         }
     }
 
-    func userDidAcceptPushNotifications(notification: NSNotification) {
-        updateNotifiTypesWithType(.Daily, added: true)
-        updateNotifiTypesWithType(.Weekly, added: true)
-        dismissViewControllerAnimated(true, completion: nil)
+    func userDidAcceptPushNotifications(_ notification: Notification) {
+        updateNotifiTypesWithType(.daily, added: true)
+        updateNotifiTypesWithType(.weekly, added: true)
+        dismiss(animated: true, completion: nil)
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     /* Update the User Defaults property */
-    private func updateNotifiTypesWithType(newType: NotificationTypes, added: Bool) {
+    fileprivate func updateNotifiTypesWithType(_ newType: NotificationTypes, added: Bool) {
         let rawValue = Defaults[.notificationTypes]
         var types = NotificationTypes(rawValue: rawValue)
         if added {
@@ -215,11 +215,11 @@ final class PushPermissionViewController: UIViewController {
 }
 
 extension PushPermissionViewController: UIViewControllerTransitioningDelegate {
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         animator.presenting = true
         return animator
     }
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         animator.presenting = false
         return animator
     }

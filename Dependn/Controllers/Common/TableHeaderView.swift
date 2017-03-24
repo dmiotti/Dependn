@@ -17,7 +17,7 @@ final class TableHeaderView: SHCommonInitView {
         }
     }
     
-    private let titleLbl = UILabel()
+    fileprivate let titleLbl = UILabel()
     
     override func commonInit() {
         super.commonInit()
@@ -25,11 +25,11 @@ final class TableHeaderView: SHCommonInitView {
         backgroundColor = "F5FAFF".UIColor
         alpha = 0.93
         
-        titleLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
+        titleLbl.font = UIFont.systemFont(ofSize: 12, weight: UIFontWeightMedium)
         titleLbl.textColor = "7D9BB8".UIColor
         addSubview(titleLbl)
         
-        titleLbl.snp_makeConstraints {
+        titleLbl.snp.makeConstraints {
             $0.left.equalTo(self).offset(15)
             $0.bottom.equalTo(self).offset(-6)
         }
@@ -37,7 +37,7 @@ final class TableHeaderView: SHCommonInitView {
         let sepTop = UIView()
         sepTop.backgroundColor = UIColor.appSeparatorColor()
         addSubview(sepTop)
-        sepTop.snp_makeConstraints {
+        sepTop.snp.makeConstraints {
             $0.top.equalTo(self)
             $0.left.equalTo(self)
             $0.right.equalTo(self)
@@ -47,7 +47,7 @@ final class TableHeaderView: SHCommonInitView {
         let sepBtm = UIView()
         sepBtm.backgroundColor = UIColor.appSeparatorColor()
         addSubview(sepBtm)
-        sepBtm.snp_makeConstraints {
+        sepBtm.snp.makeConstraints {
             $0.bottom.equalTo(self)
             $0.left.equalTo(self)
             $0.right.equalTo(self)

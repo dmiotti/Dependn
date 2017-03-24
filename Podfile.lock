@@ -1,32 +1,40 @@
 PODS:
-  - Amplitude-iOS (3.14.0)
+  - Amplitude-iOS (3.14.1)
   - BrightFutures (5.1.0):
     - Result (~> 3.0)
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
-  - CocoaLumberjack/Core (3.0.0)
-  - CocoaLumberjack/Default (3.0.0):
-    - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (3.0.0):
+  - CocoaLumberjack/Default (3.1.0)
+  - CocoaLumberjack/Swift (3.1.0):
     - CocoaLumberjack/Default
-  - CocoaLumberjack/Swift (3.0.0):
-    - CocoaLumberjack/Extensions
-  - Crashlytics (3.8.3):
+  - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.11)
   - libxlsxwriter (0.6.9)
   - PKHUD (4.2.0)
-  - Result (3.1.0)
+  - Result (3.2.1)
   - SnapKit (3.2.0)
-  - SwiftHelpers (3.0.0)
+  - SwiftHelpers (5.0.1):
+    - SwiftHelpers/Basic (= 5.0.1)
+    - SwiftHelpers/Core (= 5.0.1)
+    - SwiftHelpers/CoreData (= 5.0.1)
+    - SwiftHelpers/DateTime (= 5.0.1)
+    - SwiftHelpers/Misc (= 5.0.1)
+    - SwiftHelpers/UI (= 5.0.1)
+  - SwiftHelpers/Basic (5.0.1)
+  - SwiftHelpers/Core (5.0.1)
+  - SwiftHelpers/CoreData (5.0.1)
+  - SwiftHelpers/DateTime (5.0.1)
+  - SwiftHelpers/Misc (5.0.1)
+  - SwiftHelpers/UI (5.0.1)
+  - SwiftyJSON (3.1.4)
   - SwiftyUserDefaults (3.0.0)
-  - UrbanAirship-iOS-SDK (8.2.0)
 
 DEPENDENCIES:
   - Amplitude-iOS
   - BrightFutures
-  - ChameleonFramework/Swift
+  - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
   - CocoaLumberjack/Swift
   - Crashlytics
   - Fabric
@@ -34,33 +42,38 @@ DEPENDENCIES:
   - PKHUD
   - SnapKit
   - SwiftHelpers (from `git@github.com:dmiotti/SwiftHelpers.git`)
+  - SwiftyJSON
   - SwiftyUserDefaults
-  - UrbanAirship-iOS-SDK
 
 EXTERNAL SOURCES:
+  ChameleonFramework:
+    :git: https://github.com/ViccAlexander/Chameleon.git
   SwiftHelpers:
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 CHECKOUT OPTIONS:
+  ChameleonFramework:
+    :commit: acc480fbe023c6e5fe40f68593f4a70a8c4c7ad5
+    :git: https://github.com/ViccAlexander/Chameleon.git
   SwiftHelpers:
-    :commit: 73756afa6454d097e0cab8c67f6270119db68a26
+    :commit: 8f7187d38327cd6c2f495a611a96edac978f7c68
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:
-  Amplitude-iOS: d50378ef97434cd910e6c9f21a45d0d8ee660c44
+  Amplitude-iOS: 4a3c8807b2ea5369dc11e87e23825bff01e5a922
   BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
-  CocoaLumberjack: c823149bccc5519a9447aeb433be7b1212a7d6a5
-  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  CocoaLumberjack: 8311463ddf9ee86a06ef92a071dd656c89244500
+  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   libxlsxwriter: 863cff6657797176917741ab87b783fe99539869
   PKHUD: 48af884cf00c2213b0313b739d914e6cab1c0f5e
-  Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
+  Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  SwiftHelpers: acc25abe965f5375becd94ee33ef28436ae65de0
+  SwiftHelpers: 346de9223bfde9b2011c866af3dcf3e9d70d9c41
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
-  UrbanAirship-iOS-SDK: 7bd900d7876faafe8650753cea2610daeea27457
 
-PODFILE CHECKSUM: 8ba2f1aa58c31ca3c8bad825aa1c349736ec6903
+PODFILE CHECKSUM: ad44eb66d64d05bf5450b7a0a9f4d30424a74656
 
 COCOAPODS: 1.2.0

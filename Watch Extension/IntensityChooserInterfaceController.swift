@@ -16,9 +16,9 @@ final class IntensityChooserInterfaceController: WKInterfaceController {
     
     @IBOutlet var validateBtn: WKInterfaceButton!
     
-    private let values: [Int] = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    fileprivate let values: [Int] = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     
-    private var selectedIntensity = Int(WatchSessionManager.sharedManager.newRecordModel.intensity)
+    fileprivate var selectedIntensity = Int(WatchSessionManager.sharedManager.newRecordModel.intensity)
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
@@ -53,7 +53,7 @@ final class IntensityChooserInterfaceController: WKInterfaceController {
         super.didDeactivate()
     }
     
-    @IBAction func intensityValueChanged(value: Int) {
+    @IBAction func intensityValueChanged(_ value: Int) {
         selectedIntensity = values[value]
     }
 

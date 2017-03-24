@@ -10,17 +10,41 @@ import Foundation
 import CoreData
 import ChameleonFramework
 import SwiftyUserDefaults
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 extension Addiction {
     
-    class func findOrInsertNewAddiction(name: String, inContext context: NSManagedObjectContext) throws -> Addiction {
+    class func findOrInsertNewAddiction(_ name: String, inContext context: NSManagedObjectContext) throws -> Addiction {
         if let dbAdd = try findByName(name, inContext: context) {
             return dbAdd
         }
         
-        let newAdd = NSEntityDescription.insertNewObjectForEntityForName(Addiction.entityName, inManagedObjectContext: context) as! Addiction
+        let newAdd = NSEntityDescription.insertNewObject(forEntityName: Addiction.entityName, into: context) as! Addiction
         newAdd.name = name
-        newAdd.color = UIColor.randomFlatColor().hexValue()
+        newAdd.color = UIColor.randomFlat.hexValue()
          
         if Defaults[.watchAddiction] == nil {
            Defaults[.watchAddiction] = name
@@ -31,28 +55,28 @@ extension Addiction {
         return newAdd
     }
     
-    static func findByName(name: String, inContext context: NSManagedObjectContext) throws -> Addiction? {
+    static func findByName(_ name: String, inContext context: NSManagedObjectContext) throws -> Addiction? {
         let req = entityFetchRequest()
         req.predicate = NSPredicate(format: "name ==[cd] %@", name)
         req.fetchLimit = 1
-        return try context.executeFetchRequest(req).first as? Addiction
+        return try context.fetch(req).first as? Addiction
     }
     
     class func getAllAddictions(inContext context: NSManagedObjectContext) throws -> [Addiction] {
         let req = entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-        return try context.executeFetchRequest(req) as? [Addiction] ?? []
+        return try context.fetch(req) as? [Addiction] ?? []
     }
     
     class func getAllAddictionsOrderedByCount(inContext context: NSManagedObjectContext) throws -> [Addiction] {
         let req = entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-        var addictions = try context.executeFetchRequest(req) as? [Addiction] ?? [Addiction]()
-        addictions.sortInPlace { $0.records?.count > $1.records?.count }
+        var addictions = try context.fetch(req) as? [Addiction] ?? [Addiction]()
+        addictions.sort { $0.records?.count > $1.records?.count }
         return addictions
     }
     
-    class func deleteAddiction(addiction: Addiction, inContext context: NSManagedObjectContext) throws {
+    class func deleteAddiction(_ addiction: Addiction, inContext context: NSManagedObjectContext) throws {
         if Defaults[.watchAddiction] == addiction.name {
            Defaults[.watchAddiction] = nil
         }
@@ -60,9 +84,9 @@ extension Addiction {
         let records = try Record.recordForAddiction(addiction, inContext: context)
         
         for record in records {
-            context.deleteObject(record)
+            context.delete(record)
         }
-        context.deleteObject(addiction)
+        context.delete(addiction)
     }
     
 }

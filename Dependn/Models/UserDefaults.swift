@@ -9,17 +9,17 @@
 import UIKit
 import SwiftyUserDefaults
 
-struct NotificationTypes: OptionSetType {
+struct NotificationTypes: OptionSet {
     let rawValue : Int
     init(rawValue: Int){
         self.rawValue = rawValue
     }
     init() {
-        self = NotificationTypes.Empty
+        self = NotificationTypes.empty
     }
-    static let Empty    = NotificationTypes(rawValue: 0b0000)
-    static let Daily    = NotificationTypes(rawValue: 0b0010)
-    static let Weekly   = NotificationTypes(rawValue: 0b0100)
+    static let empty    = NotificationTypes(rawValue: 0b0000)
+    static let daily    = NotificationTypes(rawValue: 0b0010)
+    static let weekly   = NotificationTypes(rawValue: 0b0100)
 }
 
 extension DefaultsKeys {

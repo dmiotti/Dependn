@@ -13,21 +13,20 @@ private let kDeeplinkAddEntryName = "addentry"
 
 final class DeeplinkManager: NSObject {
     
-    let URL: NSURL
+    let url: URL
     
-    private let components: NSURLComponents
-    private let context: UIViewController
+    fileprivate let components: URLComponents
+    fileprivate let context: UIViewController
     
-    init(URL: NSURL, inContext context: UIViewController) {
-        self.URL = URL
-        self.components = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false)!
+    init(url: URL, inContext context: UIViewController) {
+        self.url = url
+        self.components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         self.context = context
     }
     
     func execute() {
-        
-        if let scheme = components.scheme where scheme == "http" || scheme == "https" {
-            UIApplication.sharedApplication().openURL(URL)
+        if let scheme = components.scheme, scheme == "http" || scheme == "https" {
+            UIApplication.shared.open(url, options: [:])
             return
         }
         
@@ -39,35 +38,33 @@ final class DeeplinkManager: NSObject {
                 break
             }
         }
-        
     }
     
-    private func doAdd() {
-        
+    fileprivate func doAdd() {
         if ensureThereIsAddictions() {
             let nav = SHStatusBarNavigationController(rootViewController: AddRecordViewController())
-            nav.statusBarStyle = .Default
-            nav.modalPresentationStyle = .FormSheet
-            context.presentViewController(nav, animated: true, completion: nil)
+            nav.statusBarStyle = .default
+            nav.modalPresentationStyle = .formSheet
+            context.present(nav, animated: true, completion: nil)
         } else {
-            let alert = UIAlertController(title: L("history.no_addictions.title"), message: L("history.no_addictions.message"), preferredStyle: .Alert)
-            let addAction = UIAlertAction(title: L("history.no_addictions.add"), style: .Default) { action in
+            let alert = UIAlertController(title: L("history.no_addictions.title"), message: L("history.no_addictions.message"), preferredStyle: .alert)
+            let addAction = UIAlertAction(title: L("history.no_addictions.add"), style: .default) { action in
                 let controller = AddictionListViewController()
                 if let nav = self.context.navigationController {
                     nav.pushViewController(controller, animated: true)
                 } else {
-                    self.context.presentViewController(controller, animated: true, completion: nil)
+                    self.context.present(controller, animated: true, completion: nil)
                 }
             }
-            let okAction = UIAlertAction(title: L("history.no_addictions.ok"), style: .Cancel, handler: nil)
+            let okAction = UIAlertAction(title: L("history.no_addictions.ok"), style: .cancel, handler: nil)
             alert.addAction(addAction)
             alert.addAction(okAction)
-            context.presentViewController(alert, animated: true, completion: nil)
+            context.present(alert, animated: true, completion: nil)
         }
         
     }
     
-    private func ensureThereIsAddictions() -> Bool {
+    fileprivate func ensureThereIsAddictions() -> Bool {
         var hasAddictions = false
         do {
             let moc = CoreDataStack.shared.managedObjectContext
@@ -81,8 +78,8 @@ final class DeeplinkManager: NSObject {
     
     static func invokeAddEntry(inContext context: UIViewController) {
         let URLString = "dependn://\(kDeeplinkAddEntryName)"
-        if let URL = NSURL(string: URLString) {
-            let manager = DeeplinkManager(URL: URL, inContext: context)
+        if let url = URL(string: URLString) {
+            let manager = DeeplinkManager(url: url, inContext: context)
             manager.execute()
         }
     }

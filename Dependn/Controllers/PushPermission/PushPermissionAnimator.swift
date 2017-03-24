@@ -12,67 +12,68 @@ final class PushPermissionAnimator: NSObject, UIViewControllerAnimatedTransition
 
     var presenting: Bool = true
 
-    private var dimmingView = UIView()
+    fileprivate var dimmingView = UIView()
 
     override init() {
-        dimmingView.backgroundColor = UIColor.appBlueColor().colorWithAlphaComponent(0.84)
+        dimmingView.backgroundColor = UIColor.appBlueColor().withAlphaComponent(0.84)
     }
 
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.35
     }
 
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        if let
-            from = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey),
-            to = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey),
-            containerView = transitionContext.containerView() {
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        if
+            let from = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from),
+            let to = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) {
+            
+            let containerView = transitionContext.containerView
 
             if presenting {
-                from.view.userInteractionEnabled = false
+                from.view.isUserInteractionEnabled = false
 
                 dimmingView.alpha = 0
                 containerView.addSubview(dimmingView)
-                dimmingView.snp_makeConstraints {
+                dimmingView.snp.makeConstraints {
                     $0.edges.equalTo(containerView)
                 }
 
                 containerView.addSubview(to.view)
-                to.view.snp_makeConstraints {
+                to.view.snp.makeConstraints {
                     $0.edges.equalTo(containerView)
                 }
 
-                to.view.transform = CGAffineTransformMakeTranslation(0, to.view.frame.size.height)
+                to.view.transform = CGAffineTransform(translationX: 0, y: to.view.frame.size.height)
                 to.view.alpha = 0
 
-                UIView.animateWithDuration(
-                    transitionDuration(transitionContext),
+                UIView.animate(
+                    withDuration: transitionDuration(using: transitionContext),
                     delay: 0,
                     usingSpringWithDamping: 1,
                     initialSpringVelocity: 1,
                     options: UIViewAnimationOptions(),
                     animations: {
                         self.dimmingView.alpha = 1
-                        from.view.tintAdjustmentMode = .Dimmed
-                        to.view.transform = CGAffineTransformIdentity
+                        from.view.tintAdjustmentMode = .dimmed
+                        to.view.transform = CGAffineTransform.identity
                         to.view.alpha = 1
                     }, completion: { (finished) in
                         transitionContext.completeTransition(true)
                 })
 
             } else {
-                to.view.userInteractionEnabled = true
+                to.view.isUserInteractionEnabled = true
 
-                UIView.animateWithDuration(
-                    transitionDuration(transitionContext),
+                UIView.animate(
+                    withDuration: transitionDuration(using: transitionContext),
                     delay: 0,
                     usingSpringWithDamping: 1,
                     initialSpringVelocity: 1,
                     options: UIViewAnimationOptions(),
                     animations: {
                         self.dimmingView.alpha = 0
-                        to.view.tintAdjustmentMode = .Automatic
-                        from.view.transform = CGAffineTransformMakeTranslation(0, to.view.frame.size.height)
+                        to.view.tintAdjustmentMode = .automatic
+                        from.view.transform = CGAffineTransform(translationX: 0, y: to.view.frame.size.height)
                         from.view.alpha = 0
                     }, completion: { (finished) in
                         self.dimmingView.removeFromSuperview()

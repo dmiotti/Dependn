@@ -11,45 +11,69 @@ import CoreData
 import SwiftHelpers
 import CocoaLumberjack
 import PKHUD
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 protocol PlacesViewControllerDelegate {
-    func placeController(controller: PlacesViewController, didChoosePlace place: Place?)
+    func placeController(_ controller: PlacesViewController, didChoosePlace place: Place?)
 }
 
 enum PlacesSectionType: Int {
-    case RecentPlaces
-    case Places
+    case recentPlaces
+    case places
 }
 
 final class PlacesViewController: UIViewController {
     
     var delegate: PlacesViewControllerDelegate?
     
-    private var tableView: UITableView!
-    private var addBbi: UIBarButtonItem!
+    fileprivate var tableView: UITableView!
+    fileprivate var addBbi: UIBarButtonItem!
     
-    private var searchBar: UISearchBar!
+    fileprivate var searchBar: UISearchBar!
     
-    private var suggestedFRC: NSFetchedResultsController?
-    private var recentFRC: NSFetchedResultsController?
+    fileprivate var suggestedFRC: NSFetchedResultsController<NSFetchRequestResult>?
+    fileprivate var recentFRC: NSFetchedResultsController<NSFetchRequestResult>?
     
-    private var sections = [PlacesSectionType]()
+    fileprivate var sections = [PlacesSectionType]()
     
-    private let managedObjectContext = CoreDataStack.shared.managedObjectContext
+    fileprivate let managedObjectContext = CoreDataStack.shared.managedObjectContext
     
     var selectedPlace: Place?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        edgesForExtendedLayout = .None
+        edgesForExtendedLayout = UIRectEdge()
         
         updateTitle(L("places.title"), blueBackground: false)
         
         let containerSearchBar = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 54))
         searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
         containerSearchBar.addSubview(searchBar)
-        searchBar.snp_makeConstraints {
+        searchBar.snp.makeConstraints {
             $0.bottom.equalTo(containerSearchBar)
             $0.left.equalTo(containerSearchBar)
             $0.right.equalTo(containerSearchBar)
@@ -57,30 +81,30 @@ final class PlacesViewController: UIViewController {
         }
         configureSearchBar()
 
-        tableView = UITableView(frame: .zero, style: .Plain)
+        tableView = UITableView(frame: .zero, style: .plain)
         tableView.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.separatorColor = UIColor.appSeparatorColor()
         tableView.rowHeight = 55
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(PlaceCell.self, forCellReuseIdentifier: PlaceCell.reuseIdentifier)
+        tableView.register(PlaceCell.self, forCellReuseIdentifier: PlaceCell.reuseIdentifier)
         tableView.tableHeaderView = containerSearchBar
         view.addSubview(tableView)
-        tableView.snp_makeConstraints {
+        tableView.snp.makeConstraints {
             $0.edges.equalTo(view)
         }
 
-        addBbi = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(PlacesViewController.addBtnClicked(_:)))
+        addBbi = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(PlacesViewController.addBtnClicked(_:)))
         addBbi.tintColor = UIColor.appBlueColor()
         navigationItem.rightBarButtonItem = addBbi
         
         registerNotificationObservers()
     }
 
-    private var placesLoaded = false
+    fileprivate var placesLoaded = false
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         if !placesLoaded {
@@ -90,16 +114,16 @@ final class PlacesViewController: UIViewController {
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
-    private func preparePlaces() {
+    fileprivate func preparePlaces() {
         do {
             let places = try Place.allPlaces(inContext: CoreDataStack.shared.managedObjectContext)
             if places.count == 0 && InitialImportPlacesOperation.shouldImportPlaces() {
-                let queue = NSOperationQueue()
+                let queue = OperationQueue()
                 let op = InitialImportPlacesOperation { op in
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         self.performSearch(nil)
                     }
                 }
@@ -113,48 +137,47 @@ final class PlacesViewController: UIViewController {
         }
     }
     
-    func addBtnClicked(sender: UIButton) {
-        let alert = UIAlertController(title: L("places.new.title"), message: L("places.new.message"), preferredStyle: .Alert)
-        let cancelAction = UIAlertAction(title: L("places.new.cancel"), style: .Cancel, handler: nil)
-        let addAction = UIAlertAction(title: L("places.new.add"), style: .Default) { action in
-            if let name = alert.textFields?.first?.text where name.characters.count > 0 {
+    func addBtnClicked(_ sender: UIButton) {
+        let alert = UIAlertController(title: L("places.new.title"), message: L("places.new.message"), preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: L("places.new.cancel"), style: .cancel, handler: nil)
+        let addAction = UIAlertAction(title: L("places.new.add"), style: .default) { action in
+            if let name = alert.textFields?.first?.text, name.characters.count > 0 {
                 self.addPlace(name)
             } else {
-                UIAlertController.presentAlertWithTitle(
-                    L("places.new.error"), message: L("places.new.name_missing"), inController: self)
+                UIAlertController.presentAlert(title: L("places.new.error"), message: L("places.new.name_missing"), in: self)
             }
         }
-        alert.addTextFieldWithConfigurationHandler { textField in
+        alert.addTextField { textField in
             textField.placeholder = L("places.new.placeholder")
-            textField.autocapitalizationType = .Sentences
+            textField.autocapitalizationType = .sentences
         }
         alert.addAction(cancelAction)
         alert.addAction(addAction)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Configure SearchBar
     
-    private func configureSearchBar() {
+    fileprivate func configureSearchBar() {
         searchBar.placeholder = L("search.placeholder")
-        searchBar.autoresizingMask = .FlexibleWidth
+        searchBar.autoresizingMask = .flexibleWidth
         searchBar.delegate = self
         
         let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
-        CGContextSetFillColorWithColor(context, UIColor.clearColor().CGColor)
-        CGContextFillRect(context, rect)
+        context?.setFillColor(UIColor.clear.cgColor)
+        context?.fill(rect)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         searchBar.backgroundImage = image
         
         searchBar.tintColor = UIColor.appBlueColor()
-        searchBar.searchBarStyle = .Minimal
+        searchBar.searchBarStyle = .minimal
     }
     
-    private func performSearch(searchText: String?) {
+    fileprivate func performSearch(_ searchText: String?) {
         do {
             recentFRC = Place.recentPlacesFRC(inContext: managedObjectContext, forSearch: searchText)
             recentFRC?.delegate = self
@@ -168,22 +191,22 @@ final class PlacesViewController: UIViewController {
             sections.removeAll()
             
             if recentFRC?.fetchedObjects?.count > 0 {
-                sections.append(.RecentPlaces)
+                sections.append(.recentPlaces)
             }
             
             if suggestedFRC?.fetchedObjects?.count > 0 {
-                sections.append(.Places)
+                sections.append(.places)
             }
             
             tableView.reloadData()
         } catch let err as NSError {
-            print("Error while search place with \(searchText): \(err)")
+            print("Error while search place with \(String(describing: searchText)): \(err)")
         }
     }
     
     // MARK: - Add/Delete from CoreData
     
-    private func addPlace(name: String) {
+    fileprivate func addPlace(_ name: String) {
         selectedPlace = nil
         
         let place = Place.insertPlace(name, inContext: CoreDataStack.shared.managedObjectContext)
@@ -193,34 +216,34 @@ final class PlacesViewController: UIViewController {
         delegate?.placeController(self, didChoosePlace: place)
     }
     
-    private func deletePlace(place: Place) {
-        let title = String(format: L("places.delete.title"), place.name.capitalizedString)
-        let reason = String(format: L("places.delete.message"), place.name.capitalizedString)
-        let alert = UIAlertController(title: title, message: reason, preferredStyle: .Alert)
-        let cancelAction = UIAlertAction(title: L("places.delete.cancel"), style: .Default, handler: nil)
-        let okAction = UIAlertAction(title: L("places.delete.confirm"), style: .Default) { action in
+    fileprivate func deletePlace(_ place: Place) {
+        let title = String(format: L("places.delete.title"), place.name.capitalized)
+        let reason = String(format: L("places.delete.message"), place.name.capitalized)
+        let alert = UIAlertController(title: title, message: reason, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: L("places.delete.cancel"), style: .default, handler: nil)
+        let okAction = UIAlertAction(title: L("places.delete.confirm"), style: .default) { action in
             Place.deletePlace(place, inContext: CoreDataStack.shared.managedObjectContext)
         }
         alert.addAction(cancelAction)
         alert.addAction(okAction)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true)
     }
     
     // MARK: - Keyboard Notifications
     
-    private func registerNotificationObservers() {
-        let ns = NSNotificationCenter.defaultCenter()
-        ns.addObserver(self, selector: #selector(PlacesViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        ns.addObserver(self, selector: #selector(PlacesViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    fileprivate func registerNotificationObservers() {
+        let ns = NotificationCenter.default
+        ns.addObserver(self, selector: #selector(PlacesViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        ns.addObserver(self, selector: #selector(PlacesViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        let scrollViewRect = view.convertRect(tableView.frame, fromView: tableView.superview)
+    func keyboardWillShow(_ notification: Notification) {
+        let scrollViewRect = view.convert(tableView.frame, from: tableView.superview)
         if let rectValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let kbRect = view.convertRect(rectValue.CGRectValue(), fromView: nil)
+            let kbRect = view.convert(rectValue.cgRectValue, from: nil)
             
-            let hiddenScrollViewRect = CGRectIntersection(scrollViewRect, kbRect)
-            if !CGRectIsNull(hiddenScrollViewRect) {
+            let hiddenScrollViewRect = scrollViewRect.intersection(kbRect)
+            if !hiddenScrollViewRect.isNull {
                 var contentInsets = tableView.contentInset
                 contentInsets.bottom = hiddenScrollViewRect.size.height
                 tableView.contentInset = contentInsets
@@ -229,7 +252,7 @@ final class PlacesViewController: UIViewController {
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         var contentInsets = tableView.contentInset
         contentInsets.bottom = 0
         tableView.contentInset = contentInsets
@@ -240,8 +263,8 @@ final class PlacesViewController: UIViewController {
 
 // MARK: - UITableViewDelegate
 extension PlacesViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         delegate?.placeController(self, didChoosePlace: placeAtIndexPath(indexPath))
     }
@@ -249,45 +272,45 @@ extension PlacesViewController: UITableViewDelegate {
 
 // MARK: - UITableViewDataSource
 extension PlacesViewController: UITableViewDataSource {
-    private func placeAtIndexPath(indexPath: NSIndexPath) -> Place {
+    fileprivate func placeAtIndexPath(_ indexPath: IndexPath) -> Place {
         let place: Place
         let section = sections[indexPath.section]
         switch section {
-        case .RecentPlaces:
+        case .recentPlaces:
             place = recentFRC?.fetchedObjects?[indexPath.row] as! Place
-        case .Places:
+        case .places:
             place = suggestedFRC?.fetchedObjects?[indexPath.row] as! Place
         }
         return place
     }
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let section = sections[section]
         switch section {
-        case .RecentPlaces:
+        case .recentPlaces:
             return recentFRC?.fetchedObjects?.count ?? 0
-        case .Places:
+        case .places:
             return suggestedFRC?.fetchedObjects?.count ?? 0
         }
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(PlaceCell.reuseIdentifier, forIndexPath: indexPath) as! PlaceCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: PlaceCell.reuseIdentifier, for: indexPath) as! PlaceCell
         let place = placeAtIndexPath(indexPath)
         cell.placeLbl.text = place.name.firstLetterCapitalization
-        cell.accessoryType = selectedPlace == place ? .Checkmark : .None
+        cell.accessoryType = selectedPlace == place ? .checkmark : .none
         return cell
     }
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             deletePlace(placeAtIndexPath(indexPath))
         }
     }
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard sections.count > 1 else {
             return nil
         }
@@ -296,85 +319,85 @@ extension PlacesViewController: UITableViewDataSource {
         
         let type = sections[section]
         switch type {
-        case .RecentPlaces:
-            header.title = L("places.recent_places").uppercaseString
-        case .Places:
-            header.title = L("places.suggested_places").uppercaseString
+        case .recentPlaces:
+            header.title = L("places.recent_places").uppercased()
+        case .places:
+            header.title = L("places.suggested_places").uppercased()
         }
         
         return header
     }
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard sections.count > 1 else {
             return 0
         }
         return 40
     }
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.01
     }
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
     }
 }
 
 // MARK: - NSFetchedResultsControllerDelegate
 extension PlacesViewController: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         guard let section = sectionForFRC(controller) else {
             return
         }
         switch type {
-        case .Insert:
+        case .insert:
             if let newIndexPath = newIndexPath {
-                let translated = NSIndexPath(forRow: newIndexPath.row, inSection: section)
-                tableView.insertRowsAtIndexPaths([translated], withRowAnimation: .Automatic)
+                let translated = IndexPath(row: newIndexPath.row, section: section)
+                tableView.insertRows(at: [translated], with: .automatic)
             }
-        case .Delete:
+        case .delete:
             if let indexPath = indexPath {
-                let translated = NSIndexPath(forRow: indexPath.row, inSection: section)
-                tableView.deleteRowsAtIndexPaths([translated], withRowAnimation: .Automatic)
+                let translated = IndexPath(row: indexPath.row, section: section)
+                tableView.deleteRows(at: [translated], with: .automatic)
             }
-        case .Move:
-            if let indexPath = indexPath, newIndexPath = newIndexPath {
-                let translatedDelete = NSIndexPath(forRow: indexPath.row, inSection: section)
-                let translatedNew = NSIndexPath(forRow: newIndexPath.row, inSection: section)
+        case .move:
+            if let indexPath = indexPath, let newIndexPath = newIndexPath {
+                let translatedDelete = IndexPath(row: indexPath.row, section: section)
+                let translatedNew = IndexPath(row: newIndexPath.row, section: section)
                 
-                tableView.deleteRowsAtIndexPaths([translatedDelete], withRowAnimation: .Automatic)
-                tableView.insertRowsAtIndexPaths([translatedNew], withRowAnimation: .Automatic)
+                tableView.deleteRows(at: [translatedDelete], with: .automatic)
+                tableView.insertRows(at: [translatedNew], with: .automatic)
             }
-        case .Update:
+        case .update:
             if let indexPath = indexPath {
-                let translated = NSIndexPath(forRow: indexPath.row, inSection: section)
-                tableView.reloadRowsAtIndexPaths([translated], withRowAnimation: .Automatic)
+                let translated = IndexPath(row: indexPath.row, section: section)
+                tableView.reloadRows(at: [translated], with: .automatic)
             }
         }
     }
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
     
-    private func sectionForFRC(controller: NSFetchedResultsController) -> Int? {
+    fileprivate func sectionForFRC(_ controller: NSFetchedResultsController<NSFetchRequestResult>) -> Int? {
         if controller == recentFRC {
-            return sections.indexOf(.RecentPlaces)
+            return sections.index(of: .recentPlaces)
         }
-        return sections.indexOf(.Places)
+        return sections.index(of: .places)
     }
 }
 
 // MARK: - UISearchBarDelegate
 extension PlacesViewController: UISearchBarDelegate {
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let pattrn: String? = searchText.characters.count > 0 ? searchText : nil
         performSearch(pattrn)
     }
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
     }
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
     }

@@ -14,25 +14,25 @@ import CocoaLumberjack
 
 private let kExportOperationSeparator = ";"
 private let kExportOperationNewLine = "\n"
-private let kExportOperationDayFormatter = NSDateFormatter(dateFormat: "dd/MM/yyyy")
-private let kExportOperationHourFormatter = NSDateFormatter(dateFormat: "HH:mm")
+private let kExportOperationDayFormatter = DateFormatter(dateFormat: "dd/MM/yyyy")
+private let kExportOperationHourFormatter = DateFormatter(dateFormat: "HH:mm")
 
 final class CSVExportOperation: SHOperation {
     
     var exportedPath: String?
     var error: NSError?
     
-    private let context: NSManagedObjectContext
+    fileprivate let context: NSManagedObjectContext
     
     override init() {
-        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        context.parentContext = CoreDataStack.shared.managedObjectContext
+        context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.parent = CoreDataStack.shared.managedObjectContext
         super.init()
     }
     
     override func execute() {
         
-        context.performBlockAndWait {
+        context.performAndWait {
             do {
                 
                 let addictions = try Addiction.getAllAddictionsOrderedByCount(inContext: self.context)
@@ -51,25 +51,25 @@ final class CSVExportOperation: SHOperation {
                     L("export.lon"),
                     L("export.desire"),
                     L("export.conso")
-                ].joinWithSeparator(kExportOperationSeparator)
+                ].joined(separator: kExportOperationSeparator)
 
-                csv.appendContentsOf(kExportOperationNewLine)
+                csv.append(kExportOperationNewLine)
                 
                 for addiction in addictions {
-                    let req = NSFetchRequest(entityName: Record.entityName)
+                    let req = NSFetchRequest<NSFetchRequestResult>(entityName: Record.entityName)
                     req.predicate = NSPredicate(format: "addiction == %@", addiction)
                     req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
-                    let records = try self.context.executeFetchRequest(req) as! [Record]
+                    let records = try self.context.fetch(req) as! [Record]
                     let recordsCsv = records.map({ self.recordToCSV($0) })
-                        .joinWithSeparator(kExportOperationNewLine)
-                    csv.appendContentsOf(recordsCsv)
-                    csv.appendContentsOf(kExportOperationNewLine)
-                    csv.appendContentsOf(kExportOperationNewLine)
+                        .joined(separator: kExportOperationNewLine)
+                    csv.append(recordsCsv)
+                    csv.append(kExportOperationNewLine)
+                    csv.append(kExportOperationNewLine)
                 }
                 
-                try csv.writeToFile(path,
+                try csv.write(toFile: path,
                     atomically: true,
-                    encoding: NSUTF8StringEncoding)
+                    encoding: String.Encoding.utf8)
                 
                 self.exportedPath = path
             } catch let err as NSError {
@@ -80,12 +80,12 @@ final class CSVExportOperation: SHOperation {
         finish()
     }
     
-    private func recordToCSV(record: Record) -> String {
+    fileprivate func recordToCSV(_ record: Record) -> String {
         let date = record.date
         let values = [
             record.addiction.name.firstLetterCapitalization,
-            kExportOperationDayFormatter.stringFromDate(date),
-            kExportOperationHourFormatter.stringFromDate(date),
+            kExportOperationDayFormatter.string(from: date as Date),
+            kExportOperationHourFormatter.string(from: date as Date),
             String(format: "%.1f", arguments: [ record.intensity.floatValue ]),
             record.place?.name.firstLetterCapitalization ?? "",
             record.feeling ?? "",
@@ -95,20 +95,18 @@ final class CSVExportOperation: SHOperation {
             record.desire.boolValue ? L("export.choosen") : "",
             record.desire.boolValue ? "" : L("export.choosen")
         ]
-        return values.joinWithSeparator(kExportOperationSeparator)
+        return values.joined(separator: kExportOperationSeparator)
     }
     
-    private func exportPath() -> String {
-        let dateFormatter = NSDateFormatter(dateFormat: "dd'_'MM'_'yyyy'_'HH'_'mm")
-        let filename = "export_\(dateFormatter.stringFromDate(NSDate()))"
-        return applicationCachesDirectory
-            .URLByAppendingPathComponent(filename)
-            .URLByAppendingPathExtension("csv").path!
+    fileprivate func exportPath() -> String {
+        let dateFormatter = DateFormatter(dateFormat: "dd'_'MM'_'yyyy'_'HH'_'mm")
+        let filename = "export_\(dateFormatter.string(from: Date()))"
+        return applicationCachesDirectory.appendingPathComponent(filename).appendingPathComponent("csv").path
     }
     
-    private lazy var applicationCachesDirectory: NSURL = {
-        let urls = NSFileManager.defaultManager()
-            .URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
+    fileprivate lazy var applicationCachesDirectory: URL = {
+        let urls = FileManager.default
+            .urls(for: .cachesDirectory, in: .userDomainMask)
         return urls[urls.count-1]
     }()
     

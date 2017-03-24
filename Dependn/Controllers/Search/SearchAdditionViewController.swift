@@ -9,14 +9,27 @@
 import UIKit
 import CoreData
 import SwiftHelpers
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 protocol SearchAdditionViewControllerDelegate {
-    func searchController(searchController: SearchAdditionViewController, didSelectAddiction addiction: Addiction)
+    func searchController(_ searchController: SearchAdditionViewController, didSelectAddiction addiction: Addiction)
 }
 
 final class SearchAdditionViewController: SHNoBackButtonTitleViewController {
     
-    private var searchResults = [Addiction]()
+    fileprivate var searchResults = [Addiction]()
     
     var delegate: SearchAdditionViewControllerDelegate?
     var selectedAddiction: Addiction? {
@@ -27,33 +40,33 @@ final class SearchAdditionViewController: SHNoBackButtonTitleViewController {
         }
     }
     
-    private let managedObjectContext = CoreDataStack.shared.managedObjectContext
+    fileprivate let managedObjectContext = CoreDataStack.shared.managedObjectContext
     
-    private var searchBar: UISearchBar!
+    fileprivate var searchBar: UISearchBar!
     
-    private var fetchedResultsController: NSFetchedResultsController?
+    fileprivate var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
     
-    private var tableView: UITableView!
+    fileprivate var tableView: UITableView!
     
     var useBlueNavigationBar: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        edgesForExtendedLayout = .None
+        edgesForExtendedLayout = []
         
         updateTitle(L("addiction_list.title"), blueBackground: useBlueNavigationBar)
         
         searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 44))
         configureSearchBar()
       
-        tableView = UITableView(frame: .zero, style: .Grouped)
+        tableView = UITableView(frame: .zero, style: .grouped)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.separatorColor = UIColor.appSeparatorColor()
-        tableView.registerClass(NewAddictionTableViewCell.self, forCellReuseIdentifier: NewAddictionTableViewCell.reuseIdentifier)
-        tableView.registerClass(AddictionTableViewCell.self, forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
+        tableView.register(NewAddictionTableViewCell.self, forCellReuseIdentifier: NewAddictionTableViewCell.reuseIdentifier)
+        tableView.register(AddictionTableViewCell.self, forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
         tableView.tableHeaderView = searchBar
         view.addSubview(tableView)
         
@@ -64,36 +77,36 @@ final class SearchAdditionViewController: SHNoBackButtonTitleViewController {
         registerNotificationObservers()
     }
     
-    private func configureSearchBar() {
+    fileprivate func configureSearchBar() {
         searchBar.placeholder = L("search.placeholder")
-        searchBar.autoresizingMask = .FlexibleWidth
+        searchBar.autoresizingMask = .flexibleWidth
         searchBar.delegate = self
         
         let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
-        CGContextSetFillColorWithColor(context, UIColor.clearColor().CGColor)
-        CGContextFillRect(context, rect)
+        context?.setFillColor(UIColor.clear.cgColor)
+        context?.fill(rect)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         searchBar.backgroundImage = image
         
         searchBar.tintColor = UIColor.appBlueColor()
-        searchBar.searchBarStyle = .Minimal
+        searchBar.searchBarStyle = .minimal
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
-    private func configureLayoutConstraints() {
-        tableView.snp_makeConstraints {
+    fileprivate func configureLayoutConstraints() {
+        tableView.snp.makeConstraints {
             $0.edges.equalTo(view)
         }
     }
     
-    private func performSearch(searchText: String?) {
+    fileprivate func performSearch(_ searchText: String?) {
         do {
             let req = Addiction.entityFetchRequest()
             req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
@@ -105,23 +118,23 @@ final class SearchAdditionViewController: SHNoBackButtonTitleViewController {
             try fetchedResultsController!.performFetch()
             tableView.reloadData()
         } catch let err as NSError {
-            print("Error while search place with \(searchText): \(err)")
+            print("Error while search place with \(String(describing: searchText)): \(err)")
         }
     }
     
-    private func registerNotificationObservers() {
-        let ns = NSNotificationCenter.defaultCenter()
-        ns.addObserver(self, selector: #selector(SearchAdditionViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        ns.addObserver(self, selector: #selector(SearchAdditionViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    fileprivate func registerNotificationObservers() {
+        let ns = NotificationCenter.default
+        ns.addObserver(self, selector: #selector(SearchAdditionViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        ns.addObserver(self, selector: #selector(SearchAdditionViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        let scrollViewRect = view.convertRect(tableView.frame, fromView: tableView.superview)
+    func keyboardWillShow(_ notification: Notification) {
+        let scrollViewRect = view.convert(tableView.frame, from: tableView.superview)
         if let rectValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let kbRect = view.convertRect(rectValue.CGRectValue(), fromView: nil)
+            let kbRect = view.convert(rectValue.cgRectValue, from: nil)
             
-            let hiddenScrollViewRect = CGRectIntersection(scrollViewRect, kbRect)
-            if !CGRectIsNull(hiddenScrollViewRect) {
+            let hiddenScrollViewRect = scrollViewRect.intersection(kbRect)
+            if !hiddenScrollViewRect.isNull {
                 var contentInsets = tableView.contentInset
                 contentInsets.bottom = hiddenScrollViewRect.size.height
                 tableView.contentInset = contentInsets
@@ -130,7 +143,7 @@ final class SearchAdditionViewController: SHNoBackButtonTitleViewController {
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         var contentInsets = tableView.contentInset
         contentInsets.bottom = 0
         tableView.contentInset = contentInsets
@@ -141,25 +154,25 @@ final class SearchAdditionViewController: SHNoBackButtonTitleViewController {
 
 // MARK: - UITableViewDataSource
 extension SearchAdditionViewController: UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return (fetchedResultsController?.sections?.count ?? 0) + 1
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section < fetchedResultsController?.sections?.count {
             return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
         }
         return 1
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section < fetchedResultsController?.sections?.count {
-            let cell = tableView.dequeueReusableCellWithIdentifier(AddictionTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! AddictionTableViewCell
-            if let addiction = fetchedResultsController?.objectAtIndexPath(indexPath) as? Addiction {
+            let cell = tableView.dequeueReusableCell(withIdentifier: AddictionTableViewCell.reuseIdentifier, for: indexPath) as! AddictionTableViewCell
+            if let addiction = fetchedResultsController?.object(at: indexPath) as? Addiction {
                 cell.addiction = addiction
                 cell.choosen = addiction == selectedAddiction
             }
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(NewAddictionTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewAddictionTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: NewAddictionTableViewCell.reuseIdentifier, for: indexPath) as! NewAddictionTableViewCell
             return cell
         }
     }
@@ -167,39 +180,39 @@ extension SearchAdditionViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension SearchAdditionViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 55
     }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section < fetchedResultsController?.sections?.count {
-            if let addiction = fetchedResultsController?.objectAtIndexPath(indexPath) as? Addiction {
+            if let addiction = fetchedResultsController?.object(at: indexPath) as? Addiction {
                 selectedAddiction = addiction
                 tableView.reloadData()
                 delegate?.searchController(self, didSelectAddiction: addiction)
-                navigationController?.popViewControllerAnimated(true)
+                navigationController?.popViewController(animated: true)
             }
         } else {
             addNewAddiction()
         }
     }
-    private func addNewAddiction() {
+    fileprivate func addNewAddiction() {
         let chooser = DependencyChooserViewController()
-        chooser.style = .FromAddRecord
+        chooser.style = .fromAddRecord
         navigationController?.pushViewController(chooser, animated: true)
     }
 }
 
 // MARK: - UISearchBarDelegate
 extension SearchAdditionViewController: UISearchBarDelegate {
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let pattrn: String? = searchText.characters.count > 0 ? searchText : nil
         performSearch(pattrn)
     }
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
     }
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
     }
@@ -207,43 +220,43 @@ extension SearchAdditionViewController: UISearchBarDelegate {
 
 // MARK: - NSFetchedResultsControllerDelegate
 extension SearchAdditionViewController: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
-        case .Insert:
+        case .insert:
             if let newIndexPath = newIndexPath {
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
-        case .Delete:
+        case .delete:
             if let indexPath = indexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
             }
-        case .Move:
-            if let indexPath = indexPath, newIndexPath = newIndexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+        case .move:
+            if let indexPath = indexPath, let newIndexPath = newIndexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
-        case .Update:
+        case .update:
             if let indexPath = indexPath {
-                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView.reloadRows(at: [indexPath], with: .automatic)
             }
         }
     }
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
-        case .Insert:
-            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-        case .Delete:
-            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-        case .Update:
-            tableView.reloadSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-        case .Move:
+        case .insert:
+            tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
+        case .delete:
+            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
+        case .update:
+            tableView.reloadSections(IndexSet(integer: sectionIndex), with: .automatic)
+        case .move:
             break
         }
     }
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
 }

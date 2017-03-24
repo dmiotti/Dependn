@@ -16,21 +16,21 @@ final class Analytics: NSObject {
     
     static let instance = Analytics()
     
-    private let context: NSManagedObjectContext
+    fileprivate let context: NSManagedObjectContext
     
-    private override init() {
+    fileprivate override init() {
         #if DEBUG
             Amplitude.instance().initializeApiKey("e0aaa26848db06fa3c1d0ccd7cf283db")
         #else
             Amplitude.instance().initializeApiKey("c86e96179f239e19d7fa8a2a7d1d067f")
         #endif
         
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let userId = defaults.objectForKey("userId") as? String {
+        let defaults = UserDefaults.standard
+        if let userId = defaults.object(forKey: "userId") as? String {
             Amplitude.instance().setUserId(userId)
         } else {
-            let userId = NSUUID().UUIDString
-            defaults.setObject(userId, forKey: "userId")
+            let userId = UUID().uuidString
+            defaults.set(userId, forKey: "userId")
             defaults.synchronize()
             Amplitude.instance().setUserId(userId)
         }
@@ -38,70 +38,70 @@ final class Analytics: NSObject {
         Amplitude.instance().trackingSessionEvents = true
         Amplitude.instance().enableLocationListening()
         
-        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        context.parentContext = CoreDataStack.shared.managedObjectContext
+        context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.parent = CoreDataStack.shared.managedObjectContext
         
         super.init()
         
         updateTrackingEnabledFromDefaults()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Analytics.applicationDidBecomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Analytics.applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     func updateUserProperties() {
-        var props = [String: AnyObject]()
+        var props = [String: Any]()
         
         let addictions = try! Addiction.getAllAddictions(inContext: context)
-        props["addictions"] = addictions.map({ $0.name }).joinWithSeparator(";")
+        props["addictions"] = addictions.map({ $0.name }).joined(separator: ";")
         
-        let records = Record.recordCount(inContext: context)
+        let records = try! Record.recordCount(inContext: context)
         props["records"] = records
         
         if WCSession.isSupported() {
-            let session = WCSession.defaultSession()
-            session.activateSession()
-            props["watch"] = session.paired
+            let session = WCSession.default()
+            session.activate()
+            props["watch"] = session.isPaired as AnyObject?
         }
 
         props["usePasscode"] = Defaults[.usePasscode]
         
         props["useLocation"] = Defaults[.useLocation]
 
-        props["push"] = UIApplication.sharedApplication().isRegisteredForRemoteNotifications()
+        props["push"] = UIApplication.shared.isRegisteredForRemoteNotifications as AnyObject?
 
-        if let settings = UIApplication.sharedApplication().currentUserNotificationSettings() {
-            props["localpush"] = settings.types.contains(.Alert)
+        if let settings = UIApplication.shared.currentUserNotificationSettings {
+            props["localpush"] = settings.types.contains(.alert) as AnyObject?
         }
 
         Amplitude.instance().setUserProperties(props)
     }
     
-    func trackSelectAddictions(addictions: [Addiction]) {
-        let props = [ "addictions": addictions.map({ $0.name }).joinWithSeparator(";") ]
+    func trackSelectAddictions(_ addictions: [Addiction]) {
+        let props = [ "addictions": addictions.map({ $0.name }).joined(separator: ";") ]
         Amplitude.instance().logEvent("SelectAddictions", withEventProperties: props)
         Analytics.instance.trackUserAddictions()
     }
     
     func trackUserAddictions() {
         if let addictions = try? Addiction.getAllAddictions(inContext: context) {
-            let props = [ "addictions": addictions.map({ $0.name }).joinWithSeparator(";") ]
+            let props = [ "addictions": addictions.map({ $0.name }).joined(separator: ";") ]
             Amplitude.instance().setUserProperties(props)
         }
     }
     
-    func trackAddAddiction(addiction: Addiction) {
+    func trackAddAddiction(_ addiction: Addiction) {
         Amplitude.instance().logEvent("AddAddiction", withEventProperties: ["addiction": addiction.name])
         trackUserAddictions()
     }
     
-    func trackAddNewRecord(addiction: String, place: String?, intensity: Float, conso: Bool, fromAppleWatch appleWatch: Bool) {
-        var props: [String: NSObject] = [
-            "addiction": addiction,
-            "intensity": intensity,
+    func trackAddNewRecord(_ addiction: String, place: String?, intensity: Float, conso: Bool, fromAppleWatch appleWatch: Bool) {
+        var props: [String: Any] = [
+            "addiction": addiction as NSObject,
+            "intensity": intensity as NSObject,
             "type": conso ? "conso" : "craving",
             "source": appleWatch ? "watch" : "phone"
         ]
@@ -111,34 +111,34 @@ final class Analytics: NSObject {
         Amplitude.instance().logEvent("AddRecord", withEventProperties: props)
     }
     
-    func trackAddPlace(place: String) {
+    func trackAddPlace(_ place: String) {
         Amplitude.instance().logEvent("AddPlace", withEventProperties: ["place": place])
     }
     
-    func trackExport(succeed: Bool) {
+    func trackExport(_ succeed: Bool) {
         Amplitude.instance().logEvent("Export", withEventProperties: ["result": succeed])
     }
     
-    func trackRevenue(productIdentifier: String, price: Double, receipt: NSData? = nil) {
-        Amplitude.instance().logRevenue(productIdentifier, quantity: 1, price: price)
+    func trackRevenue(_ productIdentifier: String, price: Double, receipt: Data? = nil) {
+        Amplitude.instance().logRevenue(productIdentifier, quantity: 1, price: price as NSNumber!)
     }
 
-    func trackDeviceToken(deviceToken: NSData) {
+    func trackDeviceToken(_ deviceToken: Data) {
         let tokenString = deviceToken.parseDeviceToken()
         Amplitude.instance().setUserProperties([ "deviceToken": tokenString ])
     }
     
-    func shareApp(target: String) {
+    func shareApp(_ target: String) {
         Amplitude.instance().logEvent("Share", withEventProperties: [ "target": target ])
     }
 
-    func applicationDidBecomeActive(notification: NSNotification) {
+    func applicationDidBecomeActive(_ notification: Notification) {
         updateTrackingEnabledFromDefaults()
         Amplitude.instance().updateLocation()
     }
     
-    private func updateTrackingEnabledFromDefaults() {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        Amplitude.instance().optOut = !defaults.boolForKey("trackingEnabled")
+    fileprivate func updateTrackingEnabledFromDefaults() {
+        let defaults = UserDefaults.standard
+        Amplitude.instance().optOut = !defaults.bool(forKey: "trackingEnabled")
     }
 }

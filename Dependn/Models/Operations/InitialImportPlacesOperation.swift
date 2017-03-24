@@ -29,11 +29,11 @@ final class InitialImportPlacesOperation: CoreDataOperation {
     ]
     
     override func execute() {
-        context.performBlockAndWait {
+        context.performAndWait {
             do {
                 for name in self.placeNames {
                     if try Place.findByName(name, inContext: self.context) == nil {
-                        Place.insertPlace(name, inContext: self.context)
+                        _ = Place.insertPlace(name, inContext: self.context)
                     }
                 }
                 Defaults[.initialPlacesImported] = true
@@ -48,15 +48,15 @@ final class InitialImportPlacesOperation: CoreDataOperation {
         finish()
     }
     
-    private func saveContext() {
+    fileprivate func saveContext() {
         var contextToSave: NSManagedObjectContext? = context
         while let ctx = contextToSave {
-            ctx.performBlockAndWait {
+            ctx.performAndWait {
                 do {
                     if ctx.hasChanges {
                         try ctx.save()
                     }
-                    contextToSave = contextToSave?.parentContext
+                    contextToSave = contextToSave?.parent
                 } catch let err as NSError {
                     print("Error while saving context: \(err)")
                 }

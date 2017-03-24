@@ -12,10 +12,10 @@ import CoreData
 final class Record: NSManagedObject, NamedEntity {
     static var entityName = "Record"
     
-    static let sectionDateFormatter = NSDateFormatter(dateFormat: "EEEE d MMMM yyyy")
+    static let sectionDateFormatter = DateFormatter(dateFormat: "EEEE d MMMM yyyy")
     
     var sectionIdentifier: String? {
-        return Record.sectionDateFormatter.stringFromDate(date)
+        return Record.sectionDateFormatter.string(from: date as Date)
     }
     
 }

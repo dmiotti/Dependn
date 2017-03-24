@@ -17,33 +17,33 @@ let kImportOperationErrorDomain = "ImportOperation"
 let kImportOperationNothingToImportCode = 1
 let kImportOperationUserCancelledCode = 2
 
-private let kImportOperationDateFormatter = NSDateFormatter(dateFormat: "dd/MM/yyyy HH:mm")
+private let kImportOperationDateFormatter = DateFormatter(dateFormat: "dd/MM/yyyy HH:mm")
 
 final class CSVImportOperation: SHOperation {
     
-    private(set) var error: NSError?
+    fileprivate(set) var error: NSError?
     
-    private let context: NSManagedObjectContext
-    private let controller: UIViewController
+    fileprivate let context: NSManagedObjectContext
+    fileprivate let controller: UIViewController
     
-    private var cachedPlaces = [Place]()
+    fileprivate var cachedPlaces = [Place]()
     
     init(controller: UIViewController) {
         self.controller = controller
-        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        context.parentContext = CoreDataStack.shared.managedObjectContext
+        context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.parent = CoreDataStack.shared.managedObjectContext
         super.init()
     }
     
     override func execute() {
         let candidates = getCandidateFiles()
         if candidates.count > 0 {
-            askForFile(candidates).onComplete { r in
+            ask(for: candidates).onComplete { r in
                 if let file = r.value {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        HUD.show(.Progress)
+                    DispatchQueue.main.async {
+                        HUD.show(.progress)
                     }
-                    self.context.performBlockAndWait {
+                    self.context.performAndWait {
                         do {
                             try self.deleteAllRecords()
                             try self.deleteAllAddictions()
@@ -54,10 +54,10 @@ final class CSVImportOperation: SHOperation {
                         }
                     }
                     self.saveContext()
-                    dispatch_async(dispatch_get_main_queue()) {
-                        HUD.hide(animated: true, completion: { finished in
+                    DispatchQueue.main.async {
+                        HUD.hide(animated: true) { finished in
                             self.finish()
-                        })
+                        }
                     }
                 } else {
                     self.error = r.error
@@ -75,18 +75,18 @@ final class CSVImportOperation: SHOperation {
         }
     }
     
-    private func getCandidateFiles() -> [NSURL] {
-        var candidates = [NSURL]()
+    fileprivate func getCandidateFiles() -> [URL] {
+        var candidates = [URL]()
         
-        let fileManager = NSFileManager.defaultManager()
-        let urls = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        let fileManager = FileManager.default
+        let urls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
         if let directoryURL = urls.last {
             
             /// List all possible import to the user
-            let enumerator = fileManager.enumeratorAtURL(directoryURL,
-                                                         includingPropertiesForKeys: nil, options: .SkipsHiddenFiles, errorHandler: nil)
+            let enumerator = fileManager.enumerator(at: directoryURL,
+                                                         includingPropertiesForKeys: nil, options: .skipsHiddenFiles, errorHandler: nil)
             
-            while let element = enumerator?.nextObject() as? NSURL {
+            while let element = enumerator?.nextObject() as? URL {
                 if element.pathExtension == "csv" {
                     candidates.append(element)
                 }
@@ -96,21 +96,21 @@ final class CSVImportOperation: SHOperation {
         return candidates
     }
     
-    private func askForFile(files: [NSURL]) -> Future<NSURL, NSError> {
-        let promise = Promise<NSURL, NSError>()
+    fileprivate func ask(for files: [URL]) -> Future<URL, NSError> {
+        let promise = Promise<URL, NSError>()
         
-        dispatch_async(dispatch_get_main_queue()) {
-            let alert = UIAlertController(title: L("import.choose_file"), message: L("import.choose_file_message"), preferredStyle: .ActionSheet)
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: L("import.choose_file"), message: L("import.choose_file_message"), preferredStyle: .actionSheet)
             
-            for file in files {
-                let filename = file.URLByDeletingPathExtension?.lastPathComponent
-                let action = UIAlertAction(title: filename, style: .Default) { action in
+            let actions = files.map { file -> UIAlertAction in
+                let filename = file.deletingPathExtension().lastPathComponent
+                return UIAlertAction(title: filename, style: .default) { action in
                     promise.success(file)
                 }
-                alert.addAction(action)
             }
+            actions.forEach(alert.addAction)
             
-            let cancelAction = UIAlertAction(title: L("cancel"), style: .Cancel) { action in
+            let cancelAction = UIAlertAction(title: L("cancel"), style: .cancel) { action in
                 let err = NSError(domain: kImportOperationErrorDomain,
                                   code: kImportOperationUserCancelledCode,
                                   userInfo: [NSLocalizedDescriptionKey: L("import.cancelled_by_user"),
@@ -119,53 +119,53 @@ final class CSVImportOperation: SHOperation {
             }
             alert.addAction(cancelAction)
             
-            self.controller.presentViewController(alert, animated: true, completion: nil)
+            self.controller.present(alert, animated: true, completion: nil)
         }
         
         return promise.future
     }
     
-    private func importFileAtURL(URL: NSURL) throws {
-        let csv = try String(contentsOfURL: URL, encoding: NSUTF8StringEncoding)
-        let lines = csv.componentsSeparatedByCharactersInSet(
-            NSCharacterSet.newlineCharacterSet())
-        for (index, line) in lines.enumerate() {
+    fileprivate func importFileAtURL(_ URL: Foundation.URL) throws {
+        let csv = try String(contentsOf: URL, encoding: String.Encoding.utf8)
+        let lines = csv.components(
+            separatedBy: CharacterSet.newlines)
+        for (index, line) in lines.enumerated() {
             if index == 0 {
                 continue
             }
-            let values = line.componentsSeparatedByString(";")
+            let values = line.components(separatedBy: ";")
             newRecordFromValues(values)
         }
     }
     
-    private func deleteAllRecords() throws {
+    fileprivate func deleteAllRecords() throws {
         let req = Record.entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: true) ]
-        let records = try context.executeFetchRequest(req) as! [Record]
+        let records = try context.fetch(req) as! [Record]
         for r in records {
-            context.deleteObject(r)
+            context.delete(r)
         }
     }
     
-    private func deleteAllAddictions() throws {
-        let req = NSFetchRequest(entityName: Addiction.entityName)
+    fileprivate func deleteAllAddictions() throws {
+        let req = NSFetchRequest<NSFetchRequestResult>(entityName: Addiction.entityName)
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-        let addictions = try context.executeFetchRequest(req) as! [Addiction]
+        let addictions = try context.fetch(req) as! [Addiction]
         for addiction in addictions {
-            context.deleteObject(addiction)
+            context.delete(addiction)
         }
     }
     
-    private func deleteAllPlaces() throws {
+    fileprivate func deleteAllPlaces() throws {
         let req = Place.entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: false) ]
-        let places = try context.executeFetchRequest(req) as! [Place]
+        let places = try context.fetch(req) as! [Place]
         for place in places {
-            context.deleteObject(place)
+            context.delete(place)
         }
     }
     
-    private func getPlaceOrCreate(name: String) -> Place {
+    fileprivate func getPlaceOrCreate(_ name: String) -> Place {
         do {
             let pred = NSPredicate(format: "name == %@", name)
             let places = try Place.allPlaces(inContext: context, usingPredicate: pred)
@@ -179,19 +179,18 @@ final class CSVImportOperation: SHOperation {
         return Place.insertPlace(name, inContext: context)
     }
     
-    private func newRecordFromValues(values: [String]) {
-        if values.count < 9 {
+    fileprivate func newRecordFromValues(_ values: [String]) {
+        guard values.count >= 9 else {
             return
         }
         
         do {
-            let addiction = try Addiction.findOrInsertNewAddiction(values[0],
-                                                                   inContext: context)
+            let addiction = try Addiction.findOrInsertNewAddiction(values[0], inContext: context)
             
             let daystr = values[1]
             let hourstr = values[2]
             let datestr = "\(daystr) \(hourstr)"
-            let date = kImportOperationDateFormatter.dateFromString(datestr) ?? NSDate()
+            let date = kImportOperationDateFormatter.date(from: datestr) ?? Date()
             let intensity = NSString(string: values[3]).floatValue
             let placeName = values[4]
             let feeling = values[5]
@@ -211,37 +210,38 @@ final class CSVImportOperation: SHOperation {
                 place = getPlaceOrCreate(placeName)
             }
             
-            Record.insertNewRecord(addiction,
-                                   intensity: intensity,
-                                   feeling: feeling,
-                                   comment: comment,
-                                   place: place,
-                                   latitude: doubleOrNil(lat),
-                                   longitude: doubleOrNil(lon),
-                                   desire: isDesire,
-                                   date: date,
-                                   inContext: context)
+            _ = Record.insertNewRecord(
+                addiction,
+                intensity: intensity,
+                feeling: feeling,
+                comment: comment,
+                place: place,
+                latitude: doubleOrNil(lat),
+                longitude: doubleOrNil(lon),
+                desire: isDesire,
+                date: date,
+                inContext: context)
         } catch let err as NSError {
             DDLogError("Error while adding new record: \(err)")
         }
     }
     
-    private func doubleOrNil(value: String) -> Double? {
+    fileprivate func doubleOrNil(_ value: String) -> Double? {
         if value.characters.count > 0 {
             return Double(value.floatValue)
         }
         return nil
     }
     
-    private func saveContext() {
+    fileprivate func saveContext() {
         var contextToSave: NSManagedObjectContext? = context
         while let ctx = contextToSave {
-            ctx.performBlockAndWait {
+            ctx.performAndWait {
                 do {
                     if ctx.hasChanges {
                         try ctx.save()
                     }
-                    contextToSave = contextToSave?.parentContext
+                    contextToSave = contextToSave?.parent
                 } catch let err as NSError {
                     print("Error while saving context: \(err)")
                 }

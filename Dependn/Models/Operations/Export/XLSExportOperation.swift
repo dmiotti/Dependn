@@ -11,8 +11,8 @@ import SwiftHelpers
 import CoreData
 import xlsxwriter
 
-private let kExportOperationDayFormatter = NSDateFormatter(dateFormat: "dd/MM/yyyy")
-private let kExportOperationHourFormatter = NSDateFormatter(dateFormat: "HH:mm")
+private let kExportOperationDayFormatter = DateFormatter(dateFormat: "dd/MM/yyyy")
+private let kExportOperationHourFormatter = DateFormatter(dateFormat: "HH:mm")
 
 final class XLSExportOperation: CoreDataOperation {
     
@@ -24,9 +24,9 @@ final class XLSExportOperation: CoreDataOperation {
     
     override func execute() {
         
-        if NSFileManager.defaultManager().fileExistsAtPath(path) {
+        if FileManager.default.fileExists(atPath: path) {
             do {
-                try NSFileManager.defaultManager().removeItemAtPath(path)
+                try FileManager.default.removeItem(atPath: path)
             } catch let err as NSError {
                 print("Error while deleting file \(path): \(err)")
                 error = err
@@ -35,7 +35,7 @@ final class XLSExportOperation: CoreDataOperation {
             
         }
         
-        context.performBlockAndWait {
+        context.performAndWait {
             
             let headers = [
                 L("export.date"),
@@ -68,7 +68,7 @@ final class XLSExportOperation: CoreDataOperation {
                     
                     var rowIdx = 2
                     
-                    for (colIdx ,header) in headers.enumerate() {
+                    for (colIdx ,header) in headers.enumerated() {
                         worksheet_write_string(
                             worksheet,
                             UInt32(rowIdx), UInt16(colIdx),
@@ -77,14 +77,14 @@ final class XLSExportOperation: CoreDataOperation {
                     
                     rowIdx += 1
                     
-                    let req = NSFetchRequest(entityName: Record.entityName)
+                    let req = NSFetchRequest<NSFetchRequestResult>(entityName: Record.entityName)
                     req.predicate = NSPredicate(format: "addiction == %@", addiction)
                     req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
-                    let records = try self.context.executeFetchRequest(req) as! [Record]
+                    let records = try self.context.fetch(req) as! [Record]
                     
-                    for (recIdx, record) in records.enumerate() {
+                    for (recIdx, record) in records.enumerated() {
                         let values = self.recordToValues(record)
-                        for (colIdx, value) in values.enumerate() {
+                        for (colIdx, value) in values.enumerated() {
                             worksheet_write_string(worksheet,
                                 UInt32(rowIdx + recIdx), UInt16(colIdx), value, nil)
                         }
@@ -104,11 +104,11 @@ final class XLSExportOperation: CoreDataOperation {
         finish()
     }
     
-    private func recordToValues(record: Record) -> [String] {
+    fileprivate func recordToValues(_ record: Record) -> [String] {
         let date = record.date
         return [
-            kExportOperationDayFormatter.stringFromDate(date),
-            kExportOperationHourFormatter.stringFromDate(date),
+            kExportOperationDayFormatter.string(from: date as Date),
+            kExportOperationHourFormatter.string(from: date as Date),
             String(format: "%.1f", arguments: [ record.intensity.floatValue ]),
             record.place?.name.firstLetterCapitalization ?? "",
             record.feeling ?? "",

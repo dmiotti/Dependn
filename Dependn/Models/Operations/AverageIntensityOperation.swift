@@ -13,25 +13,25 @@ import CocoaLumberjack
 
 final class AverageIntensityOperation: CoreDataOperation {
     
-    private(set) var average: Float?
+    fileprivate(set) var average: Float?
     
     override func execute() {
         
-        let req = NSFetchRequest(entityName: Record.entityName)
-        req.resultType = .DictionaryResultType
+        let req = NSFetchRequest<NSFetchRequestResult>(entityName: Record.entityName)
+        req.resultType = .dictionaryResultType
         let exp = NSExpression(forKeyPath: "intensity")
         
         let expDesc = NSExpressionDescription()
         expDesc.expression = exp
         expDesc.name = "averageIntensity"
-        expDesc.expressionResultType = .FloatAttributeType
+        expDesc.expressionResultType = .floatAttributeType
         
         req.propertiesToFetch = [ expDesc ]
         
-        context.performBlockAndWait {
+        context.performAndWait {
             do {
-                let objects = try self.context.executeFetchRequest(req)
-                if let obj = objects.first as? NSObject, avg = obj.valueForKey("averageIntensity") as? NSNumber {
+                let objects = try self.context.fetch(req)
+                if let obj = objects.first as? NSObject, let avg = obj.value(forKey: "averageIntensity") as? NSNumber {
                     self.average = avg.floatValue
                 }
             } catch let err as NSError {

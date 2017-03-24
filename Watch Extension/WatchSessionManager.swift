@@ -38,7 +38,7 @@ final class WatchStatsAddiction {
     
     var formattedSinceLast: String {
         let interval = Date().timeIntervalSince(sinceLast)
-        return String(format: NSLocalizedString("watch.sinceLast", comment: ""), stringFromTimeInterval(interval: interval))
+        return String(format: NSLocalizedString("watch.sinceLast", comment: ""), stringFromTimeInterval(interval))
     }
 }
 
@@ -51,11 +51,11 @@ final class AppContext {
 }
 
 enum NewRecordType {
-    case Conso, Craving
+    case conso, craving
 }
 
 final class NewRecordModel {
-    var type: NewRecordType = .Conso
+    var type: NewRecordType = .conso
     var place: WatchSimpleModel?
     var addiction: WatchSimpleModel?
     var intensity: Float = 7
@@ -74,11 +74,11 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     let context = AppContext()
     
     static let sharedManager = WatchSessionManager()
-    private override init() {
+    fileprivate override init() {
         super.init()
     }
     
-    private let session: WCSession = WCSession.default()
+    fileprivate let session: WCSession = WCSession.default()
     
     let newRecordModel = NewRecordModel()
     
@@ -87,9 +87,9 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         session.activate()
     }
 
-    private var getContextCompletionQueue = [RequestContextBlock]()
+    fileprivate var getContextCompletionQueue = [RequestContextBlock]()
 
-    func requestContext(block: RequestContextBlock? = nil) {
+    func requestContext(_ block: RequestContextBlock? = nil) {
 
         if let block = block {
             getContextCompletionQueue.append(block)
@@ -132,9 +132,9 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             let place = record.place?.name {
             
             let message: [String: Any] = [
-                "action": "add" as AnyObject,
+                "action": "add",
                 "data": [
-                    "type": record.type == .Conso ? "conso" : "craving",
+                    "type": record.type == .conso ? "conso" : "craving",
                     "addiction": addiction,
                     "place": place,
                     "intensity": "\(record.intensity)"

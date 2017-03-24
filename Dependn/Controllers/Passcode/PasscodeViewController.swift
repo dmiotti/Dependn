@@ -22,22 +22,20 @@ final class PasscodeViewController: UIViewController {
         view.backgroundColor = UIColor.lightBackgroundColor()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         launchPasscode()
     }
     
-    private func launchPasscode() {
+    fileprivate func launchPasscode() {
         if let policy = PasscodeViewController.supportedOwnerAuthentications().first {
             authContext.evaluatePolicy(policy, localizedReason: L("passcode.reason")) { success, error in
                 if success {
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 } else {
-                    DDLogError("\(error)")
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.launchPasscode()
-                    }
+                    DDLogError(error.debugDescription)
+                    DispatchQueue.main.async(execute: self.launchPasscode)
                 }
             }
         }
@@ -46,14 +44,14 @@ final class PasscodeViewController: UIViewController {
     static func supportedOwnerAuthentications() -> [LAPolicy] {
         var supportedAuthentications = [LAPolicy]()
         var error: NSError?
-        if authContext.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
-            supportedAuthentications.append(.DeviceOwnerAuthenticationWithBiometrics)
+        if authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            supportedAuthentications.append(.deviceOwnerAuthenticationWithBiometrics)
         }
-        DDLogError("\(error)")
-        if authContext.canEvaluatePolicy(.DeviceOwnerAuthentication, error: &error) {
-            supportedAuthentications.append(.DeviceOwnerAuthentication)
+        DDLogError(error.debugDescription)
+        if authContext.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+            supportedAuthentications.append(.deviceOwnerAuthentication)
         }
-        DDLogError("\(error)")
+        DDLogError(error.debugDescription)
         return supportedAuthentications
     }
 

@@ -16,7 +16,7 @@ class DayInterfaceController: WKInterfaceController {
     
     internal let dateFormatter = DateFormatter()
     
-    func loadData(data: WatchStatsAddiction) { }
+    func loadData(_ data: WatchStatsAddiction) { }
     
     override init() {
         dateFormatter.dateFormat = "d MMMM"
@@ -45,7 +45,7 @@ class DayInterfaceController: WKInterfaceController {
         
         // Configure interface objects here.
         if let data = WatchSessionManager.sharedManager.context.stats {
-            loadData(data: data)
+            loadData(data)
         } else {
             valueLbl.setText(nil)
             addictionLbl.setText(nil)
@@ -62,19 +62,19 @@ class DayInterfaceController: WKInterfaceController {
     
     func contextDidUpdate(_ notification: NSNotification) {
         if let context = notification.userInfo?["context"] as? AppContext, let stats = context.stats {
-            loadData(data: stats)
+            loadData(stats)
         }
     }
     
     // MARK: Menu actions
     
     @IBAction func doMenuAddConso() {
-        WatchSessionManager.sharedManager.newRecordModel.type = .Conso
+        WatchSessionManager.sharedManager.newRecordModel.type = .conso
         presentController(withName: "NewRecord", context: nil)
     }
     
     @IBAction func doMenuAddCraving() {
-        WatchSessionManager.sharedManager.newRecordModel.type = .Craving
+        WatchSessionManager.sharedManager.newRecordModel.type = .craving
         presentController(withName: "NewRecord", context: nil)
     }
 }

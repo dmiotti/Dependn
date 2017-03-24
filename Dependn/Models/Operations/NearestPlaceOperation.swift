@@ -17,31 +17,31 @@ final class NearestPlaceOperation: SHOperation {
     let location: CLLocation
     let distance: CLLocationDistance
     
-    private let context: NSManagedObjectContext
+    fileprivate let context: NSManagedObjectContext
     
-    private(set) var place: Place?
-    private(set) var error: NSError?
+    fileprivate(set) var place: Place?
+    fileprivate(set) var error: NSError?
     
     init(location: CLLocation, distance: CLLocationDistance) {
         self.location = location
         self.distance = distance
-        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        context.parentContext = CoreDataStack.shared.managedObjectContext
+        context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.parent = CoreDataStack.shared.managedObjectContext
     }
     
     override func execute() {
         
-        let req = NSFetchRequest(entityName: Record.entityName)
+        let req = NSFetchRequest<NSFetchRequestResult>(entityName: Record.entityName)
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
         req.predicate = NSPredicate(format: "place != nil AND lat != nil AND lon != nil")
         
-        context.performBlockAndWait {
+        context.performAndWait {
             do {
-                let records = try self.context.executeFetchRequest(req) as! [Record]
+                let records = try self.context.fetch(req) as! [Record]
                 for record in records {
-                    if let lat = record.lat?.doubleValue, lon = record.lon?.doubleValue {
+                    if let lat = record.lat?.doubleValue, let lon = record.lon?.doubleValue {
                         let recordLocation = CLLocation(latitude: lat, longitude: lon)
-                        let dist = self.location.distanceFromLocation(recordLocation)
+                        let dist = self.location.distance(from: recordLocation)
                         if dist <= self.distance {
                             self.place = record.place
                             break

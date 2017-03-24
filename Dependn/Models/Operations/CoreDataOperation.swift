@@ -17,8 +17,8 @@ class CoreDataOperation: SHOperation {
     var error: NSError?
     
     override init() {
-        context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        context.parentContext = CoreDataStack.shared.managedObjectContext
+        context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.parent = CoreDataStack.shared.managedObjectContext
     }
 
 }

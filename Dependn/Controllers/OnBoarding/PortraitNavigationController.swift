@@ -10,12 +10,11 @@ import UIKit
 import SwiftHelpers
 
 final class PortraitNavigationController: SHStatusBarNavigationController {
-
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return .Portrait
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
     }
     
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate: Bool {
         return false
     }
 }

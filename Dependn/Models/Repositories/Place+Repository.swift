@@ -9,10 +9,34 @@
 import Foundation
 import CoreData
 import CocoaLumberjack
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 extension Place {
     
-    class func suggestedPlacesFRC(inContext context: NSManagedObjectContext, forSearch search: String? = nil) -> NSFetchedResultsController {
+    class func suggestedPlacesFRC(inContext context: NSManagedObjectContext, forSearch search: String? = nil) -> NSFetchedResultsController<NSFetchRequestResult> {
         let req = entityFetchRequest()
         let pred = NSPredicate(format: "records.@count == 0")
         if let search = search {
@@ -29,7 +53,7 @@ extension Place {
             cacheName: nil)
     }
     
-    static func recentPlacesFRC(inContext context: NSManagedObjectContext, forSearch search: String? = nil) -> NSFetchedResultsController {
+    static func recentPlacesFRC(inContext context: NSManagedObjectContext, forSearch search: String? = nil) -> NSFetchedResultsController<NSFetchRequestResult> {
         let req = entityFetchRequest()
         let pred = NSPredicate(format: "records.@count > 0")
         if let search = search {
@@ -50,36 +74,36 @@ extension Place {
         let req = entityFetchRequest()
         req.predicate = predicate
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: false) ]
-        return try context.executeFetchRequest(req) as! [Place]
+        return try context.fetch(req) as! [Place]
     }
     
     class func getAllPlacesOrderedByCount(inContext context: NSManagedObjectContext) throws -> [Place] {
         let req = entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-        var places = try context.executeFetchRequest(req) as! [Place]
-        places.sortInPlace { $0.records?.count > $1.records?.count }
+        var places = try context.fetch(req) as! [Place]
+        places.sort { $0.records?.count > $1.records?.count }
         return places
     }
     
-    class func insertPlace(name: String, inContext context: NSManagedObjectContext) -> Place {
+    class func insertPlace(_ name: String, inContext context: NSManagedObjectContext) -> Place {
         let place = Place.insertEntity(inContext: context)
         place.name = name
         return place
     }
     
-    class func deletePlace(place: Place, inContext context: NSManagedObjectContext) {
+    class func deletePlace(_ place: Place, inContext context: NSManagedObjectContext) {
         let records = Record.recordWithPlace(place, inContext: context)
         for record in records {
             record.place = nil
         }
-        context.deleteObject(place)
+        context.delete(place)
     }
     
-    static func findByName(name: String, inContext context: NSManagedObjectContext) throws -> Place? {
+    static func findByName(_ name: String, inContext context: NSManagedObjectContext) throws -> Place? {
         let req = entityFetchRequest()
         req.predicate = NSPredicate(format: "name ==[cd] %@", name)
         req.fetchLimit = 1
-        return try context.executeFetchRequest(req).first as? Place
+        return try context.fetch(req).first as? Place
     }
     
 }

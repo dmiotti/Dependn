@@ -15,8 +15,8 @@ struct WatchSimpleModel {
     
     func watchDictionaryRepresentation() -> WatchDictionary {
         var dict = WatchDictionary()
-        dict["name"] = name
-        dict["uri"] = uri
+        dict["name"] = name as AnyObject?
+        dict["uri"] = uri as AnyObject?
         return dict
     }
 }
@@ -42,7 +42,7 @@ final class WatchNewEntryInfoOperation: CoreDataOperation {
             let addictions = try Addiction.getAllAddictionsOrderedByCount(inContext: context)
             
             let addictionModels = addictions.map {
-                WatchSimpleModel(uri: $0.objectID.URIRepresentation().absoluteString, name: $0.name)
+                WatchSimpleModel(uri: $0.objectID.uriRepresentation().absoluteString, name: $0.name)
             }
             
             info.mostUsedAddiction = addictionModels.first
@@ -52,11 +52,11 @@ final class WatchNewEntryInfoOperation: CoreDataOperation {
             let places = try Place.getAllPlacesOrderedByCount(inContext: context)
             
             let placeModels = places.map {
-                WatchSimpleModel(uri: $0.objectID.URIRepresentation().absoluteString, name: $0.name)
+                WatchSimpleModel(uri: $0.objectID.uriRepresentation().absoluteString, name: $0.name)
             }
             
             info.mostUsedPlace = placeModels.first
-            info.places = placeModels.sort { $0.name < $1.name }
+            info.places = placeModels.sorted { $0.name < $1.name }
             
             watchInfo = info
             
@@ -67,7 +67,7 @@ final class WatchNewEntryInfoOperation: CoreDataOperation {
         finish()
     }
     
-    static func formatNewEntryResultsForAppleWatch(result: WatchAddInfo) -> WatchDictionary {
+    static func formatNewEntryResultsForAppleWatch(_ result: WatchAddInfo) -> WatchDictionary {
         var dict = WatchDictionary()
         
         dict["addictions"] = result.addictions.map {
@@ -79,27 +79,27 @@ final class WatchNewEntryInfoOperation: CoreDataOperation {
         }
         
         if let mostUsedAddiction = result.mostUsedAddiction {
-            dict["most_used_addiction"] = mostUsedAddiction.watchDictionaryRepresentation()
+            dict["most_used_addiction"] = mostUsedAddiction.watchDictionaryRepresentation() as AnyObject?
         }
         
         if let mostUsedPlace = result.mostUsedPlace {
-            dict["most_used_place"] = mostUsedPlace.watchDictionaryRepresentation()
+            dict["most_used_place"] = mostUsedPlace.watchDictionaryRepresentation() as AnyObject?
         }
         
         return dict
     }
     
-    private func createIconImageWithName(name: String, color: UIColor) -> UIImage? {
+    fileprivate func createIconImageWithName(_ name: String, color: UIColor) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 30, height: 30), false, 0.0)
         
         if let context = UIGraphicsGetCurrentContext() {
             
             let circleView = RecordCircleTypeView()
             circleView.color = color
-            if let first = name.capitalizedString.characters.first {
+            if let first = name.capitalized.characters.first {
                 circleView.textLbl.text = "\(first)"
             }
-            circleView.layer.renderInContext(context)
+            circleView.layer.render(in: context)
             
             let image = UIGraphicsGetImageFromCurrentImageContext()
             

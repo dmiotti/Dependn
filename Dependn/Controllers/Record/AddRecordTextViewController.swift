@@ -10,18 +10,18 @@ import UIKit
 import SwiftHelpers
 
 protocol AddRecordTextViewControllerDelegate {
-    func addRecordTextViewController(controller: AddRecordTextViewController, didEnterText text: String?)
+    func addRecordTextViewController(_ controller: AddRecordTextViewController, didEnterText text: String?)
 }
 
-private let kAddRecordTextViewPlaceholderColor = UIColor.appBlackColor().colorWithAlphaComponent(0.22)
+private let kAddRecordTextViewPlaceholderColor = UIColor.appBlackColor().withAlphaComponent(0.22)
 private let kAddRecordTextViewInsets = UIEdgeInsets(top: 25, left: 25, bottom: 25, right: 25)
 
 final class AddRecordTextViewController: UIViewController {
     
     var delegate: AddRecordTextViewControllerDelegate?
     
-    private var doneBtn: UIBarButtonItem!
-    private var textView: UITextView!
+    fileprivate var doneBtn: UIBarButtonItem!
+    fileprivate var textView: UITextView!
     
     var originalText: String?
     var placeholder: String?
@@ -29,20 +29,20 @@ final class AddRecordTextViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white
 
-        doneBtn = UIBarButtonItem(title: L("new_record.add_text"), style: .Done, target: self, action: #selector(AddRecordTextViewController.doneBtnClicked(_:)))
+        doneBtn = UIBarButtonItem(title: L("new_record.add_text"), style: .done, target: self, action: #selector(AddRecordTextViewController.doneBtnClicked(_:)))
         doneBtn.setTitleTextAttributes([
-            NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold),
+            NSFontAttributeName: UIFont.systemFont(ofSize: 15, weight: UIFontWeightSemibold),
             NSForegroundColorAttributeName: UIColor.appBlueColor(),
             NSKernAttributeName: -0.36
-            ], forState: .Normal)
+            ], for: UIControlState())
         navigationItem.rightBarButtonItem = doneBtn
         
         textView = UITextView()
         textView.text = originalText
         textView.textColor = UIColor.appBlackColor()
-        textView.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+        textView.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)
         textView.delegate = self
         textView.textContainerInset = kAddRecordTextViewInsets
         view.addSubview(textView)
@@ -57,34 +57,34 @@ final class AddRecordTextViewController: UIViewController {
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         textView.becomeFirstResponder()
     }
     
-    private func configureLayoutConstraints() {
-        textView.snp_makeConstraints {
+    fileprivate func configureLayoutConstraints() {
+        textView.snp.makeConstraints {
             $0.edges.equalTo(view)
         }
     }
     
-    private func registerNotificationObservers() {
-        let ns = NSNotificationCenter.defaultCenter()
-        ns.addObserver(self, selector: #selector(AddRecordTextViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        ns.addObserver(self, selector: #selector(AddRecordTextViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    fileprivate func registerNotificationObservers() {
+        let ns = NotificationCenter.default
+        ns.addObserver(self, selector: #selector(AddRecordTextViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        ns.addObserver(self, selector: #selector(AddRecordTextViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        let scrollViewRect = view.convertRect(textView.frame, fromView: textView.superview)
+    func keyboardWillShow(_ notification: Notification) {
+        let scrollViewRect = view.convert(textView.frame, from: textView.superview)
         if let rectValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let kbRect = view.convertRect(rectValue.CGRectValue(), fromView: nil)
+            let kbRect = view.convert(rectValue.cgRectValue, from: nil)
             
-            let hiddenScrollViewRect = CGRectIntersection(scrollViewRect, kbRect)
-            if !CGRectIsNull(hiddenScrollViewRect) {
+            let hiddenScrollViewRect = scrollViewRect.intersection(kbRect)
+            if !hiddenScrollViewRect.isNull {
                 var contentInsets = textView.textContainerInset
                 contentInsets.bottom = hiddenScrollViewRect.size.height + kAddRecordTextViewInsets.bottom
                 textView.textContainerInset = contentInsets
@@ -97,34 +97,34 @@ final class AddRecordTextViewController: UIViewController {
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         textView.textContainerInset = kAddRecordTextViewInsets
-        textView.scrollIndicatorInsets = UIEdgeInsetsZero
+        textView.scrollIndicatorInsets = UIEdgeInsets.zero
     }
     
-    func doneBtnClicked(sender: UIBarButtonItem) {
+    func doneBtnClicked(_ sender: UIBarButtonItem) {
         var text: String? = textView.text
         if text == placeholder {
             text = nil
         }
         delegate?.addRecordTextViewController(self, didEnterText: text)
-        navigationController?.popToRootViewControllerAnimated(true)
+        navigationController?.popToRootViewController(animated: true)
     }
     
-    private func addPlaceholderToTextView() {
+    fileprivate func addPlaceholderToTextView() {
         textView.text = placeholder
         textView.textColor = kAddRecordTextViewPlaceholderColor
-        textView.selectedTextRange = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.beginningOfDocument)
+        textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
     }
     
 }
 
 extension AddRecordTextViewController: UITextViewDelegate {
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Combine the textView text and the replacement text to
         // create the updated text string
-        let currentText:NSString = textView.text
-        let updatedText = currentText.stringByReplacingCharactersInRange(range, withString:text)
+        let currentText:NSString = textView.text as NSString
+        let updatedText = currentText.replacingCharacters(in: range, with:text)
         
         // If updated text view will be empty, add the placeholder
         // and set the cursor to the beginning of the text view
@@ -144,10 +144,10 @@ extension AddRecordTextViewController: UITextViewDelegate {
         return true
     }
     
-    func textViewDidChangeSelection(textView: UITextView) {
+    func textViewDidChangeSelection(_ textView: UITextView) {
         if view.window != nil {
             if textView.textColor == kAddRecordTextViewPlaceholderColor {
-                textView.selectedTextRange = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.beginningOfDocument)
+                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
             }
         }
     }

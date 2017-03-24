@@ -12,9 +12,9 @@ import CocoaLumberjack
 
 final class ValueLabelView: SHCommonInitView {
 
-    private(set) var valueLbl: UILabel!
-    private(set) var fractionLbl: UILabel!
-    private var titleLbl: UILabel!
+    fileprivate(set) var valueLbl: UILabel!
+    fileprivate(set) var fractionLbl: UILabel!
+    fileprivate var titleLbl: UILabel!
     
     var title: String? {
         set {
@@ -25,15 +25,15 @@ final class ValueLabelView: SHCommonInitView {
         }
     }
     
-    func updateTitle(newTitle: String?) {
-        if let newTitle = newTitle?.uppercaseString {
+    func updateTitle(_ newTitle: String?) {
+        if let newTitle = newTitle?.uppercased() {
             let attr = NSMutableAttributedString(string: newTitle)
             let range = NSMakeRange(0, attr.length)
-            attr.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(10, weight: UIFontWeightSemibold), range: range)
-            attr.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor().colorWithAlphaComponent(0.6), range: range)
+            attr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 10, weight: UIFontWeightSemibold), range: range)
+            attr.addAttribute(NSForegroundColorAttributeName, value: UIColor.white.withAlphaComponent(0.6), range: range)
             attr.addAttribute(NSKernAttributeName, value: 0.83, range: range)
             let paragraph = NSMutableParagraphStyle()
-            paragraph.alignment = .Center
+            paragraph.alignment = .center
             attr.addAttribute(NSParagraphStyleAttributeName, value: paragraph, range: range)
             titleLbl.attributedText = attr
         } else {
@@ -45,9 +45,9 @@ final class ValueLabelView: SHCommonInitView {
         super.commonInit()
 
         valueLbl = UILabel()
-        valueLbl.textColor = UIColor.whiteColor()
-        valueLbl.font = UIFont.systemFontOfSize(46, weight: UIFontWeightLight)
-        valueLbl.textAlignment = .Center
+        valueLbl.textColor = UIColor.white
+        valueLbl.font = UIFont.systemFont(ofSize: 46, weight: UIFontWeightLight)
+        valueLbl.textAlignment = .center
         valueLbl.numberOfLines = 1
         valueLbl.adjustsFontSizeToFitWidth = true
         valueLbl.text = " "
@@ -58,27 +58,27 @@ final class ValueLabelView: SHCommonInitView {
         addSubview(titleLbl)
         
         fractionLbl = UILabel()
-        fractionLbl.textColor = UIColor.whiteColor()
-        fractionLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightMedium)
+        fractionLbl.textColor = UIColor.white
+        fractionLbl.font = UIFont.systemFont(ofSize: 12, weight: UIFontWeightMedium)
         addSubview(fractionLbl)
 
         configureLayoutConstraints()
     }
 
-    private func configureLayoutConstraints() {
-        valueLbl.snp_makeConstraints {
+    fileprivate func configureLayoutConstraints() {
+        valueLbl.snp.makeConstraints {
             $0.centerY.equalTo(self).offset(-5)
             $0.centerX.equalTo(self)
             $0.left.greaterThanOrEqualTo(self)
             $0.right.lessThanOrEqualTo(self)
         }
-        titleLbl.snp_makeConstraints {
-            $0.top.equalTo(valueLbl.snp_bottom)
+        titleLbl.snp.makeConstraints {
+            $0.top.equalTo(valueLbl.snp.bottom)
             $0.centerX.equalTo(self)
             $0.left.greaterThanOrEqualTo(self)
             $0.right.lessThanOrEqualTo(self)
         }
-        fractionLbl.snp_makeConstraints {
+        fractionLbl.snp.makeConstraints {
             $0.right.equalTo(valueLbl)
             $0.top.equalTo(valueLbl)
         }
@@ -86,45 +86,43 @@ final class ValueLabelView: SHCommonInitView {
 
 }
 
-private let kStatsPanelDateFormatter = NSDateFormatter(dateFormat: "MMMM")
+private let kStatsPanelDateFormatter = DateFormatter(dateFormat: "MMMM")
 
 final class StatsPanelView: SHCommonInitView {
     
-    private(set) var addiction: Addiction?
-    private(set) var color: UIColor?
+    fileprivate(set) var addiction: Addiction?
+    fileprivate(set) var color: UIColor?
     
-    private let operationQueue = NSOperationQueue()
+    fileprivate let operationQueue = OperationQueue()
     
-    private lazy var numberFormatter: NSNumberFormatter = {
-        let fmt = NSNumberFormatter()
-        fmt.numberStyle = .DecimalStyle
+    fileprivate lazy var numberFormatter: NumberFormatter = {
+        let fmt = NumberFormatter()
+        fmt.numberStyle = .decimal
         fmt.maximumFractionDigits = 1
         return fmt
     }()
     
-    private var nameLbl: UILabel!
-    private var periodLbl: UILabel!
+    fileprivate var nameLbl: UILabel!
+    fileprivate var periodLbl: UILabel!
     
-    private var stackView: UIStackView!
-    private var todayValue: ValueLabelView!
-    private var weekValue: ValueLabelView!
-    private var intervalValue: ValueLabelView!
+    fileprivate var stackView: UIStackView!
+    fileprivate var todayValue: ValueLabelView!
+    fileprivate var weekValue: ValueLabelView!
+    fileprivate var intervalValue: ValueLabelView!
     
-    private var refreshTimer: NSTimer?
+    fileprivate var refreshTimer: Timer?
     
     override func commonInit() {
         super.commonInit()
-        
-        UIFontTextStyleHeadline
-        
+                
         nameLbl = UILabel()
-        nameLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightSemibold)
-        nameLbl.textColor = UIColor.whiteColor()
+        nameLbl.font = UIFont.systemFont(ofSize: 12, weight: UIFontWeightSemibold)
+        nameLbl.textColor = UIColor.white
         addSubview(nameLbl)
         
         periodLbl = UILabel()
-        periodLbl.font = UIFont.systemFontOfSize(12, weight: UIFontWeightRegular)
-        periodLbl.textColor = UIColor.whiteColor().colorWithAlphaComponent(0.6)
+        periodLbl.font = UIFont.systemFont(ofSize: 12, weight: UIFontWeightRegular)
+        periodLbl.textColor = UIColor.white.withAlphaComponent(0.6)
         addSubview(periodLbl)
         
         todayValue = ValueLabelView()
@@ -137,44 +135,44 @@ final class StatsPanelView: SHCommonInitView {
         intervalValue.title = L("statspanel.interval")
         
         stackView = UIStackView(arrangedSubviews: [todayValue, weekValue, intervalValue])
-        stackView.axis = .Horizontal
-        stackView.distribution = .FillEqually
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
         stackView.spacing = 0
-        stackView.backgroundColor = UIColor.brownColor()
+        stackView.backgroundColor = UIColor.brown
         addSubview(stackView)
         
         configureLayoutConstraints()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(StatsPanelView.applicationDidEnterBackground(_:)), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(StatsPanelView.applicationWillEnterForeground(_:)), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(StatsPanelView.applicationDidEnterBackground(_:)), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(StatsPanelView.applicationWillEnterForeground(_:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         
         startTimer()
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
         stopTimer()
     }
     
-    private func configureLayoutConstraints() {
-        nameLbl.snp_makeConstraints {
+    fileprivate func configureLayoutConstraints() {
+        nameLbl.snp.makeConstraints {
             $0.top.equalTo(self).offset(14)
             $0.left.equalTo(self).offset(16)
         }
-        periodLbl.snp_makeConstraints {
+        periodLbl.snp.makeConstraints {
             $0.top.equalTo(self).offset(14)
             $0.right.equalTo(self).offset(-16)
         }
-        stackView.snp_makeConstraints {
+        stackView.snp.makeConstraints {
             $0.edges.equalTo(self)
         }
     }
     
-    func updateWithAddiction(addiction: Addiction) {
+    func updateWithAddiction(_ addiction: Addiction) {
         self.addiction = addiction
         
-        nameLbl.text = addiction.name.uppercaseString
-        periodLbl.text = kStatsPanelDateFormatter.stringFromDate(NSDate()).uppercaseString
+        nameLbl.text = addiction.name.uppercased()
+        periodLbl.text = kStatsPanelDateFormatter.string(from: Date()).uppercased()
         
         performOperations()
     }
@@ -188,25 +186,25 @@ final class StatsPanelView: SHCommonInitView {
         
         let statsOp = ShortStatsOperation(addictions: [addiction])
         statsOp.completionBlock = {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 if let results = statsOp.results.first {
                     // Today count
                     if let todayCount = results.todayCount {
-                        self.todayValue.valueLbl.text = self.numberFormatter.stringFromNumber(todayCount)
+                        self.todayValue.valueLbl.text = self.numberFormatter.string(from: NSNumber(value: todayCount))
                     } else {
                         self.todayValue.valueLbl.text = " "
                     }
                     
                     // This week
                     if let thisWeek = results.thisWeekCount {
-                        self.weekValue.valueLbl.text = self.numberFormatter.stringFromNumber(thisWeek)
+                        self.weekValue.valueLbl.text = self.numberFormatter.string(from: NSNumber(value: thisWeek))
                     } else {
                         self.weekValue.valueLbl.text = " "
                     }
                     
                     // Since last
                     if let interval = results.sinceLast {
-                        self.intervalValue.valueLbl.attributedText = self.attributedStringFromTimeInterval(interval)
+                        self.intervalValue.valueLbl.attributedText = self.attributedString(from: interval)
                         self.intervalValue.fractionLbl.text = self.fractionFromInterval(interval)
                     } else {
                         self.intervalValue.valueLbl.attributedText = nil
@@ -222,31 +220,31 @@ final class StatsPanelView: SHCommonInitView {
     
     // MARK: - Handleling timer
     
-    private func stopTimer() {
+    fileprivate func stopTimer() {
         refreshTimer?.invalidate()
         refreshTimer = nil
     }
     
-    private func startTimer() {
+    fileprivate func startTimer() {
         stopTimer()
-        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(
-            15,
+        refreshTimer = Timer.scheduledTimer(
+            timeInterval: 15,
             target: self,
             selector: #selector(StatsPanelView.performOperations),
             userInfo: nil, repeats: true)
     }
     
-    func applicationDidEnterBackground(notification: NSNotification) {
+    func applicationDidEnterBackground(_ notification: Notification) {
         stopTimer()
     }
     
-    func applicationWillEnterForeground(notification: NSNotification) {
+    func applicationWillEnterForeground(_ notification: Notification) {
         startTimer()
     }
     
     // MARK: - Private Helpers
     
-    private func hoursMinutesSecondsFromInterval(interval: NSTimeInterval) -> (hours: Int, minutes: Int, seconds: Int) {
+    fileprivate func hoursMinutesSecondsFromInterval(_ interval: TimeInterval) -> (hours: Int, minutes: Int, seconds: Int) {
         let ti = Int(interval)
         let seconds = ti % 60
         let minutes = (ti / 60) % 60
@@ -254,7 +252,7 @@ final class StatsPanelView: SHCommonInitView {
         return (hours, minutes, seconds)
     }
     
-    private func attributedStringFromTimeInterval(interval: NSTimeInterval) -> NSAttributedString {
+    fileprivate func attributedString(from interval: TimeInterval) -> NSAttributedString {
         let time = hoursMinutesSecondsFromInterval(interval)
         
         let valueText: String
@@ -272,14 +270,14 @@ final class StatsPanelView: SHCommonInitView {
         
         let attr = NSMutableAttributedString(string: "\(valueText)\(unitText)")
         let range = NSMakeRange(0, attr.length)
-        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(46, weight: UIFontWeightLight), range: range)
-        attr.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: range)
+        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 46, weight: UIFontWeightLight), range: range)
+        attr.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: range)
         let unitRange = attr.string.rangeString(unitText)
-        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(20, weight: UIFontWeightLight), range: unitRange)
+        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 20, weight: UIFontWeightLight), range: unitRange)
         return attr
     }
     
-    private func fractionFromInterval(interval: NSTimeInterval) -> String? {
+    fileprivate func fractionFromInterval(_ interval: TimeInterval) -> String? {
         let time = hoursMinutesSecondsFromInterval(interval)
         if time.hours <= 0 || time.minutes < 15 {
             return nil
@@ -294,30 +292,30 @@ final class StatsPanelView: SHCommonInitView {
         return self.fraction(3, denominator: 4)
     }
     
-    private func fraction(numerator: Int, denominator: Int) -> String {
+    fileprivate func fraction(_ numerator: Int, denominator: Int) -> String {
         var result = ""
         
         // build numerator
         let one = "\(numerator)"
         for char in one.characters {
-            if let num = Int(String(char)), val = superscriptFromInt(num) {
-                result.appendContentsOf(val)
+            if let num = Int(String(char)), let val = superscriptFromInt(num) {
+                result.append(val)
             }
         }
         
         // build denominator
         let two = "\(denominator)"
-        result.appendContentsOf("/")
+        result.append("/")
         for char in two.characters {
-            if let num = Int(String(char)), val = subscriptFromInt(num) {
-                result.appendContentsOf(val)
+            if let num = Int(String(char)), let val = subscriptFromInt(num) {
+                result.append(val)
             }
         }
         
         return result
     }
     
-    private func superscriptFromInt(num: Int) -> String? {
+    fileprivate func superscriptFromInt(_ num: Int) -> String? {
         let superscriptDigits: [Int: String] = [
             0: "\u{2070}",
             1: "\u{00B9}",
@@ -332,7 +330,7 @@ final class StatsPanelView: SHCommonInitView {
         return superscriptDigits[num]
     }
     
-    private func subscriptFromInt(num: Int) -> String? {
+    fileprivate func subscriptFromInt(_ num: Int) -> String? {
         let subscriptDigits: [Int: String] = [
             0: "\u{2080}",
             1: "\u{2081}",

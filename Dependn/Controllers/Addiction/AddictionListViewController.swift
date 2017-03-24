@@ -13,16 +13,16 @@ import CocoaLumberjack
 
 final class AddictionListViewController: SHNoBackButtonTitleViewController {
     
-    private var tableView: UITableView!
-    private var addBtn: UIBarButtonItem!
-    private var editBtn: UIBarButtonItem!
+    fileprivate var tableView: UITableView!
+    fileprivate var addBtn: UIBarButtonItem!
+    fileprivate var editBtn: UIBarButtonItem!
     
-    private let managedObjectContext = CoreDataStack.shared.managedObjectContext
+    fileprivate let managedObjectContext = CoreDataStack.shared.managedObjectContext
     
-    private lazy var fetchedResultsController: NSFetchedResultsController = {
-        let req = Addiction.entityFetchRequest()
+    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Addiction> = { () -> NSFetchedResultsController<Addiction> in
+        let req = NSFetchRequest<Addiction>(entityName: Addiction.entityName)
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-        let controller = NSFetchedResultsController(fetchRequest: req, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        let controller = NSFetchedResultsController<Addiction>(fetchRequest: req, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         controller.delegate = self
         return controller
     }()
@@ -30,41 +30,41 @@ final class AddictionListViewController: SHNoBackButtonTitleViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        edgesForExtendedLayout = .None
+        edgesForExtendedLayout = []
         
         updateTitle(L("addiction_list.title"))
         
-        tableView = UITableView(frame: .zero, style: .Grouped)
+        tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.separatorColor = UIColor.appSeparatorColor()
         tableView.rowHeight = 55
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(AddictionTableViewCell.self, forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
+        tableView.register(AddictionTableViewCell.self, forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
         view.addSubview(tableView)
-        tableView.snp_makeConstraints {
+        tableView.snp.makeConstraints {
             $0.edges.equalTo(view)
         }
         
-        addBtn = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AddictionListViewController.addBtnClicked(_:)))
+        addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(AddictionListViewController.addBtnClicked(_:)))
         navigationItem.rightBarButtonItem = addBtn
         
         registerNotificationObservers()
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         launchFetchIfNeeded()
     }
     
     // MARK: - Data Fetch
     
-    private var fetchExecuted = false
-    private func launchFetchIfNeeded() {
+    fileprivate var fetchExecuted = false
+    fileprivate func launchFetchIfNeeded() {
         if fetchExecuted { return }
         do {
             try fetchedResultsController.performFetch()
@@ -75,46 +75,46 @@ final class AddictionListViewController: SHNoBackButtonTitleViewController {
         }
     }
     
-    func addBtnClicked(sender: UIBarButtonItem) {
+    func addBtnClicked(_ sender: UIBarButtonItem) {
         let chooser = DependencyChooserViewController()
-        chooser.style = .FromSettings
+        chooser.style = .fromSettings
         navigationController?.pushViewController(chooser, animated: true)
     }
     
     // MARK: - Add/Delete from CoreData
     
-    private func deleteAddiction(addiction: Addiction) {
-        let title = String(format: L("addiction_list.delete.title"), addiction.name.capitalizedString)
-        let reason = String(format: L("addiction_list.delete.message"), addiction.name.capitalizedString)
-        let alert = UIAlertController(title: title, message: reason, preferredStyle: .Alert)
-        let cancelAction = UIAlertAction(title: L("addiction_list.delete.cancel"), style: .Default, handler: nil)
-        let okAction = UIAlertAction(title: L("addiction_list.delete.confirm"), style: .Default) { action in
+    fileprivate func deleteAddiction(_ addiction: Addiction) {
+        let title = String(format: L("addiction_list.delete.title"), addiction.name.capitalized)
+        let reason = String(format: L("addiction_list.delete.message"), addiction.name.capitalized)
+        let alert = UIAlertController(title: title, message: reason, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: L("addiction_list.delete.cancel"), style: .default, handler: nil)
+        let okAction = UIAlertAction(title: L("addiction_list.delete.confirm"), style: .default) { action in
             do {
                 try Addiction.deleteAddiction(addiction, inContext: self.managedObjectContext)
             } catch let err as NSError {
-                UIAlertController.presentError(err, inController: self)
+                UIAlertController.present(error: err, in: self)
             }
         }
         alert.addAction(cancelAction)
         alert.addAction(okAction)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Keyboard Notifications
     
-    private func registerNotificationObservers() {
-        let ns = NSNotificationCenter.defaultCenter()
-        ns.addObserver(self, selector: #selector(AddictionListViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        ns.addObserver(self, selector: #selector(AddictionListViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    fileprivate func registerNotificationObservers() {
+        let ns = NotificationCenter.default
+        ns.addObserver(self, selector: #selector(AddictionListViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        ns.addObserver(self, selector: #selector(AddictionListViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        let scrollViewRect = view.convertRect(tableView.frame, fromView: tableView.superview)
+    func keyboardWillShow(_ notification: Notification) {
+        let scrollViewRect = view.convert(tableView.frame, from: tableView.superview)
         if let rectValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let kbRect = view.convertRect(rectValue.CGRectValue(), fromView: nil)
+            let kbRect = view.convert(rectValue.cgRectValue, from: nil)
             
-            let hiddenScrollViewRect = CGRectIntersection(scrollViewRect, kbRect)
-            if !CGRectIsNull(hiddenScrollViewRect) {
+            let hiddenScrollViewRect = scrollViewRect.intersection(kbRect)
+            if !hiddenScrollViewRect.isNull {
                 var contentInsets = tableView.contentInset
                 contentInsets.bottom = hiddenScrollViewRect.size.height
                 tableView.contentInset = contentInsets
@@ -123,7 +123,7 @@ final class AddictionListViewController: SHNoBackButtonTitleViewController {
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         var contentInsets = tableView.contentInset
         contentInsets.bottom = 0
         tableView.contentInset = contentInsets
@@ -134,23 +134,23 @@ final class AddictionListViewController: SHNoBackButtonTitleViewController {
 
 // MARK: - UITableViewDataSource
 extension AddictionListViewController: UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController.sections?.count ?? 0
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(AddictionTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! AddictionTableViewCell
-        cell.addiction = fetchedResultsController.objectAtIndexPath(indexPath) as? Addiction
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: AddictionTableViewCell.reuseIdentifier, for: indexPath) as! AddictionTableViewCell
+        cell.addiction = fetchedResultsController.object(at: indexPath)
         return cell
     }
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            let addiction = fetchedResultsController.objectAtIndexPath(indexPath) as! Addiction
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let addiction = fetchedResultsController.object(at: indexPath)
             self.deleteAddiction(addiction)
         }
     }
@@ -158,73 +158,72 @@ extension AddictionListViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension AddictionListViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         updateNameOfAddictionAtIndexPath(indexPath)
     }
-    private func updateNameOfAddictionAtIndexPath(indexPath: NSIndexPath) {
-        if let addiction = fetchedResultsController.objectAtIndexPath(indexPath) as? Addiction {
-            let alert = UIAlertController(title: L("addiction_list.modify.title"), message: nil, preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: L("cancel"), style: .Cancel, handler: nil)
-            let addAction = UIAlertAction(title: L("addiction_list.modify"), style: .Default) { action in
-                if let name = alert.textFields?.first?.text {
-                    addiction.name = name
-                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                } else {
-                    UIAlertController.presentAlertWithTitle(L("addiction_list.new.error"),
-                        message: L("addiction_list.new.name_missing"), inController: self)
-                }
+    fileprivate func updateNameOfAddictionAtIndexPath(_ indexPath: IndexPath) {
+        let addiction = fetchedResultsController.object(at: indexPath)
+        let alert = UIAlertController(title: L("addiction_list.modify.title"), message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: L("cancel"), style: .cancel, handler: nil)
+        let addAction = UIAlertAction(title: L("addiction_list.modify"), style: .default) { action in
+            if let name = alert.textFields?.first?.text {
+                addiction.name = name
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            } else {
+                UIAlertController.presentAlert(title: L("addiction_list.new.error"), message: L("addiction_list.new.name_missing"), in: self)
             }
-            alert.addTextFieldWithConfigurationHandler { textField in
-                textField.placeholder = L("addiction_list.modify.placeholder")
-                textField.text = addiction.name.capitalizedString
-            }
-            alert.addAction(cancelAction)
-            alert.addAction(addAction)
-            presentViewController(alert, animated: true, completion: nil)
         }
+        alert.addTextField { textField in
+            textField.placeholder = L("addiction_list.modify.placeholder")
+            textField.text = addiction.name.capitalized
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(addAction)
+        present(alert, animated: true, completion: nil)
     }
 }
 
 // MARK: - NSFetchedResultsControllerDelegate
 extension AddictionListViewController: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
-        case .Insert:
+        case .insert:
             if let newIndexPath = newIndexPath {
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
-        case .Delete:
+        case .delete:
             if let indexPath = indexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
             }
-        case .Move:
-            if let indexPath = indexPath, newIndexPath = newIndexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+        case .move:
+            if let indexPath = indexPath, let newIndexPath = newIndexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
-        case .Update:
+        case .update:
             if let indexPath = indexPath {
-                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView.reloadRows(at: [indexPath], with: .automatic)
             }
         }
     }
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
-        case .Insert:
-            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-        case .Delete:
-            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-        case .Update:
-            tableView.reloadSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-        case .Move:
+        case .insert:
+            tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
+        case .delete:
+            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
+        case .update:
+            tableView.reloadSections(IndexSet(integer: sectionIndex), with: .automatic)
+        case .move:
             break
         }
     }
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
 }

@@ -14,8 +14,8 @@ import CocoaLumberjack
 /// Gets the time in seconds since the last take of an addiction
 final class TimeSinceLastRecord: SHOperation {
 
-    var sinceLast: NSDate?
-    var interval: NSTimeInterval?
+    var sinceLast: Date?
+    var interval: TimeInterval?
     var error: NSError?
     
     let addiction: Addiction
@@ -23,8 +23,8 @@ final class TimeSinceLastRecord: SHOperation {
     
     init(addiction: Addiction) {
         self.addiction = addiction
-        self.context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        self.context.parentContext = CoreDataStack.shared.managedObjectContext
+        self.context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        self.context.parent = CoreDataStack.shared.managedObjectContext
     }
     
     override func execute() {
@@ -32,14 +32,14 @@ final class TimeSinceLastRecord: SHOperation {
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
         req.predicate = NSPredicate(format: "addiction == %@", addiction)
         req.fetchLimit = 1
-        context.performBlockAndWait {
+        context.performAndWait {
             do {
-                let records = try self.context.executeFetchRequest(req) as! [Record]
+                let records = try self.context.fetch(req) as! [Record]
                 if let last = records.last {
                     self.sinceLast = last.date
-                    self.interval = fabs(last.date.timeIntervalSinceDate(NSDate()))
+                    self.interval = fabs(last.date.timeIntervalSince(Date()))
                 } else {
-                    self.sinceLast = NSDate()
+                    self.sinceLast = Date()
                     self.interval = 0
                 }
             } catch let err as NSError {

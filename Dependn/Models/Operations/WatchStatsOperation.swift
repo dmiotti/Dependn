@@ -12,13 +12,13 @@ import CoreData
 import SwiftyUserDefaults
 import BrightFutures
 
-typealias WatchDictionary = Dictionary<String, AnyObject>
+typealias WatchDictionary = Dictionary<String, Any>
 typealias WatchStatsValueTime = (value: String, date: String)
 
 final class WatchStatsAddiction {
     var addiction = ""
     var values = [WatchStatsValueTime]()
-    var sinceLast: NSDate!
+    var sinceLast: Date!
 }
 
 private let kWatchStatsOperationErrorDomain = "WatchStatsOperation"
@@ -43,44 +43,41 @@ final class WatchStatsOperation: CoreDataOperation {
                 self.getSinceLast(addiction).onComplete { r in
                     
                     if let sinceLast = r.value {
-                        statsAddiction.sinceLast = sinceLast
+                        statsAddiction.sinceLast = sinceLast as Date!
                     }
                     
-                    let now = NSDate()
-                    let req = NSFetchRequest(entityName: Record.entityName)
+                    let now = Date()
+                    let req = NSFetchRequest<Record>(entityName: Record.entityName)
                     
-                    for i in 0...3 {
+                    3.each { i in
                         let date = now - i.days
                         let start = date.beginningOfDay
                         let end = date.endOfDay
                         
-                        let rangepre = NSPredicate(format: "date >= %@ AND date <= %@", start, end)
+                        let rangepre = NSPredicate(format: "date >= %@ AND date <= %@", start as NSDate, end as NSDate)
                         let addicpred = NSPredicate(format: "addiction == %@", addiction)
                         req.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [rangepre, addicpred])
                         
-                        var error: NSError?
-                        let count = self.context.countForFetchRequest(req, error: &error)
-                        if let err = error {
-                            self.error = err
-                        } else {
-                            let dateFormatter = NSDateFormatter()
+                        do {
+                            let count = try self.context.count(for: req)
+                            let dateFormatter = DateFormatter()
                             dateFormatter.dateFormat = "EE d MMM"
-                            
                             let day: String
-                            
                             let proximity = SHDateProximityToDate(start)
                             switch proximity {
-                            case .Today:
+                            case .today:
                                 day = L("watch.today")
-                            case .Yesterday:
+                            case .yesterday:
                                 day = L("watch.yesterday")
-                            case .TwoDaysAgo:
+                            case .twoDaysAgo:
                                 day = L("watch.twoDaysAgo")
                             default:
-                                day = dateFormatter.stringFromDate(start).capitalizedString
+                                day = dateFormatter.string(from: start).capitalized
                                 break
                             }
                             statsAddiction.values.append((String(count), day))
+                        } catch let err as NSError {
+                            self.error = err
                         }
                     }
                     
@@ -92,7 +89,7 @@ final class WatchStatsOperation: CoreDataOperation {
         }
     }
     
-    private func getAddiction() -> Future<Addiction, NSError> {
+    fileprivate func getAddiction() -> Future<Addiction, NSError> {
         let promise = Promise<Addiction, NSError>()
         
         do {
@@ -129,13 +126,11 @@ final class WatchStatsOperation: CoreDataOperation {
         return promise.future
     }
     
-    private func getSinceLast(addiction: Addiction) -> Future<NSDate, NSError> {
-        let promise = Promise<NSDate, NSError>()
-        let queue = NSOperationQueue()
-        
+    fileprivate func getSinceLast(_ addiction: Addiction) -> Future<Date, NSError> {
+        let promise = Promise<Date, NSError>()
+        let queue = OperationQueue()
         let op = TimeSinceLastRecord(addiction: addiction)
         queue.addOperation(op)
-        
         op.completionBlock = {
             if let sinceLast = op.sinceLast {
                 promise.success(sinceLast)
@@ -143,11 +138,10 @@ final class WatchStatsOperation: CoreDataOperation {
                 promise.failure(op.error!)
             }
         }
-        
         return promise.future
     }
     
-    static func formatStatsResultsForAppleWatch(result: WatchStatsAddiction) -> WatchDictionary {
+    static func formatStatsResultsForAppleWatch(_ result: WatchStatsAddiction) -> WatchDictionary {
         var dict = WatchDictionary()
         dict["name"] = result.addiction
         dict["value"] = result.values.map { [$0.value, $0.date] }

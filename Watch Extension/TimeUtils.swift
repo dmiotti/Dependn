@@ -8,8 +8,8 @@
 
 import UIKit
 
-func stringFromTimeInterval(interval: TimeInterval) -> String {
-    let time = hoursMinutesSecondsFromInterval(interval: interval)
+func stringFromTimeInterval(_ interval: TimeInterval) -> String {
+    let time = hoursMinutesSecondsFromInterval(interval)
     
     var str = ""
     if time.hours > 0 {
@@ -20,15 +20,15 @@ func stringFromTimeInterval(interval: TimeInterval) -> String {
         str += "\(time.seconds)s"
     }
     
-    if let fraction = fractionFromInterval(interval: interval) {
+    if let fraction = fractionFromInterval(interval) {
         str += fraction
     }
     
     return str
 }
 
-private func fractionFromInterval(interval: TimeInterval) -> String? {
-    let time = hoursMinutesSecondsFromInterval(interval: interval)
+private func fractionFromInterval(_ interval: TimeInterval) -> String? {
+    let time = hoursMinutesSecondsFromInterval(interval)
     if time.hours <= 0 || time.minutes < 15 {
         return nil
     }
@@ -42,7 +42,7 @@ private func fractionFromInterval(interval: TimeInterval) -> String? {
     return String(numerator: 3, denominator: 4)
 }
 
-private func hoursMinutesSecondsFromInterval(interval: TimeInterval) -> (hours: Int, minutes: Int, seconds: Int) {
+private func hoursMinutesSecondsFromInterval(_ interval: TimeInterval) -> (hours: Int, minutes: Int, seconds: Int) {
     let ti = Int(interval)
     let seconds = ti % 60
     let minutes = (ti / 60) % 60
@@ -58,7 +58,7 @@ public extension String {
         // build numerator
         let one = "\(numerator)"
         for char in one.characters {
-            if let num = Int(String(char)), let val = superscriptFromInt(num: num) {
+            if let num = Int(String(char)), let val = superscriptFromInt(num) {
                 result.append(val)
             }
         }
@@ -67,7 +67,7 @@ public extension String {
         let two = "\(denominator)"
         result.append("/")
         for char in two.characters {
-            if let num = Int(String(char)), let val = subscriptFromInt(num: num) {
+            if let num = Int(String(char)), let val = subscriptFromInt(num) {
                 result.append(val)
             }
         }
@@ -76,7 +76,7 @@ public extension String {
     }
 }
 
-private func superscriptFromInt(num: Int) -> String? {
+private func superscriptFromInt(_ num: Int) -> String? {
     let superscriptDigits: [Int: String] = [
         0: "\u{2070}",
         1: "\u{00B9}",
@@ -91,7 +91,7 @@ private func superscriptFromInt(num: Int) -> String? {
     return superscriptDigits[num]
 }
 
-private func subscriptFromInt(num: Int) -> String? {
+private func subscriptFromInt(_ num: Int) -> String? {
     let subscriptDigits: [Int: String] = [
         0: "\u{2080}",
         1: "\u{2081}",

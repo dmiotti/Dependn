@@ -10,9 +10,9 @@ import WatchKit
 import Foundation
 
 enum NewRecordRowType: Int {
-    case Addiction
-    case Place
-    case Intensity
+    case addiction
+    case place
+    case intensity
     
     static let count: Int = {
         var max: Int = 0
@@ -66,19 +66,19 @@ final class NewRecordInterfaceController: WKInterfaceController {
             rowCtrl.titleLbl.setText(nil)
             
             switch row {
-            case .Addiction:
+            case .addiction:
                 if let selectedAddiction = selectedAddiction {
                     rowCtrl.valueLbl.setText(selectedAddiction.name)
                 } else {
                     rowCtrl.valueLbl.setText(nil)
                 }
-            case .Place:
+            case .place:
                 if let selectedPlace = selectedPlace {
                     rowCtrl.valueLbl.setText(selectedPlace.name)
                 } else {
                     rowCtrl.valueLbl.setText(nil)
                 }
-            case .Intensity:
+            case .intensity:
                 let roundedIntensity = Int(round(selectedIntensity))
                 rowCtrl.valueLbl.setText("\(roundedIntensity)")
                 rowCtrl.valueLbl.setTextColor(.white)
@@ -94,11 +94,11 @@ final class NewRecordInterfaceController: WKInterfaceController {
     override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
         if let row = NewRecordRowType(rawValue: rowIndex) {
             switch row {
-            case .Addiction:
+            case .addiction:
                 presentController(withName: "AddictionList", context: nil)
-            case .Place:
+            case .place:
                 presentController(withName: "PlaceList", context: nil)
-            case .Intensity:
+            case .intensity:
                 presentController(withName: "IntensityChooser", context: nil)
             }
         }

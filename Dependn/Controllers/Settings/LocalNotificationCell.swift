@@ -21,14 +21,14 @@ final class LocalNotificationCell: SHCommonInitTableViewCell {
         super.commonInit()
 
         dateLbl.textColor = UIColor.appBlackColor()
-        dateLbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightThin)
+        dateLbl.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightThin)
 
         titleLbl.textColor = UIColor.appBlackColor()
-        titleLbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightBold)
+        titleLbl.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightBold)
         titleLbl.numberOfLines = 0
 
         bodyLbl.textColor = UIColor.appBlackColor()
-        bodyLbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+        bodyLbl.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)
         bodyLbl.numberOfLines = 0
 
         contentView.addSubview(dateLbl)
@@ -46,17 +46,17 @@ final class LocalNotificationCell: SHCommonInitTableViewCell {
         bodyLbl.text = nil
     }
 
-    private func configureLayoutConstraints() {
-        dateLbl.snp_makeConstraints {
+    fileprivate func configureLayoutConstraints() {
+        dateLbl.snp.makeConstraints {
             $0.top.equalTo(contentView).offset(5)
             $0.left.equalTo(contentView).offset(25)
         }
-        titleLbl.snp_makeConstraints {
-            $0.top.equalTo(dateLbl.snp_bottom).offset(5)
+        titleLbl.snp.makeConstraints {
+            $0.top.equalTo(dateLbl.snp.bottom).offset(5)
             $0.left.equalTo(dateLbl)
         }
-        bodyLbl.snp_makeConstraints {
-            $0.top.equalTo(titleLbl.snp_bottom).offset(2)
+        bodyLbl.snp.makeConstraints {
+            $0.top.equalTo(titleLbl.snp.bottom).offset(2)
             $0.left.equalTo(dateLbl)
             $0.bottom.lessThanOrEqualTo(contentView)
         }

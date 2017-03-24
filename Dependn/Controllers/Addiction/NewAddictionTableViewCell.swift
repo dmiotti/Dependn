@@ -13,19 +13,19 @@ final class NewAddictionTableViewCell: SHCommonInitTableViewCell {
     
     static let reuseIdentifier = "NewAddictionTableViewCell"
     
-    private var titleLbl: UILabel!
+    fileprivate var titleLbl: UILabel!
     
     override func commonInit() {
         super.commonInit()
         
         titleLbl = UILabel()
-        titleLbl.textAlignment = .Center
+        titleLbl.textAlignment = .center
         titleLbl.textColor = UIColor.appBlueColor()
         titleLbl.text = L("search.add_addiction")
-        titleLbl.font = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+        titleLbl.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)
         contentView.addSubview(titleLbl)
         
-        titleLbl.snp_makeConstraints {
+        titleLbl.snp.makeConstraints {
             $0.edges.equalTo(contentView)
         }
     }

@@ -10,6 +10,8 @@ import UIKit
 import SwiftHelpers
 import CoreData
 import SwiftyUserDefaults
+import UserNotifications
+import UserNotificationsUI
 
 /// Schedule the next push
 /// This push should be sent
@@ -18,12 +20,12 @@ import SwiftyUserDefaults
 // 3. Schedule a push
 final class PushSchedulerOperation: SHOperation {
 
-    static func schedule(completion: (Void -> Void)? = nil) {
-        let queue = NSOperationQueue()
+    static func schedule(_ completion: ((Void) -> Void)? = nil) {
+        let queue = OperationQueue()
         let context = CoreDataStack.shared.managedObjectContext
         let op = PushSchedulerOperation(context: context)
         if let completion = completion {
-            let completeOp = NSBlockOperation {
+            let completeOp = BlockOperation {
                 completion()
             }
 
@@ -33,15 +35,15 @@ final class PushSchedulerOperation: SHOperation {
         queue.addOperation(op)
     }
 
-    private(set) var error: NSError?
+    fileprivate(set) var error: NSError?
 
-    private let context: NSManagedObjectContext
-    private let dateFormatter: NSDateFormatter
+    fileprivate let context: NSManagedObjectContext
+    fileprivate let dateFormatter: DateFormatter
 
     init(context: NSManagedObjectContext) {
-        self.context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        self.context.parentContext = context
-        self.dateFormatter = NSDateFormatter()
+        self.context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        self.context.parent = context
+        self.dateFormatter = DateFormatter()
         self.dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
     }
 
@@ -53,10 +55,10 @@ final class PushSchedulerOperation: SHOperation {
         }
 
         // Cancel all others local notifications
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
 
         // 2. Get count per addiction for the current day
-        context.performBlockAndWait {
+        context.performAndWait {
             do {
                 let addictions = try Addiction.getAllAddictions(inContext: self.context)
 
@@ -67,13 +69,13 @@ final class PushSchedulerOperation: SHOperation {
 
                 let rawValue = Defaults[.notificationTypes]
                 let types = NotificationTypes(rawValue: rawValue)
-                let now = NSDate()
+                let now = Date()
 
-                if types.contains(.Daily) {
+                if types.contains(.daily) {
                     var obfuscatedAddictions = [String]()
 
                     // 3. Prepare daily push
-                    let fireDate: NSDate
+                    let fireDate: Date
                     if now.hour < 8 {
                         fireDate = now.beginningOfDay + 8.hour + 1.minute
                     } else {
@@ -84,53 +86,36 @@ final class PushSchedulerOperation: SHOperation {
 
                     var pushStrings = [String]()
                     for addiction in addictions {
-                        let countInRange = Record.countInRange(addiction,
-                            start:      dayBefore.beginningOfDay,
-                            end:        dayBefore.endOfDay,
-                            isDesire:   false,
-                            inContext:  self.context)
-                        let name = addiction.name
-                        let obsfuscated = name.substringToIndex(name.startIndex.advancedBy(3))
-                        pushStrings.append("\(obsfuscated). \(countInRange)")
-                        obfuscatedAddictions.append(obsfuscated)
+                        if let countInRange = try? Record.countInRange(addiction, start: dayBefore.beginningOfDay, end: dayBefore.endOfDay, isDesire: false, inContext: self.context) {
+                            let name = addiction.name
+                            let obsfuscated = name.substring(to: name.characters.index(name.startIndex, offsetBy: 3))
+                            pushStrings.append("\(obsfuscated). \(countInRange)")
+                            obfuscatedAddictions.append(obsfuscated)
+                        }
                     }
 
                     let title = L("daily.push.title")
-                    let body = pushStrings.joinWithSeparator(", ")
-
-                    let n = UILocalNotification()
-                    n.fireDate = fireDate
-                    n.alertTitle = "Dependn'"
-                    n.alertBody = "\(title): \(body)"
-                    n.timeZone = NSTimeZone.localTimeZone()
-                    UIApplication.sharedApplication().scheduleLocalNotification(n)
-
-                    PushSchedulerOperation.printLocalNotification(n)
+                    let body = pushStrings.joined(separator: ", ")
+                    self.scheduleNotification(at: fireDate, body: "\(title): \(body)")
 
                     /// schedule an empty push for next days
-                    for i in 1..<29 {
+                    1.month.inDays.toInt.each { i in
                         let nextDate = (fireDate + i.days).beginningOfDay + 8.hour + 1.minute
                         let textes = obfuscatedAddictions.map {
                             return "\($0). 0"
                         }
-                        let body = textes.joinWithSeparator(", ")
-                        let n = UILocalNotification()
-                        n.fireDate = nextDate
-                        n.alertBody = "\(title): \(body)"
-                        n.timeZone = NSTimeZone.localTimeZone()
-                        UIApplication.sharedApplication().scheduleLocalNotification(n)
-
-                        PushSchedulerOperation.printLocalNotification(n)
+                        let body = textes.joined(separator: ", ")
+                        self.scheduleNotification(at: nextDate, body: "\(title): \(body)")
                     }
                 }
 
-                if types.contains(.Weekly) {
+                if types.contains(.weekly) {
                     // 4. Schedule de weekly push
-                    let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-                    if let comps = calendar?.components([.Year, .Month, .WeekOfYear, .Weekday], fromDate: now) {
+                    let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+                    if let comps = (calendar as NSCalendar?)?.components([.year, .month, .weekOfYear, .weekday], from: now) {
                         let weekday = comps.weekday
-                        let daysToMonday = (9 - weekday) % 7
-                        var nextMonday = now.dateByAddingTimeInterval(60*60*24*daysToMonday).beginningOfDay
+                        let daysToMonday = (9 - weekday!) % 7
+                        var nextMonday = now.addingTimeInterval(60*60*24*daysToMonday).beginningOfDay
                         if nextMonday.timeIntervalSinceNow < 0 {
                             nextMonday = nextMonday + 7.days
                         }
@@ -138,27 +123,17 @@ final class PushSchedulerOperation: SHOperation {
                         var pushStrings = [String]()
 
                         for addiction in addictions {
-                            let countInRange = Record.countInRange(addiction,
-                                start:      previousMonday,
-                                end:        nextMonday,
-                                isDesire:   false,
-                                inContext:  self.context)
-                            let name = addiction.name
-                            let obsfuscated = name.substringToIndex(name.startIndex.advancedBy(3))
-                            pushStrings.append("\(obsfuscated). \(countInRange)")
+                            if let countInRange = try? Record.countInRange(addiction, start: previousMonday, end: nextMonday, isDesire: false, inContext: self.context) {
+                                let name = addiction.name
+                                let obsfuscated = name.substring(to: name.characters.index(name.startIndex, offsetBy: 3))
+                                pushStrings.append("\(obsfuscated). \(countInRange)")
+                            }
                         }
 
                         let fireDate = nextMonday + 8.hour + 2.minutes
                         let title = L("weekly.push.title")
-                        let body = pushStrings.joinWithSeparator(", ")
-
-                        let n = UILocalNotification()
-                        n.fireDate = fireDate
-                        n.alertBody = "\(title): \(body)"
-                        n.timeZone = NSTimeZone.localTimeZone()
-                        UIApplication.sharedApplication().scheduleLocalNotification(n)
-
-                        PushSchedulerOperation.printLocalNotification(n)
+                        let body = pushStrings.joined(separator: ", ")
+                        self.scheduleNotification(at: fireDate, body: "\(title): \(body)")
                     }
                 }
             } catch let err as NSError {
@@ -168,27 +143,23 @@ final class PushSchedulerOperation: SHOperation {
 
         finish()
     }
+    
+    fileprivate func scheduleNotification(at date: Date, body: String) {
+        let content = UNMutableNotificationContent()
+        content.title = "Dependn'"
+        content.body = body
+        content.sound = UNNotificationSound.default()
+        let triggerDate = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second,], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+    }
 
-    private func isPushAccepted() -> Bool {
-        let userSettings = UIApplication.sharedApplication().currentUserNotificationSettings()
-        guard let settings = userSettings where settings.types.contains(.Alert) else {
+    fileprivate func isPushAccepted() -> Bool {
+        let userSettings = UIApplication.shared.currentUserNotificationSettings
+        guard let settings = userSettings, settings.types.contains(.alert) else {
             return false
         }
         return true
     }
-
-
-    private let debugDateFormatter = NSDateFormatter(dateFormat: "yyyy-MM-dd HH:mm")
-
-    static func printLocalNotification(notification: UILocalNotification) {
-        #if DEBUG
-        let formatter = NSDateFormatter(dateFormat: "yyyy-MM-dd HH:mm:ss")
-        let date = formatter.stringFromDate(notification.fireDate!)
-        let title = notification.alertTitle!
-        let body = notification.alertBody!
-
-        print("[Dependn'] Scheduling daily push: \n\t\(date)\n\t\(title)\n\t\(body)\n")
-        #endif
-    }
-
 }

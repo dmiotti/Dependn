@@ -14,7 +14,6 @@ import CocoaLumberjack
 import SwiftHelpers
 import WatchConnectivity
 import BrightFutures
-import AirshipKit
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,7 +26,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: Initializers
         
         init?(fullType: String) {
-            guard let last = fullType.componentsSeparatedByString(".").last else {
+            guard let last = fullType.components(separatedBy: ".").last else {
                 return nil
             }
             
@@ -37,7 +36,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: Properties
         
         var type: String {
-            return NSBundle.mainBundle().bundleIdentifier! + ".\(self.rawValue)"
+            return Bundle.main.bundleIdentifier! + ".\(self.rawValue)"
         }
     }
     
@@ -47,7 +46,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Properties
 
-    private(set) var checkForPasscode: Bool = true
+    fileprivate(set) var checkForPasscode: Bool = true
     
     var window: UIWindow?
     
@@ -56,19 +55,16 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Application Life Cycle
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Register defaults properties in Settings app
-        let defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = UserDefaults.standard
         let appDefaults = [ "trackingEnabled": true ]
-        defaults.registerDefaults(appDefaults)
+        defaults.register(defaults: appDefaults)
         defaults.synchronize()
         
         // Setup Fabric
         Fabric.with([Crashlytics.self])
-
-        UAirship.takeOff()
-        UAirship.push().autobadgeEnabled = true
         
         StyleSheet.customizeAppearance(window)
         
@@ -78,7 +74,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         var shouldPerformAdditionalDelegateHandling = true
         
         // If a shortcut was launched, display its information and take the appropriate action
-        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
             
             launchedShortcutItem = shortcutItem
             
@@ -92,9 +88,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
                 type: ShortcutIdentifier.Add.type,
                 localizedTitle: NSLocalizedString("shortcut.addentry.title", comment: ""),
                 localizedSubtitle: NSLocalizedString("shortcut.addentry.subtitle", comment: ""),
-                icon: UIApplicationShortcutIcon(type: .Add),
+                icon: UIApplicationShortcutIcon(type: .add),
                 userInfo: [
-                    AppDelegate.applicationShortcutUserInfoIconKey: UIApplicationShortcutIconType.Add.rawValue
+                    AppDelegate.applicationShortcutUserInfoIconKey: UIApplicationShortcutIconType.add.rawValue
                 ])
             
             application.shortcutItems = [ addShortcut ]
@@ -103,14 +99,14 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         return shouldPerformAdditionalDelegateHandling
     }
     
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
 
         var bgTask: UIBackgroundTaskIdentifier!
 
-        bgTask = application.beginBackgroundTaskWithExpirationHandler {
+        bgTask = application.beginBackgroundTask (expirationHandler: {
             application.endBackgroundTask(bgTask)
             bgTask = UIBackgroundTaskInvalid
-        }
+        })
 
         CoreDataStack.shared.saveContext()
         WatchSessionManager.sharedManager.updateApplicationContext()
@@ -122,89 +118,58 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             bgTask = UIBackgroundTaskInvalid
         }
 
-        NSOperationQueue().addOperation(schedulePush)
+        OperationQueue().addOperation(schedulePush)
     }
     
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         checkForPasscode = true
         showPasscodeIfNeeded()
     }
     
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         CoreDataStack.shared.saveContext()
     }
     
-    func applicationDidBecomeActive(application: UIApplication) {
-        UAirship.push().resetBadge()
-        UAirship.push().updateRegistration()
-
+    func applicationDidBecomeActive(_ application: UIApplication) {
         showPasscodeIfNeeded()
 
         guard let shortcutItem = launchedShortcutItem else {
             return
         }
 
-        handleShortcutItem(shortcutItem)
+        _ = handleShortcutItem(shortcutItem)
         launchedShortcutItem = nil
     }
     
-    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         launchedShortcutItem = shortcutItem
         completionHandler(true)
     }
 
     // MARK: - Pushes
 
-    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        UAirship.push().appRegisteredUserNotificationSettings()
-
-        if notificationSettings.types.contains(.Alert) {
-            NSNotificationCenter.defaultCenter().postNotificationName(kUserAcceptPushPermissions, object: nil, userInfo: nil)
+    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types.contains(.alert) {
+            NotificationCenter.default.post(name: Notification.Name(rawValue: kUserAcceptPushPermissions), object: nil, userInfo: nil)
 
             PushSchedulerOperation.schedule()
             application.registerForRemoteNotifications()
         } else {
-            NSNotificationCenter.defaultCenter().postNotificationName(kUserRejectPushPermissions, object: nil, userInfo: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: kUserRejectPushPermissions), object: nil, userInfo: nil)
         }
     }
 
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        UAirship.push().userPushNotificationsEnabled = true
-        UAirship.push().appRegisteredForRemoteNotificationsWithDeviceToken(deviceToken)
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Analytics.instance.trackDeviceToken(deviceToken)
     }
 
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
 
-    }
-
-    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        print("Application did receive local notification: \(PushSchedulerOperation.printLocalNotification(notification))")
-    }
-
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        UAirship.push().appReceivedRemoteNotification(userInfo, applicationState: application.applicationState)
-    }
-
-    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-        UAirship.push().appReceivedActionWithIdentifier(identifier!,
-                                                        notification: userInfo,
-                                                        applicationState: application.applicationState,
-                                                        completionHandler: completionHandler)
-    }
-
-    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-        
-        UAirship.push().appReceivedActionWithIdentifier(identifier!,
-                                                        notification: userInfo,
-                                                        responseInfo: responseInfo,
-                                                        applicationState: application.applicationState,
-                                                        completionHandler: completionHandler)
     }
     
     // MARK: - Handle shortcut items
     
-    private func handleShortcutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+    fileprivate func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
         guard ShortcutIdentifier(fullType: shortcutItem.type) != nil else {
             return false
         }
@@ -231,10 +196,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Passcode management
     
-    private var hidingNav: SHStatusBarNavigationController?
-    private var lastPasscodeShown: NSDate?
+    fileprivate var hidingNav: SHStatusBarNavigationController?
+    fileprivate var lastPasscodeShown: Date?
     
-    private func showPasscodeIfNeeded() {
+    fileprivate func showPasscodeIfNeeded() {
         guard
             checkForPasscode &&
             hidingNav == nil &&
@@ -246,28 +211,28 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
         checkForPasscode = false
         
-        let now = NSDate()
-        if let lastShown = lastPasscodeShown, lastShown.timeIntervalSinceDate(now) < 15 * 60 {
+        let now = Date()
+        if let lastShown = lastPasscodeShown, lastShown.timeIntervalSince(now) < 15 * 60 {
             return
         }
         
         presentPasscode()
     }
     
-    private func presentPasscode() {
-        if let rootViewController = window?.rootViewController, rootViewController.isViewLoaded() {
+    fileprivate func presentPasscode() {
+        if let rootViewController = window?.rootViewController, rootViewController.isViewLoaded {
             var topController = rootViewController
             while let top = topController.presentedViewController {
                 topController = top
             }
             
-            lastPasscodeShown = NSDate()
+            lastPasscodeShown = Date()
             
             let passcodeViewController = PasscodeViewController()
             hidingNav = SHStatusBarNavigationController(rootViewController: passcodeViewController)
-            hidingNav!.statusBarStyle = .LightContent
-            hidingNav!.modalTransitionStyle = .CrossDissolve
-            topController.presentViewController(hidingNav!, animated: false, completion: nil)
+            hidingNav!.statusBarStyle = .lightContent
+            hidingNav!.modalTransitionStyle = .crossDissolve
+            topController.present(hidingNav!, animated: false, completion: nil)
         }
     }
 }

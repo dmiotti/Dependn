@@ -13,14 +13,14 @@ final class HistoryTableViewCell: SHCommonInitTableViewCell {
     
     static let reuseIdentifier = "HistoryTableViewCell"
     
-    private(set) var circleTypeView: RecordCircleTypeView!
-    private(set) var dateLbl: UILabel!
-    private(set) var intensityCircle: IntensityGradientView!
+    fileprivate(set) var circleTypeView: RecordCircleTypeView!
+    fileprivate(set) var dateLbl: UILabel!
+    fileprivate(set) var intensityCircle: IntensityGradientView!
     
     override func commonInit() {
         super.commonInit()
         
-        accessoryType = .DisclosureIndicator
+        accessoryType = .disclosureIndicator
         
         circleTypeView = RecordCircleTypeView()
         contentView.addSubview(circleTypeView)
@@ -35,24 +35,24 @@ final class HistoryTableViewCell: SHCommonInitTableViewCell {
         configureLayoutConstraints()
     }
     
-    private func configureLayoutConstraints() {
-        circleTypeView.snp_makeConstraints {
+    fileprivate func configureLayoutConstraints() {
+        circleTypeView.snp.makeConstraints {
             $0.centerY.equalTo(contentView)
             $0.left.equalTo(contentView).offset(20)
             $0.width.height.equalTo(30)
         }
         
-        intensityCircle.snp_makeConstraints {
+        intensityCircle.snp.makeConstraints {
             $0.centerY.equalTo(contentView)
             $0.right.equalTo(contentView)
             $0.width.height.equalTo(28)
         }
         
-        dateLbl.snp_makeConstraints {
-            $0.left.equalTo(circleTypeView.snp_right).offset(14)
+        dateLbl.snp.makeConstraints {
+            $0.left.equalTo(circleTypeView.snp.right).offset(14)
             $0.top.equalTo(contentView)
             $0.bottom.equalTo(contentView)
-            $0.right.equalTo(intensityCircle.snp_left).offset(-10)
+            $0.right.equalTo(intensityCircle.snp.left).offset(-10)
         }
     }
 

@@ -10,15 +10,15 @@ import UIKit
 
 public struct DependnProducts {
     
-    private static let Prefix = "com.davidmiotti.dependn."
+    fileprivate static let Prefix = "com.davidmiotti.dependn."
     
     public static let ExportXLS = Prefix + "export_xls"
     
-    private static let productIdentifiers: Set<ProductIdentifier> = [ DependnProducts.ExportXLS ]
+    fileprivate static let productIdentifiers: Set<ProductIdentifier> = [ DependnProducts.ExportXLS ]
     
     public static let store = IAPHelper(productIds: DependnProducts.productIdentifiers)
 }
 
-func resourceNameForProductIdentifier(productIdentifier: String) -> String? {
-    return productIdentifier.componentsSeparatedByString(".").last
+func resourceNameForProductIdentifier(_ productIdentifier: String) -> String? {
+    return productIdentifier.components(separatedBy: ".").last
 }

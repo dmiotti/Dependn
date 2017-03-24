@@ -12,8 +12,8 @@ import CoreData
 import CocoaLumberjack
 
 struct TimeRange {
-    let start: NSDate
-    let end: NSDate
+    let start: Date
+    let end: Date
 }
 
 final class AverageTimeInBetweenTwoTakesOperation: CoreDataOperation {
@@ -21,7 +21,7 @@ final class AverageTimeInBetweenTwoTakesOperation: CoreDataOperation {
     let addiction: Addiction
     let range: TimeRange
     
-    private(set) var average: NSTimeInterval?
+    fileprivate(set) var average: TimeInterval?
     
     init(addiction: Addiction, range: TimeRange) {
         self.addiction = addiction
@@ -29,26 +29,26 @@ final class AverageTimeInBetweenTwoTakesOperation: CoreDataOperation {
     }
     
     override func execute() {
-        let req = NSFetchRequest(entityName: Record.entityName)
+        let req = NSFetchRequest<NSFetchRequestResult>(entityName: Record.entityName)
         let addictionPredicate = NSPredicate(format: "addiction == %@", addiction)
-        let rangePredicate = NSPredicate(format: "date >= %@ AND date <= %@", range.start, range.end)
+        let rangePredicate = NSPredicate(format: "date >= %@ AND date <= %@", range.start as NSDate, range.end as NSDate)
         req.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [addictionPredicate, rangePredicate])
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
         
-        context.performBlockAndWait {
+        context.performAndWait {
             do {
-                let results = try self.context.executeFetchRequest(req) as! [Record]
-                var values = [NSTimeInterval]()
-                var lastDate: NSDate?
+                let results = try self.context.fetch(req) as! [Record]
+                var values = [TimeInterval]()
+                var lastDate: Date?
                 for result in results {
                     if let last = lastDate {
-                        let interval = last.timeIntervalSinceDate(result.date)
+                        let interval = last.timeIntervalSince(result.date as Date)
                         values.append(interval)
                     }
-                    lastDate = result.date
+                    lastDate = result.date as Date
                 }
                 if values.count > 0 {
-                    self.average = values.reduce(NSTimeInterval(0), combine: +) / NSTimeInterval(values.count)
+                    self.average = values.reduce(TimeInterval(0), +) / TimeInterval(values.count)
                 }
             } catch let err as NSError {
                 DDLogError("Error while calculating average between two takes: \(err)")

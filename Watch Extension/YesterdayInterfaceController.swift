@@ -11,8 +11,8 @@ import Foundation
 
 final class YesterdayInterfaceController: DayInterfaceController {
     
-    override func loadData(data: WatchStatsAddiction) {
-        super.loadData(data: data)
+    override func loadData(_ data: WatchStatsAddiction) {
+        super.loadData(data)
         
         let value = data.values[1]
         valueLbl.setText(value.value)

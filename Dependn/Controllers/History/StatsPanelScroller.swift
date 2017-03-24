@@ -15,10 +15,10 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
         }
     }
 
-    private var scrollView: UIScrollView!
-    private var scrollContainerView: UIView!
-    private var pageControl: UIPageControl!
-    private var blueBackgroundView: UIView!
+    fileprivate var scrollView: UIScrollView!
+    fileprivate var scrollContainerView: UIView!
+    fileprivate var pageControl: UIPageControl!
+    fileprivate var blueBackgroundView: UIView!
 
     override func commonInit() {
         super.commonInit()
@@ -31,10 +31,10 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
 
         scrollView = UIScrollView()
         scrollView.delegate = self
-        scrollView.pagingEnabled = true
+        scrollView.isPagingEnabled = true
         scrollView.scrollsToTop = false
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.directionalLockEnabled = true
+        scrollView.isDirectionalLockEnabled = true
         scrollView.alwaysBounceHorizontal = true
         addSubview(scrollView)
 
@@ -42,20 +42,20 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
         scrollView.addSubview(scrollContainerView)
         
         pageControl = UIPageControl()
-        pageControl.tintColor = UIColor.whiteColor()
-        pageControl.addTarget(self, action: #selector(StatsPanelScroller.pageControlValueChanged(_:)), forControlEvents: .ValueChanged)
+        pageControl.tintColor = UIColor.white
+        pageControl.addTarget(self, action: #selector(StatsPanelScroller.pageControlValueChanged(_:)), for: .valueChanged)
         addSubview(pageControl)
 
         configureLayoutConstraints()
     }
     
-    func pageControlValueChanged(pc: UIPageControl) {
+    func pageControlValueChanged(_ pc: UIPageControl) {
         var offset = scrollView.contentOffset
         offset.x = CGFloat(pc.currentPage) * scrollView.frame.size.width
         scrollView.setContentOffset(offset, animated: true)
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset
         let pageWidth = scrollView.frame.size.width
         let frac = offset.x / pageWidth
@@ -69,7 +69,7 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
     
     
     // Animate the transition between stats
-    private func performTransform() {
+    fileprivate func performTransform() {
         let numberOfPages = pageControl.numberOfPages
         let pageWidth = scrollView.frame.size.width
         let currentXOffset = range(scrollView.contentOffset.x, minimum: 0, maximum: pageWidth * CGFloat(numberOfPages))
@@ -100,13 +100,13 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
      
      - Returns: `minimum` if `value` is less than `minimum`, `maximum` if `value` is more than `value`, `value` otherwise
      */
-    func range<T: Comparable>(value: T, minimum: T, maximum: T) -> T {
+    func range<T: Comparable>(_ value: T, minimum: T, maximum: T) -> T {
         return max(min(value, maximum), minimum)
     }
     
-    private var statsBoards = [StatsPanelView]()
+    fileprivate var statsBoards = [StatsPanelView]()
 
-    private func buildBoard() {
+    fileprivate func buildBoard() {
         for board in statsBoards {
             board.removeFromSuperview()
         }
@@ -115,17 +115,17 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
         
         pageControl.numberOfPages = addictions.count
         
-        for (index, addiction) in addictions.enumerate() {
+        for (index, addiction) in addictions.enumerated() {
             let board = StatsPanelView()
             board.updateWithAddiction(addiction)
             scrollContainerView.addSubview(board)
-            board.snp_makeConstraints {
+            board.snp.makeConstraints {
                 $0.top.equalTo(scrollContainerView)
                 $0.bottom.equalTo(scrollContainerView)
                 $0.width.equalTo(self)
                 
                 if let last = statsBoards.last {
-                    $0.left.equalTo(last.snp_right)
+                    $0.left.equalTo(last.snp.right)
                 } else {
                     $0.left.equalTo(scrollContainerView)
                 }
@@ -140,24 +140,24 @@ final class StatsPanelScroller: SHCommonInitView, UIScrollViewDelegate {
         layoutIfNeeded()
     }
 
-    private func configureLayoutConstraints() {
-        blueBackgroundView.snp_makeConstraints {
-            $0.bottom.equalTo(self.snp_top)
+    fileprivate func configureLayoutConstraints() {
+        blueBackgroundView.snp.makeConstraints {
+            $0.bottom.equalTo(self.snp.top)
             $0.left.equalTo(self)
             $0.right.equalTo(self)
             $0.height.equalTo(480)
         }
         
-        scrollView.snp_makeConstraints {
-            $0.edges.equalTo(self).offset(UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(self).inset(UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
         }
         
-        scrollContainerView.snp_makeConstraints {
+        scrollContainerView.snp.makeConstraints {
             $0.edges.equalTo(scrollView)
             $0.height.equalTo(self)
         }
         
-        pageControl.snp_makeConstraints {
+        pageControl.snp.makeConstraints {
             $0.left.equalTo(self)
             $0.right.equalTo(self)
             $0.height.equalTo(6)

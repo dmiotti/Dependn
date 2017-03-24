@@ -16,53 +16,53 @@ import CocoaLumberjack
 // MARK: - UIViewController
 final class AddRecordViewController: SHNoBackButtonTitleViewController {
     
-    private enum SectionType {
-        case Addiction
-        case DateAndPlace
-        case Intensity
-        case Optionals
+    fileprivate enum SectionType {
+        case addiction
+        case dateAndPlace
+        case intensity
+        case optionals
     }
     
-    private enum RowType {
-        case Addiction
-        case Date
-        case Place
-        case Intensity
-        case Feelings
-        case Comments
+    fileprivate enum RowType {
+        case addiction
+        case date
+        case place
+        case intensity
+        case feelings
+        case comments
     }
     
-    private struct Section {
+    fileprivate struct Section {
         var type: SectionType
         var items: [RowType]
     }
     
     /// Title segmented control
-    private var segmentedControl: UISegmentedControl!
+    fileprivate var segmentedControl: UISegmentedControl!
     
     /// User selected fields
-    private var tableView: UITableView!
+    fileprivate var tableView: UITableView!
     
-    private var cancelBtn: UIBarButtonItem!
-    private var doneBtn: UIBarButtonItem!
+    fileprivate var cancelBtn: UIBarButtonItem!
+    fileprivate var doneBtn: UIBarButtonItem!
     
-    private let locationManager = CLLocationManager()
-    private var userLocation: CLLocation?
+    fileprivate let locationManager = CLLocationManager()
+    fileprivate var userLocation: CLLocation?
     
-    private var editingStep: RowType?
+    fileprivate var editingStep: RowType?
     
     var record: Record?
     
-    private var sections = [Section]()
+    fileprivate var sections = [Section]()
     
     // MARK: - Editing Record properties
     
-    private var chosenDate = NSDate()
-    private var chosenAddiction: Addiction!
-    private var chosenPlace: Place?
-    private var chosenIntensity: Float = 3
-    private var chosenFeeling: String?
-    private var chosenComment: String?
+    fileprivate var chosenDate = Date()
+    fileprivate var chosenAddiction: Addiction!
+    fileprivate var chosenPlace: Place?
+    fileprivate var chosenIntensity: Float = 3
+    fileprivate var chosenFeeling: String?
+    fileprivate var chosenComment: String?
     
     // MARK: - View Lifecycle
     
@@ -70,17 +70,17 @@ final class AddRecordViewController: SHNoBackButtonTitleViewController {
         super.viewDidLoad()
         
         sections = [
-            Section(type: .Addiction, items: [ .Addiction ]),
-            Section(type: .DateAndPlace, items: [ .Date, .Place ]),
-            Section(type: .Intensity, items: [ .Intensity ]),
-            Section(type: .Optionals, items: [ .Feelings, .Comments ])
+            Section(type: .addiction, items: [ .addiction ]),
+            Section(type: .dateAndPlace, items: [ .date, .place ]),
+            Section(type: .intensity, items: [ .intensity ]),
+            Section(type: .optionals, items: [ .feelings, .comments ])
         ]
         
-        edgesForExtendedLayout = .None
+        edgesForExtendedLayout = []
         
         segmentedControl = UISegmentedControl(items: [ L("new_record.conso"), L("new_record.desire") ])
-        segmentedControl.setWidth(76, forSegmentAtIndex: 0)
-        segmentedControl.setWidth(76, forSegmentAtIndex: 1)
+        segmentedControl.setWidth(76, forSegmentAt: 0)
+        segmentedControl.setWidth(76, forSegmentAt: 1)
         segmentedControl.selectedSegmentIndex = 0
         navigationItem.titleView = segmentedControl
         
@@ -88,21 +88,21 @@ final class AddRecordViewController: SHNoBackButtonTitleViewController {
         
         view.backgroundColor = UIColor.lightBackgroundColor()
         
-        navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+        navigationController?.navigationBar.barTintColor = UIColor.white
         navigationController?.navigationBar.tintColor = UIColor.appBlueColor()
         
-        cancelBtn = UIBarButtonItem(title: L("new_record.cancel"), style: .Plain, target: self, action: #selector(AddRecordViewController.cancelBtnClicked(_:)))
-        cancelBtn.setTitleTextAttributes(StyleSheet.cancelBtnAttrs, forState: .Normal)
+        cancelBtn = UIBarButtonItem(title: L("new_record.cancel"), style: .plain, target: self, action: #selector(AddRecordViewController.cancelBtnClicked(_:)))
+        cancelBtn.setTitleTextAttributes(StyleSheet.cancelBtnAttrs, for: UIControlState())
         navigationItem.leftBarButtonItem = cancelBtn
         
         let doneText = record != nil ? L("new_record.modify") : L("new_record.add_btn")
-        doneBtn = UIBarButtonItem(title: doneText, style: .Done, target: self, action: #selector(AddRecordViewController.addBtnClicked(_:)))
-        doneBtn.setTitleTextAttributes(StyleSheet.doneBtnAttrs, forState: .Normal)
+        doneBtn = UIBarButtonItem(title: doneText, style: .done, target: self, action: #selector(AddRecordViewController.addBtnClicked(_:)))
+        doneBtn.setTitleTextAttributes(StyleSheet.doneBtnAttrs, for: UIControlState())
         navigationItem.rightBarButtonItem = doneBtn
         
         chosenAddiction = try! Addiction.getAllAddictionsOrderedByCount(inContext: CoreDataStack.shared.managedObjectContext).first
         
-        tableView = UITableView(frame: .zero, style: .Grouped)
+        tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.delegate = self
         tableView.dataSource = self
@@ -110,11 +110,11 @@ final class AddRecordViewController: SHNoBackButtonTitleViewController {
         tableView.sectionHeaderHeight = 0
         tableView.sectionFooterHeight = 0
         tableView.cellLayoutMarginsFollowReadableWidth = false
-        tableView.registerClass(AddictionTableViewCell.self,    forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
-        tableView.registerClass(NewDateTableViewCell.self,      forCellReuseIdentifier: NewDateTableViewCell.reuseIdentifier)
-        tableView.registerClass(NewPlaceTableViewCell.self,     forCellReuseIdentifier: NewPlaceTableViewCell.reuseIdentifier)
-        tableView.registerClass(NewIntensityTableViewCell.self, forCellReuseIdentifier: NewIntensityTableViewCell.reuseIdentifier)
-        tableView.registerClass(NewTextTableViewCell.self,      forCellReuseIdentifier: NewTextTableViewCell.reuseIdentifier)
+        tableView.register(AddictionTableViewCell.self,    forCellReuseIdentifier: AddictionTableViewCell.reuseIdentifier)
+        tableView.register(NewDateTableViewCell.self,      forCellReuseIdentifier: NewDateTableViewCell.reuseIdentifier)
+        tableView.register(NewPlaceTableViewCell.self,     forCellReuseIdentifier: NewPlaceTableViewCell.reuseIdentifier)
+        tableView.register(NewIntensityTableViewCell.self, forCellReuseIdentifier: NewIntensityTableViewCell.reuseIdentifier)
+        tableView.register(NewTextTableViewCell.self,      forCellReuseIdentifier: NewTextTableViewCell.reuseIdentifier)
         view.addSubview(tableView)
         
         configureLayoutConstraints()
@@ -134,40 +134,40 @@ final class AddRecordViewController: SHNoBackButtonTitleViewController {
     
     deinit {
         stopLocationManager()
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
-    private func fillWithRecord(record: Record) {
+    fileprivate func fillWithRecord(_ record: Record) {
         chosenAddiction = record.addiction
         chosenIntensity = record.intensity.floatValue
-        chosenDate      = record.date
+        chosenDate      = record.date as Date
         chosenPlace     = record.place
         chosenFeeling   = record.feeling
         chosenComment   = record.comment
         segmentedControl.selectedSegmentIndex = record.desire.boolValue ? 1 : 0
     }
     
-    private func configureLayoutConstraints() {
-        tableView.snp_makeConstraints {
+    fileprivate func configureLayoutConstraints() {
+        tableView.snp.makeConstraints {
             $0.edges.equalTo(view)
         }
     }
     
     // MARK: - Keyboard
     
-    private func registerNotificationObservers() {
-        let ns = NSNotificationCenter.defaultCenter()
-        ns.addObserver(self, selector: #selector(AddRecordViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        ns.addObserver(self, selector: #selector(AddRecordViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    fileprivate func registerNotificationObservers() {
+        let ns = NotificationCenter.default
+        ns.addObserver(self, selector: #selector(AddRecordViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        ns.addObserver(self, selector: #selector(AddRecordViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        let scrollViewRect = view.convertRect(tableView.frame, fromView: tableView.superview)
+    func keyboardWillShow(_ notification: Notification) {
+        let scrollViewRect = view.convert(tableView.frame, from: tableView.superview)
         if let rectValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let kbRect = view.convertRect(rectValue.CGRectValue(), fromView: nil)
+            let kbRect = view.convert(rectValue.cgRectValue, from: nil)
             
-            let hiddenScrollViewRect = CGRectIntersection(scrollViewRect, kbRect)
-            if !CGRectIsNull(hiddenScrollViewRect) {
+            let hiddenScrollViewRect = scrollViewRect.intersection(kbRect)
+            if !hiddenScrollViewRect.isNull {
                 var contentInsets = tableView.contentInset
                 contentInsets.bottom = hiddenScrollViewRect.size.height
                 tableView.contentInset = contentInsets
@@ -176,7 +176,7 @@ final class AddRecordViewController: SHNoBackButtonTitleViewController {
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         var contentInsets = tableView.contentInset
         contentInsets.bottom = 0
         tableView.contentInset = contentInsets
@@ -185,31 +185,31 @@ final class AddRecordViewController: SHNoBackButtonTitleViewController {
     
     // MARK: - UIBarButtonItems
     
-    func addBtnClicked(sender: UIBarButtonItem) {
+    func addBtnClicked(_ sender: UIBarButtonItem) {
         if let record = record {
             
             record.addiction = chosenAddiction
-            record.intensity = chosenIntensity
+            record.intensity = chosenIntensity.number
             record.feeling   = chosenFeeling
             record.comment   = chosenComment
             record.date      = chosenDate
             record.place     = chosenPlace
-            record.desire    = segmentedControl.selectedSegmentIndex == 1
+            record.desire    = (segmentedControl.selectedSegmentIndex == 1).number
             
         } else {
             
             let isDesire = segmentedControl.selectedSegmentIndex == 1
             
-            Record.insertNewRecord(chosenAddiction,
-                                   intensity: chosenIntensity,
-                                   feeling: chosenFeeling,
-                                   comment: chosenComment,
-                                   place: chosenPlace,
-                                   latitude: userLocation?.coordinate.latitude,
-                                   longitude: userLocation?.coordinate.longitude,
-                                   desire: isDesire,
-                                   date: chosenDate,
-                                   inContext: CoreDataStack.shared.managedObjectContext)
+            _ = Record.insertNewRecord(chosenAddiction,
+                                       intensity: chosenIntensity,
+                                       feeling: chosenFeeling,
+                                       comment: chosenComment,
+                                       place: chosenPlace,
+                                       latitude: userLocation?.coordinate.latitude,
+                                       longitude: userLocation?.coordinate.longitude,
+                                       desire: isDesire,
+                                       date: chosenDate,
+                                       inContext: CoreDataStack.shared.managedObjectContext)
             
             Analytics.instance.trackAddNewRecord(
                 chosenAddiction.name,
@@ -218,100 +218,100 @@ final class AddRecordViewController: SHNoBackButtonTitleViewController {
                 conso: !isDesire,
                 fromAppleWatch: false)
             
-            tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+            tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
         }
 
         PushSchedulerOperation.schedule()
         
-        dismissViewControllerAnimated(true, completion: { finished in
+        dismiss(animated: true, completion: { finished in
             WatchSessionManager.sharedManager.updateApplicationContext()
         })
     }
     
-    func cancelBtnClicked(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func cancelBtnClicked(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
 }
 
 // MARK: - UITableViewDataSource
 extension AddRecordViewController: UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sections[section].items.count
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let row = sections[indexPath.section].items[indexPath.row]
         switch row {
-        case .Addiction:
-            let cell = tableView.dequeueReusableCellWithIdentifier(
-                AddictionTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! AddictionTableViewCell
+        case .addiction:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: AddictionTableViewCell.reuseIdentifier, for: indexPath) as! AddictionTableViewCell
             cell.addiction = chosenAddiction
-            cell.accessoryType = .DisclosureIndicator
+            cell.accessoryType = .disclosureIndicator
             return cell
-        case .Date:
-            let cell = tableView.dequeueReusableCellWithIdentifier(NewDateTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewDateTableViewCell
+        case .date:
+            let cell = tableView.dequeueReusableCell(withIdentifier: NewDateTableViewCell.reuseIdentifier, for: indexPath) as! NewDateTableViewCell
             cell.date = chosenDate
             cell.delegate = self
             return cell
-        case .Place:
-            let cell = tableView.dequeueReusableCellWithIdentifier(NewPlaceTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewPlaceTableViewCell
+        case .place:
+            let cell = tableView.dequeueReusableCell(withIdentifier: NewPlaceTableViewCell.reuseIdentifier, for: indexPath) as! NewPlaceTableViewCell
             cell.chosenPlaceLbl.text = chosenPlace?.name.firstLetterCapitalization
             return cell
-        case .Intensity:
-            let cell = tableView.dequeueReusableCellWithIdentifier(NewIntensityTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! NewIntensityTableViewCell
+        case .intensity:
+            let cell = tableView.dequeueReusableCell(withIdentifier: NewIntensityTableViewCell.reuseIdentifier, for: indexPath) as! NewIntensityTableViewCell
             cell.delegate = self
             cell.updateIntensityWithProgress(chosenIntensity / 10.0)
             return cell
-        case .Feelings:
-            let cell = tableView.dequeueReusableCellWithIdentifier(NewTextTableViewCell.reuseIdentifier, forIndexPath:
+        case .feelings:
+            let cell = tableView.dequeueReusableCell(withIdentifier: NewTextTableViewCell.reuseIdentifier, for:
                 indexPath) as! NewTextTableViewCell
             cell.descLbl.text = L("new_record.feeling")
             cell.contentLbl.text = chosenFeeling
             return cell
-        case .Comments:
-            let cell = tableView.dequeueReusableCellWithIdentifier(NewTextTableViewCell.reuseIdentifier, forIndexPath:
+        case .comments:
+            let cell = tableView.dequeueReusableCell(withIdentifier: NewTextTableViewCell.reuseIdentifier, for:
                 indexPath) as! NewTextTableViewCell
             cell.descLbl.text = L("new_record.comment")
             cell.contentLbl.text = chosenComment
             return cell
         }
     }
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let type = sections[section].type
         switch type {
-        case .Addiction:
+        case .addiction:
             return 20
-        case .DateAndPlace:
+        case .dateAndPlace:
             return 20
-        case .Intensity:
+        case .intensity:
             return 40
-        case .Optionals:
+        case .optionals:
             return 40
         }
     }
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = TableHeaderView()
         
         let type = sections[section].type
         switch type {
-        case .Intensity:
-            header.title = L("new_record.intensity").uppercaseString
-        case .Optionals:
-            header.title = L("new_record.optional").uppercaseString
-        case .Addiction:
+        case .intensity:
+            header.title = L("new_record.intensity").uppercased()
+        case .optionals:
+            header.title = L("new_record.optional").uppercased()
+        case .addiction:
             break
-        case .DateAndPlace:
+        case .dateAndPlace:
             break
         }
         
         return header
     }
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let row = sections[indexPath.section].type
-        if row == .Intensity {
+        if row == .intensity {
             return 105.0
         }
         return 55.0
@@ -320,48 +320,48 @@ extension AddRecordViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension AddRecordViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         let row = sections[indexPath.section].items[indexPath.row]
         switch row {
-        case .Addiction:
+        case .addiction:
             let controller = SearchAdditionViewController()
             controller.selectedAddiction = chosenAddiction
             controller.delegate = self
             navigationController?.pushViewController(controller, animated: true)
-        case .Date:
+        case .date:
             break
-        case .Place:
+        case .place:
             showPlaces()
-        case .Intensity:
+        case .intensity:
             break
-        case .Feelings:
-            editingStep = .Feelings
+        case .feelings:
+            editingStep = .feelings
             showTextRecord()
-        case .Comments:
-            editingStep = .Comments
+        case .comments:
+            editingStep = .comments
             showTextRecord()
         }
     }
-    private func showPlaces() {
+    fileprivate func showPlaces() {
         let places = PlacesViewController()
         places.delegate = self
         places.selectedPlace = chosenPlace
         navigationController?.pushViewController(places, animated: true)
     }
-    private func showTextRecord() {
+    fileprivate func showTextRecord() {
         let controller = AddRecordTextViewController()
         controller.delegate = self
         switch editingStep! {
-        case .Feelings:
+        case .feelings:
             controller.updateTitle(L("new_record.feeling_subtitle"), blueBackground: false)
             controller.originalText = chosenFeeling
             if !Defaults[.hasSeenEmotionPlaceholder] {
                 controller.placeholder = L("new_record.feeling_placeholder")
                 Defaults[.hasSeenEmotionPlaceholder] = true
             }
-        case .Comments:
+        case .comments:
             controller.updateTitle(L("new_record.comment_subtitle"), blueBackground: false)
             controller.originalText = chosenComment
             controller.placeholder = L("new_record.comment_placeholder")
@@ -374,19 +374,19 @@ extension AddRecordViewController: UITableViewDelegate {
 
 // MARK - SearchAdditionViewControllerDelegate
 extension AddRecordViewController: SearchAdditionViewControllerDelegate {
-    func searchController(searchController: SearchAdditionViewController, didSelectAddiction addiction: Addiction) {
+    func searchController(_ searchController: SearchAdditionViewController, didSelectAddiction addiction: Addiction) {
         chosenAddiction = addiction
-        tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
     }
 }
 
 // MARK - AddRecordTextViewControllerDelegate
 extension AddRecordViewController: AddRecordTextViewControllerDelegate {
-    func addRecordTextViewController(controller: AddRecordTextViewController, didEnterText text: String?) {
+    func addRecordTextViewController(_ controller: AddRecordTextViewController, didEnterText text: String?) {
         switch editingStep! {
-        case .Feelings:
+        case .feelings:
             chosenFeeling = text
-        case .Comments:
+        case .comments:
             chosenComment = text
         default:
             break
@@ -399,26 +399,30 @@ extension AddRecordViewController: AddRecordTextViewControllerDelegate {
 
 // MARK - CLLocationManagerDelegate
 extension AddRecordViewController: CLLocationManagerDelegate {
-    private func launchLocationManager() {
+    fileprivate func launchLocationManager() {
         locationManager.requestWhenInUseAuthorization()
         locationManager.stopUpdatingLocation()
         locationManager.startUpdatingLocation()
     }
-    private func stopLocationManager() {
+    fileprivate func stopLocationManager() {
         locationManager.stopUpdatingLocation()
     }
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if record != nil || !Defaults[.useLocation] {
             return
         }
-        if status == .AuthorizedWhenInUse || status == .AuthorizedAlways {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
             launchLocationManager()
         } else {
             stopLocationManager()
         }
     }
-    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if record != nil || !Defaults[.useLocation] {
+            return
+        }
+        
+        guard let newLocation = locations.last else {
             return
         }
         
@@ -426,68 +430,67 @@ extension AddRecordViewController: CLLocationManagerDelegate {
         
         DDLogInfo("Location found \(newLocation)")
         
-        if let location = userLocation
-            where (chosenPlace == nil || chosenPlace?.name.characters.count == 0) {
+        if let location = userLocation, (chosenPlace == nil || chosenPlace?.name.characters.count == 0) {
             let op = NearestPlaceOperation(location: location, distance: 80)
             op.completionBlock = {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     if let placeId = op.place?.objectID {
                         let moc = CoreDataStack.shared.managedObjectContext
-                        let place = moc.objectWithID(placeId) as! Place
+                        let place = moc.object(with: placeId) as! Place
                         self.chosenPlace = place
-                        self.reloadRows([.Place])
+                        self.reloadRows([.place])
                     }
                 }
             }
-            let queue = NSOperationQueue()
+            let queue = OperationQueue()
             queue.addOperation(op)
         }
     }
     
-    private func indexPathForRowType(rowType: RowType) -> NSIndexPath? {
-        for (sectionIndex, section) in sections.enumerate() {
-            for (itemIndex, row) in section.items.enumerate() {
+    fileprivate func indexPathForRowType(_ rowType: RowType) -> IndexPath? {
+        for (sectionIndex, section) in sections.enumerated() {
+            for (itemIndex, row) in section.items.enumerated() {
                 if row == rowType {
-                    return NSIndexPath(forRow: itemIndex, inSection: sectionIndex)
+                    return IndexPath(row: itemIndex, section: sectionIndex)
                 }
             }
         }
         return nil
     }
     
-    private func reloadRows(rows: [RowType]) {
-        var indexPaths = [NSIndexPath]()
+    fileprivate func reloadRows(_ rows: [RowType]) {
+        var indexPaths = [IndexPath]()
         for rowType in rows {
             if let indexPath = self.indexPathForRowType(rowType) {
                 indexPaths.append(indexPath)
             }
         }
-        tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        tableView.reloadRows(at: indexPaths, with: .automatic)
     }
 }
 
 // MARK: - NewIntensityTableViewCellDelegate
 extension AddRecordViewController: NewIntensityTableViewCellDelegate {
-    func intensityCell(cell: NewIntensityTableViewCell, didChangeIntensity intensity: Float) {
+    func intensityCell(_ cell: NewIntensityTableViewCell, didChangeIntensity intensity: Float) {
         chosenIntensity = intensity * 10.0
     }
 }
 
 // MARK: - NewDateTableViewCellDelegate
 extension AddRecordViewController: NewDateTableViewCellDelegate {
-    func dateTableViewCell(cell: NewDateTableViewCell, didSelectDate date: NSDate) {
+    func dateTableViewCell(_ cell: NewDateTableViewCell, didSelectDate date: Date) {
         chosenDate = date
-        reloadRows([.Date])
+        reloadRows([.date])
     }
 }
 
 // MARK: - PlacesViewControllerDelegate
 extension AddRecordViewController: PlacesViewControllerDelegate {
-    func placeController(controller: PlacesViewController, didChoosePlace place: Place?) {
+    func placeController(_ controller: PlacesViewController, didChoosePlace place: Place?) {
         if let place = place {
             chosenPlace = place
-            reloadRows([.Place])
-            navigationController?.popViewControllerAnimated(true)
+            reloadRows([.place])
+            _ = navigationController?.popViewController(animated: true)
         }
     }
 }

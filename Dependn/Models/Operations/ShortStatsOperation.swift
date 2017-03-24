@@ -14,7 +14,7 @@ class StatsResult {
     var addiction: String
     var todayCount: Int?
     var thisWeekCount: Int?
-    var sinceLast: NSTimeInterval?
+    var sinceLast: TimeInterval?
     
     init(addiction: String) {
         self.addiction = addiction
@@ -25,7 +25,7 @@ final class ShortStatsOperation: CoreDataOperation {
     
     var results = [StatsResult]()
     
-    private let internalQueue = NSOperationQueue()
+    fileprivate let internalQueue = OperationQueue()
     
     var userAddictions: [Addiction]?
     
@@ -42,16 +42,16 @@ final class ShortStatsOperation: CoreDataOperation {
                 addictions = try Addiction.getAllAddictionsOrderedByCount(inContext: context)
             }
             
-            internalQueue.suspended = true
+            internalQueue.isSuspended = true
             
             var statOperations = [SHOperation]()
             
             for addiction in addictions {
                 let operations = setupOperationsForAddiction(addiction)
-                statOperations.appendContentsOf(operations)
+                statOperations.append(contentsOf: operations)
             }
             
-            let finalOp = NSBlockOperation {
+            let finalOp = BlockOperation {
                 self.finish()
             }
             
@@ -61,7 +61,7 @@ final class ShortStatsOperation: CoreDataOperation {
             
             internalQueue.addOperation(finalOp)
             
-            internalQueue.suspended = false
+            internalQueue.isSuspended = false
             
         } catch let err as NSError {
             self.error = err
@@ -69,11 +69,11 @@ final class ShortStatsOperation: CoreDataOperation {
         }
     }
     
-    private func setupOperationsForAddiction(addiction: Addiction) -> [SHOperation] {
+    fileprivate func setupOperationsForAddiction(_ addiction: Addiction) -> [SHOperation] {
         let statsResult = StatsResult(addiction: addiction.name)
         results.append(statsResult)
         
-        let now = NSDate()
+        let now = Date()
         
         let todayRange = TimeRange(start: now.beginningOfDay, end: now.endOfDay)
         let todayOp = CountOperation(addiction: addiction, range: todayRange)

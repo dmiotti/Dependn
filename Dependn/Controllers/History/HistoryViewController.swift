@@ -15,20 +15,20 @@ import CocoaLumberjack
 import SwiftyUserDefaults
 
 final class HistoryViewController: UIViewController {
-    
-    private var actionBtn: UIBarButtonItem!
-    private var exportBtn: UIBarButtonItem!
-    private var tableView: UITableView!
-    private var addBtn: UIButton!
-    private var statsView: StatsPanelScroller!
-    private var dateFormatter: NSDateFormatter!
-    private var emptyView: HistoryEmptyView!
-    
-    private let managedObjectContext = CoreDataStack.shared.managedObjectContext
-    
-    private let readDateFormatter = NSDateFormatter()
-    
-    private lazy var fetchedResultsController: NSFetchedResultsController = {
+
+    fileprivate var actionBtn: UIBarButtonItem!
+    fileprivate var exportBtn: UIBarButtonItem!
+    fileprivate var tableView: UITableView!
+    fileprivate var addBtn: UIButton!
+    fileprivate var statsView: StatsPanelScroller!
+    fileprivate var dateFormatter: DateFormatter!
+    fileprivate var emptyView: HistoryEmptyView!
+
+    fileprivate let managedObjectContext = CoreDataStack.shared.managedObjectContext
+
+    fileprivate let readDateFormatter = DateFormatter()
+
+    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Record> = { () -> NSFetchedResultsController<Record> in
         let controller = Record.historyFetchedResultsController(inContext: self.managedObjectContext)
         controller.delegate = self
         return controller
@@ -42,24 +42,24 @@ final class HistoryViewController: UIViewController {
         
         readDateFormatter.dateFormat = "EEEE dd MMMM yyyy"
         
-        edgesForExtendedLayout = .None
+        edgesForExtendedLayout = UIRectEdge()
         
         if let nav = navigationController as? SHStatusBarNavigationController {
-            nav.statusBarStyle = .LightContent
+            nav.statusBarStyle = .lightContent
         }
         
-        dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .NoStyle
-        dateFormatter.timeStyle = .ShortStyle
+        dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .none
+        dateFormatter.timeStyle = .short
         
-        actionBtn = UIBarButtonItem(image: UIImage(named: "settings_icon"), style: .Plain, target: self, action: #selector(HistoryViewController.actionBtnClicked(_:)))
+        actionBtn = UIBarButtonItem(image: UIImage(named: "settings_icon"), style: .plain, target: self, action: #selector(HistoryViewController.actionBtnClicked(_:)))
         navigationItem.leftBarButtonItem = actionBtn
         
-        exportBtn = UIBarButtonItem(image: UIImage(named: "export"), style: .Plain, target: self, action: #selector(HistoryViewController.exportBtnClicked(_:)))
+        exportBtn = UIBarButtonItem(image: UIImage(named: "export"), style: .plain, target: self, action: #selector(HistoryViewController.exportBtnClicked(_:)))
         
         statsView = StatsPanelScroller()
         
-        tableView = UITableView(frame: .zero, style: .Plain)
+        tableView = UITableView(frame: .zero, style: .plain)
         tableView.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0)
         tableView.backgroundColor = UIColor.lightBackgroundColor()
         tableView.separatorColor = UIColor.appSeparatorColor()
@@ -68,32 +68,32 @@ final class HistoryViewController: UIViewController {
         tableView.rowHeight = 55
         tableView.sectionHeaderHeight = 0
         tableView.sectionFooterHeight = 0
-        tableView.registerClass(HistoryTableViewCell.self,
+        tableView.register(HistoryTableViewCell.self,
             forCellReuseIdentifier: HistoryTableViewCell.reuseIdentifier)
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 120))
         view.addSubview(tableView)
-        
+
         emptyView = HistoryEmptyView()
         emptyView.alpha = 0
         view.addSubview(emptyView)
-        
-        addBtn = UIButton(type: .System)
-        addBtn.setImage(UIImage(named: "add")?.imageWithRenderingMode(.AlwaysOriginal), forState: .Normal)
-        addBtn.addTarget(self, action: #selector(HistoryViewController.addBtnClicked(_:)), forControlEvents: .TouchUpInside)
+
+        addBtn = UIButton(type: .system)
+        addBtn.setImage(UIImage(named: "add")?.withRenderingMode(.alwaysOriginal), for: UIControlState())
+        addBtn.addTarget(self, action: #selector(HistoryViewController.addBtnClicked(_:)), for: .touchUpInside)
         view.addSubview(addBtn)
-        
+
         configureLayoutConstraints()
-        
+
         configureNotificationObservers()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         reloadInterface()
         configureExportBtn()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         if !Defaults[.alreadyLaunched] {
@@ -102,36 +102,39 @@ final class HistoryViewController: UIViewController {
         } else if !Defaults[.pushAlreadyShown] && !PushPermissionViewController.isPermissionAccepted() {
             Defaults[.pushAlreadyShown] = true
             let perm = PushPermissionViewController()
-            presentViewController(perm, animated: true, completion: nil)
+            present(perm, animated: true, completion: nil)
         }
     }
     
-    private func configureExportBtn() {
-        if Record.hasAtLeastOneRecord(inContext: managedObjectContext) {
-            if navigationItem.rightBarButtonItem == nil {
-                navigationItem.setRightBarButtonItem(exportBtn, animated: true)
+    fileprivate func configureExportBtn() {
+        do {
+            if try Record.hasAtLeastOneRecord(inContext: managedObjectContext) {
+                if navigationItem.rightBarButtonItem == nil {
+                    navigationItem.setRightBarButton(exportBtn, animated: true)
+                }
+            } else {
+                navigationItem.setRightBarButton(nil, animated: true)
             }
-        } else {
-            if navigationItem.rightBarButtonItem != nil {
-                navigationItem.setRightBarButtonItem(nil, animated: true)
-            }
+        } catch let err as NSError {
+            UIAlertController.present(error: err, in: self)
+            navigationItem.setRightBarButton(nil, animated: true)
         }
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
-    private func configureNotificationObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.coreDataStackDidChange(_:)), name: kCoreDataStackStoreDidChange, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.applicationWillEnterForeground(_:)), name: UIApplicationWillEnterForegroundNotification, object: nil)
+    fileprivate func configureNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(HistoryViewController.coreDataStackDidChange(_:)), name: NSNotification.Name(rawValue: kCoreDataStackStoreDidChange), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HistoryViewController.applicationWillEnterForeground(_:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
-    private func configureStatsView() {
+    fileprivate func configureStatsView() {
         let addictions = try! Addiction.getAllAddictionsOrderedByCount(inContext: CoreDataStack.shared.managedObjectContext)
         
         if addictions.count > 0 {
-            statsView.frame = CGRectMake(0, 0, view.bounds.size.width, 160)
+            statsView.frame = CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 160)
             tableView.tableHeaderView = statsView
             statsView.addictions = addictions
         } else {
@@ -141,7 +144,7 @@ final class HistoryViewController: UIViewController {
     
     // MARK: - Data Fetch
     
-    private func reloadInterface() {
+    fileprivate func reloadInterface() {
         fetchExecuted = false
         launchFetchIfNeeded()
 
@@ -156,8 +159,8 @@ final class HistoryViewController: UIViewController {
         }
     }
     
-    private func toggleEmptyView(show: Bool) {
-        UIView.animateWithDuration(0.35) {
+    fileprivate func toggleEmptyView(_ show: Bool) {
+        UIView.animate(withDuration: 0.35) {
             self.emptyView.alpha = show ? 1 : 0
             self.tableView.alpha = show ? 0 : 1
         }
@@ -165,18 +168,16 @@ final class HistoryViewController: UIViewController {
     
     // MARK: - Notifications
     
-    func coreDataStackDidChange(notification: NSNotification) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.reloadInterface()
-        }
+    func coreDataStackDidChange(_ notification: Notification) {
+        DispatchQueue.main.async(execute: reloadInterface)
     }
 
-    func applicationWillEnterForeground(notification: NSNotification) {
+    func applicationWillEnterForeground(_ notification: Notification) {
         reloadInterface()
     }
     
-    private var fetchExecuted = false
-    private func launchFetchIfNeeded() {
+    fileprivate var fetchExecuted = false
+    fileprivate func launchFetchIfNeeded() {
         if fetchExecuted { return }
         do {
             try fetchedResultsController.performFetch()
@@ -189,33 +190,33 @@ final class HistoryViewController: UIViewController {
 
     // MARK: - Configure Layout Constraints
     
-    private func configureLayoutConstraints() {
-        tableView.snp_makeConstraints {
+    fileprivate func configureLayoutConstraints() {
+        tableView.snp.makeConstraints {
             $0.edges.equalTo(view)
         }
         
-        addBtn.snp_makeConstraints {
+        addBtn.snp.makeConstraints {
             $0.bottom.equalTo(view).offset(-20)
             $0.centerX.equalTo(view)
         }
         
-        emptyView.snp_makeConstraints {
+        emptyView.snp.makeConstraints {
             $0.edges.equalTo(view)
         }
     }
     
     // MARK: - Add button handler
     
-    func actionBtnClicked(sender: UIBarButtonItem) {
+    func actionBtnClicked(_ sender: UIBarButtonItem) {
         let settings = SettingsViewController()
         self.navigationController?.pushViewController(settings, animated: true)
     }
     
-    func exportBtnClicked(sender: UIBarButtonItem) {
-        NSOperationQueue().addOperation(ExportOperation(controller: self))
+    func exportBtnClicked(_ sender: UIBarButtonItem) {
+        OperationQueue().addOperation(ExportOperation(controller: self))
     }
     
-    func addBtnClicked(sender: UIButton) {
+    func addBtnClicked(_ sender: UIButton) {
         DeeplinkManager.invokeAddEntry(inContext: self)
     }
     
@@ -223,76 +224,76 @@ final class HistoryViewController: UIViewController {
 
 // MARK: - UITableViewDataSource
 extension HistoryViewController: UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController.sections?.count ?? 0
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(HistoryTableViewCell.reuseIdentifier, forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: HistoryTableViewCell.reuseIdentifier, for: indexPath)
         configureCell(cell, forIndexPath: indexPath)
         return cell
     }
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            let record = fetchedResultsController.objectAtIndexPath(indexPath) as! Record
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let record = fetchedResultsController.object(at: indexPath) 
             Record.deleteRecord(record, inContext: managedObjectContext)
             configureStatsView()
         }
     }
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = TableHeaderView()
 
         let dateString = fetchedResultsController.sections?[section].name
         
-        if let dateString = dateString, date = readDateFormatter.dateFromString(dateString) {
+        if let dateString = dateString, let date = readDateFormatter.date(from: dateString) {
             let proximity = SHDateProximityToDate(date)
             switch proximity {
-            case .Today:
-                header.title = L("history.today").uppercaseString
+            case .today:
+                header.title = L("history.today").uppercased()
                 break
-            case .Yesterday:
-                header.title = L("history.yesterday").uppercaseString
+            case .yesterday:
+                header.title = L("history.yesterday").uppercased()
                 break
             default:
-                header.title = dateString.uppercaseString
+                header.title = dateString.uppercased()
             }
         } else {
-            header.title = dateString?.uppercaseString
+            header.title = dateString?.uppercased()
         }
         
         return header
     }
-    private func configureCell(cell: UITableViewCell, forIndexPath indexPath: NSIndexPath) {
-        let record = fetchedResultsController.objectAtIndexPath(indexPath) as! Record
+    fileprivate func configureCell(_ cell: UITableViewCell, forIndexPath indexPath: IndexPath) {
+        let record = fetchedResultsController.object(at: indexPath)
         if let cell = cell as? HistoryTableViewCell {
             let addiction = record.addiction
             cell.dateLbl.attributedText = attributedStringForRecord(record, addiction: addiction)
             cell.circleTypeView.color = addiction.color.UIColor
-            if let first = addiction.name.capitalizedString.characters.first {
+            if let first = addiction.name.capitalized.characters.first {
                 cell.circleTypeView.textLbl.text = "\(first)"
             }
             cell.intensityCircle.progress = record.intensity.floatValue / 10.0
         }
     }
-    private func attributedStringForRecord(record: Record, addiction: Addiction) -> NSAttributedString {
-        let dateString = dateFormatter.stringFromDate(record.date).stringByReplacingOccurenceOfString(":", withString: "h")
+    fileprivate func attributedStringForRecord(_ record: Record, addiction: Addiction) -> NSAttributedString {
+        let dateString = dateFormatter.string(from: record.date).replacingOccurrences(of: ":", with: "h")
         let desireType = record.desire.boolValue ? L("history.record.desire") : L("history.record.conso")
         let typeString = "\(desireType) · \(addiction.name)"
         let full = "\(dateString)\n\(typeString)"
         let attr = NSMutableAttributedString(string: full)
         let fullRange = NSRange(location: 0, length: attr.length)
-        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(16, weight: UIFontWeightRegular), range: fullRange)
+        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular), range: fullRange)
         attr.addAttribute(NSForegroundColorAttributeName, value: UIColor.appBlackColor(), range: fullRange)
         let typeRange = full.rangeString(typeString)
-        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(12, weight: UIFontWeightRegular), range: typeRange)
+        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 12, weight: UIFontWeightRegular), range: typeRange)
         attr.addAttribute(NSForegroundColorAttributeName, value: UIColor.appLightTextColor(), range: typeRange)
         return NSAttributedString(attributedString: attr)
     }
@@ -300,66 +301,66 @@ extension HistoryViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension HistoryViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let recordController = AddRecordViewController()
-        recordController.record = fetchedResultsController.objectAtIndexPath(indexPath) as? Record
+        recordController.record = fetchedResultsController.object(at: indexPath)
         let nav = SHStatusBarNavigationController(rootViewController: recordController)
-        nav.statusBarStyle = .Default
-        nav.modalPresentationStyle = .FormSheet
-        presentViewController(nav, animated: true, completion: nil)
+        nav.statusBarStyle = .default
+        nav.modalPresentationStyle = .formSheet
+        present(nav, animated: true, completion: nil)
     }
 }
 
 // MARK: - NSFetchedResultsControllerDelegate
 extension HistoryViewController: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        if UIApplication.sharedApplication().applicationState == .Background {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        if UIApplication.shared.applicationState == .background {
             return
         }
         tableView.beginUpdates()
     }
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        if UIApplication.sharedApplication().applicationState == .Background {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if UIApplication.shared.applicationState == .background {
             return
         }
         switch type {
-        case .Insert:
+        case .insert:
             if let newIndexPath = newIndexPath {
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
-        case .Delete:
+        case .delete:
             if let indexPath = indexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
             }
-        case .Move:
-            if let indexPath = indexPath, newIndexPath = newIndexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+        case .move:
+            if let indexPath = indexPath, let newIndexPath = newIndexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
-        case .Update:
+        case .update:
             if let indexPath = indexPath {
-                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView.reloadRows(at: [indexPath], with: .automatic)
             }
         }
     }
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-        if UIApplication.sharedApplication().applicationState == .Background {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        if UIApplication.shared.applicationState == .background {
             return
         }
         switch type {
-        case .Insert:
-            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-        case .Delete:
-            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-        case .Update:
-            tableView.reloadSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-        case .Move:
+        case .insert:
+            tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
+        case .delete:
+            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
+        case .update:
+            tableView.reloadSections(IndexSet(integer: sectionIndex), with: .automatic)
+        case .move:
             break
         }
     }
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        if UIApplication.sharedApplication().applicationState == .Background {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        if UIApplication.shared.applicationState == .background {
             tableView.reloadData()
             return
         }
