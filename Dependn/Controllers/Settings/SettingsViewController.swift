@@ -63,21 +63,21 @@ final class SettingsViewController: SHNoBackButtonTitleViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        #if DEBUG
+//        #if DEBUG
         sections = [
             Section(type: .data, items: [ .export, .manageAddictions, .memorisePlaces ]),
             Section(type: .general, items: [ .contactUs, .passcode, .watch, .notifications, .version ]),
             Section(type: .iap, items: [ .restore ]),
             Section(type: .others, items: [ .rate, .share, .tour, .debugNotifications ])
         ]
-        #else
-        sections = [
-            Section(type: .data, items: [ .export, .manageAddictions, .memorisePlaces ]),
-            Section(type: .general, items: [ .contactUs, .passcode, .watch, .notifications, .version ]),
-            Section(type: .iap, items: [ .restore ]),
-            Section(type: .others, items: [ .rate, .share, .tour ])
-        ]
-        #endif
+//        #else
+//        sections = [
+//            Section(type: .data, items: [ .export, .manageAddictions, .memorisePlaces ]),
+//            Section(type: .general, items: [ .contactUs, .passcode, .watch, .notifications, .version ]),
+//            Section(type: .iap, items: [ .restore ]),
+//            Section(type: .others, items: [ .rate, .share, .tour ])
+//        ]
+//        #endif
 
         edgesForExtendedLayout = .all
         
