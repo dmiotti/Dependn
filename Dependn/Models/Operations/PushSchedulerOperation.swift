@@ -72,65 +72,61 @@ final class PushSchedulerOperation: SHOperation {
                 let now = Date()
 
                 if types.contains(.daily) {
-                    var obfuscatedAddictions = [String]()
 
-                    // 3. Prepare daily push
-                    let fireDate: Date
-                    if now.hour < 8 {
-                        fireDate = now.beginningOfDay + 8.hour + 1.minute
-                    } else {
-                        fireDate = now.beginningOfDay + 1.day + 8.hour + 1.minute
-                    }
-
-                    let dayBefore = fireDate - 1.day
-
-                    var pushStrings = [String]()
-                    for addiction in addictions {
-                        if let countInRange = try? Record.countInRange(addiction, start: dayBefore.beginningOfDay, end: dayBefore.endOfDay, isDesire: false, inContext: self.context) {
-                            let name = addiction.name
-                            let obsfuscated = name.substring(to: name.characters.index(name.startIndex, offsetBy: 3))
-                            pushStrings.append("\(obsfuscated). \(countInRange)")
-                            obfuscatedAddictions.append(obsfuscated)
+                    let now = Date()
+                    for i in 1..<1.month.inDays.toInt {
+                        var comps = Calendar.current.dateComponents([.hour, .minute, .day, .era, .year, .month], from: now)
+                        comps.day = (comps.day ?? 0) + i
+                        comps.hour = 9
+                        comps.minute = 0
+                        let nextDate = Calendar.current.date(from: comps)
+                        comps.day = (comps.day ?? 0) - 1
+                        let dayBefore = Calendar.current.date(from: comps)
+                        
+                        if let nextDate = nextDate, let dayBefore = dayBefore {
+                            var obfuscatedAddictions = [String]()
+                            var pushStrings = [String]()
+                            for addiction in addictions {
+                                let numberOfConso = try? Record.countInRange(addiction, start: dayBefore.beginningOfDay, end: dayBefore.endOfDay, isDesire: false, inContext: self.context)
+                                if let numberOfConso = numberOfConso {
+                                    let name = addiction.name
+                                    let obsfuscated = name.substring(to: name.characters.index(name.startIndex, offsetBy: 3))
+                                    pushStrings.append("\(obsfuscated). \(numberOfConso)")
+                                    obfuscatedAddictions.append(obsfuscated)
+                                }
+                            }
+                            
+                            let body = pushStrings.joined(separator: ", ")
+                            self.scheduleNotification(at: nextDate, body: "\(L("daily.push.title")): \(body)")
                         }
-                    }
-
-                    let title = L("daily.push.title")
-                    let body = pushStrings.joined(separator: ", ")
-                    self.scheduleNotification(at: fireDate, body: "\(title): \(body)")
-
-                    /// schedule an empty push for next days
-                    1.month.inDays.toInt.each { i in
-                        let nextDate = (fireDate + i.days).beginningOfDay + 8.hour + 1.minute
-                        let textes = obfuscatedAddictions.map {
-                            return "\($0). 0"
-                        }
-                        let body = textes.joined(separator: ", ")
-                        self.scheduleNotification(at: nextDate, body: "\(title): \(body)")
                     }
                 }
 
                 if types.contains(.weekly) {
                     // 4. Schedule de weekly push
-                    let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-                    if let comps = (calendar as NSCalendar?)?.components([.year, .month, .weekOfYear, .weekday], from: now) {
-                        let weekday = comps.weekday
-                        let daysToMonday = (9 - weekday!) % 7
-                        var nextMonday = now.addingTimeInterval(60*60*24*daysToMonday).beginningOfDay
-                        if nextMonday.timeIntervalSinceNow < 0 {
-                            nextMonday = nextMonday + 7.days
-                        }
-                        let previousMonday = nextMonday - 7.days
-                        var pushStrings = [String]()
+                    let calendar = Calendar.current
+                    let comps = calendar.dateComponents([.year, .month, .weekOfYear, .weekday], from: now)
+                    let weekday = comps.weekday
+                    let daysToMonday = (9 - weekday!) % 7
+                    var nextMonday = now.addingTimeInterval(60*60*24*daysToMonday).beginningOfDay
+                    if nextMonday.timeIntervalSinceNow < 0 {
+                        nextMonday = nextMonday + 7.days
+                    }
+                    let previousMonday = nextMonday - 7.days
+                    var pushStrings = [String]()
 
-                        for addiction in addictions {
-                            if let countInRange = try? Record.countInRange(addiction, start: previousMonday, end: nextMonday, isDesire: false, inContext: self.context) {
-                                let name = addiction.name
-                                let obsfuscated = name.substring(to: name.characters.index(name.startIndex, offsetBy: 3))
-                                pushStrings.append("\(obsfuscated). \(countInRange)")
-                            }
+                    for addiction in addictions {
+                        if let countInRange = try? Record.countInRange(addiction, start: previousMonday, end: nextMonday, isDesire: false, inContext: self.context) {
+                            let name = addiction.name
+                            let obsfuscated = name.substring(to: name.characters.index(name.startIndex, offsetBy: 3))
+                            pushStrings.append("\(obsfuscated). \(countInRange)")
                         }
+                    }
 
-                        let fireDate = nextMonday + 8.hour + 2.minutes
+                    var fireComps = calendar.dateComponents([.hour, .minute, .day, .era, .year, .month], from: nextMonday)
+                    fireComps.hour = 9
+                    fireComps.minute = 2
+                    if let fireDate = calendar.date(from: fireComps) {
                         let title = L("weekly.push.title")
                         let body = pushStrings.joined(separator: ", ")
                         self.scheduleNotification(at: fireDate, body: "\(title): \(body)")
@@ -152,7 +148,8 @@ final class PushSchedulerOperation: SHOperation {
         let triggerDate = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second,], from: date)
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        UNUserNotificationCenter.current().add(request)
+        print("Scheduling notification for \(date): \(body)")
     }
 
     fileprivate func isPushAccepted() -> Bool {

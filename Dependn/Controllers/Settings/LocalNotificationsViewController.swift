@@ -40,8 +40,10 @@ final class LocalNotificationsViewController: UIViewController {
         }
         
         UNUserNotificationCenter.current().getPendingNotificationRequests { [weak self] notifications in
-            self?.localNotifications = notifications
-            self?.tableView.reloadData()
+            DispatchQueue.main.async {
+                self?.localNotifications = notifications
+                self?.tableView.reloadData()
+            }
         }
     }
 }
