@@ -245,6 +245,7 @@
 		588D8C9D1C8F1898005BA8EB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		588D8C9F1C8F18A4005BA8EB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		589065D01C7A3F2F00F7F6DC /* Dependn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dependn.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		58AC8F901E88304300B3B178 /* Watch Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Watch Extension.entitlements"; sourceTree = "<group>"; };
 		58AD8B371C9178D40008CD9C /* UIViewController+TitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+TitleView.swift"; sourceTree = "<group>"; };
 		58AED4851CD121330037BFB1 /* CoreDataOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataOperation.swift; sourceTree = "<group>"; };
 		58BB15861CA1F91A00E3E06A /* Place+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Place+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -634,6 +635,7 @@
 		58F092CB1C9615AB00DF4ADC /* Watch Extension */ = {
 			isa = PBXGroup;
 			children = (
+				58AC8F901E88304300B3B178 /* Watch Extension.entitlements */,
 				587CB0F01CD1577B00FCDB48 /* WatchSessionManager.swift */,
 				58F092CE1C9615AB00DF4ADC /* ExtensionDelegate.swift */,
 				5841B3371CD2495A0024AC99 /* GlanceInterfaceController.swift */,
@@ -777,6 +779,11 @@
 						DevelopmentTeam = 659B2N7HE9;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1260,6 +1267,7 @@
 		58F092D81C9615AB00DF4ADC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Watch Extension/Watch Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: David Miotti (A999UM69TM)";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1281,6 +1289,7 @@
 		58F092D91C9615AB00DF4ADC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Watch Extension/Watch Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: David Miotti (659B2N7HE9)";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
