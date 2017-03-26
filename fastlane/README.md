@@ -1,9 +1,32 @@
 fastlane documentation
 ================
 # Installation
+
+Make sure you have the latest version of the Xcode command line tools installed:
+
 ```
-sudo gem install fastlane
+xcode-select --install
 ```
+
+## Choose your installation method:
+
+<table width="100%" >
+<tr>
+<th width="33%"><a href="http://brew.sh">Homebrew</a></td>
+<th width="33%">Installer Script</td>
+<th width="33%">Rubygems</td>
+</tr>
+<tr>
+<td width="33%" align="center">macOS</td>
+<td width="33%" align="center">macOS</td>
+<td width="33%" align="center">macOS or Linux with Ruby 2.0.0 or above</td>
+</tr>
+<tr>
+<td width="33%"><code>brew cask install fastlane</code></td>
+<td width="33%"><a href="https://download.fastlane.tools/fastlane.zip">Download the zip file</a>. Then double click on the <code>install</code> script (or run it in a terminal window).</td>
+<td width="33%"><code>sudo gem install fastlane -NV</code></td>
+</tr>
+</table>
 # Available Actions
 ## iOS
 ### ios test
@@ -15,7 +38,7 @@ Runs all the tests
 ```
 fastlane ios bump_version
 ```
-Update the build number to the count of Git commits
+Bump the version number
 ### ios beta
 ```
 fastlane ios beta
@@ -31,6 +54,6 @@ Deploy a new version to the App Store
 
 ----
 
-This README.md is auto-generated and will be re-generated every time to run [fastlane](https://fastlane.tools).
-More information about fastlane can be found on [https://fastlane.tools](https://fastlane.tools).
-The documentation of fastlane can be found on [GitHub](https://github.com/fastlane/fastlane/tree/master/fastlane).
+This README.md is auto-generated and will be re-generated every time [fastlane](https://fastlane.tools) is run.
+More information about fastlane can be found on [fastlane.tools](https://fastlane.tools).
+The documentation of fastlane can be found on [docs.fastlane.tools](https://docs.fastlane.tools).

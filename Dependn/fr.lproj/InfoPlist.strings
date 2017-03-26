@@ -7,6 +7,7 @@
 */
 
 NSLocationWhenInUseUsageDescription = "Tracker où vous consommez le plus";
+NSPhotoLibraryUsageDescription = "Aidez-nous à améliorer l'application";
 
 shortcutTitleAddEntry = "Ajouter";
 shortcutSubtitleAddEntry = "Ajoutera une consomation";
