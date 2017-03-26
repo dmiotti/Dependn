@@ -190,7 +190,7 @@ extension SearchAdditionViewController: UITableViewDelegate {
                 selectedAddiction = addiction
                 tableView.reloadData()
                 delegate?.searchController(self, didSelectAddiction: addiction)
-                navigationController?.popViewController(animated: true)
+                _ = navigationController?.popViewController(animated: true)
             }
         } else {
             addNewAddiction()

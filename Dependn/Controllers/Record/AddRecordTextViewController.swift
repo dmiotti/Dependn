@@ -108,7 +108,7 @@ final class AddRecordTextViewController: UIViewController {
             text = nil
         }
         delegate?.addRecordTextViewController(self, didEnterText: text)
-        navigationController?.popToRootViewController(animated: true)
+        _ = navigationController?.popToRootViewController(animated: true)
     }
     
     fileprivate func addPlaceholderToTextView() {
