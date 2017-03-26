@@ -104,29 +104,22 @@ final class PushSchedulerOperation: SHOperation {
 
                 if types.contains(.weekly) {
                     // 4. Schedule de weekly push
-                    let calendar = Calendar.current
-                    let comps = calendar.dateComponents([.year, .month, .weekOfYear, .weekday], from: now)
-                    let weekday = comps.weekday
-                    let daysToMonday = (9 - weekday!) % 7
-                    var nextMonday = now.addingTimeInterval(60*60*24*daysToMonday).beginningOfDay
-                    if nextMonday.timeIntervalSinceNow < 0 {
-                        nextMonday = nextMonday + 7.days
-                    }
-                    let previousMonday = nextMonday - 7.days
+                    let start = now.startOfWeek
+                    let end = now.endOfWeek
+                    
                     var pushStrings = [String]()
-
                     for addiction in addictions {
-                        if let countInRange = try? Record.countInRange(addiction, start: previousMonday, end: nextMonday, isDesire: false, inContext: self.context) {
+                        if let countInRange = try? Record.countInRange(addiction, start: start, end: end, isDesire: false, inContext: self.context) {
                             let name = addiction.name
                             let obsfuscated = name.substring(to: name.characters.index(name.startIndex, offsetBy: 3))
                             pushStrings.append("\(obsfuscated). \(countInRange)")
                         }
                     }
-
-                    var fireComps = calendar.dateComponents([.hour, .minute, .day, .era, .year, .month], from: nextMonday)
-                    fireComps.hour = 9
+                    
+                    var fireComps = Calendar.current.dateComponents([.hour, .minute, .day, .era, .year, .month], from: end)
+                    fireComps.hour = (fireComps.hour ?? 0) + 9
                     fireComps.minute = 2
-                    if let fireDate = calendar.date(from: fireComps) {
+                    if let fireDate = Calendar.current.date(from: fireComps) {
                         let title = L("weekly.push.title")
                         let body = pushStrings.joined(separator: ", ")
                         self.scheduleNotification(at: fireDate, body: "\(title): \(body)")
@@ -157,5 +150,17 @@ final class PushSchedulerOperation: SHOperation {
             return false
         }
         return true
+    }
+}
+
+extension Date {
+    var startOfWeek: Date {
+        let date = Calendar.current.date(from: Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
+        let dslTimeOffset = NSTimeZone.local.daylightSavingTimeOffset(for: date)
+        return date.addingTimeInterval(dslTimeOffset)
+    }
+    
+    var endOfWeek: Date {
+        return Calendar.current.date(byAdding: .second, value: 604799, to: self.startOfWeek)!
     }
 }
