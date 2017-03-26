@@ -53,7 +53,7 @@ final class CoreDataStack: NSObject {
     }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
-        // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
+        // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and loa,d its model.
         let modelURL = Bundle.main.url(forResource: kCoreDataStackMomdFilename, withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
@@ -65,11 +65,11 @@ final class CoreDataStack: NSObject {
         let url = self.applicationDocumentsDirectory.appendingPathComponent(kCoreDataStackSQLLiteFilename)
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            var opts = [String: AnyObject]()
-            opts[NSMigratePersistentStoresAutomaticallyOption] = true as AnyObject?
-            opts[NSInferMappingModelAutomaticallyOption] = true as AnyObject?
+            var opts = [String: Any]()
+            opts[NSMigratePersistentStoresAutomaticallyOption] = true
+            opts[NSInferMappingModelAutomaticallyOption] = true
             if !DeviceType.isSimulator {
-                opts[NSPersistentStoreUbiquitousContentNameKey] = "Dependn" as AnyObject?
+                opts[NSPersistentStoreUbiquitousContentNameKey] = "Dependn"
             }
             opts[NSPersistentStoreFileProtectionKey] = FileProtectionType.completeUntilFirstUserAuthentication as AnyObject?
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: opts)
