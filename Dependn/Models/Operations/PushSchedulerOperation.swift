@@ -149,7 +149,6 @@ final class PushSchedulerOperation: SHOperation {
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request)
-        print("Scheduling notification for \(date): \(body)")
     }
 
     fileprivate func isPushAccepted() -> Bool {

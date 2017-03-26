@@ -41,7 +41,16 @@ final class LocalNotificationsViewController: UIViewController {
         
         UNUserNotificationCenter.current().getPendingNotificationRequests { [weak self] notifications in
             DispatchQueue.main.async {
-                self?.localNotifications = notifications
+                self?.localNotifications = notifications.sorted { a, b in
+                    if
+                        let aTrigger = a.trigger as? UNCalendarNotificationTrigger,
+                        let bTrigger = b.trigger as? UNCalendarNotificationTrigger,
+                        let aDate = aTrigger.nextTriggerDate(),
+                        let bDate = bTrigger.nextTriggerDate() {
+                        return aDate < bDate
+                    }
+                    return false
+                }
                 self?.tableView.reloadData()
             }
         }
