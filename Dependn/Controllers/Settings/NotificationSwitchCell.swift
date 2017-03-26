@@ -28,7 +28,7 @@ final class NotificationSwitchCell: SHCommonInitTableViewCell {
         contentView.addSubview(textLbl)
 
         textLbl.snp.makeConstraints {
-            $0.edges.equalTo(contentView).inset(UIEdgeInsets(top: 0, left: 15, bottom: 0, right: -15))
+            $0.edges.equalTo(contentView).inset(UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15))
         }
 
         switcher.addTarget(self, action: #selector(NotificationSwitchCell.switchValueChanged(_:)), for: .valueChanged)

@@ -30,9 +30,6 @@ final class StyleSheet {
     ]
     
     class func customizeAppearance(_ window: UIWindow?) {
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        UINavigationBar.appearance().shadowImage = UIImage(color: UIColor.black.withAlphaComponent(0.5))
-        
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = titleAttributes
         UINavigationBar.appearance().barTintColor = UIColor.appBlueColor()

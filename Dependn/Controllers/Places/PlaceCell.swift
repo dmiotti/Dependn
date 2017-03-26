@@ -23,7 +23,7 @@ final class PlaceCell: SHCommonInitTableViewCell {
         placeLbl.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)
         contentView.addSubview(placeLbl)
         placeLbl.snp.makeConstraints {
-            $0.edges.equalTo(contentView).inset(UIEdgeInsets(top: 0, left: 30, bottom: 0, right: -30))
+            $0.edges.equalTo(contentView).inset(UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30))
         }
     }
 

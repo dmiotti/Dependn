@@ -28,7 +28,7 @@ final class HistoryViewController: UIViewController {
 
     fileprivate let readDateFormatter = DateFormatter()
 
-    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Record> = { () -> NSFetchedResultsController<Record> in
+    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Record> = {
         let controller = Record.historyFetchedResultsController(inContext: self.managedObjectContext)
         controller.delegate = self
         return controller
@@ -42,7 +42,7 @@ final class HistoryViewController: UIViewController {
         
         readDateFormatter.dateFormat = "EEEE dd MMMM yyyy"
         
-        edgesForExtendedLayout = UIRectEdge()
+        edgesForExtendedLayout = []
         
         if let nav = navigationController as? SHStatusBarNavigationController {
             nav.statusBarStyle = .lightContent

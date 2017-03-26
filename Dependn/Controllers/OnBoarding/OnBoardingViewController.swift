@@ -120,7 +120,7 @@ final class OnBoardingViewController: UIViewController {
             textContainerView.addSubview(textLbl)
             
             textLbl.snp.makeConstraints {
-                $0.edges.equalTo(textContainerView).inset(UIEdgeInsets(top: 0, left: 50, bottom: 0, right: -50))
+                $0.edges.equalTo(textContainerView).inset(UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 50))
             }
             
             textContainerView.snp.makeConstraints {

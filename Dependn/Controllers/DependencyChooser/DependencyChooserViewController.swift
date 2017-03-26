@@ -219,7 +219,7 @@ final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
         headerView.addSubview(headerLbl)
         
         headerLbl.snp.makeConstraints {
-            $0.edges.equalTo(headerView).inset(UIEdgeInsets(top: 20, left: 20, bottom: -20, right: -20))
+            $0.edges.equalTo(headerView).inset(UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
         }
         
         headerView.snp.makeConstraints {

@@ -19,7 +19,7 @@ final class AddictionListViewController: SHNoBackButtonTitleViewController {
     
     fileprivate let managedObjectContext = CoreDataStack.shared.managedObjectContext
     
-    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Addiction> = { () -> NSFetchedResultsController<Addiction> in
+    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Addiction> = {
         let req = NSFetchRequest<Addiction>(entityName: Addiction.entityName)
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
         let controller = NSFetchedResultsController<Addiction>(fetchRequest: req, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
