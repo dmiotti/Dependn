@@ -10,9 +10,23 @@ import UIKit
 import SwiftHelpers
 
 struct SuggestedAddiction {
-    var name: String
-    var color: String
+    let name: String
+    let color: String
+    let addiction: Addiction?
+    
+    init(addiction: Addiction) {
+        self.name = addiction.name
+        self.color = addiction.color
+        self.addiction = addiction
+    }
+    
+    init(name: String, color: String) {
+        self.name = name
+        self.color = color
+        self.addiction = nil
+    }
 }
+
 extension SuggestedAddiction: Comparable {}
 func ==(lhs: SuggestedAddiction, rhs: SuggestedAddiction) -> Bool {
     return lhs.name == rhs.name
@@ -87,27 +101,30 @@ final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
     // MARK: - Create suggested addictions
     
     fileprivate func fillWithData() {
-        proposedAddictions.append(contentsOf: [
-            SuggestedAddiction(name: L("suggested.addictions.tobacco"),     color: "#27A9F1"),
-            SuggestedAddiction(name: L("suggested.addictions.alcohol"),     color: "#BD10E0"),
-            SuggestedAddiction(name: L("suggested.addictions.cannabis"),    color: "#2DD7AA"),
+        var suggestions = [
+            SuggestedAddiction(name: L("suggested.addictions.tobacco"), color: "#27A9F1"),
+            SuggestedAddiction(name: L("suggested.addictions.alcohol"), color: "#BD10E0"),
+            SuggestedAddiction(name: L("suggested.addictions.cannabis"), color: "#2DD7AA"),
             SuggestedAddiction(name: L("suggested.addictions.antidepressant"), color: "#16a085"),
             SuggestedAddiction(name: L("suggested.addictions.tranquilizer"), color: "#7f8c8d"),
-            SuggestedAddiction(name: L("suggested.addictions.videogames"),  color: "#e67e22"),
-            SuggestedAddiction(name: L("suggested.addictions.screentime"),  color: "#c0392b"),
-            SuggestedAddiction(name: L("suggested.addictions.gambling"),    color: "#f1c40f"),
-            SuggestedAddiction(name: L("suggested.addictions.sex"),         color: "#1abc9c"),
-            SuggestedAddiction(name: L("suggested.addictions.food"),        color: "#2980b9"),
-            SuggestedAddiction(name: L("suggested.addictions.heroin"),      color: "#8B572A"),
-            SuggestedAddiction(name: L("suggested.addictions.mdma"),        color: "#BD10E0"),
-            SuggestedAddiction(name: L("suggested.addictions.ecigarette"),  color: "#e74c3c"),
-            SuggestedAddiction(name: L("suggested.addictions.sport"),       color: "#2c3e50")
-        ])
+            SuggestedAddiction(name: L("suggested.addictions.videogames"), color: "#e67e22"),
+            SuggestedAddiction(name: L("suggested.addictions.screentime"), color: "#c0392b"),
+            SuggestedAddiction(name: L("suggested.addictions.gambling"), color: "#f1c40f"),
+            SuggestedAddiction(name: L("suggested.addictions.sex"), color: "#1abc9c"),
+            SuggestedAddiction(name: L("suggested.addictions.food"), color: "#2980b9"),
+            SuggestedAddiction(name: L("suggested.addictions.heroin"), color: "#8B572A"),
+            SuggestedAddiction(name: L("suggested.addictions.mdma"), color: "#BD10E0"),
+            SuggestedAddiction(name: L("suggested.addictions.ecigarette"), color: "#e74c3c"),
+            SuggestedAddiction(name: L("suggested.addictions.sport"), color: "#2c3e50")
+        ]
         
         if let currentAddictions = try? Addiction.getAllAddictions(inContext: CoreDataStack.shared.managedObjectContext) {
-            let names = currentAddictions.map({ $0.name })
-            proposedAddictions = proposedAddictions.filter({ !names.contains($0.name) })
+            let names = suggestions.map({ $0.name })
+            let missingAddictions = currentAddictions.filter { names.contains($0.name) }
+            suggestions.append(contentsOf: missingAddictions.map(SuggestedAddiction.init))
         }
+        
+        proposedAddictions = suggestions
     }
     
     // MARK: - Button Events
@@ -284,7 +301,7 @@ final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
         let cancelAction = UIAlertAction(title: L("addiction_list.new.cancel"), style: .cancel, handler: nil)
         let addAction = UIAlertAction(title: L("addiction_list.new.add"), style: .default) { action in
             if let name = alert.textFields?.first?.text {
-                self.addAddictionWithName(name)
+                self.addAddiction(name: name)
             } else {
                 UIAlertController.presentAlert(title: L("addiction_list.new.error"), message: L("addiction_list.new.name_missing"), in: self)
             }
@@ -298,11 +315,18 @@ final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    fileprivate func addAddictionWithName(_ name: String) {
+    fileprivate func addAddiction(name: String) {
         do {
             let ctx = CoreDataStack.shared.managedObjectContext
             let addiction = try Addiction.findOrInsertNewAddiction(name, inContext: ctx)
             Analytics.instance.trackAddAddiction(addiction)
+            let suggestedAddiction = SuggestedAddiction(addiction: addiction)
+            self.proposedAddictions.append(suggestedAddiction)
+            self.selectedAddictions.append(suggestedAddiction)
+            self.tableView.beginUpdates()
+            let indexPath = IndexPath(row: self.proposedAddictions.count - 1, section: 0)
+            self.tableView.insertRows(at: [indexPath], with: .automatic)
+            self.tableView.endUpdates()
         } catch let err as NSError {
             UIAlertController.present(error: err, in: self)
         }
