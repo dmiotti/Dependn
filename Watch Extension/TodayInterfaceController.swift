@@ -19,10 +19,12 @@ final class TodayInterfaceController: DayInterfaceController {
     override func loadData(_ data: WatchStatsAddiction) {
         super.loadData(data)
         
-        let value = data.values[0]
-        valueLbl.setText(value.value)
-        addictionLbl.setText(data.addiction)
-        dayLbl.setText(value.date)
+        if data.values.count > 0 {
+            let value = data.values[0]
+            valueLbl.setText(value.value)
+            addictionLbl.setText(data.addiction)
+            dayLbl.setText(value.date)
+        }
         
         setTitle(data.formattedSinceLast)
     }

@@ -23,13 +23,10 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
 
     /** Called when the session has completed activation. If session state is WCSessionActivationStateNotActivated there will be an error with more details. */
     public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        
+        updateApplicationContext()
     }
     
     static let sharedManager = WatchSessionManager()
-    fileprivate override init() {
-        super.init()
-    }
     
     fileprivate let session: WCSession? = WCSession.isSupported() ? WCSession.default() : nil
     
@@ -74,7 +71,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
             var entryDict = WatchDictionary()
             if let result = newEntryOp.watchInfo {
                 let value = WatchNewEntryInfoOperation.formatNewEntryResultsForAppleWatch(result)
-                entryDict["value"] = value as AnyObject?
+                entryDict["value"] = value
             } else if let err = newEntryOp.error, let sugg = err.localizedRecoverySuggestion {
                 entryDict["error"] = [
                     "description": err.localizedDescription,

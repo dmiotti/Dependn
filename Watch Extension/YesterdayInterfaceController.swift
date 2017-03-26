@@ -14,10 +14,12 @@ final class YesterdayInterfaceController: DayInterfaceController {
     override func loadData(_ data: WatchStatsAddiction) {
         super.loadData(data)
         
-        let value = data.values[1]
-        valueLbl.setText(value.value)
-        addictionLbl.setText(data.addiction)
-        dayLbl.setText(value.date)
+        if data.values.count > 1 {
+            let value = data.values[1]
+            valueLbl.setText(value.value)
+            addictionLbl.setText(data.addiction)
+            dayLbl.setText(value.date)
+        }
     }
     
 }

@@ -407,13 +407,14 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		58548BD41C8BE18100C7C940 /* Record */ = {
+		58548BD41C8BE18100C7C940 /* Add Record */ = {
 			isa = PBXGroup;
 			children = (
 				58548BD51C8BE18100C7C940 /* AddRecordViewController.swift */,
 				58DC7A0A1C8C57A5007F9F5D /* AddRecordTextViewController.swift */,
 				58548BD61C8BE18100C7C940 /* Cells */,
 			);
+			name = "Add Record";
 			path = Record;
 			sourceTree = "<group>";
 		};
@@ -550,7 +551,7 @@
 				584897841CAC60C800CA18CE /* OnBoarding */,
 				582603491CF0B47900EA9F57 /* DependencyChooser */,
 				58DF62A51C83BDEE0035F608 /* History */,
-				58548BD41C8BE18100C7C940 /* Record */,
+				58548BD41C8BE18100C7C940 /* Add Record */,
 				58BB15901CA20D0D00E3E06A /* Places */,
 				581DC5DD1C8B3C41006DE551 /* Addiction */,
 				58548BE71C8BE1E400C7C940 /* Search */,

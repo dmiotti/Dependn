@@ -88,6 +88,10 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     }
 
     fileprivate var getContextCompletionQueue = [RequestContextBlock]()
+    
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        parseApplicationContext(applicationContext)
+    }
 
     func requestContext(_ block: RequestContextBlock? = nil) {
 
@@ -104,7 +108,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         let message = ["action": "context"]
         session.sendMessage(message, replyHandler: { response in
             
-            self.parseApplicationContext(appContext: response as [String : AnyObject])
+            self.parseApplicationContext(response)
 
             self.unqueueContextBlocks()
             
@@ -151,7 +155,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
         }
     }
     
-    fileprivate func parseApplicationContext(appContext: [String: Any]) {
+    fileprivate func parseApplicationContext(_ appContext: [String: Any]) {
         
         /// Parse stats context
         let statsContext = appContext["stats"] as? WatchDictionary
@@ -238,6 +242,6 @@ extension WatchSessionManager {
     
     // Receiving data
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-        parseApplicationContext(appContext: applicationContext)
+        parseApplicationContext(applicationContext)
     }
 }

@@ -13,10 +13,13 @@ final class TwoDaysAgoInterfaceController: DayInterfaceController {
     
     override func loadData(_ data: WatchStatsAddiction) {
         super.loadData(data)
-        let value = data.values[2]
-        valueLbl.setText(value.value)
-        addictionLbl.setText(data.addiction)
-        dayLbl.setText(value.date)
+        
+        if data.values.count > 2 {
+            let value = data.values[2]
+            valueLbl.setText(value.value)
+            addictionLbl.setText(data.addiction)
+            dayLbl.setText(value.date)
+        }
     }
     
 }
