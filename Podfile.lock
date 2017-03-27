@@ -56,7 +56,7 @@ CHECKOUT OPTIONS:
     :commit: acc480fbe023c6e5fe40f68593f4a70a8c4c7ad5
     :git: https://github.com/ViccAlexander/Chameleon.git
   SwiftHelpers:
-    :commit: 59b463dc9db5fa63ddd76fa77c88dc949d3d0cd9
+    :commit: 5cc33f61996cf5d4e35746f1d974fea4785b1b5a
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:

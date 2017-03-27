@@ -9,19 +9,6 @@
 import UIKit
 import CoreData
 import SwiftHelpers
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
 
 protocol SearchAdditionViewControllerDelegate {
     func searchController(_ searchController: SearchAdditionViewController, didSelectAddiction addiction: Addiction)
@@ -44,7 +31,14 @@ final class SearchAdditionViewController: SHNoBackButtonTitleViewController {
     
     fileprivate var searchBar: UISearchBar!
     
-    fileprivate var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
+    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Addiction> = {
+        let req = Addiction.entityFetchRequest()
+        req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
+        let ctx = CoreDataStack.shared.managedObjectContext
+        let controller = NSFetchedResultsController<Addiction>(fetchRequest: req, managedObjectContext: ctx, sectionNameKeyPath: nil, cacheName: nil)
+        controller.delegate = self
+        return controller
+    }()
     
     fileprivate var tableView: UITableView!
     
@@ -111,12 +105,13 @@ final class SearchAdditionViewController: SHNoBackButtonTitleViewController {
             let req = Addiction.entityFetchRequest()
             req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
             if let searchText = searchText {
-                req.predicate = NSPredicate(format: "name contains[cd] %@", searchText)
+                let predicate = NSPredicate(format: "name contains[cd] %@", searchText)
+                fetchedResultsController.fetchRequest.predicate = predicate
+            } else {
+                fetchedResultsController.fetchRequest.predicate = nil
             }
-            fetchedResultsController = NSFetchedResultsController(fetchRequest: req, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-            fetchedResultsController!.delegate = self
-            try fetchedResultsController!.performFetch()
-            tableView.reloadData()
+            try fetchedResultsController.performFetch()
+            tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
         } catch let err as NSError {
             print("Error while search place with \(String(describing: searchText)): \(err)")
         }
@@ -155,21 +150,20 @@ final class SearchAdditionViewController: SHNoBackButtonTitleViewController {
 // MARK: - UITableViewDataSource
 extension SearchAdditionViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return (fetchedResultsController?.sections?.count ?? 0) + 1
+        return (fetchedResultsController.sections?.count ?? 0) + 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section < fetchedResultsController?.sections?.count {
-            return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
+        if section < fetchedResultsController.sections?.count {
+            return fetchedResultsController.sections?[section].numberOfObjects ?? 0
         }
         return 1
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section < fetchedResultsController?.sections?.count {
+        if indexPath.section < fetchedResultsController.sections?.count {
             let cell = tableView.dequeueReusableCell(withIdentifier: AddictionTableViewCell.reuseIdentifier, for: indexPath) as! AddictionTableViewCell
-            if let addiction = fetchedResultsController?.object(at: indexPath) as? Addiction {
-                cell.addiction = addiction
-                cell.choosen = addiction == selectedAddiction
-            }
+            let addiction = fetchedResultsController.object(at: indexPath)
+            cell.addiction = addiction
+            cell.choosen = addiction == selectedAddiction
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: NewAddictionTableViewCell.reuseIdentifier, for: indexPath) as! NewAddictionTableViewCell
@@ -185,13 +179,12 @@ extension SearchAdditionViewController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.section < fetchedResultsController?.sections?.count {
-            if let addiction = fetchedResultsController?.object(at: indexPath) as? Addiction {
-                selectedAddiction = addiction
-                tableView.reloadData()
-                delegate?.searchController(self, didSelectAddiction: addiction)
-                _ = navigationController?.popViewController(animated: true)
-            }
+        if indexPath.section < fetchedResultsController.sections?.count {
+            let addiction = fetchedResultsController.object(at: indexPath)
+            selectedAddiction = addiction
+            tableView.reloadData()
+            delegate?.searchController(self, didSelectAddiction: addiction)
+            _ = navigationController?.popViewController(animated: true)
         } else {
             addNewAddiction()
         }

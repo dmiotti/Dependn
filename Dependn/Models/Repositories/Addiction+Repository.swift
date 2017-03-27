@@ -59,19 +59,19 @@ extension Addiction {
         let req = entityFetchRequest()
         req.predicate = NSPredicate(format: "name ==[cd] %@", name)
         req.fetchLimit = 1
-        return try context.fetch(req).first as? Addiction
+        return try context.fetch(req).first
     }
     
     class func getAllAddictions(inContext context: NSManagedObjectContext) throws -> [Addiction] {
         let req = entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-        return try context.fetch(req) as? [Addiction] ?? []
+        return try context.fetch(req)
     }
     
     class func getAllAddictionsOrderedByCount(inContext context: NSManagedObjectContext) throws -> [Addiction] {
         let req = entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-        var addictions = try context.fetch(req) as? [Addiction] ?? [Addiction]()
+        var addictions = try context.fetch(req)
         addictions.sort { $0.records?.count > $1.records?.count }
         return addictions
     }

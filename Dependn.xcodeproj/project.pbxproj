@@ -93,7 +93,6 @@
 		58DF62C71C83BDEE0035F608 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62A71C83BDEE0035F608 /* HistoryViewController.swift */; };
 		58DF62CB1C83BDEE0035F608 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58DF62AD1C83BDEE0035F608 /* InfoPlist.strings */; };
 		58DF62CC1C83BDEE0035F608 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58DF62AF1C83BDEE0035F608 /* Localizable.strings */; };
-		58DF62CE1C83BDEE0035F608 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62B31C83BDEE0035F608 /* CoreDataStack.swift */; };
 		58DF62CF1C83BDEE0035F608 /* AverageIntensityOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62B51C83BDEE0035F608 /* AverageIntensityOperation.swift */; };
 		58DF62D01C83BDEE0035F608 /* AveragePerDayOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62B61C83BDEE0035F608 /* AveragePerDayOperation.swift */; };
 		58DF62D11C83BDEE0035F608 /* AverageTimeInBetweenTwoTakesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF62B71C83BDEE0035F608 /* AverageTimeInBetweenTwoTakesOperation.swift */; };
@@ -268,7 +267,6 @@
 		58DF62AE1C83BDEE0035F608 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		58DF62B01C83BDEE0035F608 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		58DF62B11C83BDEE0035F608 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		58DF62B31C83BDEE0035F608 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		58DF62B51C83BDEE0035F608 /* AverageIntensityOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AverageIntensityOperation.swift; sourceTree = "<group>"; };
 		58DF62B61C83BDEE0035F608 /* AveragePerDayOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AveragePerDayOperation.swift; sourceTree = "<group>"; };
 		58DF62B71C83BDEE0035F608 /* AverageTimeInBetweenTwoTakesOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AverageTimeInBetweenTwoTakesOperation.swift; sourceTree = "<group>"; };
@@ -578,7 +576,6 @@
 		58DF62B21C83BDEE0035F608 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				58DF62B31C83BDEE0035F608 /* CoreDataStack.swift */,
 				58DF62BE1C83BDEE0035F608 /* Record.swift */,
 				581DC5D01C8B2ED0006DE551 /* Addiction.swift */,
 				58BB158C1CA1F93400E3E06A /* Place.swift */,
@@ -919,7 +916,6 @@
 				5864FD7A1CDFC2F900656664 /* CSVExportOperation.swift in Sources */,
 				5826034C1CF0B47900EA9F57 /* DependencyChooserCell.swift in Sources */,
 				581DC5E71C8B73D3006DE551 /* UserDefaults.swift in Sources */,
-				58DF62CE1C83BDEE0035F608 /* CoreDataStack.swift in Sources */,
 				58548BE21C8BE18100C7C940 /* NewPlaceTableViewCell.swift in Sources */,
 				581DC5D71C8B3172006DE551 /* Addiction+Repository.swift in Sources */,
 				58DF62C71C83BDEE0035F608 /* HistoryViewController.swift in Sources */,

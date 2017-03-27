@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import SwiftHelpers
 
 final class Addiction: NSManagedObject, NamedEntity {
     static var entityName = "Addiction"

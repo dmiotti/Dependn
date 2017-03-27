@@ -11,6 +11,7 @@ import Amplitude_iOS
 import CoreData
 import WatchConnectivity
 import SwiftyUserDefaults
+import SwiftHelpers
 
 final class Analytics: NSObject {
     

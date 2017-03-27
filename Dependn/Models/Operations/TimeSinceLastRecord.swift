@@ -34,7 +34,7 @@ final class TimeSinceLastRecord: SHOperation {
         req.fetchLimit = 1
         context.performAndWait {
             do {
-                let records = try self.context.fetch(req) as! [Record]
+                let records = try self.context.fetch(req) 
                 if let last = records.last {
                     self.sinceLast = last.date
                     self.interval = fabs(last.date.timeIntervalSince(Date()))

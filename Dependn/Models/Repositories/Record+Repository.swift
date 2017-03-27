@@ -45,7 +45,7 @@ extension Record {
     }
     
     class func historyFetchedResultsController(inContext context: NSManagedObjectContext) -> NSFetchedResultsController<Record> {
-        let req = NSFetchRequest<Record>(entityName: Record.entityName)
+        let req = Record.entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: false) ]
         let controller = NSFetchedResultsController<Record>(fetchRequest: req, managedObjectContext: context, sectionNameKeyPath: "sectionIdentifier", cacheName: nil)
         return controller
@@ -58,14 +58,14 @@ extension Record {
     class func recordForAddiction(_ addiction: Addiction, inContext context: NSManagedObjectContext) throws -> [Record] {
         let req = Record.entityFetchRequest()
         req.predicate = NSPredicate(format: "addiction == %@", addiction)
-        return try context.fetch(req) as? [Record] ?? []
+        return try context.fetch(req)
     }
     
     class func recordWithPlace(_ place: Place, inContext context: NSManagedObjectContext) -> [Record] {
         let req = entityFetchRequest()
         req.predicate = NSPredicate(format: "place == %@", place)
         do {
-            return try context.fetch(req) as! [Record]
+            return try context.fetch(req)
         } catch let err as NSError {
             DDLogError("Error while fetching record with place: \(place): \(err)")
         }
@@ -87,5 +87,4 @@ extension Record {
         req.predicate = NSPredicate(format: "addiction == %@ AND date >= %@ AND date <= %@ AND desire == %@", addiction, start as NSDate, end as NSDate, NSNumber(value: isDesire))
         return try context.count(for: req)
     }
-    
 }

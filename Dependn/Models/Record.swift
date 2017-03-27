@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import SwiftHelpers
 
 final class Record: NSManagedObject, NamedEntity {
     static var entityName = "Record"

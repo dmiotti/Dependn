@@ -11,30 +11,6 @@ import CoreData
 import SwiftHelpers
 import CocoaLumberjack
 import PKHUD
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 protocol PlacesViewControllerDelegate {
     func placeController(_ controller: PlacesViewController, didChoosePlace place: Place?)
@@ -54,8 +30,8 @@ final class PlacesViewController: UIViewController {
     
     fileprivate var searchBar: UISearchBar!
     
-    fileprivate var suggestedFRC: NSFetchedResultsController<NSFetchRequestResult>?
-    fileprivate var recentFRC: NSFetchedResultsController<NSFetchRequestResult>?
+    fileprivate var suggestedFRC: NSFetchedResultsController<Place>?
+    fileprivate var recentFRC: NSFetchedResultsController<Place>?
     
     fileprivate var sections = [PlacesSectionType]()
     
@@ -277,9 +253,9 @@ extension PlacesViewController: UITableViewDataSource {
         let section = sections[indexPath.section]
         switch section {
         case .recentPlaces:
-            place = recentFRC?.fetchedObjects?[indexPath.row] as! Place
+            place = recentFRC!.fetchedObjects![indexPath.row]
         case .places:
-            place = suggestedFRC?.fetchedObjects?[indexPath.row] as! Place
+            place = suggestedFRC!.fetchedObjects![indexPath.row]
         }
         return place
     }

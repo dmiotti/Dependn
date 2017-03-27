@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+import SwiftHelpers
 
 final class Place: NSManagedObject, NamedEntity {
     static var entityName = "Place"

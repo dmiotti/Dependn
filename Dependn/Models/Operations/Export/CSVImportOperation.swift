@@ -141,7 +141,7 @@ final class CSVImportOperation: SHOperation {
     fileprivate func deleteAllRecords() throws {
         let req = Record.entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "date", ascending: true) ]
-        let records = try context.fetch(req) as! [Record]
+        let records = try context.fetch(req) 
         for r in records {
             context.delete(r)
         }
@@ -159,7 +159,7 @@ final class CSVImportOperation: SHOperation {
     fileprivate func deleteAllPlaces() throws {
         let req = Place.entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: false) ]
-        let places = try context.fetch(req) as! [Place]
+        let places = try context.fetch(req)
         for place in places {
             context.delete(place)
         }

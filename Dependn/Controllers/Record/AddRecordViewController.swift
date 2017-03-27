@@ -153,13 +153,16 @@ final class AddRecordViewController: SHNoBackButtonTitleViewController {
         }
     }
     
-    // MARK: - Keyboard
+    // MARK: Notifications
     
     fileprivate func registerNotificationObservers() {
         let ns = NotificationCenter.default
         ns.addObserver(self, selector: #selector(AddRecordViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         ns.addObserver(self, selector: #selector(AddRecordViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        ns.addObserver(self, selector: #selector(AddRecordViewController.coreDataContextDidChanged(_:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: nil)
     }
+    
+    // MARK: - Keyboard
     
     func keyboardWillShow(_ notification: Notification) {
         let scrollViewRect = view.convert(tableView.frame, from: tableView.superview)
@@ -183,7 +186,13 @@ final class AddRecordViewController: SHNoBackButtonTitleViewController {
         tableView.scrollIndicatorInsets = contentInsets
     }
     
-    // MARK: - UIBarButtonItems
+    // MARK: - CoreData
+    
+    func coreDataContextDidChanged(_ notification: Notification) {
+        print("CoreData did changed: \(notification.userInfo)")
+    }
+    
+    // MARK: UIBarButtonItems
     
     func addBtnClicked(_ sender: UIBarButtonItem) {
         if let record = record {

@@ -36,8 +36,8 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 extension Place {
     
-    class func suggestedPlacesFRC(inContext context: NSManagedObjectContext, forSearch search: String? = nil) -> NSFetchedResultsController<NSFetchRequestResult> {
-        let req = entityFetchRequest()
+    class func suggestedPlacesFRC(inContext context: NSManagedObjectContext, forSearch search: String? = nil) -> NSFetchedResultsController<Place> {
+        let req = Place.entityFetchRequest()
         let pred = NSPredicate(format: "records.@count == 0")
         if let search = search {
             let filter = NSPredicate(format: "name contains[cd] %@", search)
@@ -46,15 +46,15 @@ extension Place {
             req.predicate = pred
         }
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-        return NSFetchedResultsController(
+        return NSFetchedResultsController<Place>(
             fetchRequest: req,
             managedObjectContext: context,
             sectionNameKeyPath: nil,
             cacheName: nil)
     }
     
-    static func recentPlacesFRC(inContext context: NSManagedObjectContext, forSearch search: String? = nil) -> NSFetchedResultsController<NSFetchRequestResult> {
-        let req = entityFetchRequest()
+    static func recentPlacesFRC(inContext context: NSManagedObjectContext, forSearch search: String? = nil) -> NSFetchedResultsController<Place> {
+        let req = Place.entityFetchRequest()
         let pred = NSPredicate(format: "records.@count > 0")
         if let search = search {
             let filter = NSPredicate(format: "name contains[cd] %@", search)
@@ -74,13 +74,13 @@ extension Place {
         let req = entityFetchRequest()
         req.predicate = predicate
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: false) ]
-        return try context.fetch(req) as! [Place]
+        return try context.fetch(req)
     }
     
     class func getAllPlacesOrderedByCount(inContext context: NSManagedObjectContext) throws -> [Place] {
         let req = entityFetchRequest()
         req.sortDescriptors = [ NSSortDescriptor(key: "name", ascending: true) ]
-        var places = try context.fetch(req) as! [Place]
+        var places = try context.fetch(req)
         places.sort { $0.records?.count > $1.records?.count }
         return places
     }
@@ -103,7 +103,7 @@ extension Place {
         let req = entityFetchRequest()
         req.predicate = NSPredicate(format: "name ==[cd] %@", name)
         req.fetchLimit = 1
-        return try context.fetch(req).first as? Place
+        return try context.fetch(req).first
     }
     
 }
