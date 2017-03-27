@@ -72,18 +72,22 @@ final class PushSchedulerOperation: SHOperation {
                 let now = Date()
 
                 if types.contains(.daily) {
-
                     let now = Date()
-                    for i in 1..<1.month.inDays.toInt {
-                        var comps = Calendar.current.dateComponents([.hour, .minute, .day, .era, .year, .month], from: now)
+                    for i in 0..<1.month.inDays.toInt {
+                        let calendar = Calendar.current
+                        var comps = calendar.dateComponents([.hour, .minute, .day, .era, .year, .month], from: now)
                         comps.day = (comps.day ?? 0) + i
                         comps.hour = 9
                         comps.minute = 0
-                        let nextDate = Calendar.current.date(from: comps)
+                        let nextDate = calendar.date(from: comps)
                         comps.day = (comps.day ?? 0) - 1
-                        let dayBefore = Calendar.current.date(from: comps)
+                        let dayBefore = calendar.date(from: comps)
                         
                         if let nextDate = nextDate, let dayBefore = dayBefore {
+                            if nextDate < now {
+                                continue
+                            }
+
                             var obfuscatedAddictions = [String]()
                             var pushStrings = [String]()
                             for addiction in addictions {
