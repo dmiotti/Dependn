@@ -31,4 +31,6 @@ extension DefaultsKeys {
     static let watchAddiction            = DefaultsKey<String?>("watchAddiction")
     static let notificationTypes         = DefaultsKey<Int>("notificationTypes")
     static let pushAlreadyShown          = DefaultsKey<Bool>("pushAlreadyShown")
+    static let appVersion                = DefaultsKey<String?>("appVersion")
+    static let didiCloudCheck            = DefaultsKey<Bool>("didiCloudCheck")
 }

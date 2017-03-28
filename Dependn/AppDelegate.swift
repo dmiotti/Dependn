@@ -97,6 +97,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             
             application.shortcutItems = [ addShortcut ]
         }
+        
+        saveCurrentAppVersion()
 
         return shouldPerformAdditionalDelegateHandling
     }
@@ -169,19 +171,35 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     }
     
-    
     // MARK: - Initialize CoreDataStack
     
     private func initializeCoreDataStack() {
-        var opts: [AnyHashable: Any] = [
-            NSMigratePersistentStoresAutomaticallyOption: true,
-            NSInferMappingModelAutomaticallyOption: true,
-            NSPersistentStoreFileProtectionKey: FileProtectionType.completeUntilFirstUserAuthentication
-        ]
-        if !DeviceType.isSimulator {
-            opts[NSPersistentStoreUbiquitousContentNameKey] = "Dependn"
+        let needMigration = Defaults[.alreadyLaunched] && !Defaults[.didiCloudCheck]
+        Defaults[.didiCloudCheck] = true
+        if needMigration {
+            var opts: [AnyHashable: Any] = [
+                NSMigratePersistentStoresAutomaticallyOption: true,
+                NSInferMappingModelAutomaticallyOption: true,
+                NSPersistentStoreFileProtectionKey: FileProtectionType.completeUntilFirstUserAuthentication,
+                NSPersistentStoreRemoveUbiquitousMetadataOption: true
+            ]
+            if !DeviceType.isSimulator {
+                opts[NSPersistentStoreUbiquitousContentNameKey] = "Dependn"
+            }
+            CoreDataStack.initializeWithMomd("Dependn", sql: "Dependn.sqlite", persistantStoreOptions: opts)
+        } else {
+            CoreDataStack.initializeWithMomd("Dependn", sql: "Dependn.sqlite")
         }
-        CoreDataStack.initializeWithMomd("Dependn", sql: "Dependn.sqlite", persistantStoreOptions: opts)
+    }
+    
+    // MARK: - Saves the current app version
+    
+    private func saveCurrentAppVersion() {
+        guard let currentVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {
+            return
+        }
+        Defaults[.appVersion] = currentVersion
+        Defaults.synchronize()
     }
     
     // MARK: - Handle shortcut items
