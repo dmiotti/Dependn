@@ -14,6 +14,7 @@ import CocoaLumberjack
 import SwiftHelpers
 import WatchConnectivity
 import BrightFutures
+import CoreData
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -56,8 +57,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Application Life Cycle
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        CoreDataStack.initializeWithMomd("Dependn", sql: "Dependn.sqlite")
+        initializeCoreDataStack()
         
         // Register defaults properties in Settings app
         let defaults = UserDefaults.standard
@@ -167,6 +167,21 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
 
+    }
+    
+    
+    // MARK: - Initialize CoreDataStack
+    
+    private func initializeCoreDataStack() {
+        var opts: [AnyHashable: Any] = [
+            NSMigratePersistentStoresAutomaticallyOption: true,
+            NSInferMappingModelAutomaticallyOption: true,
+            NSPersistentStoreFileProtectionKey: FileProtectionType.completeUntilFirstUserAuthentication
+        ]
+        if !DeviceType.isSimulator {
+            opts[NSPersistentStoreUbiquitousContentNameKey] = "Dependn"
+        }
+        CoreDataStack.initializeWithMomd("Dependn", sql: "Dependn.sqlite", persistantStoreOptions: opts)
     }
     
     // MARK: - Handle shortcut items
