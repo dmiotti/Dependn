@@ -57,6 +57,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        CoreDataStack.initializeWithMomd("Dependn", sql: "Dependn.sqlite")
+        
         // Register defaults properties in Settings app
         let defaults = UserDefaults.standard
         let appDefaults = [ "trackingEnabled": true ]

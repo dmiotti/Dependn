@@ -24,7 +24,9 @@ final class HistoryViewController: UIViewController {
     fileprivate var dateFormatter: DateFormatter!
     fileprivate var emptyView: HistoryEmptyView!
 
-    fileprivate let managedObjectContext = CoreDataStack.shared.managedObjectContext
+    fileprivate lazy var managedObjectContext: NSManagedObjectContext = {
+        return CoreDataStack.shared.managedObjectContext
+    }()
 
     fileprivate let readDateFormatter = DateFormatter()
 
