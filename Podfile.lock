@@ -1,33 +1,33 @@
 PODS:
   - Amplitude-iOS (3.14.1)
-  - BrightFutures (5.1.0):
-    - Result (~> 3.0)
+  - BrightFutures (5.2.0):
+    - Result (~> 3.2)
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
-  - CocoaLumberjack/Default (3.1.0)
-  - CocoaLumberjack/Swift (3.1.0):
+  - CocoaLumberjack/Default (3.2.0)
+  - CocoaLumberjack/Swift (3.2.0):
     - CocoaLumberjack/Default
   - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.11)
   - libxlsxwriter (0.6.9)
-  - PKHUD (4.2.0)
-  - Result (3.2.1)
+  - PKHUD (4.2.2)
+  - Result (3.2.3)
   - SnapKit (3.2.0)
-  - SwiftHelpers (5.0.1):
-    - SwiftHelpers/Basic (= 5.0.1)
-    - SwiftHelpers/Core (= 5.0.1)
-    - SwiftHelpers/CoreData (= 5.0.1)
-    - SwiftHelpers/DateTime (= 5.0.1)
-    - SwiftHelpers/Misc (= 5.0.1)
-    - SwiftHelpers/UI (= 5.0.1)
-  - SwiftHelpers/Basic (5.0.1)
-  - SwiftHelpers/Core (5.0.1)
-  - SwiftHelpers/CoreData (5.0.1)
-  - SwiftHelpers/DateTime (5.0.1)
-  - SwiftHelpers/Misc (5.0.1)
-  - SwiftHelpers/UI (5.0.1)
+  - SwiftHelpers (5.0.3):
+    - SwiftHelpers/Basic (= 5.0.3)
+    - SwiftHelpers/Core (= 5.0.3)
+    - SwiftHelpers/CoreData (= 5.0.3)
+    - SwiftHelpers/DateTime (= 5.0.3)
+    - SwiftHelpers/Misc (= 5.0.3)
+    - SwiftHelpers/UI (= 5.0.3)
+  - SwiftHelpers/Basic (5.0.3)
+  - SwiftHelpers/Core (5.0.3)
+  - SwiftHelpers/CoreData (5.0.3)
+  - SwiftHelpers/DateTime (5.0.3)
+  - SwiftHelpers/Misc (5.0.3)
+  - SwiftHelpers/UI (5.0.3)
   - SwiftyJSON (3.1.4)
   - SwiftyUserDefaults (3.0.0)
 
@@ -56,24 +56,24 @@ CHECKOUT OPTIONS:
     :commit: acc480fbe023c6e5fe40f68593f4a70a8c4c7ad5
     :git: https://github.com/ViccAlexander/Chameleon.git
   SwiftHelpers:
-    :commit: 5cc33f61996cf5d4e35746f1d974fea4785b1b5a
+    :commit: f5d2f51f62c543ff0cfff056cfff66f503166415
     :git: git@github.com:dmiotti/SwiftHelpers.git
 
 SPEC CHECKSUMS:
   Amplitude-iOS: 4a3c8807b2ea5369dc11e87e23825bff01e5a922
-  BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
+  BrightFutures: 8681dbb9fa831b69b6e7dc4a498b9e081d5daeb5
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
-  CocoaLumberjack: 8311463ddf9ee86a06ef92a071dd656c89244500
+  CocoaLumberjack: 9b4aed7073d242f29cc2f62068d995faf67f703a
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   libxlsxwriter: 863cff6657797176917741ab87b783fe99539869
-  PKHUD: 48af884cf00c2213b0313b739d914e6cab1c0f5e
-  Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
+  PKHUD: 9a3599e04d57676ec14746c40e423a52fb6588c0
+  Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  SwiftHelpers: 346de9223bfde9b2011c866af3dcf3e9d70d9c41
+  SwiftHelpers: 63f0b7c4ead778811a44c126ebf560c47162d8c9
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
 
 PODFILE CHECKSUM: ad44eb66d64d05bf5450b7a0a9f4d30424a74656
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1
