@@ -159,7 +159,6 @@ final class AddRecordViewController: SHNoBackButtonTitleViewController {
         let ns = NotificationCenter.default
         ns.addObserver(self, selector: #selector(AddRecordViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         ns.addObserver(self, selector: #selector(AddRecordViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        ns.addObserver(self, selector: #selector(AddRecordViewController.coreDataContextDidChanged(_:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: nil)
     }
     
     // MARK: - Keyboard
@@ -184,12 +183,6 @@ final class AddRecordViewController: SHNoBackButtonTitleViewController {
         contentInsets.bottom = 0
         tableView.contentInset = contentInsets
         tableView.scrollIndicatorInsets = contentInsets
-    }
-    
-    // MARK: - CoreData
-    
-    func coreDataContextDidChanged(_ notification: Notification) {
-        print("CoreData did changed: \(notification.userInfo)")
     }
     
     // MARK: UIBarButtonItems

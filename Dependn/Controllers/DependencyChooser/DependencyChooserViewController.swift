@@ -115,7 +115,8 @@ final class DependencyChooserViewController: SHNoBackButtonTitleViewController {
             SuggestedAddiction(name: L("suggested.addictions.heroin"), color: "#8B572A"),
             SuggestedAddiction(name: L("suggested.addictions.mdma"), color: "#BD10E0"),
             SuggestedAddiction(name: L("suggested.addictions.ecigarette"), color: "#e74c3c"),
-            SuggestedAddiction(name: L("suggested.addictions.sport"), color: "#2c3e50")
+            SuggestedAddiction(name: L("suggested.addictions.sport"), color: "#2c3e50"),
+            SuggestedAddiction(name: L("suggested.addictions.work"), color: "#52B3D9")
         ]
         
         if let currentAddictions = try? Addiction.getAllAddictions(inContext: CoreDataStack.shared.managedObjectContext) {

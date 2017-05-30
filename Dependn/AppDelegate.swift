@@ -57,7 +57,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Application Life Cycle
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        initializeCoreDataStack()
+        CoreDataStack.initializeWithMomd("Dependn", sql: "Dependn.sqlite")
         
         // Register defaults properties in Settings app
         let defaults = UserDefaults.standard
@@ -169,27 +169,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
 
-    }
-    
-    // MARK: - Initialize CoreDataStack
-    
-    private func initializeCoreDataStack() {
-        let needMigration = Defaults[.alreadyLaunched] && !Defaults[.didiCloudCheck]
-        Defaults[.didiCloudCheck] = true
-        if needMigration {
-            var opts: [AnyHashable: Any] = [
-                NSMigratePersistentStoresAutomaticallyOption: true,
-                NSInferMappingModelAutomaticallyOption: true,
-                NSPersistentStoreFileProtectionKey: FileProtectionType.completeUntilFirstUserAuthentication,
-                NSPersistentStoreRemoveUbiquitousMetadataOption: true
-            ]
-            if !DeviceType.isSimulator {
-                opts[NSPersistentStoreUbiquitousContentNameKey] = "Dependn"
-            }
-            CoreDataStack.initializeWithMomd("Dependn", sql: "Dependn.sqlite", persistantStoreOptions: opts)
-        } else {
-            CoreDataStack.initializeWithMomd("Dependn", sql: "Dependn.sqlite")
-        }
     }
     
     // MARK: - Saves the current app version

@@ -111,7 +111,7 @@ final class SearchAdditionViewController: SHNoBackButtonTitleViewController {
                 fetchedResultsController.fetchRequest.predicate = nil
             }
             try fetchedResultsController.performFetch()
-            tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+            tableView.reloadData()
         } catch let err as NSError {
             print("Error while search place with \(String(describing: searchText)): \(err)")
         }
